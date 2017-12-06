@@ -1,4 +1,20 @@
 //REM
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0033aa+0,3366cc+21,00aadd+51,3366cc+79,3366cc+79,0033aa+100 */
+  background: #aa0000; /* Old browsers */
+  background: linear-gradient(135deg, #c80c0c 0%,#be6060 21%,#bd4848 51%,#cc3333 79%,#cc3333 79%,#aa0000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+}
+
 html {
   font-size: 62.5%;
 }
@@ -6,4 +22,23 @@ html {
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: $m-size;
+}
+
+.card {
+  max-width: 345px;
+}
+.media {
+  height: 200px;
+}
+
+.center{
+  width: 75%;
+  margin: 0 auto;
+}
+
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
