@@ -1,10 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import AppBar from '../appBar/appBar'
+import AppBar from "../appBar/appBar";
+import UserCard from "../cards/user-card";
+import CompletedCard from "../cards/completed-card";
+import UncompletedCard from "../cards/uncompleted-card";
 
 class HomeComponent extends React.Component {
   render = () => (
-    <AppBar />
+    <AppBar>
+      <div>
+        <UserCard />
+      </div>
+      <CompletedCard />
+      <UncompletedCard />
+    </AppBar>
   );
 }
 

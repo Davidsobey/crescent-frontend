@@ -10,7 +10,7 @@ import Visibility from "material-ui-icons/Visibility";
 import VisibilityOff from "material-ui-icons/VisibilityOff";
 import { Link } from "react-router-dom";
 
-import Logo from "../../img/LogoText.png";
+const Logo = require("../../images/LogoText.png");
 
 class LoginComponent extends React.Component {
   state = {
@@ -82,7 +82,7 @@ class LoginComponent extends React.Component {
             </FormControl>
             <br />
             <br />
-            <div >
+            <div>
               <Link className="login" to="./home">
                 <Button raised color="primary">
                   Login

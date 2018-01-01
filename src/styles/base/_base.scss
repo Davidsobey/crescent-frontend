@@ -17,9 +17,12 @@ body {
   );
 }
 #app {
-  height: 100%;
   width: 100%;
+  min-height: 100%;
   display: flex;
+}
+.AppBar-root-1{
+  height: unset !important;
 }
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;

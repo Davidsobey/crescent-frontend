@@ -16,18 +16,19 @@ import { MenuList, MenuItem } from "material-ui/Menu";
 import Paper from "material-ui/Paper";
 import { ListItemIcon, ListItemText } from "material-ui/List";
 import PeopleIcon from "material-ui-icons/People";
-import BusinessIcon from "material-ui-icons/Business";
-import AssesmentIcon from "material-ui-icons/Assessment";
+import CoursesIcon from "material-ui-icons/ChromeReaderMode";
 import AssignmentIcon from "material-ui-icons/Assignment";
+import AttachIcon from "material-ui-icons/Attachment";
+import Logout from "material-ui-icons/PowerSettingsNew";
+import { Link } from "react-router-dom";
 
-import Logo from "../../img/LogoText.png";
+import Logo from "../../images/LogoText.png";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     width: "100%",
-    height: "100%",
     marginTop: "0px",
     zIndex: 1,
     overflow: "hidden"
@@ -86,7 +87,7 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "13.2px 8px",
+    padding: "13.5px 8px",
     color: "white",
     fontSize: "25px",
     backgroundColor: "#c50003"
@@ -105,15 +106,15 @@ const styles = theme => ({
     flex: 1
   },
   title: {
-    paddingLeft: '30px',
-    paddingTop: '5px',
-    color: 'white'
+    paddingLeft: "30px",
+    paddingTop: "5px",
+    color: "white"
   }
 });
 
 class AppBar extends React.Component {
   state = {
-    open: false
+    open: true
   };
 
   handleDrawer = () => {
@@ -124,9 +125,12 @@ class AppBar extends React.Component {
     }
   };
 
-  render() {
-    const { classes, theme } = this.props;
+  logOut = () => {
+    console.log("Logout");
+  };
 
+  render() {
+    const { classes, theme, children } = this.props;
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
@@ -148,15 +152,9 @@ class AppBar extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography
-                className={classes.flex}
-                type="title"
-                color="inherit"
-                noWrap
-              />
               <div>
                 <IconButton className="alignRight" color="contrast">
-                  <AccountCircle />
+                  <Logout onClick={this.logOut} />
                 </IconButton>
               </div>
             </Toolbar>
@@ -172,57 +170,59 @@ class AppBar extends React.Component {
             open={this.state.open}
           >
             <div className={classes.drawerInner}>
-              <div className={classes.drawerHeader}>
-                <img
-                  width="34px"
-                  src={Logo}
-                  className="drawerLogo"
-                  alt="Crescent"
-                />
-                <Typography className={classes.title} type="title" gutterBottom>
-                  Crescent
-                </Typography>
-              </div>
+              <Link to="/home">
+                <div className={classes.drawerHeader}>
+                  <img
+                    width="34px"
+                    src={Logo}
+                    className="drawerLogo"
+                    alt="Crescent"
+                  />
+                  <Typography
+                    className={classes.title}
+                    type="title"
+                    gutterBottom
+                  >
+                    Crescent
+                  </Typography>
+                </div>
+              </Link>
               <Divider />
               <MenuList>
+                <Link to="/home">
+                  <MenuItem>
+                    <ListItemIcon>
+                      <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Home" />
+                  </MenuItem>
+                </Link>
+                <Link to="/course/view">
+                  <MenuItem>
+                    <ListItemIcon>
+                      <CoursesIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Courses" />
+                  </MenuItem>
+                </Link>
+                <Link to="/tests/view">
+                  <MenuItem>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Tests" />
+                  </MenuItem>
+                </Link>
                 <MenuItem>
                   <ListItemIcon>
-                    <HomeIcon />
+                    <AttachIcon />
                   </ListItemIcon>
-                  <ListItemText inset primary="Home" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemIcon>
-                    <PeopleIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Clients" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemIcon>
-                    <BusinessIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Suppliers" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemIcon>
-                    <AssignmentIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Quotes" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemIcon>
-                    <AssesmentIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Reports" />
+                  <ListItemText inset primary="Course Material" />
                 </MenuItem>
               </MenuList>
             </div>
           </Drawer>
-          <main className={classes.content}>
-            <Typography noWrap>
-              {"You think water moves fast? You should see ice."}
-            </Typography>
-          </main>
+          <main className={classes.content}>{children}</main>
         </div>
       </div>
     );
