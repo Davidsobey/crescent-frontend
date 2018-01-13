@@ -16,9 +16,9 @@ const AppRouter = () => (
       {/* <Route path="/signup" component={SignupPage} exact={true} /> */}
       <Route path="/home" component={HomeComponent} exact={true} />
       <Route path="/course/view" component={CourseView} />
-      <Route path="/tests/view" component={ViewTests} />
-      <Route path="/tests/begin" component={BeginTest} />
-      <Route path="/tests/write" component={WriteTest} />
+      <Route path="/assesments/view" component={ViewTests} />
+      <Route path="/assesments/begin" component={BeginTest} />
+      <Route path="/assesments/write" component={WriteTest} />
       {/* <Route path="/help" component={HelpPage} /> */}
       {/* <Route component={NotFound} /> */}
     </Switch>

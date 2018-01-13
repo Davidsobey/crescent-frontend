@@ -4,7 +4,7 @@ import "normalize.css/normalize.css";
 import AppRouter from "./routers/AppRouter";
 import { MuiThemeProvider } from "material-ui/styles";
 import { createMuiTheme } from "material-ui/styles";
-import { purple, red } from "material-ui/colors";
+import { amber, red } from "material-ui/colors";
 import "./styles/styles.scss";
 
 const muiTheme = createMuiTheme({
@@ -15,7 +15,7 @@ const muiTheme = createMuiTheme({
       200: "#e28081",
       300: "#d64d4f",
       400: "#ce2629",
-      500: "#c50003",
+      500: "#c62828",
       600: "#bf0003",
       700: "#b80002",
       800: "#b00002",
@@ -26,7 +26,7 @@ const muiTheme = createMuiTheme({
       A700: "#ff4e4e",
       contrastDefaultColor: "light"
     },
-    secondary: red
+    secondary: amber
   },
   status: {
     danger: "red"

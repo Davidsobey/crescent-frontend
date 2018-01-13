@@ -8,13 +8,21 @@ import Paper from "material-ui/Paper";
 
 import ExpansionPanel from "../expansion-panel";
 import Dashboard from "../appBar/appBar";
+import TestList from "../tests/test-list";
 
 const styles = theme => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3
-  })
+  }),
+  width: {
+    width: "33.3%"
+  },
+  helper: {
+    borderLeft: `2px solid ${theme.palette.text.lightDivider}`,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+  }
 });
 
 function DetailedExpansionPanel(props) {
@@ -27,14 +35,17 @@ function DetailedExpansionPanel(props) {
         </Typography>
         <ExpansionPanel
           title="APRM"
-          additional="Test Compelted 2/3"
-          detail="Additional Material"
-        />
-        <ExpansionPanel
-          title="PRM"
-          additional="Test Compelted 0/3"
-          detail="Additional Material"
-        />
+          additional="Assesments"
+          detail="Additional Content"
+        >
+          <div className={classes.width} />
+          <div className={classNames(classes.width, classes.helper)}>
+            <TestList />
+          </div>
+          <div className={classNames(classes.width, classes.helper)}>
+            Additional Content
+          </div>
+        </ExpansionPanel>
       </Paper>
     </Dashboard>
   );

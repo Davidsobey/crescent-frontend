@@ -23,6 +23,8 @@ import Logout from "material-ui-icons/PowerSettingsNew";
 import { Link } from "react-router-dom";
 
 import Logo from "../../images/LogoText.png";
+import { amber500 } from "material-ui/colors";
+import { amber100 } from "material-ui/colors";
 
 const drawerWidth = 240;
 
@@ -69,7 +71,8 @@ const styles = theme => ({
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    backgroundColor: theme.palette.primary[500]
   },
   drawerPaperClose: {
     width: 60,
@@ -90,12 +93,12 @@ const styles = theme => ({
     padding: "13.5px 8px",
     color: "white",
     fontSize: "25px",
-    backgroundColor: "#c50003"
+    backgroundColor: theme.palette.primary[500]
   },
   content: {
     width: "100%",
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: "#e2e2e2",
     padding: 24,
     marginTop: 56
   },
@@ -106,9 +109,12 @@ const styles = theme => ({
     flex: 1
   },
   title: {
-    paddingLeft: "30px",
+    paddingLeft: "15px",
     paddingTop: "5px",
     color: "white"
+  },
+  secondary: {
+    color: theme.palette.secondary[500]
   }
 });
 
@@ -145,16 +151,19 @@ class AppBar extends React.Component {
               disableGutters={!this.state.open}
             >
               <IconButton
-                color="contrast"
                 aria-label="open drawer"
                 onClick={this.handleDrawer}
-                className={classNames(classes.menuButton, this.state.open)}
+                className={classNames(
+                  classes.menuButton,
+                  this.state.open,
+                  classes.secondary
+                )}
               >
                 <MenuIcon />
               </IconButton>
               <div>
-                <IconButton className="alignRight" color="contrast">
-                  <Logout onClick={this.logOut} />
+                <IconButton className="alignRight">
+                  <Logout className={classes.secondary} onClick={this.logOut} />
                 </IconButton>
               </div>
             </Toolbar>
@@ -180,10 +189,10 @@ class AppBar extends React.Component {
                   />
                   <Typography
                     className={classes.title}
-                    type="title"
+                    type="body2"
                     gutterBottom
                   >
-                    Crescent
+                    Lunar E-Learning Platform
                   </Typography>
                 </div>
               </Link>
@@ -192,7 +201,7 @@ class AppBar extends React.Component {
                 <Link to="/home">
                   <MenuItem>
                     <ListItemIcon>
-                      <HomeIcon />
+                      <HomeIcon className={classes.secondary} />
                     </ListItemIcon>
                     <ListItemText inset primary="Home" />
                   </MenuItem>
@@ -200,22 +209,22 @@ class AppBar extends React.Component {
                 <Link to="/course/view">
                   <MenuItem>
                     <ListItemIcon>
-                      <CoursesIcon />
+                      <CoursesIcon className={classes.secondary} />
                     </ListItemIcon>
                     <ListItemText inset primary="Courses" />
                   </MenuItem>
                 </Link>
-                <Link to="/tests/view">
+                <Link to="/assesments/view">
                   <MenuItem>
                     <ListItemIcon>
-                      <AssignmentIcon />
+                      <AssignmentIcon className={classes.secondary} />
                     </ListItemIcon>
-                    <ListItemText inset primary="Tests" />
+                    <ListItemText inset primary="Assesments" />
                   </MenuItem>
                 </Link>
                 <MenuItem>
                   <ListItemIcon>
-                    <AttachIcon />
+                    <AttachIcon className={classes.secondary} />
                   </ListItemIcon>
                   <ListItemText inset primary="Course Material" />
                 </MenuItem>

@@ -26,9 +26,6 @@ const styles = theme => ({
     alignItems: "center",
     margin: "0 39px"
   },
-  column: {
-    flexBasis: "33.3%"
-  },
   helper: {
     borderLeft: `2px solid ${theme.palette.text.lightDivider}`,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
@@ -43,90 +40,43 @@ const styles = theme => ({
   marginTop: {
     marginTop: 16
   },
-  green: {
-    backgroundColor: "#8BC34A"
-  },
-  red: {
-    backgroundColor: "#c50003"
+  secondary: {
+    color: theme.palette.secondary[500]
   },
   displayInline: {
     display: "inline-flex",
     justifyContent: "space-around",
     width: "100%",
     alignItems: "center"
+  },
+  justify: {
+    display: "inline-flex",
+    flex: 1
+  },
+  width: {
+    width: "33.3%"
   }
 });
 
 function ExpansionPanel(props) {
-  const { classes } = props;
+  const { classes, children } = props;
   return (
     <ExpansionPanelMUI className={classes.marginTop}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <div className={classes.column}>
-          <Typography type="headline">{props.title}</Typography>
-        </div>
-        <div className={classes.column}>
-          <Typography type="headline">{props.additional}</Typography>
+        <div className={classes.justify}>
+          <div className={classes.width}>
+            <Typography type="headline">{props.title}</Typography>
+          </div>
+          <div className={classes.width}>
+            <Typography type="headline">{props.additional}</Typography>
+          </div>
+          <div className={classes.width}>
+            <Typography type="headline">{props.additional}</Typography>
+          </div>
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.details}>
-        <div className={classes.column} />
-        {props.detail === "Review Test" && (
-          <div className={classes.column}>
-            <div>
-              <Typography type="body2">Test: 33/50</Typography>
-            </div>
-          </div>
-        )}
-        {props.detail === "Take Test" && (
-          <div className={classes.column}>
-            <div>
-              <Typography type="body2">Test: Not Taken</Typography>
-            </div>
-          </div>
-        )}
-        {props.detail === "Additional Material" && (
-          <div className={classNames(classes.column, classes.helper)}>
-            <div className={classes.displayInline}>
-              <Typography type="body2">Test 1: 33/50</Typography>
-              <Button className={classes.green}>Review</Button>
-            </div>
-            <div className={classes.displayInline}>
-              <Typography type="body2">Test 2: 25/50</Typography>
-              <Button className={classes.green}>Review</Button>
-            </div>
-            <div className={classes.displayInline}>
-              <Typography type="body2">Test 3: 24/50</Typography>
-              <Button className={classes.red}>Retake</Button>
-            </div>
-          </div>
-        )}
-        {props.detail === "Additional Material" && (
-          <div className={classNames(classes.column, classes.helper)}>
-            <Typography type="caption">
-              {props.detail}
-              <br />
-              <a href="#sub-labels-and-columns" className={classes.link}>
-                PDF1.pdf
-              </a>
-            </Typography>
-          </div>
-        )}
-
-        {props.detail === "Review Test" && (
-          <Link to="/tests/begin">
-            <Button raised color="default" className={classes.green}>
-              {props.detail}
-            </Button>
-          </Link>
-        )}
-        {props.detail === "Take Test" && (
-          <Link to="/tests/begin">
-            <Button raised color="primary" to="/">
-              {props.detail}
-            </Button>
-          </Link>
-        )}
+        {children}
       </ExpansionPanelDetails>
     </ExpansionPanelMUI>
   );

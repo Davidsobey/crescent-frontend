@@ -3,7 +3,7 @@ import React from "react";
 import AppBar from "../appBar/appBar";
 import UserCard from "../cards/user-card";
 import CompletedCard from "../cards/completed-card";
-import UncompletedCard from "../cards/uncompleted-card";
+import IncompleteCard from "../cards/incomplete-card";
 
 class HomeComponent extends React.Component {
   render = () => (
@@ -12,7 +12,7 @@ class HomeComponent extends React.Component {
         <UserCard />
       </div>
       <CompletedCard />
-      <UncompletedCard />
+      <IncompleteCard />
     </AppBar>
   );
 }

@@ -42,7 +42,7 @@ function BeginTest(props) {
           Once you are done click on the complete test button, the test will be
           graded and your result will be displayed.
         </Typography>
-        <Link to="/tests/write">
+        <Link to="/assesments/write">
           <Button raised color="primary" to="/">
             Begin Test
           </Button>

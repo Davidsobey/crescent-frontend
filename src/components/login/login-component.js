@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import { Card, Button, CardHeader } from "material-ui";
 import { LockOutline, Person } from "material-ui-icons/";
 import IconButton from "material-ui/IconButton";
-import Grid from "material-ui/Grid";
 import { FormControl } from "material-ui/Form";
 import Input, { InputLabel, InputAdornment } from "material-ui/Input";
 import Visibility from "material-ui-icons/Visibility";
 import VisibilityOff from "material-ui-icons/VisibilityOff";
 import { Link } from "react-router-dom";
-
+import { login } from "./action"
 const Logo = require("../../images/LogoText.png");
 
 class LoginComponent extends React.Component {
@@ -40,7 +39,7 @@ class LoginComponent extends React.Component {
           <Card color="primary" raised className="card">
             <div className="row center">
               <LockOutline className="pushdown" />
-              <CardHeader title="Crescent Testing Login" />
+              <CardHeader title="Lunar Testing Login" />
             </div>
             <FormControl fullWidth>
               <InputLabel htmlFor="username">Username</InputLabel>
@@ -84,7 +83,7 @@ class LoginComponent extends React.Component {
             <br />
             <div>
               <Link className="login" to="./home">
-                <Button raised color="primary">
+                <Button raised onClick={() => login(this.state.password, this.state.username)} color="primary">
                   Login
                 </Button>
               </Link>

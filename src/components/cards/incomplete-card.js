@@ -13,7 +13,7 @@ import Divider from "material-ui/Divider";
 import IconButton from "material-ui/IconButton";
 import Typography from "material-ui/Typography";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import CancelIcon from "material-ui-icons/Cancel";
+import ThumbDownIcon from "material-ui-icons/ThumbDown";
 import withWidth from "material-ui/utils/withWidth";
 
 const styles = theme => ({
@@ -53,7 +53,7 @@ const styles = theme => ({
   }
 });
 
-class UncompletedCard extends React.Component {
+class IncompleteCard extends React.Component {
   state = { expanded: false, expanded1: false };
 
   handleExpandClick = () => {
@@ -71,9 +71,9 @@ class UncompletedCard extends React.Component {
       <div className={classes.displayInline}>
         <Card className={classes.card}>
           <div className={classes.displayInline}>
-            <CardHeader title="Uncompleted Courses" />
+            <CardHeader title="Incomplete Courses" />
             <div className={classes.right}>
-              <CancelIcon />
+              <ThumbDownIcon />
             </div>
           </div>
           <Divider />
@@ -152,8 +152,8 @@ class UncompletedCard extends React.Component {
   }
 }
 
-UncompletedCard.propTypes = {
+IncompleteCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(UncompletedCard);
+export default withStyles(styles)(IncompleteCard);

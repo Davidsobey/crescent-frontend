@@ -8,9 +8,10 @@ import IconButton from "material-ui/IconButton";
 import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import DoneIcon from "material-ui-icons/Done";
+import ThumbUpIcon from "material-ui-icons/ThumbUp";
 
-const styles = theme => ({
+const styles = theme => 
+({
   card: {
     maxWidth: 400,
     marginRight: 10
@@ -43,8 +44,9 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     marginRight: 20,
-    color: "#8BC34A"
+    color: theme.palette.secondary[500]
   }
+  
 });
 
 class CompletedCard extends React.Component {
@@ -67,7 +69,7 @@ class CompletedCard extends React.Component {
           <div className={classes.displayInline}>
             <CardHeader title="Completed Courses" />
             <div className={classes.right}>
-              <DoneIcon />
+              <ThumbUpIcon />
             </div>
           </div>
           <Divider />

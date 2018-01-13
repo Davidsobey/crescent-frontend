@@ -3,25 +3,14 @@ body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background: #aa0000; /* Old browsers */
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0033aa+0,3366cc+21,00aadd+51,3366cc+79,3366cc+79,0033aa+100 */
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  background: linear-gradient(
-    135deg,
-    #c80c0c 0%,
-    #be6060 21%,
-    #bd4848 51%,
-    #cc3333 79%,
-    #cc3333 79%,
-    #aa0000 100%
-  );
+  background: #b2b2b2;
 }
 #app {
   width: 100%;
   min-height: 100%;
   display: flex;
 }
-.AppBar-root-1{
+.AppBar-root-1 {
   height: unset !important;
 }
 body {
