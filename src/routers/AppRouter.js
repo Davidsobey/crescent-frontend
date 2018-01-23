@@ -1,28 +1,43 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
-import LoginComponent from "../components/login/login-component";
-import HomeComponent from "../components/home/home-component";
-import CourseView from "../components/courses/course-view";
-import ViewTests from "../components/tests/view-tests";
-import BeginTest from "../components/tests/begin-test";
-import WriteTest from "../components/tests/write-test";
+import { connect } from "react-redux";
+import { createBrowserHistory } from "history";
 
+import Login from "../Containers/Login";
+import { AlertActions } from "../Actions/AlertActions";
+import { debug } from "util";
 
-const AppRouter = () => (
-  <BrowserRouter>
-    {/* <Header isLoggedIn={true} /> */}
-    <Switch>
-      <Route path="/" component={LoginComponent} exact={true} />
-      {/* <Route path="/signup" component={SignupPage} exact={true} /> */}
-      <Route path="/home" component={HomeComponent} exact={true} />
-      <Route path="/course/view" component={CourseView} />
-      <Route path="/assesments/view" component={ViewTests} />
-      <Route path="/assesments/begin" component={BeginTest} />
-      <Route path="/assesments/write" component={WriteTest} />
-      {/* <Route path="/help" component={HelpPage} /> */}
-      {/* <Route component={NotFound} /> */}
-    </Switch>
-  </BrowserRouter>
-);
+const history = createBrowserHistory();
 
-export default AppRouter;
+class AppRouter extends React.Component {
+  constructor(props) {
+    super(props);
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(AlertActions.clear());
+    });
+  }
+
+  render() {
+    const { AlertReducer } = this.props;
+    return (
+      <BrowserRouter>
+        <Switch>
+          {alert.message && <div>test</div>}
+          <Route path="/" component={Login} exact={true} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  const { AlertReducer } = state;
+  return {
+    AlertReducer
+  };
+}
+
+const connectedApp = connect(mapStateToProps)(AppRouter);
+export { connectedApp as AppRouter };
