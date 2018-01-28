@@ -11,7 +11,7 @@ import Card from "../../Components/Card";
 import Button from "../../Components/Button";
 import UserActions from "../../Actions/UserActions";
 
-import Logo from "../../Images/LogoText.png";
+// import Logo from "../../Images/LogoText.png";
 
 const validate = values => {
   const errors = {};
@@ -36,7 +36,7 @@ class Login extends React.Component {
     return (
       <div className="content">
         <form name="form" onSubmit={this.props.handleSubmit(this.submit)}>
-          <img src={Logo} className="center-img" width="200px" alt="Crescent" />
+          {/* <img src={Logo} className="center-img" width="200px" alt="Crescent" /> */}
           <Card width="500px" title="Lunar Testing Login">
             <br />
             <br />
