@@ -22,7 +22,7 @@ import Logout from "material-ui-icons/PowerSettingsNew";
 import { Link } from "react-router-dom";
 
 import ExpandableMenuItem from '../../Components/ExpandableMenuItem'
-import Logo from "../../images/LogoBackground.png";
+import Logo from "../../Images/LogoBackground.png";
 import { amber500 } from "material-ui/colors";
 import { amber100 } from "material-ui/colors";
 
