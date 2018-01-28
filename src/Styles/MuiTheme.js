@@ -1,5 +1,5 @@
 import React from "react";
-import { createMuiTheme } from "material-ui/styles";
+import createMuiTheme from "material-ui/styles/createMuiTheme";
 
 const blackPalette = {
   50: "#e6e7e8",
@@ -55,7 +55,7 @@ const secondary = {
   contrastDefaultColor: "light"
 };
 
-const muiTheme = createMuiTheme({
+const MuiTheme = createMuiTheme({
   palette: {
     primary: blackPalette,
     secondary: secondary,
@@ -63,4 +63,4 @@ const muiTheme = createMuiTheme({
   }
 });
 
-export default muiTheme;
+export default MuiTheme;
