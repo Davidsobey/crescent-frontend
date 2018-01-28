@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import "normalize.css/normalize.css";
 import { MuiThemeProvider } from "material-ui/styles";
 import "./Styles/GlobalStyles.js";
-import MuiTheme from "./Styles/MUITheme";
-import AppRouter from "./Routers/AppRouter";
+import MuiTheme from "../src/Styles/MUITheme";
+import AppRouter from "../src/Routers/AppRouter";
 import configureStore from "./Store";
 
 const store = configureStore();
