@@ -12,7 +12,7 @@ import { reduxForm } from "redux-form";
 
 import Card from "../../../Components/Card";
 import AppBar from "../../../Components/AppBar";
-import Button from "../../../components/Button";
+import Button from "../../../Components/Button";
 import Table from "../../../Components/Table";
 import CourseActions from "../../../Actions/CourseActions";
 

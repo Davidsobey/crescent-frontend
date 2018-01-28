@@ -12,7 +12,7 @@ import { Field, reduxForm } from "redux-form";
 import Card from "../../../Components/Card";
 import TextField from "../../../Components/TextField";
 import AppBar from "../../../Components/AppBar";
-import Button from "../../../components/Button";
+import Button from "../../../Components/Button";
 import CourseActions from "../../../Actions/CourseActions";
 
 const validate = values => {

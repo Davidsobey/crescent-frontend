@@ -8,10 +8,10 @@ import { TextField } from "redux-form-material-ui";
 import { Field, reduxForm } from "redux-form";
 
 import Card from "../../Components/Card";
-import Button from "../../components/Button";
+import Button from "../../Components/Button";
 import UserActions from "../../Actions/UserActions";
 
-const Logo = require("../../images/LogoText.png");
+const Logo = require("../../Images/LogoText.png");
 
 const validate = values => {
   const errors = {};
