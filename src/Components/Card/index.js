@@ -10,19 +10,23 @@ class Card extends React.Component {
   render() {
     const { children } = this.props;
 
+    const style = {
+      width: this.props.width
+    };
+
     return (
-      <MuiCard color="secondary" raised className="card">
-        <div className="row center">
+      <MuiCard color="secondary" raised className={`card`} style={style}>
+        <div>
           {this.props.title.includes("Login") ? (
             <div className="row center">
               <LockOutline className="pushdown" />
               <CardHeader title="Lunar Testing Login" />
+              <Divider />
             </div>
           ) : (
             <CardHeader title={this.props.title} />
           )}
         </div>
-        <Divider />
         {children}
       </MuiCard>
     );

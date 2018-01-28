@@ -8,7 +8,7 @@ import { TextField } from "redux-form-material-ui";
 import { Field, reduxForm } from "redux-form";
 
 import Card from "../../Components/Card";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 import UserActions from "../../Actions/UserActions";
 
 const Logo = require("../../images/LogoText.png");
@@ -26,9 +26,6 @@ const validate = values => {
   return errors;
 };
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   submit = values => {
     this.props.dispatch(UserActions.login(values.email, values.password));
   };
@@ -40,7 +37,7 @@ class Login extends React.Component {
       <div className="content">
         <form name="form" onSubmit={this.props.handleSubmit(this.submit)}>
           <img src={Logo} className="center-img" width="200px" alt="Crescent" />
-          <Card width="500" title="Lunar Testing Login">
+          <Card width="500px" title="Lunar Testing Login">
             <br />
             <br />
             <FormControl fullWidth>

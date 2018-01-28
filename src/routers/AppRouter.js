@@ -1,13 +1,13 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { createBrowserHistory } from "history";
 
 import Login from "../Containers/Login";
+import Home from "../Containers/Home";
+import CourseCreate from "../Containers/Course/CourseCreate";
+import CourseView from "../Containers/Course/CourseView";
+import history from "../Helpers/History";
 import { AlertActions } from "../Actions/AlertActions";
-import { debug } from "util";
-
-const history = createBrowserHistory();
 
 class AppRouter extends React.Component {
   constructor(props) {
@@ -22,12 +22,15 @@ class AppRouter extends React.Component {
   render() {
     const { AlertReducer } = this.props;
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           {alert.message && <div>test</div>}
           <Route path="/" component={Login} exact={true} />
+          <Route path="/home" component={Home} exact={true} />
+          <Route path="/course/create" component={CourseCreate} exact={true} />
+          <Route path="/course/list" component={CourseView} exact={true} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

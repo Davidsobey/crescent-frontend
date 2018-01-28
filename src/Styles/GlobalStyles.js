@@ -35,6 +35,10 @@ injectGlobal`
     margin: auto;
   }
 
+  .login{
+    max-width: 500px;
+  }
+
   .content{
     width:100%;
   }
@@ -49,11 +53,7 @@ injectGlobal`
   }
 
   .drawerLogo{
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    margin: auto;
-    max-width: 180px;
+    width: 100%
   }
 
   .center{
@@ -71,7 +71,6 @@ injectGlobal`
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
-    max-width: 31rem;
     border-radius: 4px !important;
     margin: auto;
   }

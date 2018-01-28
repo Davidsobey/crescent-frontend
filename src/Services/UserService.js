@@ -1,4 +1,5 @@
 import AuthHeader from "../Helpers/AuthHeader";
+
 const UserService = {
   login,
   logout,
@@ -10,18 +11,17 @@ const UserService = {
 };
 
 function login(username, password) {
-  debugger;
   const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type":
-        "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
-    },
-    body: JSON.stringify({ username, password })
+    method: "post",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify({
+      email: username,
+      password: password
+    })
   };
 
   return fetch(
-    "https://crescenttesting.azurewebsites.net/api/Auth",
+    "https://crescenttesting.azurewebsites.net/api/Auth?",
     requestOptions
   )
     .then(response => {
@@ -103,4 +103,21 @@ function handleResponse(response) {
   return response.json();
 }
 
+function handleResponse(response) {
+  if (!response.ok) { 
+      return Promise.reject(response.statusText);
+  }
+
+  return response.json();
+}
+
 export default UserService;
+
+// const requestOptions = {
+//   method: "GET"
+// };
+
+// return fetch(
+//   "http://crescenttesting.azurewebsites.net/api/Clients",
+//   requestOptions
+// ).then(handleResponse);
