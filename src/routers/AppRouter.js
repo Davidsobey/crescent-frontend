@@ -9,7 +9,7 @@ import CourseView from "../Containers/Course/CourseView";
 import history from "../Helpers/History";
 import { AlertActions } from "../Actions/AlertActions";
 
-class ARouter extends React.Component {
+class AppRouter extends React.Component {
   constructor(props) {
     super(props);
     const { dispatch } = this.props;
@@ -42,5 +42,4 @@ function mapStateToProps(state) {
   };
 }
 
-const AppRouter = connect(mapStateToProps)(ARouter);
-export default AppRouter;
+export default connect(mapStateToProps)(AppRouter);
