@@ -12,7 +12,6 @@ import Button from "../../Components/Button";
 import UserActions from "../../Actions/UserActions";
 
 import Logo from "../../Images/LogoText.png";
-
 const validate = values => {
   const errors = {};
   if (!values.password) {
