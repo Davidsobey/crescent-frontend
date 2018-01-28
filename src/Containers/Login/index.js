@@ -11,7 +11,8 @@ import Card from "../../Components/Card";
 import Button from "../../Components/Button";
 import UserActions from "../../Actions/UserActions";
 
-import Logo from "../../Images/LogoText.png";
+import Logo from "../../Images/logoText.png";
+
 const validate = values => {
   const errors = {};
   if (!values.password) {
