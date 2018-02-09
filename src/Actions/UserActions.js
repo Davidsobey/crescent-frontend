@@ -1,31 +1,9 @@
-import UserConstants from "../Constants/UserConstants";
-import UserService from "../Services/UserService";
-import { AlertActions } from "./AlertActions";
-import history from "../Helpers/History";
-
-const UserActions = {
-  login,
-  logout,
-  register,
-  getAll,
-  delete: _delete
-};
+import UserConstants from '../Constants/UserConstants';
+import UserService from '../Services/UserService';
+import AlertActions from './AlertActions';
+import history from '../Helpers/History';
 
 function login(username, password) {
-  return dispatch => {
-    dispatch(request({ username }));
-    UserService.login(username, password).then(
-      user => {
-        dispatch(success(user));
-        history.push("/home");
-      },
-      error => {
-        dispatch(failure(error));
-        dispatch(AlertActions.error(error));
-      }
-    );
-  };
-
   function request(user) {
     return { type: UserConstants.LOGIN_REQUEST, user };
   }
@@ -35,6 +13,20 @@ function login(username, password) {
   function failure(error) {
     return { type: UserConstants.LOGIN_FAILURE, error };
   }
+
+  return (dispatch) => {
+    dispatch(request({ username }));
+    UserService.login(username, password).then(
+      (user) => {
+        dispatch(success(user));
+        history.push('/home');
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
 }
 
 function logout() {
@@ -42,44 +34,39 @@ function logout() {
   return { type: UserConstants.LOGOUT };
 }
 
+function close() {
+  return { type: UserConstants.LOGIN_CLOSE };
+}
+
 function register(user) {
-  return dispatch => {
-    dispatch(request(user));
-
-    UserService.register(user).then(
-      user => {
-        dispatch(success());
-        history.push("/login");
-        dispatch(AlertActions.success("Registration successful"));
-      },
-      error => {
-        dispatch(failure(error));
-        dispatch(AlertActions.error(error));
-      }
-    );
-  };
-
-  function request(user) {
+  function request() {
     return { type: UserConstants.REGISTER_REQUEST, user };
   }
-  function success(user) {
+  function success() {
     return { type: UserConstants.REGISTER_SUCCESS, user };
   }
   function failure(error) {
     return { type: UserConstants.REGISTER_FAILURE, error };
   }
+
+  return (dispatch) => {
+    dispatch(request(user));
+
+    UserService.register(user).then(
+      () => {
+        dispatch(success());
+        history.push('/login');
+        dispatch(AlertActions.success('Registration successful'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
 }
 
 function getAll() {
-  return dispatch => {
-    dispatch(request());
-
-    UserService.getAll().then(
-      users => dispatch(success(users)),
-      error => dispatch(failure(error))
-    );
-  };
-
   function request() {
     return { type: UserConstants.GETALL_REQUEST };
   }
@@ -89,32 +76,49 @@ function getAll() {
   function failure(error) {
     return { type: UserConstants.GETALL_FAILURE, error };
   }
+  return (dispatch) => {
+    dispatch(request());
+
+    UserService.getAll().then(
+      users => dispatch(success(users)),
+      error => dispatch(failure(error)),
+    );
+  };
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  return dispatch => {
+function deleteUser(id) {
+  function request() {
+    return { type: UserConstants.DELETE_REQUEST, id };
+  }
+  function success() {
+    return { type: UserConstants.DELETE_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: UserConstants.DELETE_FAILURE, id, error };
+  }
+
+  return (dispatch) => {
     dispatch(request(id));
 
     UserService.delete(id).then(
-      user => {
+      () => {
         dispatch(success(id));
       },
-      error => {
+      (error) => {
         dispatch(failure(id, error));
-      }
+      },
     );
   };
-
-  function request(id) {
-    return { type: UserConstants.DELETE_REQUEST, id };
-  }
-  function success(id) {
-    return { type: UserConstants.DELETE_SUCCESS, id };
-  }
-  function failure(id, error) {
-    return { type: UserConstants.DELETE_FAILURE, id, error };
-  }
 }
+
+const UserActions = {
+  login,
+  logout,
+  close,
+  register,
+  getAll,
+  delete: deleteUser,
+};
 
 export default UserActions;

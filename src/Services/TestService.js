@@ -7,21 +7,14 @@ function handleResponse(response) {
   return response.json();
 }
 
-function create(courseName, courseDescription) {
+function create(moduleID, testName, totalMarks) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    // body: JSON.stringify({
-    //   name: courseName,
-    //   description: courseDescription,
-    //   category: 1,
-    //   grade: 0,
-    //   enrolledUserIds: null
-    // })
   };
 
   return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Courses?Name=${courseName}&Description=${courseDescription}&CategoryId=1&Grade=0`,
+    `https://crescenttesting.azurewebsites.net/api/Tests?Name=${testName}&ModuleID=${moduleID}&TotalMarks=${totalMarks}`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -33,13 +26,13 @@ function getAll() {
   };
 
   return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Courses',
+    'https://crescenttesting.azurewebsites.net/api/Tests',
     requestOptions,
   ).then(handleResponse);
 }
 
-const CourseService = {
+const ModuleServices = {
   create,
   getAll,
 };
-export default CourseService;
+export default ModuleServices;

@@ -4,83 +4,76 @@
  *
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import { compose } from "redux";
-import { Field, reduxForm } from "redux-form";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { Field, reduxForm } from 'redux-form';
 
-import Card from "../../../Components/Card";
-import TextField from "../../../Components/TextField";
-import AppBar from "../../../Components/AppBar";
-import Button from "../../../Components/Button";
-import CourseActions from "../../../Actions/CourseActions";
+import Card from '../../../Components/Card';
+import TextField from '../../../Components/TextField';
+import Button from '../../../Components/Button';
+import CourseActions from '../../../Actions/CourseActions';
 
-const validate = values => {
+const validate = () => {
   const errors = {};
-
-  //   if (!values.companyName) {
-  //     errors.companyName = 'Required';
-  //   }
 
   return errors;
 };
 
 /* eslint-disable react/prefer-stateless-function */
 class CourseCreate extends React.Component {
-  submit = values => {
-    this.props.dispatch(
-      CourseActions.create(values.courseName, values.courseDescription)
-    );
+  submit = (values) => {
+    this.props.dispatch(CourseActions.create(values.courseName, values.courseDescription));
   };
 
   render() {
     return (
-      <AppBar>
-        <Card width="600px" title="Create New Course">
-          <form
-            onSubmit={this.props.handleSubmit(this.submit)}
-            noValidate
-            autoComplete="off"
-          >
+      <Card width="600px" title="Create New Course">
+        <form
+          onSubmit={this.props.handleSubmit(this.submit)}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
             <div>
-              <div>
-                <Field
-                  name="courseName"
-                  label={"Course Name"}
-                  margin="normal"
-                  component={TextField}
-                />
-              </div>
-              <div>
-                <Field
-                  name="courseDescription"
-                  label="Course Description"
-                  margin="normal"
-                  component={TextField}
-                />
-              </div>
+              <Field
+                name="courseName"
+                label="Course Name"
+                margin="normal"
+                component={TextField}
+              />
             </div>
-            <div className="alignRight">
-              <Button raised color="primary" type="submit">
-                Create Course
-              </Button>
+            <div>
+              <Field
+                name="courseDescription"
+                label="Course Description"
+                margin="normal"
+                component={TextField}
+              />
             </div>
-          </form>
-        </Card>
-      </AppBar>
+          </div>
+          <div className="alignRight">
+            <Button raised color="primary" type="submit">
+              Create Course
+            </Button>
+          </div>
+        </form>
+      </Card>
     );
   }
 }
 
+CourseCreate.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
+
 const withForm = reduxForm(
   {
-    form: "courseCreate",
-    validate
+    form: 'courseCreate',
+    validate,
   },
-  CourseCreate
+  CourseCreate,
 );
 
-export default compose(
-  // eslint-disable-line no-class-assign
-  withForm
-)(CourseCreate);
+export default compose(withForm)(CourseCreate);

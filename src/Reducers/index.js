@@ -1,16 +1,20 @@
-import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
-import UserReducer from "./UserReducer";
-import AuthenticationReducer from "./LoginReducer";
-import AlertReducer from "./AlertReducer";
-import CourseReducer from "./CourseReducer";
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import UserReducer from './UserReducer';
+import AuthenticationReducer from './LoginReducer';
+import AlertReducer from './AlertReducer';
+import CourseReducer from './CourseReducer';
+import ModuleReducer from './ModuleReducer';
+import TestReducer from './TestReducer';
 
 const reducers = {
   UserReducer,
   AlertReducer,
   AuthenticationReducer,
   CourseReducer,
-  form: formReducer
+  ModuleReducer,
+  TestReducer,
+  form: formReducer,
 };
 
 const rootReducer = combineReducers(reducers);

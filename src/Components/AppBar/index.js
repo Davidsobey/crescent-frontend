@@ -1,132 +1,198 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "material-ui/styles";
-import classNames from "classnames";
-import Drawer from "material-ui/Drawer";
-import MuiAppBar from "material-ui/AppBar";
-import Toolbar from "material-ui/Toolbar";
-import List from "material-ui/List";
-import Typography from "material-ui/Typography";
-import Divider from "material-ui/Divider";
-import { IconButton } from "material-ui";
-import MenuIcon from "material-ui-icons/Menu";
-import HomeIcon from "material-ui-icons/Home";
-import AccountCircle from "material-ui-icons/AccountCircle";
-import { MenuList, MenuItem } from "material-ui/Menu";
-import Paper from "material-ui/Paper";
-import { ListItemIcon, ListItemText } from "material-ui/List";
-import CoursesIcon from "material-ui-icons/ChromeReaderMode";
-import AssignmentIcon from "material-ui-icons/Assignment";
-import AttachIcon from "material-ui-icons/Attachment";
-import Logout from "material-ui-icons/PowerSettingsNew";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import { Link } from 'react-router-dom';
 
-import ExpandableMenuItem from '../../Components/ExpandableMenuItem'
-import Logo from "../../Images/LogoBackground.png";
-import { amber500 } from "material-ui/colors";
-import { amber100 } from "material-ui/colors";
+import classNames from 'classnames';
+import Drawer from 'material-ui/Drawer';
+import MuiAppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
+import { MenuList, MenuItem } from 'material-ui/Menu';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
+
+import { IconButton } from 'material-ui';
+import MenuIcon from 'material-ui-icons/Menu';
+import HomeIcon from 'material-ui-icons/Home';
+import AddIcon from 'material-ui-icons/Add';
+import ListIcon from 'material-ui-icons/ViewList';
+import CourseIcon from 'material-ui-icons/ChromeReaderMode';
+import ModuleIcon from 'material-ui-icons/Assignment';
+import AttachIcon from 'material-ui-icons/Attachment';
+import Logout from 'material-ui-icons/PowerSettingsNew';
+import TestIcon from 'material-ui-icons/Create';
+
+import ExpandableMenu from '../../Components/ExpandableMenu';
+import Logo from '../../Images/LogoBackground.png';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    marginTop: "0px",
+    width: '100%',
+    height: '100%',
+    marginTop: '0px',
     zIndex: 1,
-    overflow: "hidden"
+    overflow: 'hidden',
   },
   appFrame: {
-    position: "relative",
-    display: "flex",
-    width: "100%",
-    height: "100%"
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
   },
   appBar: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1301,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: theme.palette.secondary[500]
+    backgroundColor: theme.palette.secondary[500],
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 36
+    marginRight: 36,
   },
   hide: {
-    display: "none"
+    display: 'none',
   },
   drawerPaper: {
-    position: "relative",
-    height: "100%",
+    position: 'relative',
+    height: '100%',
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
     backgroundColor: theme.palette.primary[500],
-    overflowX: "hidden"
+    overflowX: 'hidden',
   },
   drawerPaperClose: {
     width: 60,
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   drawerInner: {
     // Make the items inside not wrap when transitioning:
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "white",
-    height: "64px",
-    fontSize: "25px",
-    backgroundColor: "white"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    height: '64px',
+    fontSize: '25px',
+    backgroundColor: 'white',
   },
   content: {
-    width: "100%",
+    width: '100%',
     flexGrow: 1,
-    backgroundColor: "#e2e2e2",
+    backgroundColor: '#e2e2e2',
     padding: 24,
-    marginTop: 56
+    marginTop: 56,
   },
   iconRight: {
-    justifyContent: "space-between"
+    justifyContent: 'space-between',
   },
   flex: {
-    flex: 1
+    flex: 1,
   },
   title: {
-    paddingLeft: "15px",
-    paddingTop: "5px",
-    color: "white"
+    paddingLeft: '15px',
+    paddingTop: '5px',
+    color: 'white',
   },
   accentColor: {
-    color: theme.palette.accent[500],
-    margin: "auto",
-    width: "85px",
-    borderBottom: "1px solid"
-  }
+    color: 'white',
+    fontSize: '14px',
+  },
 });
 
+const CourseDetails = {
+  listName: 'Course',
+  listIcon: <CourseIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Course',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Course List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+    {
+      key: 2,
+      subItemName: 'Course Material',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'material',
+    },
+  ],
+};
+
+const ModuleDetails = {
+  listName: 'Module',
+  listIcon: <ModuleIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Module',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Module List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
+const TestDetails = {
+  listName: 'Test',
+  listIcon: <TestIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Test',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Test List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
 class AppBar extends React.Component {
-  state = {
-    open: true
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: true,
+    };
+    this.handleDrawer = this.handleDrawer.bind(this);
+  }
 
   handleDrawer = () => {
     if (!this.state.open) {
@@ -137,7 +203,7 @@ class AppBar extends React.Component {
   };
 
   logOut = () => {
-    console.log("Logout");
+    // console.log('Logout');
   };
 
   render() {
@@ -148,7 +214,7 @@ class AppBar extends React.Component {
           <MuiAppBar
             className={classNames(
               classes.appBar,
-              this.state.open && classes.appBarShift
+              this.state.open && classes.appBarShift,
             )}
           >
             <Toolbar
@@ -158,17 +224,13 @@ class AppBar extends React.Component {
               <IconButton
                 aria-label="open drawer"
                 onClick={this.handleDrawer}
-                className={classNames(
-                  classes.menuButton,
-                  this.state.open,
-                  classes.secondary
-                )}
+                className={classNames(classes.menuButton, this.state.open)}
               >
                 <MenuIcon />
               </IconButton>
               <div>
                 <IconButton className="alignRight">
-                  <Logout className={classes.secondary} onClick={this.logOut} />
+                  <Logout onClick={this.logOut} />
                 </IconButton>
               </div>
             </Toolbar>
@@ -178,8 +240,8 @@ class AppBar extends React.Component {
             classes={{
               paper: classNames(
                 classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose
-              )
+                !this.state.open && classes.drawerPaperClose,
+              ),
             }}
             open={this.state.open}
           >
@@ -192,41 +254,40 @@ class AppBar extends React.Component {
                     alt="Crescent"
                     className="drawerLogo"
                   />
-                  <Typography
-                    className={classes.title}
-                    type="body2"
-                    gutterBottom
-                  />
                 </div>
               </Link>
               <Divider />
               <MenuList>
-                <Typography className={classes.accentColor} type="subheading">
-                  Admin View
-                </Typography>
+                {this.state.open && (
+                  <Typography className="user-type" type="subheading">
+                    Admin View
+                  </Typography>
+                )}
                 <Link to="/home">
                   <MenuItem>
                     <ListItemIcon>
-                      <HomeIcon className={classes.secondary} />
+                      <HomeIcon className={classes.accentColor} />
                     </ListItemIcon>
-                    <ListItemText inset primary="Home" />
+                    <ListItemText
+                      inset
+                      className={classes.accentColor}
+                      disableTypography
+                      primary="Home"
+                    />
                   </MenuItem>
                 </Link>
-                <ExpandableMenuItem target="Course" option1="Create" option2="List"/>
-                <Link to="/assesments/view">
-                  <MenuItem>
-                    <ListItemIcon>
-                      <AssignmentIcon className={classes.secondary} />
-                    </ListItemIcon>
-                    <ListItemText inset primary="Assesments" />
-                  </MenuItem>
-                </Link>
-                <MenuItem>
-                  <ListItemIcon>
-                    <AttachIcon className={classes.secondary} />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Course Material" />
-                </MenuItem>
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={CourseDetails}
+                />
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ModuleDetails}
+                />
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={TestDetails}
+                />
               </MenuList>
             </div>
           </Drawer>
@@ -239,7 +300,8 @@ class AppBar extends React.Component {
 
 AppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(AppBar);

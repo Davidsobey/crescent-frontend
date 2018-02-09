@@ -1,54 +1,55 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "material-ui/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 import Table, {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
-} from "material-ui/Table";
-import Paper from "material-ui/Paper";
+  TableRow,
+} from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    width: '100%',
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: 'auto',
   },
   table: {
-    minWidth: 700
-  }
+    minWidth: 700,
+  },
 });
 
 function loadRows(obj, arr) {
-  for (const prop in obj) {
-    if (prop !== "id") {
-      const value = obj[prop];
-      arr.push(value);
+  Object.keys(obj).forEach((prop) => {
+    if (obj[prop] && !Array.isArray(obj[prop])) {
+      arr.push(obj[prop]);
     }
-  }
+  });
   return arr;
 }
 
 function BasicTable(props) {
   const { classes, data, header } = props;
+  let count = 0;
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            {header.map(head => {
-              return <TableCell key={head}>{head}</TableCell>;
-            })}
+            {header.map(head => <TableCell key={head}>{head}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(obj => {
+          {data.map((obj) => {
             const arr = [];
             loadRows(obj, arr);
             return (
               <TableRow key={obj.id}>
-                {arr.map(value => <TableCell key={value}>{value}</TableCell>)}
+                {arr.map((value) => {
+                  count += 1;
+                  return <TableCell key={count}>{value}</TableCell>;
+                })}
               </TableRow>
             );
           })}
@@ -59,7 +60,9 @@ function BasicTable(props) {
 }
 
 BasicTable.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
+  header: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(BasicTable);

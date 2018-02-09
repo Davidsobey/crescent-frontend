@@ -1,14 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import AppBar from "../../Components/AppBar";
-
-class HomeComponent extends React.Component {
-  render = () => (
-    <AppBar>
-      <div>
-      </div>
-    </AppBar>
-  );
+function HomeComponent() {
+  return <div />;
 }
 
 export default HomeComponent;

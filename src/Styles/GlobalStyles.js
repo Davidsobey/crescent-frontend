@@ -1,4 +1,4 @@
-import { injectGlobal } from "styled-components";
+import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
@@ -25,6 +25,21 @@ injectGlobal`
     text-decoration: none;
   }
 
+  .app{
+    min-height: 100%;
+    min-width: 100%;
+  }
+
+  .user-type{
+    display: flex !important;
+    justify-content: center !important;
+    padding-right: 22px !important;
+    border: 1px solid white !important;
+    border-radius: 6px !important;
+    color: white !important;
+    font-size: 14px !important;
+  }
+
   .logo{
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
@@ -42,7 +57,9 @@ injectGlobal`
   .content{
     width:100%;
   }
-
+  .width200{
+    width: 200px;
+  }
 
   body.fontLoaded {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -64,7 +81,7 @@ injectGlobal`
     display: flex;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1.25rem;
+    padding: 3.25rem;
     margin: auto;
   }
   .card {
