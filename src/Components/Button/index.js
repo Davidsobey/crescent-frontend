@@ -11,24 +11,24 @@ function ButtonWithTheme(props) {
     && {
       ${() =>
     props.color === 'primary' &&
-        props.raised &&
+        props.variant === 'raised' &&
         `background-color: ${theme.palette.secondary[500]};`};
       ${() =>
     props.color === 'secondary' &&
-        props.raised &&
+        props.variant === 'raised' &&
         `background-color: ${theme.palette.accent[500]};
         color: ${theme.palette.primary[500]}; `};
       ${() =>
-    props.color === 'secondary' && !props.raised && `color: ${theme.palette.accent[500]}; `};
+    props.color === 'secondary' && !props.variant === 'raised' && `color: ${theme.palette.accent[500]}; `};
     }
     &&:hover {
       ${() =>
     props.color === 'primary' &&
-        props.raised &&
+    props.variant === 'raised' &&
         `background-color: ${theme.palette.secondary[700]};`};
       ${() =>
     props.color === 'secondary' &&
-        props.raised &&
+    props.variant === 'raised' &&
         `background-color: ${theme.palette.accent[700]};`};
     }
   `;
@@ -39,7 +39,7 @@ function ButtonWithTheme(props) {
 ButtonWithTheme.propTypes = {
   theme: PropTypes.object.isRequired,
   color: PropTypes.string,
-  raised: PropTypes.any,
+  variant: PropTypes.string,
 };
 
 export default withTheme()(ButtonWithTheme);

@@ -5,6 +5,8 @@ const MODULE_CREATE = '/module/create';
 const MODULE_VIEW = '/module/list';
 const TEST_CREATE = '/Test/create';
 const TEST_VIEW = '/Test/list';
+const USER_CREATE = '/User/create';
+const USER_VIEW = '/User/list';
 
 export default {
   HOME,
@@ -14,4 +16,6 @@ export default {
   MODULE_VIEW,
   TEST_CREATE,
   TEST_VIEW,
+  USER_CREATE,
+  USER_VIEW,
 };

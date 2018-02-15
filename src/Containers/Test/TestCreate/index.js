@@ -76,7 +76,7 @@ class TestCreate extends Component {
             </div>
           </div>
           <div className="alignRight">
-            <Button raised color="primary" type="submit">
+            <Button variant="raised" color="primary" type="submit">
               Create Course
             </Button>
           </div>

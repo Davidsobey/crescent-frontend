@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * UserView
- * 
+ *
  */
 
 import React from 'react';
@@ -17,13 +17,41 @@ import UserActions from '../../../Actions/UserActions';
 
 const header = ['ID', 'Name', 'Email'];
 
-class CourseView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.dispatch(UserActions.getAll()); 
-    }
-    render() {
-        const
-        
-    }
+class UserView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.dispatch(UserActions.getAll());
+  }
+  render() {
+    const { users } = this.props;
+    return (
+      <Card width="800px" title="User List">
+        {Array.isArray(users) ? (
+          <Table header={header} data={users} />
+              ) : (
+                <div className="center">
+                  <CircularProgress color="secondary" />
+                </div>
+              )}
+      </Card>
+    );
+  }
 }
+
+const mapStateToProps = state => ({
+  users: state.UserReducer.users,
+});
+
+const withForm = reduxForm(
+  {
+    form: 'courseView',
+  },
+  UserView,
+);
+
+UserView.propTypes = {
+  users: PropTypes.array,
+  dispatch: PropTypes.func,
+};
+
+export default compose(connect(mapStateToProps), withForm)(UserView);

@@ -19,7 +19,7 @@ import ModuleList from '../Containers/Module/ModuleView';
 import TestCreate from '../Containers/Test/TestCreate';
 import TestList from '../Containers/Test/TestView';
 import UserCreate from '../Containers/User/UserCreate';
-import UserView from '../Containers/User/UserView'; 
+import UserView from '../Containers/User/UserView';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -69,8 +69,8 @@ class AppRouters extends React.Component {
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
                 <Route path={Routes.TEST_CREATE} component={TestCreate} exact />
                 <Route path={Routes.TEST_VIEW} component={TestList} exact />
-                <Route path={Routes.USER_CREATE} component={UserCreate} exact /> 
-                <Route path={Routes.USER_VIEW} component={UserView} exact /> 
+                <Route path={Routes.USER_CREATE} component={UserCreate} exact />
+                <Route path={Routes.USER_VIEW} component={UserView} exact />
               </Switch>
             </AppBar>
           </Switch>

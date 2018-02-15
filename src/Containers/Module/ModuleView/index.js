@@ -18,7 +18,7 @@ import ModuleActions from '../../../Actions/ModuleActions';
 
 const header = ['ID', 'Name', 'Description', 'Category'];
 
-class CourseView extends React.Component {
+class ModuleView extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(CourseActions.getAll());
@@ -77,13 +77,13 @@ const withForm = reduxForm(
   {
     form: 'courseView',
   },
-  CourseView,
+  ModuleView,
 );
 
-CourseView.propTypes = {
+ModuleView.propTypes = {
   courses: PropTypes.array,
   dispatch: PropTypes.func,
   modules: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps), withForm)(CourseView);
+export default compose(connect(mapStateToProps), withForm)(ModuleView);

@@ -66,16 +66,11 @@ function getById(id) {
   return fetch(`/users/${id}`, requestOptions).then(handleResponse);
 }
 
-function register(userName, userEmail, clientID, roleID) {
+function register(user) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: userName,
-      email: userEmail,
-      clientId: clientID,
-      roleId: roleID,
-    }),
+    body: JSON.stringify(user),
   };
 
   return fetch('https://crescenttesting.azurewebsites.net/api/Users', requestOptions)

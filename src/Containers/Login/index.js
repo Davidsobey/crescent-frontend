@@ -54,7 +54,7 @@ class Login extends React.Component {
             {this.props.loading ? (
               <CircularProgress color="secondary" />
             ) : (
-              <Button raised color="primary" type="submit">
+              <Button variant="raised" color="primary" type="submit">
                 Login
               </Button>
             )}

@@ -22,7 +22,8 @@ const validate = () => {
 
 class UserCreate extends React.Component {
     submit = (values) => {
-      this.props.dispatch(UserActions.create(values.userName, values.userEmail));
+      const user = Object.assign({}, values);
+      this.props.dispatch(UserActions.register(user));
     };
 
     render() {
@@ -36,7 +37,7 @@ class UserCreate extends React.Component {
             <div>
               <div>
                 <Field
-                  name="userEmail"
+                  name="email"
                   label="Email"
                   margin="normal"
                   component={TextField}
@@ -44,7 +45,7 @@ class UserCreate extends React.Component {
               </div>
               <div>
                 <Field
-                  name="userName"
+                  name="name"
                   label="Name"
                   margin="normal"
                   component={TextField}
@@ -52,7 +53,7 @@ class UserCreate extends React.Component {
               </div>
               <div>
                 <Field
-                  name="clientID"
+                  name="clientId"
                   label="Client ID"
                   margin="normal"
                   component={TextField}
@@ -60,7 +61,7 @@ class UserCreate extends React.Component {
               </div>
               <div>
                 <Field
-                  name="roleID"
+                  name="roleId"
                   label="Role ID"
                   margin="normal"
                   component={TextField}

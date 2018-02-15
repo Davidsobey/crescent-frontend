@@ -38,24 +38,25 @@ function close() {
   return { type: UserConstants.LOGIN_CLOSE };
 }
 
-function register(userName, userEmail, clientID, roleID) {
+function register(user) {
   function request() {
-    return { type: UserConstants.REGISTER_REQUEST, userEmail };
+    return { type: UserConstants.REGISTER_REQUEST, user };
   }
   function success() {
-    return { type: UserConstants.REGISTER_SUCCESS, userEmail };
+    return { type: UserConstants.REGISTER_SUCCESS, user };
   }
   function failure(error) {
     return { type: UserConstants.REGISTER_FAILURE, error };
   }
 
   return (dispatch) => {
-    dispatch(request({ userEmail }));
-    UserService.register(userName, userEmail, clientID, roleID).then(
+    dispatch(request({ user }));
+
+    UserService.register(user).then(
       () => {
-        dispatch(success(userEmail));
+        dispatch(success(user));
         history.push('/user/list');
-        dispatch(AlertActions.success(`User ${userEmail} created successfully.`));
+        dispatch(AlertActions.success(`User ${user} created successfully.`));
       },
       (error) => {
         dispatch(failure(error));
