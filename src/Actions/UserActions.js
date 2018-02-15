@@ -38,25 +38,24 @@ function close() {
   return { type: UserConstants.LOGIN_CLOSE };
 }
 
-function register(user) {
+function register(userName, userEmail, clientID, roleID) {
   function request() {
-    return { type: UserConstants.REGISTER_REQUEST, user };
+    return { type: UserConstants.REGISTER_REQUEST, userEmail };
   }
   function success() {
-    return { type: UserConstants.REGISTER_SUCCESS, user };
+    return { type: UserConstants.REGISTER_SUCCESS, userEmail };
   }
   function failure(error) {
     return { type: UserConstants.REGISTER_FAILURE, error };
   }
 
   return (dispatch) => {
-    dispatch(request(user));
-
-    UserService.register(user).then(
+    dispatch(request({ userEmail }));
+    UserService.register(userName, userEmail, clientID, roleID).then(
       () => {
-        dispatch(success());
-        history.push('/login');
-        dispatch(AlertActions.success('Registration successful'));
+        dispatch(success(userEmail));
+        history.push('/user/list');
+        dispatch(AlertActions.success(`User ${userEmail} created successfully.`));
       },
       (error) => {
         dispatch(failure(error));
@@ -111,6 +110,9 @@ function deleteUser(id) {
     );
   };
 }
+
+// function enrolUser(id) {
+// }
 
 const UserActions = {
   login,

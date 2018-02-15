@@ -11,13 +11,6 @@ function create(courseName, courseDescription) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    // body: JSON.stringify({
-    //   name: courseName,
-    //   description: courseDescription,
-    //   category: 1,
-    //   grade: 0,
-    //   enrolledUserIds: null
-    // })
   };
 
   return fetch(

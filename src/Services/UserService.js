@@ -53,7 +53,8 @@ function getAll() {
     headers: AuthHeader(),
   };
 
-  return fetch('/users', requestOptions).then(handleResponse);
+  return fetch('https://crescenttesting.azurewebsites.net/api/Users', requestOptions)
+    .then(handleResponse);
 }
 
 function getById(id) {
@@ -65,14 +66,20 @@ function getById(id) {
   return fetch(`/users/${id}`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
+function register(userName, userEmail, clientID, roleID) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
+    body: JSON.stringify({
+      name: userName,
+      email: userEmail,
+      clientId: clientID,
+      roleId: roleID,
+    }),
   };
 
-  return fetch('/users/register', requestOptions).then(handleResponse);
+  return fetch('https://crescenttesting.azurewebsites.net/api/Users', requestOptions)
+    .then(handleResponse);
 }
 
 function update(user) {

@@ -11,7 +11,6 @@ import { CircularProgress } from 'material-ui/Progress';
 import Button from '../../Components/Button';
 import UserActions from '../../Actions/UserActions';
 import Card from '../../Components/Card';
-
 import Image from '../../Images/Logo.png';
 
 const validate = (values) => {
