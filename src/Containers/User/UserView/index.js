@@ -15,7 +15,7 @@ import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import UserActions from '../../../Actions/UserActions';
 
-const header = ['ID', 'Name', 'Email'];
+const header = ['ID', 'Name', 'Email', 'ClientID', 'RoleID'];
 
 class UserView extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 
 const withForm = reduxForm(
   {
-    form: 'courseView',
+    form: 'userView',
   },
   UserView,
 );

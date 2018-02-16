@@ -6,6 +6,7 @@ import AlertReducer from './AlertReducer';
 import CourseReducer from './CourseReducer';
 import ModuleReducer from './ModuleReducer';
 import TestReducer from './TestReducer';
+import QuestionReducer from './QuestionReducer';
 
 const reducers = {
   UserReducer,
@@ -14,6 +15,7 @@ const reducers = {
   CourseReducer,
   ModuleReducer,
   TestReducer,
+  QuestionReducer,
   form: formReducer,
 };
 

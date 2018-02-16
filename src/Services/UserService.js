@@ -108,12 +108,3 @@ const UserService = {
 };
 
 export default UserService;
-
-// const requestOptions = {
-//   method: "GET"
-// };
-
-// return fetch(
-//   "http://crescenttesting.azurewebsites.net/api/Clients",
-//   requestOptions
-// ).then(handleResponse);
