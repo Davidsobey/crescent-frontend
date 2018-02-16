@@ -40,8 +40,8 @@ class QuestionView extends React.Component {
         const TestMatch = Tests.filter(Test => Test.id === Question.TestId);
         const newQuestion = {
           id: Question.id,
-          description: Question.description,
-          name: Question.title,
+          title: Question.title,
+          allocatedMarks: Question.allocatedMarks,
           test: TestMatch[0].name,
         };
         formattedArray.push(newQuestion);
@@ -75,7 +75,7 @@ const mapStateToProps = state => ({
 
 const withForm = reduxForm(
   {
-    form: 'TestView',
+    form: 'QuestionView',
   },
   QuestionView,
 );

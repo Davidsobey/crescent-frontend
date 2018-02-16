@@ -23,6 +23,7 @@ import AttachIcon from 'material-ui-icons/Attachment';
 import UserIcon from 'material-ui-icons/Person';
 import Logout from 'material-ui-icons/PowerSettingsNew';
 import TestIcon from 'material-ui-icons/Create';
+import QuestionIcon from 'material-ui-icons/QuestionAnswer';
 
 import ExpandableMenu from '../../Components/ExpandableMenu';
 import Logo from '../../Images/LogoBackground.png';
@@ -186,6 +187,25 @@ const TestDetails = {
   ],
 };
 
+const QuestionDetails = {
+  listName: 'Question',
+  listIcon: <QuestionIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Question',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Question List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
 const UserDetails = {
   listName: 'User',
   listIcon: <UserIcon />,
@@ -307,6 +327,10 @@ class AppBar extends React.Component {
                 <ExpandableMenu
                   color={theme.palette.accent[500]}
                   details={TestDetails}
+                />
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={QuestionDetails}
                 />
                 <ExpandableMenu
                   color={theme.palette.accent[500]}

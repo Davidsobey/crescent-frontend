@@ -6,7 +6,7 @@ const MODULE_VIEW = '/module/list';
 const TEST_CREATE = '/Test/create';
 const TEST_VIEW = '/Test/list';
 const QUESTION_CREATE = '/Question/create';
-const QUESTION_VIEW = '/Question/view'; 
+const QUESTION_VIEW = '/Question/view';
 const USER_CREATE = '/User/create';
 const USER_VIEW = '/User/list';
 

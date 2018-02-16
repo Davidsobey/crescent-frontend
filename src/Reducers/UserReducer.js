@@ -7,9 +7,9 @@ function UserReducer(state = {}, action) {
         loading: true,
       };
     case UserConstants.GETALL_SUCCESS:
-      return {
-        items: action.users,
-      };
+      return Object.assign({}, state, {
+        users: action.users,
+      });
     case UserConstants.GETALL_FAILURE:
       return {
         error: action.error,
