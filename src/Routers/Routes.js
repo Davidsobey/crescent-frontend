@@ -9,6 +9,8 @@ const QUESTION_CREATE = '/Question/create';
 const QUESTION_VIEW = '/Question/view';
 const USER_CREATE = '/User/create';
 const USER_VIEW = '/User/list';
+const CLIENT_CREATE = '/Client/create';
+const CLIENT_VIEW = '/Client/view';
 
 export default {
   HOME,
@@ -22,4 +24,6 @@ export default {
   QUESTION_VIEW,
   USER_CREATE,
   USER_VIEW,
+  CLIENT_CREATE,
+  CLIENT_VIEW,
 };

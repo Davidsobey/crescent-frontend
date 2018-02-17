@@ -20,7 +20,8 @@ import ListIcon from 'material-ui-icons/ViewList';
 import CourseIcon from 'material-ui-icons/ChromeReaderMode';
 import ModuleIcon from 'material-ui-icons/Assignment';
 import AttachIcon from 'material-ui-icons/Attachment';
-import UserIcon from 'material-ui-icons/Person';
+import UserIcon from 'material-ui-icons/People';
+import ClientIcon from 'material-ui-icons/Person';
 import Logout from 'material-ui-icons/PowerSettingsNew';
 import TestIcon from 'material-ui-icons/Create';
 import QuestionIcon from 'material-ui-icons/QuestionAnswer';
@@ -225,6 +226,25 @@ const UserDetails = {
   ],
 };
 
+const ClientDetails = {
+  listName: 'Client',
+  listIcon: <ClientIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Client',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Client List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
 class AppBar extends React.Component {
   constructor(props) {
     super(props);
@@ -335,6 +355,10 @@ class AppBar extends React.Component {
                 <ExpandableMenu
                   color={theme.palette.accent[500]}
                   details={UserDetails}
+                />
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ClientDetails}
                 />
               </MenuList>
             </div>

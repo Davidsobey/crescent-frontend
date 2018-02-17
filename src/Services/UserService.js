@@ -1,6 +1,9 @@
 import AuthHeader from '../Helpers/AuthHeader';
+import CommonConstants from '../Constants/CommonConstants';
 
 const fetch = require('isomorphic-fetch');
+
+const api = CommonConstants.LIVE_API_ADDRESS;
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -60,10 +63,11 @@ function getAll() {
 function getById(id) {
   const requestOptions = {
     method: 'GET',
-    headers: AuthHeader(),
+    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+  return fetch(`${api}/Users/${id}`, requestOptions)
+    .then(handleResponse);
 }
 
 function register(user) {
@@ -73,7 +77,7 @@ function register(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch('https://crescenttesting.azurewebsites.net/api/Users', requestOptions)
+  return fetch(`${api}/Users`, requestOptions)
     .then(handleResponse);
 }
 
@@ -84,7 +88,19 @@ function update(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
+  return fetch(`${api}/Users/${user.id}`, requestOptions)
+    .then(handleResponse);
+}
+
+function enrol(enrolment) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(enrolment),
+  };
+
+  return fetch(`${api}/Users/enrolments`, requestOptions)
+    .then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -94,7 +110,8 @@ function deleteUser(id) {
     headers: AuthHeader(),
   };
 
-  return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+  return fetch(`${api}/Users/${id}`, requestOptions)
+    .then(handleResponse);
 }
 
 const UserService = {
@@ -105,6 +122,7 @@ const UserService = {
   getById,
   update,
   delete: deleteUser,
+  enrol,
 };
 
 export default UserService;

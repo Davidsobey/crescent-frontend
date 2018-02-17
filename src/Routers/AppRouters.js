@@ -22,6 +22,8 @@ import QuestionList from '../Containers/Question/QuestionView';
 import QuestionCreate from '../Containers/Question/QuestionCreate';
 import UserCreate from '../Containers/User/UserCreate';
 import UserView from '../Containers/User/UserView';
+import ClientView from '../Containers/Client/ClientView';
+import ClientCreate from '../Containers/Client/ClientCreate';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -57,11 +59,7 @@ class AppRouters extends React.Component {
               <Switch>
                 {/* Authenticated Routes */}
                 <Route path={Routes.HOME} component={Home} exact />
-                <Route
-                  path={Routes.COURSE_CREATE}
-                  component={CourseCreate}
-                  exact
-                />
+                <Route path={Routes.COURSE_CREATE} component={CourseCreate} exact />
                 <Route path={Routes.COURSE_VIEW} component={CourseList} exact />
                 <Route path={Routes.MODULE_CREATE} component={ModuleCreate} exact />
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
@@ -71,6 +69,8 @@ class AppRouters extends React.Component {
                 <Route path={Routes.QUESTION_VIEW} component={QuestionList} exact />
                 <Route path={Routes.USER_CREATE} component={UserCreate} exact />
                 <Route path={Routes.USER_VIEW} component={UserView} exact />
+                <Route path={Routes.CLIENT_CREATE} component={ClientCreate} exact />
+                <Route path={Routes.CLIENT_VIEW} component={ClientView} exact /> 
               </Switch>
             </AppBar>
           </Switch>
