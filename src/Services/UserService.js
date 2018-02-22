@@ -96,10 +96,10 @@ function enrol(enrolment) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(enrolment),
+    body: JSON.stringify(enrolment.courseID),
   };
 
-  return fetch(`${api}/Users/enrolments`, requestOptions)
+  return fetch(`${api}/Users/${enrolment.userID}/enrolments`, requestOptions)
     .then(handleResponse);
 }
 

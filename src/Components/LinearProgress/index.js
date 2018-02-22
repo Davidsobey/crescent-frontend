@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { LinearProgress } from 'material-ui/Progress';
@@ -10,7 +10,7 @@ const styles = {
   },
 };
 
-class LinearDeterminate extends Component {
+class LinearDeterminate extends React.Component {
   state = {
     completed: 0,
   };

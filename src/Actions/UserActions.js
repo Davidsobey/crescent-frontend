@@ -86,6 +86,34 @@ function getAll() {
   };
 }
 
+function enrol(enrolment) {
+  function request() {
+    return { type: UserConstants.ENROL_REQUEST, enrolment };
+  }
+  function success() {
+    return { type: UserConstants.ENROL_SUCCESS, enrolment };
+  }
+  function failure(error) {
+    return { type: UserConstants.REGISTER_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ enrolment }));
+
+    UserService.enrol(enrolment).then(
+      () => {
+        dispatch(success(enrolment));
+        history.push(`/user/${enrolment.userId}/list`);
+        dispatch(AlertActions.success('User enrolled successfully.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 // prefixed function name with underscore because delete is a reserved word in javascript
 function deleteUser(id) {
   function request() {
@@ -122,6 +150,7 @@ const UserActions = {
   register,
   getAll,
   delete: deleteUser,
+  enrol,
 };
 
 export default UserActions;

@@ -1,5 +1,6 @@
 import ModuleConstants from '../Constants/ModuleConstants';
 import ModuleService from '../Services/ModuleService';
+import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
@@ -54,9 +55,37 @@ function getAll() {
   };
 }
 
+function uploadMaterial(moduleId, file) {
+  function request() {
+    return { type: ModuleConstants.UPLOAD_REQUEST, file };
+  }
+  function success() {
+    return { type: ModuleConstants.UPLOAD_SUCCESS, file };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.UPLOAD_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ file }));
+    MaterialService.upload(moduleId, file).then(
+      () => {
+        dispatch(success(file));
+        history.push('/module/material/list');
+        dispatch(AlertActions.success('Material created successfully.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const ModuleActions = {
   create,
   getAll,
+  uploadMaterial,
 };
 
 export default ModuleActions;

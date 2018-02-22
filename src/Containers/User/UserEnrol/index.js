@@ -8,7 +8,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
-import ClientActions from '../../../Actions/ClientActions';
+import UserActions from '../../../Actions/UserActions';
 import CourseActions from '../../../Actions/CourseActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
@@ -19,20 +19,20 @@ const validate = () => {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-class SubscriptionCreate extends React.Component {
+class EnrolmentCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(CourseActions.getAll());
-    this.props.dispatch(ClientActions.getAll());
+    this.props.dispatch(UserActions.getAll());
   }
   submit = (values) => {
     const subscription = Object.assign({}, values);
-    this.props.dispatch(ClientActions.subscribe(subscription));
+    this.props.dispatch(UserActions.subscribe(subscription));
   };
 
   render() {
     return (
-      <Card width="600px" title="Subscribe To Course">
+      <Card width="600px" title="Enrol A User">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -54,25 +54,25 @@ class SubscriptionCreate extends React.Component {
                     Loading Courses
                 </div>
                 )}
-              {this.props.clients ? (
-                <Field name="client" label="Client Name" component={Select}>
-                  {this.props.clients.map(client => (
-                    <MenuItem value={client.id} key={client.id}>
-                      {client.name}
+              {this.props.users ? (
+                <Field name="user" label="User Name" component={Select}>
+                  {this.props.users.map(user => (
+                    <MenuItem value={user.id} key={user.id}>
+                      {user.name}
                     </MenuItem>
                   ))}
                 </Field>
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Clients
+                    Loading Users
                 </div>
                 )}
             </div>
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Subscribe
+              Enrol
             </Button>
           </div>
         </form>
@@ -81,24 +81,24 @@ class SubscriptionCreate extends React.Component {
   }
 }
 
-SubscriptionCreate.propTypes = {
+EnrolmentCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
-  clients: PropTypes.array,
+  users: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
-  clients: state.ClientReducer.clients,
+  users: state.UserReducer.users,
 });
 
 const withForm = reduxForm(
   {
-    form: 'subscriptionCreate',
+    form: 'enrolmentCreate',
     validate,
   },
-  SubscriptionCreate,
+  EnrolmentCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(SubscriptionCreate);
+export default compose(connect(mapStateToProps), withForm)(EnrolmentCreate);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -18,7 +18,7 @@ const validate = () => {
   return errors;
 };
 
-class QuestionCreate extends Component {
+class QuestionCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(QuestionActions.getAll());

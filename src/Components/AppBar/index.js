@@ -141,12 +141,6 @@ const CourseDetails = {
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
     },
-    {
-      key: 2,
-      subItemName: 'Course Material',
-      subItemIcon: <AttachIcon />,
-      subItemExtension: 'material',
-    },
   ],
 };
 
@@ -165,6 +159,12 @@ const ModuleDetails = {
       subItemName: 'Module List',
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
+    },
+    {
+      key: 2,
+      subItemName: 'Module Material',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'material/create',
     },
   ],
 };
@@ -223,6 +223,12 @@ const UserDetails = {
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
     },
+    {
+      key: 2,
+      subItemName: 'Enrol',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'enrolment/create',
+    },
   ],
 };
 
@@ -241,6 +247,12 @@ const ClientDetails = {
       subItemName: 'Client List',
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
+    },
+    {
+      key: 2,
+      subItemName: 'Subscribe',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'subscription/create',
     },
   ],
 };

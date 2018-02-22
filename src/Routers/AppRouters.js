@@ -16,14 +16,17 @@ import CourseCreate from '../Containers/Course/CourseCreate';
 import CourseList from '../Containers/Course/CourseView';
 import ModuleCreate from '../Containers/Module/ModuleCreate';
 import ModuleList from '../Containers/Module/ModuleView';
+import MaterialCreate from '../Containers/Module/Material/MaterialCreate';
 import TestCreate from '../Containers/Test/TestCreate';
 import TestList from '../Containers/Test/TestView';
 import QuestionList from '../Containers/Question/QuestionView';
 import QuestionCreate from '../Containers/Question/QuestionCreate';
 import UserCreate from '../Containers/User/UserCreate';
 import UserView from '../Containers/User/UserView';
+import EnrolmentCreate from '../Containers/User/UserEnrol';
 import ClientView from '../Containers/Client/ClientView';
 import ClientCreate from '../Containers/Client/ClientCreate';
+import SubscriptionCreate from '../Containers/Client/ClientSubscribe';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -63,14 +66,17 @@ class AppRouters extends React.Component {
                 <Route path={Routes.COURSE_VIEW} component={CourseList} exact />
                 <Route path={Routes.MODULE_CREATE} component={ModuleCreate} exact />
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
+                <Route path={Routes.MATERIAL_CREATE} component={MaterialCreate} exact />
                 <Route path={Routes.TEST_CREATE} component={TestCreate} exact />
                 <Route path={Routes.TEST_VIEW} component={TestList} exact />
                 <Route path={Routes.QUESTION_CREATE} component={QuestionCreate} exact />
                 <Route path={Routes.QUESTION_VIEW} component={QuestionList} exact />
                 <Route path={Routes.USER_CREATE} component={UserCreate} exact />
                 <Route path={Routes.USER_VIEW} component={UserView} exact />
+                <Route path={Routes.USER_ENROL} component={EnrolmentCreate} exact />
                 <Route path={Routes.CLIENT_CREATE} component={ClientCreate} exact />
-                <Route path={Routes.CLIENT_VIEW} component={ClientView} exact /> 
+                <Route path={Routes.CLIENT_VIEW} component={ClientView} exact />
+                <Route path={Routes.CLIENT_SUBSCRIBE} component={SubscriptionCreate} exact />
               </Switch>
             </AppBar>
           </Switch>

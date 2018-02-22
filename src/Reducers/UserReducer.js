@@ -24,6 +24,16 @@ function UserReducer(state = {}, action) {
       };
     case UserConstants.REGISTER_FAILURE:
       return {};
+    case UserConstants.ENROL_REQUEST:
+      return {
+        enrolments: action.enrolment,
+      };
+    case UserConstants.ENROL_SUCCESS:
+      return {
+        enrolments: action.enrolment,
+      };
+    case UserConstants.ENROL_FAILURE:
+      return {};
     case UserConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {

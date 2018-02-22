@@ -1,3 +1,4 @@
+// do a file upload
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -5,13 +6,11 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 
-import Card from '../../../Components/Card';
-import TextField from '../../../Components/TextField';
-import Select from '../../../Components/Select';
-import Button from '../../../Components/Button';
-import TestActions from '../../../Actions/TestActions';
-import ModuleActions from '../../../Actions/ModuleActions';
-import LinearProgress from '../../../Components/LinearProgress';
+import Select from '../../../../Components/Select';
+import Card from '../../../../Components/Card';
+import Button from '../../../../Components/Button';
+import ModuleActions from '../../../../Actions/ModuleActions';
+import LinearProgress from '../../../../Components/LinearProgress';
 
 const validate = () => {
   const errors = {};
@@ -19,23 +18,33 @@ const validate = () => {
   return errors;
 };
 
-class TestCreate extends React.Component {
+class MaterialCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(ModuleActions.getAll());
   }
 
+  state = {
+    selectedFile: null,
+  };
+
+  fileSelectedHandler = (event) => {
+    this.setState({
+      selectedFile: event.target.files[0],
+    });
+  }
+
   submit = (values) => {
-    this.props.dispatch(TestActions.create(
-      values.module,
-      values.testName,
-      values.testMarks,
+    const file = this.state.selectedFile;
+    this.props.dispatch(ModuleActions.uploadMaterial(
+      values.ModuleId,
+      file,
     ));
   };
 
   render() {
     return (
-      <Card width="600px" title="Create New Test">
+      <Card width="600px" title="Create New Material">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -44,7 +53,7 @@ class TestCreate extends React.Component {
           <div>
             <div className="width200">
               {this.props.modules ? (
-                <Field name="module" label="Module Name" component={Select}>
+                <Field name="ModuleId" label="Module Name" component={Select}>
                   {this.props.modules.map(module => (
                     <MenuItem value={module.id} key={module.id}>
                       {module.name}
@@ -54,30 +63,17 @@ class TestCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Modules
+                    Loading Modules
                 </div>
               )}
               <div>
-                <Field
-                  name="testName"
-                  label="Test Name"
-                  margin="normal"
-                  component={TextField}
-                />
-              </div>
-              <div>
-                <Field
-                  name="testMarks"
-                  label="Total Marks"
-                  margin="normal"
-                  component={TextField}
-                />
+                <input type="file" onChange={this.fileSelectedHandler} />
               </div>
             </div>
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Create Course
+              Create Material
             </Button>
           </div>
         </form>
@@ -86,7 +82,7 @@ class TestCreate extends React.Component {
   }
 }
 
-TestCreate.propTypes = {
+MaterialCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   modules: PropTypes.array,
@@ -98,10 +94,10 @@ const mapStateToProps = state => ({
 
 const withForm = reduxForm(
   {
-    form: 'courseCreate',
+    form: 'materialCreate',
     validate,
   },
-  TestCreate,
+  MaterialCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(TestCreate);
+export default compose(connect(mapStateToProps), withForm)(MaterialCreate);

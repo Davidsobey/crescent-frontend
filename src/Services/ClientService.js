@@ -46,10 +46,10 @@ function subscribe(subscription) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(subscription),
+    body: JSON.stringify(subscription.courseID),
   };
 
-  return fetch(`${api}/Clients/subscriptions`, requestOptions)
+  return fetch(`${api}/Clients/${subscription.clientID}/subscriptions`, requestOptions)
     .then(handleResponse);
 }
 

@@ -27,6 +27,7 @@
     "express": "4.15.4",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "^1.1.6",
+    "form-data": "^2.3.2",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "lint": "^1.1.2",
