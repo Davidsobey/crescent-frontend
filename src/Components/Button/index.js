@@ -19,16 +19,18 @@ function ButtonWithTheme(props) {
         `background-color: ${theme.palette.accent[500]};
         color: ${theme.palette.primary[500]}; `};
       ${() =>
-    props.color === 'secondary' && !props.variant === 'raised' && `color: ${theme.palette.accent[500]}; `};
+    props.color === 'secondary' &&
+        !props.variant === 'raised' &&
+        `color: ${theme.palette.accent[500]}; `};
     }
     &&:hover {
       ${() =>
     props.color === 'primary' &&
-    props.variant === 'raised' &&
+        props.variant === 'raised' &&
         `background-color: ${theme.palette.secondary[700]};`};
       ${() =>
     props.color === 'secondary' &&
-    props.variant === 'raised' &&
+        props.variant === 'raised' &&
         `background-color: ${theme.palette.accent[700]};`};
     }
   `;

@@ -53,11 +53,13 @@ function logout() {
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: AuthHeader(),
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
   };
 
-  return fetch('https://crescenttesting.azurewebsites.net/api/Users', requestOptions)
-    .then(handleResponse);
+  return fetch(
+    'https://crescenttesting.azurewebsites.net/api/Users',
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function getById(id) {
@@ -66,8 +68,7 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`${api}/Users/${id}`, requestOptions)
-    .then(handleResponse);
+  return fetch(`${api}/Users/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -77,8 +78,7 @@ function register(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${api}/Users`, requestOptions)
-    .then(handleResponse);
+  return fetch(`${api}/Users`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -88,8 +88,7 @@ function update(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${api}/Users/${user.id}`, requestOptions)
-    .then(handleResponse);
+  return fetch(`${api}/Users/${user.id}`, requestOptions).then(handleResponse);
 }
 
 function enrol(enrolment) {
@@ -99,8 +98,10 @@ function enrol(enrolment) {
     body: JSON.stringify(enrolment.courseID),
   };
 
-  return fetch(`${api}/Users/${enrolment.userID}/enrolments`, requestOptions)
-    .then(handleResponse);
+  return fetch(
+    `${api}/Users/${enrolment.userID}/enrolments`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -110,8 +111,7 @@ function deleteUser(id) {
     headers: AuthHeader(),
   };
 
-  return fetch(`${api}/Users/${id}`, requestOptions)
-    .then(handleResponse);
+  return fetch(`${api}/Users/${id}`, requestOptions).then(handleResponse);
 }
 
 const UserService = {

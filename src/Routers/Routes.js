@@ -8,13 +8,13 @@ const MATERIAL_VIEW = 'module/material/view';
 const TEST_CREATE = '/test/create';
 const TEST_VIEW = '/test/list';
 const QUESTION_CREATE = '/question/create';
-const QUESTION_VIEW = '/question/view';
+const QUESTION_VIEW = '/question/list';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const ENROLMENTS_CREATE = '/user/enrolment/create';
 const ENROLMENTS_LIST = '/user/enrolment/list';
 const CLIENT_CREATE = '/client/create';
-const CLIENT_VIEW = '/client/view';
+const CLIENT_VIEW = '/client/list';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subcription/list';
 
