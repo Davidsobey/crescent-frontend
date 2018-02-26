@@ -9,6 +9,7 @@ import AlertActions from '../Actions/AlertActions';
 import UserActions from '../Actions/UserActions';
 import Routes from './Routes';
 import AppBar from '../Components/AppBar';
+import PrivateRoute from '../Components/PrivateRoute';
 
 import Login from '../Containers/Login';
 import Home from '../Containers/Home';
@@ -62,7 +63,7 @@ class AppRouters extends React.Component {
               <Switch>
                 {/* Authenticated Routes */}
                 <Route path={Routes.HOME} component={Home} exact />
-                <Route path={Routes.COURSE_CREATE} component={CourseCreate} exact />
+                <PrivateRoute user={this.props.user} path={Routes.CourseCreate} component={CourseCreate} />
                 <Route path={Routes.COURSE_VIEW} component={CourseList} exact />
                 <Route path={Routes.MODULE_CREATE} component={ModuleCreate} exact />
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
@@ -90,12 +91,14 @@ AppRouters.propTypes = {
   dispatch: PropTypes.func.isRequired,
   open: PropTypes.bool,
   alert: PropTypes.string,
+  user: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     alert: state.AlertReducer.message,
     open: state.AlertReducer.open,
+    user: sessionStorage.getItem('user'), // eslint-disable-line no-undef
   };
 }
 
