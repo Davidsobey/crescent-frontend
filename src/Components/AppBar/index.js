@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
-import MuiAppBar from 'material-ui/AppBar';
+import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
-import { MenuList, MenuItem } from 'material-ui/Menu';
-import { ListItemIcon, ListItemText } from 'material-ui/List';
-
-import { IconButton } from 'material-ui';
+import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
+import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
+import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import { MenuItem } from 'material-ui/Menu';
+import List, { ListItemIcon, ListItemText } from 'material-ui/List';
+
 import HomeIcon from 'material-ui-icons/Home';
 import AddIcon from 'material-ui-icons/Add';
 import ListIcon from 'material-ui-icons/ViewList';
@@ -22,7 +24,6 @@ import ModuleIcon from 'material-ui-icons/Assignment';
 import AttachIcon from 'material-ui-icons/Attachment';
 import UserIcon from 'material-ui-icons/People';
 import ClientIcon from 'material-ui-icons/Person';
-import Logout from 'material-ui-icons/PowerSettingsNew';
 import TestIcon from 'material-ui-icons/Create';
 import QuestionIcon from 'material-ui-icons/QuestionAnswer';
 
@@ -33,21 +34,14 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    height: '100%',
-    marginTop: '0px',
+    flexGrow: 1,
     zIndex: 1,
     overflow: 'hidden',
-  },
-  appFrame: {
     position: 'relative',
     display: 'flex',
-    width: '100%',
-    height: '100%',
   },
   appBar: {
-    position: 'absolute',
-    zIndex: 1301,
+    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -71,14 +65,12 @@ const styles = theme => ({
   },
   drawerPaper: {
     position: 'relative',
-    height: '100%',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
     backgroundColor: theme.palette.primary[500],
-    overflowX: 'hidden',
   },
   drawerPaperClose: {
     width: 60,
@@ -88,40 +80,23 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-  drawerInner: {
-    // Make the items inside not wrap when transitioning:
-    width: drawerWidth,
-  },
-  drawerHeader: {
+  toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
-    height: '64px',
-    fontSize: '25px',
-    backgroundColor: 'white',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+  },
+  paperColor: {
+    color: theme.palette.background.paper,
+  },
+  paperBackground: {
+    backgroundColor: theme.palette.background.paper,
   },
   content: {
-    width: '100%',
     flexGrow: 1,
-    backgroundColor: '#e2e2e2',
-    padding: 24,
-    marginTop: 56,
-  },
-  iconRight: {
-    justifyContent: 'space-between',
-  },
-  flex: {
-    flex: 1,
-  },
-  title: {
-    paddingLeft: '15px',
-    paddingTop: '5px',
-    color: 'white',
-  },
-  accentColor: {
-    color: 'white',
-    fontSize: '14px',
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
   },
 });
 
@@ -256,136 +231,136 @@ const ClientDetails = {
     },
   ],
 };
-
-class AppBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true,
-    };
-    this.handleDrawer = this.handleDrawer.bind(this);
-  }
-
-  handleDrawer = () => {
-    if (!this.state.open) {
-      this.setState({ open: true });
-    } else {
-      this.setState({ open: false });
-    }
+class MiniDrawer extends React.Component {
+  state = {
+    open: false,
   };
 
-  logOut = () => {
-    // console.log('Logout');
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
     const { classes, theme, children } = this.props;
+
     return (
       <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <MuiAppBar
-            className={classNames(
-              classes.appBar,
-              this.state.open && classes.appBarShift,
-            )}
-          >
-            <Toolbar
-              className={classes.iconRight}
-              disableGutters={!this.state.open}
+        <AppBar
+          position="absolute"
+          className={classNames(
+            classes.appBar,
+            this.state.open && classes.appBarShift,
+          )}
+        >
+          <Toolbar disableGutters={!this.state.open}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(
+                classes.menuButton,
+                this.state.open && classes.hide,
+              )}
             >
-              <IconButton
-                aria-label="open drawer"
-                onClick={this.handleDrawer}
-                className={classNames(classes.menuButton, this.state.open)}
-              >
-                <MenuIcon />
-              </IconButton>
-              <div>
-                <IconButton className="alignRight">
-                  <Logout onClick={this.logOut} />
-                </IconButton>
-              </div>
-            </Toolbar>
-          </MuiAppBar>
-          <Drawer
-            type="permanent"
-            classes={{
-              paper: classNames(
-                classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose,
-              ),
-            }}
-            open={this.state.open}
-          >
-            <div className={classes.drawerInner}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" noWrap>
+              Lunar Testing System
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: classNames(
+              classes.drawerPaper,
+              !this.state.open && classes.drawerPaperClose,
+            ),
+          }}
+          open={this.state.open}
+        >
+          <div className={classes.paperBackground}>
+            <div className={classes.toolbar}>
               <Link to="/home">
-                <div className={classes.drawerHeader}>
-                  <img
-                    width="34px"
-                    src={Logo}
-                    alt="Crescent"
-                    className="drawerLogo"
-                  />
-                </div>
+                <img
+                  width="34px"
+                  src={Logo}
+                  alt="Crescent"
+                  className="drawerLogo"
+                />
               </Link>
-              <Divider />
-              <MenuList>
-                {this.state.open && (
-                  <Typography className="user-type" type="subheading">
-                    Admin View
-                  </Typography>
+              <IconButton onClick={this.handleDrawerClose}>
+                {theme.direction === 'rtl' ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
                 )}
-                <Link to="/home">
-                  <MenuItem>
-                    <ListItemIcon>
-                      <HomeIcon className={classes.accentColor} />
-                    </ListItemIcon>
-                    <ListItemText
-                      inset
-                      className={classes.accentColor}
-                      disableTypography
-                      primary="Home"
-                    />
-                  </MenuItem>
-                </Link>
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={CourseDetails}
-                />
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={ModuleDetails}
-                />
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={TestDetails}
-                />
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={QuestionDetails}
-                />
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={UserDetails}
-                />
-                <ExpandableMenu
-                  color={theme.palette.accent[500]}
-                  details={ClientDetails}
-                />
-              </MenuList>
+              </IconButton>
             </div>
-          </Drawer>
-          <main className={classes.content}>{children}</main>
-        </div>
+          </div>
+          <Divider />
+          <List>
+            {this.state.open && (
+              <Typography className="user-type" type="subheading">
+                Admin View
+              </Typography>
+            )}
+            <Link to="/home">
+              <MenuItem>
+                <ListItemIcon>
+                  <HomeIcon className={classes.paperColor} />
+                </ListItemIcon>
+                <ListItemText
+                  inset
+                  className={classes.paperColor}
+                  disableTypography
+                  primary="Home"
+                />
+              </MenuItem>
+            </Link>
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={CourseDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={ModuleDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={TestDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={QuestionDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={UserDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={ClientDetails}
+            />
+          </List>
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {children}
+        </main>
       </div>
     );
   }
 }
 
-AppBar.propTypes = {
+MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  children: PropTypes.object.isRequired,
+  children: PropTypes.object,
 };
 
-export default withStyles(styles, { withTheme: true })(AppBar);
+export default withStyles(styles, { withTheme: true })(MiniDrawer);
