@@ -8,6 +8,8 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import { Actions } from './styles';
+import Button from '../Button';
 
 const styles = theme => ({
   root: {
@@ -48,6 +50,21 @@ function BasicTable(props) {
               <TableRow key={obj.id}>
                 {arr.map((value) => {
                   count += 1;
+                  if (typeof value === 'object') {
+                    return (
+                      <TableCell key={count}>
+                        <Actions>
+                          <Button
+                            variant="raised"
+                            color="primary"
+                            onClick={() => 'a'}
+                          >
+                            Start Quote
+                          </Button>
+                        </Actions>
+                      </TableCell>
+                    );
+                  }
                   return <TableCell key={count}>{value}</TableCell>;
                 })}
               </TableRow>

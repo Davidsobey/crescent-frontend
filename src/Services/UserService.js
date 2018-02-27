@@ -68,7 +68,7 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`${api}/Users/${id}`, requestOptions).then(handleResponse);
+  return fetch(`https://crescenttesting.azurewebsites.net/api/Users/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {

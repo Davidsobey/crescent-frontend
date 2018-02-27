@@ -13,10 +13,14 @@ const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const ENROLMENTS_CREATE = '/user/enrolment/create';
 const ENROLMENTS_LIST = '/user/enrolment/list';
+const USER_ENROL = 'user/enrolment/create';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subcription/list';
+const CLIENT_SUBSCRIBE = '/client/subscription/create';
+const USERS_VIEW_COURSES = '/courses/list';
+
 
 export default {
   HOME,
@@ -34,8 +38,11 @@ export default {
   USER_VIEW,
   ENROLMENTS_CREATE,
   ENROLMENTS_LIST,
+  USER_ENROL,
   CLIENT_CREATE,
   CLIENT_VIEW,
   SUBSCRIPTIONS_CREATE,
   SUBSCRIPTIONS_LIST,
+  CLIENT_SUBSCRIBE,
+  USERS_VIEW_COURSES,
 };

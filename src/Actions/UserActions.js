@@ -114,6 +114,31 @@ function enrol(enrolment) {
   };
 }
 
+function loadUser(id) {
+  function request() {
+    return { type: UserConstants.GETUSER_REQUEST, id };
+  }
+  function success(user) {
+    return { type: UserConstants.GETUSER_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: UserConstants.GETUSER_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(id));
+
+    UserService.getById(id).then(
+      (user) => {
+        dispatch(success(user));
+      },
+      (error) => {
+        dispatch(failure(id, error));
+      },
+    );
+  };
+}
+
 // prefixed function name with underscore because delete is a reserved word in javascript
 function deleteUser(id) {
   function request() {
@@ -150,6 +175,7 @@ const UserActions = {
   register,
   getAll,
   delete: deleteUser,
+  loadUser,
   enrol,
 };
 

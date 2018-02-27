@@ -231,9 +231,23 @@ const ClientDetails = {
     },
   ],
 };
+
+const ClientCourseDetails = {
+  listName: 'Courses',
+  listIcon: <CourseIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'View My Courses',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
 class MiniDrawer extends React.Component {
   state = {
-    open: false,
+    open: true,
   };
 
   handleDrawerOpen = () => {
@@ -345,6 +359,17 @@ class MiniDrawer extends React.Component {
             <ExpandableMenu
               color={theme.palette.accent[500]}
               details={ClientDetails}
+            />
+          </List>
+          {this.state.open && (
+            <Typography className="user-type" type="subheading">
+              User View
+            </Typography>
+          )}
+          <List>
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={ClientCourseDetails}
             />
           </List>
         </Drawer>

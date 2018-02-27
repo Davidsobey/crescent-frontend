@@ -27,6 +27,7 @@ import EnrolmentCreate from '../Containers/User/UserEnrol';
 import ClientView from '../Containers/Client/ClientView';
 import ClientCreate from '../Containers/Client/ClientCreate';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe';
+import UsersCourseView from '../Containers/UserView/Courses';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -62,21 +63,63 @@ class AppRouters extends React.Component {
               <Switch>
                 {/* Authenticated Routes */}
                 <Route path={Routes.HOME} component={Home} exact />
-                <Route path={Routes.COURSE_CREATE} component={CourseCreate} exact />
+                <Route
+                  path={Routes.COURSE_CREATE}
+                  component={CourseCreate}
+                  exact
+                />
                 <Route path={Routes.COURSE_VIEW} component={CourseList} exact />
-                <Route path={Routes.MODULE_CREATE} component={ModuleCreate} exact />
+                <Route
+                  path={Routes.MODULE_CREATE}
+                  component={ModuleCreate}
+                  exact
+                />
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
-                <Route path={Routes.MATERIAL_CREATE} component={MaterialCreate} exact />
+                <Route
+                  path={Routes.MATERIAL_CREATE}
+                  component={MaterialCreate}
+                  exact
+                />
                 <Route path={Routes.TEST_CREATE} component={TestCreate} exact />
                 <Route path={Routes.TEST_VIEW} component={TestList} exact />
-                <Route path={Routes.QUESTION_CREATE} component={QuestionCreate} exact />
-                <Route path={Routes.QUESTION_VIEW} component={QuestionList} exact />
+                <Route
+                  path={Routes.QUESTION_CREATE}
+                  component={QuestionCreate}
+                  exact
+                />
+                <Route
+                  path={Routes.QUESTION_VIEW}
+                  component={QuestionList}
+                  exact
+                />
                 <Route path={Routes.USER_CREATE} component={UserCreate} exact />
                 <Route path={Routes.USER_VIEW} component={UserView} exact />
-                <Route path={Routes.USER_ENROL} component={EnrolmentCreate} exact />
-                <Route path={Routes.CLIENT_CREATE} component={ClientCreate} exact />
+                <Route
+                  path={Routes.USER_ENROL}
+                  component={EnrolmentCreate}
+                  exact
+                />
+                <Route
+                  path={Routes.CLIENT_CREATE}
+                  component={ClientCreate}
+                  exact
+                />
+                <Route
+                  path={Routes.CLIENT_CREATE}
+                  component={ClientCreate}
+                  exact
+                />
                 <Route path={Routes.CLIENT_VIEW} component={ClientView} exact />
-                <Route path={Routes.CLIENT_SUBSCRIBE} component={SubscriptionCreate} exact />
+                <Route
+                  path={Routes.CLIENT_SUBSCRIBE}
+                  component={SubscriptionCreate}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_COURSES}
+                  component={UsersCourseView}
+                  exact
+                />
               </Switch>
             </AppBar>
           </Switch>
