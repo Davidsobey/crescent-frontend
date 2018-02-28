@@ -17,6 +17,8 @@ const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subcription/list';
+const POLICIES_LIST = '/policy/list';
+const POLICIES_CREATE = '/policy/create';
 const LOGIN = '/';
 
 export default {
@@ -39,5 +41,7 @@ export default {
   CLIENT_VIEW,
   SUBSCRIPTIONS_CREATE,
   SUBSCRIPTIONS_LIST,
+  POLICIES_LIST,
+  POLICIES_CREATE,
   LOGIN,
 };

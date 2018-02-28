@@ -8,6 +8,7 @@ import ModuleReducer from './ModuleReducer';
 import TestReducer from './TestReducer';
 import QuestionReducer from './QuestionReducer';
 import ClientReducer from './ClientReducer';
+import PolicyReducer from './PolicyReducer';
 
 const reducers = {
   UserReducer,
@@ -18,6 +19,7 @@ const reducers = {
   TestReducer,
   QuestionReducer,
   ClientReducer,
+  PolicyReducer,
   form: formReducer,
 };
 

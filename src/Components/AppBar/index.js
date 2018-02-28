@@ -231,6 +231,25 @@ const ClientDetails = {
     },
   ],
 };
+
+const PolicyDetails = {
+  listName: 'Policy',
+  listIcon: <ClientIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Policy',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Policy List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
 class MiniDrawer extends React.Component {
   state = {
     open: false,
@@ -345,6 +364,10 @@ class MiniDrawer extends React.Component {
             <ExpandableMenu
               color={theme.palette.accent[500]}
               details={ClientDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={PolicyDetails}
             />
           </List>
         </Drawer>

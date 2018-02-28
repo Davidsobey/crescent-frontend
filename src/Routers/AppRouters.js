@@ -27,6 +27,8 @@ import EnrolmentCreate from '../Containers/User/UserEnrol';
 import ClientView from '../Containers/Client/ClientView';
 import ClientCreate from '../Containers/Client/ClientCreate';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe';
+import PolicyCreate from '../Containers/Policy/PolicyCreate';
+import PolicyView from '../Containers/Policy/PolicyView';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -62,7 +64,7 @@ class AppRouters extends React.Component {
               <Switch>
                 {/* Authenticated Routes */}
                 <Route path={Routes.HOME} component={Home} exact />
-                <Route path={Routes.CourseCreate} component={CourseCreate} exact />
+                <Route path={Routes.COURSE_CREATE} component={CourseCreate} exact />
                 <Route path={Routes.COURSE_VIEW} component={CourseList} exact />
                 <Route path={Routes.MODULE_CREATE} component={ModuleCreate} exact />
                 <Route path={Routes.MODULE_VIEW} component={ModuleList} exact />
@@ -77,6 +79,8 @@ class AppRouters extends React.Component {
                 <Route path={Routes.CLIENT_CREATE} component={ClientCreate} exact />
                 <Route path={Routes.CLIENT_VIEW} component={ClientView} exact />
                 <Route path={Routes.CLIENT_SUBSCRIBE} component={SubscriptionCreate} exact />
+                <Route path={Routes.POLICY_CREATE} component={PolicyCreate} exact />
+                <Route path={Routes.POLICY_VIEW} component={PolicyView} exact />
               </Switch>
             </AppBar>
           </Switch>
