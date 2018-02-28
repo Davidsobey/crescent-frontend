@@ -10,11 +10,6 @@ import Collapse from 'material-ui/transitions/Collapse';
 import MenuItem from './MenuItem';
 
 const styles = {
-  root: {
-    width: '100%',
-    height: '100%',
-    maxWidth: 360,
-  },
   accentColor: {
     color: 'white',
     fontSize: '14px',
@@ -39,7 +34,7 @@ class ExpandableMenu extends React.Component {
     const { details, classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div>
         <ListItem button onClick={this.handleClick}>
           <ListItemIcon className={classes.accentColor}>
             {details.listIcon}

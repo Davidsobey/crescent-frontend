@@ -24,6 +24,18 @@ function CourseReducer(state = {}, action) {
       return {
         courses: {},
       };
+    case CourseConstants.LOADCOURSE_REQUEST:
+      return {
+        loading: true,
+      };
+    case CourseConstants.LOADCOURSE_SUCCESS:
+      return Object.assign({}, state, {
+        course: action.course,
+      });
+    case CourseConstants.LOADCOURSE_FAILURE:
+      return {
+        course: {},
+      };
     default:
       return state;
   }

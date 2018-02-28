@@ -11,9 +11,11 @@ import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 import { CircularProgress } from 'material-ui/Progress';
 
+import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import UserActions from '../../../Actions/UserActions';
+import CourseActions from '../../../Actions/CourseActions';
 
 const header = ['ID', 'Name', 'Description', 'View Course Details'];
 
@@ -21,6 +23,13 @@ class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(UserActions.loadUser(2));
+    this.loadCourse = this.loadCourse.bind(this);
+    this.manipulateData = this.manipulateData.bind(this);
+  }
+
+  loadCourse(id) {
+    this.props.dispatch(CourseActions.loadCourse(id));
+    history.push('/courses/coursedetail');
   }
 
   manipulateData = (courses) => {
@@ -30,6 +39,10 @@ class UserView extends React.Component {
         id: course.id,
         name: course.name,
         description: course.description,
+        button: {
+          message: 'View Course Details',
+          onClick: () => this.loadCourse(course.id),
+        },
       };
       data.push(newCourse);
     });

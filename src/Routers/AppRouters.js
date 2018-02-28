@@ -28,6 +28,7 @@ import ClientView from '../Containers/Client/ClientView';
 import ClientCreate from '../Containers/Client/ClientCreate';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe';
 import UsersCourseView from '../Containers/UserView/Courses';
+import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -118,6 +119,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.USERS_VIEW_COURSES}
                   component={UsersCourseView}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_COURSE}
+                  component={UserCourseDetail}
                   exact
                 />
               </Switch>

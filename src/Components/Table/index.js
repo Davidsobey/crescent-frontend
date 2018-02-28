@@ -11,12 +11,7 @@ import Paper from 'material-ui/Paper';
 import { Actions } from './styles';
 import Button from '../Button';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
+const styles = () => ({
   table: {
     minWidth: 700,
   },
@@ -55,9 +50,9 @@ function BasicTable(props) {
                       <TableCell key={count}>
                         <Actions>
                           <Button
-                            variant="raised"
+                            className="small-font"
                             color="primary"
-                            onClick={() => 'a'}
+                            onClick={value.onClick}
                           >
                             Start Quote
                           </Button>

@@ -29,7 +29,9 @@ injectGlobal`
     min-height: 100%;
     min-width: 100%;
   }
-
+  .small-font{
+    font-size:12px !important;
+  }
   .user-type{
     display: flex !important;
     justify-content: center !important;

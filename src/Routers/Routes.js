@@ -20,6 +20,7 @@ const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subcription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
 const USERS_VIEW_COURSES = '/courses/list';
+const USERS_VIEW_COURSE = '/courses/coursedetail';
 
 
 export default {
@@ -45,4 +46,5 @@ export default {
   SUBSCRIPTIONS_LIST,
   CLIENT_SUBSCRIBE,
   USERS_VIEW_COURSES,
+  USERS_VIEW_COURSE,
 };

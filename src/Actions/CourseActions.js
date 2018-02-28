@@ -54,9 +54,34 @@ function getAll() {
   };
 }
 
+function loadCourse(id) {
+  function request() {
+    return { type: CourseConstants.LOADCOURSE_REQUEST };
+  }
+  function success(course) {
+    return { type: CourseConstants.LOADCOURSE_SUCCESS, course };
+  }
+  function failure(error) {
+    return { type: CourseConstants.LOADCOURSE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(id));
+
+    CourseService.getCourse(id).then(
+      course => dispatch(success(course)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const CourseActions = {
   create,
   getAll,
+  loadCourse,
 };
 
 export default CourseActions;

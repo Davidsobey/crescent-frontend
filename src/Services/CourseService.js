@@ -31,8 +31,21 @@ function getAll() {
   ).then(handleResponse);
 }
 
+function getCourse(id) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/Courses/${id}`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
 const CourseService = {
   create,
   getAll,
+  getCourse,
 };
 export default CourseService;
