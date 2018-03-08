@@ -21,7 +21,8 @@ const SUBSCRIPTIONS_LIST = '/client/subcription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
-
+const USERS_VIEW_MODULES = '/modules/list';
+const USERS_VIEW_MODULE = '/modules/moduledetail';
 
 export default {
   HOME,
@@ -47,4 +48,6 @@ export default {
   CLIENT_SUBSCRIBE,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
+  USERS_VIEW_MODULES,
+  USERS_VIEW_MODULE,
 };

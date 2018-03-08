@@ -7,23 +7,21 @@ import ExpansionPanel, {
   ExpansionPanelSummary,
 } from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import { LinearProgress } from 'material-ui/Progress';
+import { Divider } from 'material-ui';
 
 import Card from '../../../Components/Card';
 import history from '../../../Helpers/History';
 import Button from '../../../Components/Button';
-import ModuleActions from '../../../Actions/ModuleActions';
 
 class CourseDetail extends React.Component {
   state = {
     expanded: null,
   };
 
-  handleChange = module => (event, expanded) => {
+  handleChange = panel => (event, expanded) => {
     this.setState({
-      expanded: expanded ? module.id : false,
+      expanded: expanded ? panel : false,
     });
-    this.props.dispatch(ModuleActions.moduleMaterial(module.moduleMaterialIds));
   };
 
   render() {
@@ -39,22 +37,17 @@ class CourseDetail extends React.Component {
             </Typography>
             <Typography component="p">{course.description}</Typography>
             <br />
-            {modules ? (
+            <Divider />
+            <br />
+            {modules && (
               <div>
-                <div className="inline">
-                  <Typography variant="headline" component="h2">
-                    Course Related Modules
-                  </Typography>
-                  <Typography variant="caption" className="alignCenter">
-                    {
-                      ' - (Expand Items to view the module details and material)'
-                    }
-                  </Typography>
-                </div>
+                <Typography variant="headline" component="h2">
+                  Course Related Modules
+                </Typography>
                 {modules.map(module => (
                   <ExpansionPanel
                     expanded={expanded === module.id}
-                    onChange={this.handleChange(module)}
+                    onChange={this.handleChange(module.id)}
                     key={module.id}
                   >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -79,11 +72,6 @@ class CourseDetail extends React.Component {
                   </ExpansionPanel>
                 ))}
               </div>
-            ) : (
-              <div className="center">
-                <LinearProgress color="secondary" />
-                Loading Courses
-              </div>
             )}
           </Card>
         ) : (
@@ -102,14 +90,12 @@ class CourseDetail extends React.Component {
 
 CourseDetail.propTypes = {
   course: PropTypes.object,
-  modules: PropTypes.array,
-  dispatch: PropTypes.func,
+  modules: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   course: state.CourseReducer.course,
   modules: state.ModuleReducer.modules,
-  loading: state.ModuleReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

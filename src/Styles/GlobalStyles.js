@@ -76,7 +76,7 @@ injectGlobal`
   }
 
   .center{
-    display: flex;
+    display: flex !important;
     justify-content: center;
   }
   .center-img{
@@ -106,9 +106,19 @@ injectGlobal`
     color: #757575;
   }
 
-  .alignRight{
+  .alignCenter{
+    display: flex !important;
+    align-items: center;
+  }
+
+ .alignRight{
     display: flex;
     justify-content: flex-end;
+  }
+ 
+
+  .justify-content{
+    justify-content: space-between;
   }
 
   .row{

@@ -82,10 +82,72 @@ function uploadMaterial(moduleId, file) {
   };
 }
 
+function loadModuleByCourse(id) {
+  function request() {
+    return { type: ModuleConstants.LOADMODULE_REQUEST };
+  }
+  function success(modules) {
+    return { type: ModuleConstants.LOADMODULE_SUCCESS, modules };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.LOADMODULE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ModuleService.getModules(id).then(
+      modules => dispatch(success(modules)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+
+function moduleMaterial(materialIds) {
+  function request() {
+    return { type: ModuleConstants.MODULE_MATERIAL_REQUEST };
+  }
+  function success(modules) {
+    return { type: ModuleConstants.MODULE_MATERIAL_SUCCESS, modules };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.MODULE_MATERIAL_REQUEST, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ModuleService.getModuleMaterial(materialIds).then(
+      modules => dispatch(success(modules)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+
+function clearModules() {
+  function clear() {
+    return { type: ModuleConstants.CLEAR_MODULES };
+  }
+  return (dispatch) => {
+    dispatch(clear());
+  };
+}
+
 const ModuleActions = {
   create,
   getAll,
   uploadMaterial,
+  loadModuleByCourse,
+  clearModules,
+  moduleMaterial,
 };
 
 export default ModuleActions;

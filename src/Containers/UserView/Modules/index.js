@@ -54,7 +54,7 @@ class UserView extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <Card width="800px" title="My Course List">
+      <Card width="800px" title="My Module List">
         {user && Array.isArray(user.enrolledCourses) ? (
           <Table
             header={header}

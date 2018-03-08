@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiCard, { CardHeader } from 'material-ui/Card';
+import MuiCard, { CardHeader, CardContent } from 'material-ui/Card';
 import { LockOutline } from 'material-ui-icons';
 import Divider from 'material-ui/Divider';
 
@@ -25,7 +25,7 @@ function Card(props) {
           </div>
         )}
       </div>
-      {props.children}
+      <CardContent>{props.children}</CardContent>
     </MuiCard>
   );
 }

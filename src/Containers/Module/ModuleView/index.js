@@ -35,7 +35,7 @@ class ModuleView extends React.Component {
 
   loadData = (modules, courses) => {
     const formattedArray = [];
-    if (Array.isArray(modules)) {
+    if (Array.isArray(modules) && Array.isArray(courses)) {
       modules.forEach((module) => {
         const courseMatch = courses.filter(course => course.id === module.courseId);
         const newModule = {

@@ -19,6 +19,7 @@ function CourseReducer(state = {}, action) {
     case CourseConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         courses: action.courses,
+        loading: false,
       });
     case CourseConstants.GETALL_FAILURE:
       return {
@@ -31,6 +32,7 @@ function CourseReducer(state = {}, action) {
     case CourseConstants.LOADCOURSE_SUCCESS:
       return Object.assign({}, state, {
         course: action.course,
+        loading: false,
       });
     case CourseConstants.LOADCOURSE_FAILURE:
       return {

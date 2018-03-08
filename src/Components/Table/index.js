@@ -54,7 +54,7 @@ function BasicTable(props) {
                             color="primary"
                             onClick={value.onClick}
                           >
-                            Start Quote
+                            {value.message}
                           </Button>
                         </Actions>
                       </TableCell>
