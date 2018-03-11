@@ -1,6 +1,4 @@
 const fetch = require('isomorphic-fetch');
-require('babel-core/register');
-require('babel-polyfill');
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -61,33 +59,46 @@ function getModules(id) {
   return objectList;
 }
 
-function getModuleMaterial(ids) {
+function loadTests(id) {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
 
-  const materialDetails = [];
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/Modules/${id}/Tests`,
+    requestOptions,
+  ).then(handleResponse);
+}
 
-  let count = 0;
+function delay() {
+  return new Promise(resolve => setTimeout(resolve, 300));
+}
 
-  function* fetchNow() {
-    yield fetch(
-      `https://crescenttesting.azurewebsites.net/api/Materials/${ids[count]}`,
-      requestOptions,
-    )
-      .then(handleResponse)
-      .then((material) => {
-        if (ids.length - 1 === count) {
-          return materialDetails;
-        }
-        materialDetails.push(material);
-        count += 1;
-        fetchNow();
-        return materialDetails;
-      });
-  }
-  fetchNow();
+let materialDetails = [];
+
+async function delayedLog(item) {
+  await delay();
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/Materials/${item}`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
+async function processArray(array) {
+  materialDetails = [];
+  const promises = array.map(delayedLog);
+  const a = await Promise.all(promises).then(result => result);
+  return a;
+}
+
+function getModuleMaterial(ids) {
+  materialDetails = processArray(ids);
   return materialDetails;
 }
 
@@ -96,5 +107,6 @@ const ModuleServices = {
   getAll,
   getModules,
   getModuleMaterial,
+  loadTests,
 };
 export default ModuleServices;

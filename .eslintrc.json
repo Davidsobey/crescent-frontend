@@ -6,7 +6,8 @@
     "react/jsx-filename-extension": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "react/require-default-props": 0,
-    "max-len": "off"
+    "max-len": "off",
+    "no-nested-ternary": "off"
   },
   "globals": {
     "document": true,

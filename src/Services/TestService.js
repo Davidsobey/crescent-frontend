@@ -31,8 +31,34 @@ function getAll() {
   ).then(handleResponse);
 }
 
+function loadTest(id) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/Tests/${id}`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
+function loadTestQuestions(userId, id) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${userId}/${id}`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
 const ModuleServices = {
   create,
   getAll,
+  loadTest,
+  loadTestQuestions,
 };
 export default ModuleServices;

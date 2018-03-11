@@ -23,6 +23,8 @@ const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
 const USERS_VIEW_MODULE = '/modules/moduledetail';
+const USERS_VIEW_TEST = '/modules/starttest';
+const USERS_START_TEST = '/modules/test';
 
 export default {
   HOME,
@@ -50,4 +52,6 @@ export default {
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,
   USERS_VIEW_MODULE,
+  USERS_VIEW_TEST,
+  USERS_START_TEST,
 };

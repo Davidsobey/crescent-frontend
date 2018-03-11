@@ -7,12 +7,13 @@ import ExpansionPanel, {
   ExpansionPanelSummary,
 } from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import { LinearProgress } from 'material-ui/Progress';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import history from '../../../Helpers/History';
 import Button from '../../../Components/Button';
 import ModuleActions from '../../../Actions/ModuleActions';
+import TestActions from '../../../Actions/TestActions';
 
 class CourseDetail extends React.Component {
   state = {
@@ -24,10 +25,18 @@ class CourseDetail extends React.Component {
       expanded: expanded ? module.id : false,
     });
     this.props.dispatch(ModuleActions.moduleMaterial(module.moduleMaterialIds));
+    this.props.dispatch(ModuleActions.loadModuleTests(module.id));
   };
 
+  loadTest(id) {
+    this.props.dispatch(TestActions.loadTest(id));
+    history.push('/modules/starttest');
+  }
+
   render() {
-    const { course, modules } = this.props;
+    const {
+      course, modules, moduleMaterial, moduleTests,
+    } = this.props;
     const { expanded } = this.state;
 
     return (
@@ -63,18 +72,65 @@ class CourseDetail extends React.Component {
                       </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className="justify-content">
-                      <Typography>{module.description}</Typography>
-                      <Button
-                        color="secondary"
-                        onClick={() => {
-                          window.open(
-                            'https://crescenttesting.azurewebsites.net/ModuleMaterial/1.pdf',
-                            '_blank',
-                          );
-                        }}
-                      >
-                        Download Course Content
-                      </Button>
+                      <div>
+                        <div>
+                          <Typography>{module.description}</Typography>
+                        </div>
+                        <br />
+                        <div>
+                          <Typography>Module Material</Typography>
+                          {moduleMaterial && moduleMaterial.length > 0 ? (
+                            moduleMaterial.map(material => (
+                              <Button
+                                key={material.id}
+                                color="secondary"
+                                onClick={() =>
+                                  window.open(
+                                    `https://crescenttesting.azurewebsites.net/ModuleMaterial/${
+                                      material.filePath
+                                    }`,
+                                    '_blank',
+                                  )
+                                }
+                              >
+                                {material.filePath}
+                              </Button>
+                            ))
+                          ) : this.props.loadingMaterial ? (
+                            <div>
+                              <LinearProgress color="secondary" />
+                              Loading Module Material
+                            </div>
+                          ) : (
+                            <div>
+                              <Typography>No Material</Typography>
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <Typography>Module Tests</Typography>
+                          {moduleTests && moduleTests.length > 0 ? (
+                            moduleTests.map(test => (
+                              <Button
+                                key={test.id}
+                                color="secondary"
+                                onClick={() => this.loadTest(test.id)}
+                              >
+                                {test.name}
+                              </Button>
+                            ))
+                          ) : this.props.loadingTests ? (
+                            <div>
+                              <LinearProgress color="secondary" />
+                              Loading Tests
+                            </div>
+                          ) : (
+                            <div>
+                              <Typography>No Tests</Typography>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                 ))}
@@ -82,7 +138,7 @@ class CourseDetail extends React.Component {
             ) : (
               <div className="center">
                 <LinearProgress color="secondary" />
-                Loading Courses
+                Loading modules
               </div>
             )}
           </Card>
@@ -103,13 +159,21 @@ class CourseDetail extends React.Component {
 CourseDetail.propTypes = {
   course: PropTypes.object,
   modules: PropTypes.array,
+  moduleMaterial: PropTypes.array,
   dispatch: PropTypes.func,
+  moduleTests: PropTypes.array,
+  loadingMaterial: PropTypes.bool,
+  loadingTests: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   course: state.CourseReducer.course,
   modules: state.ModuleReducer.modules,
+  moduleMaterial: state.ModuleReducer.moduleMaterial,
   loading: state.ModuleReducer.loading,
+  moduleTests: state.ModuleReducer.moduleTests,
+  loadingMaterial: state.ModuleReducer.loadingMaterial,
+  loadingTests: state.ModuleReducer.loadingTests,
 });
 
 const mapDispatchToProps = dispatch => ({

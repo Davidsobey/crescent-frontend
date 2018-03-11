@@ -31,6 +31,8 @@ import UsersCourseView from '../Containers/UserView/Courses';
 import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
 import UsersModuleView from '../Containers/UserView/Modules';
 import UserModuleDetail from '../Containers/UserView/Modules/ModuleDetail';
+import UserTest from '../Containers/UserView/Test';
+import TakeTest from '../Containers/UserView/Test/TakeTest';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -136,6 +138,16 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.USERS_VIEW_MODULE}
                   component={UserModuleDetail}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_TEST}
+                  component={UserTest}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_START_TEST}
+                  component={TakeTest}
                   exact
                 />
               </Switch>

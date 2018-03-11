@@ -9,6 +9,9 @@ import MuiTheme from '../src/Styles/MuiTheme';
 import AppRouter from './Routers/AppRouters';
 import configureStore from './Store';
 
+require('babel-core/register');
+require('babel-polyfill');
+
 const store = configureStore();
 
 const App = () => (

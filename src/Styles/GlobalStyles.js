@@ -112,8 +112,8 @@ injectGlobal`
   }
 
  .alignRight{
-    display: flex;
-    justify-content: flex-end;
+    display: flex !important;
+    justify-content: flex-end !important;
   }
  
 

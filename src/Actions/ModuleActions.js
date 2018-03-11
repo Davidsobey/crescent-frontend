@@ -106,13 +106,12 @@ function loadModuleByCourse(id) {
   };
 }
 
-
 function moduleMaterial(materialIds) {
   function request() {
     return { type: ModuleConstants.MODULE_MATERIAL_REQUEST };
   }
-  function success(modules) {
-    return { type: ModuleConstants.MODULE_MATERIAL_SUCCESS, modules };
+  function success(moduleMaterials) {
+    return { type: ModuleConstants.MODULE_MATERIAL_SUCCESS, moduleMaterials };
   }
   function failure(error) {
     return { type: ModuleConstants.MODULE_MATERIAL_REQUEST, error };
@@ -122,7 +121,7 @@ function moduleMaterial(materialIds) {
     dispatch(request());
 
     ModuleService.getModuleMaterial(materialIds).then(
-      modules => dispatch(success(modules)),
+      moduleMaterials => dispatch(success(moduleMaterials)),
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error));
@@ -131,6 +130,29 @@ function moduleMaterial(materialIds) {
   };
 }
 
+function loadModuleTests(id) {
+  function request() {
+    return { type: ModuleConstants.LOADTESTS_REQUEST };
+  }
+  function success(moduleTests) {
+    return { type: ModuleConstants.LOADTESTS_SUCCESS, moduleTests };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.LOADTESTS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ModuleService.loadTests(id).then(
+      moduleTests => dispatch(success(moduleTests)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
 
 function clearModules() {
   function clear() {
@@ -148,6 +170,7 @@ const ModuleActions = {
   loadModuleByCourse,
   clearModules,
   moduleMaterial,
+  loadModuleTests,
 };
 
 export default ModuleActions;

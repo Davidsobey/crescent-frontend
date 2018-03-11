@@ -12,6 +12,7 @@ function TestReducer(state = {}, action) {
       };
     case TestConstants.CREATE_FAILURE:
       return {};
+
     case TestConstants.GETALL_REQUEST:
       return {
         loading: true,
@@ -24,6 +25,33 @@ function TestReducer(state = {}, action) {
       return {
         modules: {},
       };
+
+    case TestConstants.LOADTEST_REQUEST:
+      return {
+        loading: true,
+      };
+    case TestConstants.LOADTEST_SUCCESS:
+      return Object.assign({}, state, {
+        test: action.test,
+      });
+    case TestConstants.LOADTEST_FAILURE:
+      return {
+        modules: {},
+      };
+
+    case TestConstants.LOADTESTQUESTIONS_REQUEST:
+      return {
+        loading: true,
+      };
+    case TestConstants.LOADTESTQUESTIONS_SUCCESS:
+      return Object.assign({}, state, {
+        questions: action.questions,
+      });
+    case TestConstants.LOADTESTQUESTIONS_FAILURE:
+      return {
+        modules: {},
+      };
+
     default:
       return state;
   }

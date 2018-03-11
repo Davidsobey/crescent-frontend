@@ -54,9 +54,59 @@ function getAll() {
   };
 }
 
+function loadTest(id) {
+  function request() {
+    return { type: TestConstants.LOADTEST_REQUEST };
+  }
+  function success(test) {
+    return { type: TestConstants.LOADTEST_SUCCESS, test };
+  }
+  function failure(error) {
+    return { type: TestConstants.LOADTEST_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    TestService.loadTest(id).then(
+      test => dispatch(success(test)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function loadTestQuestions(userId, id) {
+  function request() {
+    return { type: TestConstants.LOADTESTQUESTIONS_REQUEST };
+  }
+  function success(questions) {
+    return { type: TestConstants.LOADTESTQUESTIONS_SUCCESS, questions };
+  }
+  function failure(error) {
+    return { type: TestConstants.LOADTESTQUESTIONS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    TestService.loadTestQuestions(userId, id).then(
+      questions => dispatch(success(questions)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const TestActions = {
   create,
   getAll,
+  loadTest,
+  loadTestQuestions,
 };
 
 export default TestActions;
