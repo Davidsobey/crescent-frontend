@@ -385,12 +385,12 @@ class MiniDrawer extends React.Component {
               details={ClientCourseDetails}
             />
           </List>
-          <List>
+          {/* <List>
             <ExpandableMenu
               color={theme.palette.accent[500]}
               details={ClientModuleDetails}
             />
-          </List>
+          </List> */}
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
