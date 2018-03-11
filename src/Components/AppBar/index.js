@@ -245,18 +245,18 @@ const ClientCourseDetails = {
   ],
 };
 
-const ClientModuleDetails = {
-  listName: 'Modules',
-  listIcon: <ModuleIcon />,
-  subItems: [
-    {
-      key: 0,
-      subItemName: 'View My Modules',
-      subItemIcon: <ListIcon />,
-      subItemExtension: 'list',
-    },
-  ],
-};
+// const ClientModuleDetails = {
+//   listName: 'Modules',
+//   listIcon: <ModuleIcon />,
+//   subItems: [
+//     {
+//       key: 0,
+//       subItemName: 'View My Modules',
+//       subItemIcon: <ListIcon />,
+//       subItemExtension: 'list',
+//     },
+//   ],
+// };
 
 class MiniDrawer extends React.Component {
   state = {
