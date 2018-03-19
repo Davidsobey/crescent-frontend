@@ -15,17 +15,7 @@ class UserTest extends React.Component {
   }
 
   render() {
-    // const { test } = this.props;
-    const test = {
-      id: 4,
-      name: 'Example Test',
-      moduleID: 2,
-      totalMarks: 100,
-      module: null,
-      questions: null,
-      questionIds: null,
-      enrolments: null,
-    };
+    const { test } = this.props;
 
     return (
       <div className="content">
@@ -52,7 +42,7 @@ class UserTest extends React.Component {
 }
 
 UserTest.propTypes = {
-  // test: PropTypes.object,
+  test: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

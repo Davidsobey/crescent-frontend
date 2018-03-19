@@ -13,7 +13,6 @@ require('babel-core/register');
 require('babel-polyfill');
 
 const store = configureStore();
-
 const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={MuiTheme}>

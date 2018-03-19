@@ -116,6 +116,25 @@ injectGlobal`
     justify-content: flex-end !important;
   }
  
+  .test-table{
+    display: table;
+    max-width: 500px;
+    margin: auto;
+  }
+
+  .button-completed{
+    border: 1px solid #66bb6a !important;
+    color: #66bb6a !important;
+    background-color: #66bb6a1a !important;
+    margin: 5px !important;
+  }
+
+  .button-not-completed{
+    border: 1px solid #760000 !important;
+    color: #760000 !important;
+    background-color: #7600001a !important;
+    margin: 5px !important;
+  }
 
   .justify-content{
     justify-content: space-between;

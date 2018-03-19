@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
-
 import history from '../Helpers/History';
 import AlertActions from '../Actions/AlertActions';
 import UserActions from '../Actions/UserActions';
@@ -33,6 +32,8 @@ import UsersModuleView from '../Containers/UserView/Modules';
 import UserModuleDetail from '../Containers/UserView/Modules/ModuleDetail';
 import UserTest from '../Containers/UserView/Test';
 import TakeTest from '../Containers/UserView/Test/TakeTest';
+import Question from '../Containers/UserView/Test/Question';
+
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -47,7 +48,6 @@ class AppRouters extends React.Component {
   handleClose = () => {
     this.props.dispatch(UserActions.close());
   };
-
   render() {
     return (
       <div className="app">
@@ -148,6 +148,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.USERS_START_TEST}
                   component={TakeTest}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_QUESTION}
+                  component={Question}
                   exact
                 />
               </Switch>

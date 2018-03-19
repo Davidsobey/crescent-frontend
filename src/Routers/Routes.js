@@ -25,6 +25,7 @@ const USERS_VIEW_MODULES = '/modules/list';
 const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
+const USERS_QUESTION = '/modules/test/question';
 
 export default {
   HOME,
@@ -54,4 +55,5 @@ export default {
   USERS_VIEW_MODULE,
   USERS_VIEW_TEST,
   USERS_START_TEST,
+  USERS_QUESTION,
 };

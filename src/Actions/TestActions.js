@@ -102,11 +102,66 @@ function loadTestQuestions(userId, id) {
   };
 }
 
+function markQuestion(id, answerId) {
+  function request() {
+    return { type: TestConstants.MARKTESTQUESTION_REQUEST };
+  }
+  function success() {
+    return { type: TestConstants.MARKTESTQUESTION_SUCCESS };
+  }
+  function failure(error) {
+    return { type: TestConstants.MARKTESTQUESTION_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    TestService.markQuestion(id, answerId).then(dispatch(success()), (error) => {
+      dispatch(failure(error));
+      dispatch(AlertActions.error(error));
+    });
+  };
+}
+
+function loadTestQuestion(question) {
+  function success() {
+    return { type: TestConstants.LOADQUESTION_SUCCESS, question };
+  }
+
+  return (dispatch) => {
+    dispatch(success(question));
+  };
+}
+
+function loadQuestions(string) {
+  function success() {
+    return { type: TestConstants.LOADQUESTION_SUCCES, string };
+  }
+
+  return (dispatch) => {
+    dispatch(success(string));
+  };
+}
+
+function loadQuestion1(string) {
+  function success() {
+    return { type: TestConstants.LOADQUESTION_SUCCE, string };
+  }
+
+  return (dispatch) => {
+    dispatch(success(string));
+  };
+}
+
 const TestActions = {
   create,
   getAll,
   loadTest,
   loadTestQuestions,
+  loadQuestions,
+  markQuestion,
+  loadTestQuestion,
+  loadQuestion1,
 };
 
 export default TestActions;

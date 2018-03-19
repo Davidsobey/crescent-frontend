@@ -55,10 +55,24 @@ function loadTestQuestions(userId, id) {
   ).then(handleResponse);
 }
 
+function markQuestion(id, answerGivenId) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, answerGivenId }),
+  };
+
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${id}/Mark`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
 const ModuleServices = {
   create,
   getAll,
   loadTest,
   loadTestQuestions,
+  markQuestion,
 };
 export default ModuleServices;
