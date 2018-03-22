@@ -51,8 +51,10 @@ function TestReducer(state = {}, action) {
         ...state,
         loading: true,
       };
-    case TestConstants.LOADTESTQUESTIONS_SUCCESS:
-      return { ...state, questions: action.questions };
+    case TestConstants.LOADTESTQUESTIONS_SUCCESS: {
+      const ques = action.questions.sort((a, b) => a.id - b.id);
+      return { ...state, questions: ques };
+    }
     case TestConstants.LOADTESTQUESTIONS_FAILURE:
       return {
         ...state,
@@ -64,8 +66,15 @@ function TestReducer(state = {}, action) {
         ...state,
         loading: true,
       };
-    case TestConstants.MARKTESTQUESTION_SUCCESS:
-      return { ...state, response: 'Question Marked', loading: false };
+    case TestConstants.MARKTESTQUESTION_SUCCESS: {
+      const newData = state.questions.map((ques) => {
+        if (ques.questionId === action.payload.id) {
+          return { ...ques, answerGivenId: action.payload.answerId };
+        }
+        return ques;
+      });
+      return { ...state, response: 'Question Marked', questions: newData };
+    }
     case TestConstants.MARKTESTQUESTION_FAILURE:
       return {
         ...state,
@@ -75,6 +84,14 @@ function TestReducer(state = {}, action) {
       return {
         ...state,
         question: action.question,
+      };
+    case TestConstants.CHANGE_ANSWER:
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          answerGivenId: action.value,
+        },
       };
     case TestConstants.LOADQUESTION_SUCCES:
       return {
