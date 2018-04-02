@@ -15,7 +15,7 @@ import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import TestActions from '../../../Actions/TestActions';
 
-const header = ['ID', 'Name', 'Module', 'Total Marks'];
+const header = ['ID', 'Name', 'Module', 'Total Marks', 'Edit/Delete'];
 
 class TestView extends React.Component {
   constructor(props) {
@@ -28,7 +28,12 @@ class TestView extends React.Component {
     return (
       <Card width="800px" title="Test List">
         {Array.isArray(tests) ? (
-          <Table header={header} data={tests} />
+          <Table
+            header={header}
+            data={tests}
+            del="Test"
+            edit="/test/edit"
+          />
         ) : (
           <div className="center">
             <CircularProgress color="secondary" />

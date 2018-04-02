@@ -11,10 +11,15 @@ function create(moduleID, testName, totalMarks) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: testName,
+      moduleID,
+      totalMarks,
+    }),
   };
 
   return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Tests?Name=${testName}&ModuleID=${moduleID}&TotalMarks=${totalMarks}`,
+    'https://crescenttesting.azurewebsites.net/api/Tests',
     requestOptions,
   ).then(handleResponse);
 }
