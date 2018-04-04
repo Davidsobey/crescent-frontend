@@ -103,6 +103,18 @@ function TestReducer(state = {}, action) {
         ...state,
         question,
       };
+    case TestConstants.SUBMIT_TEST_REQUEST:
+      return {
+        ...state,
+      };
+    case TestConstants.SUBMIT_TEST_SUCCESS:
+      return {
+        ...state,
+      };
+    case TestConstants.SUBMIT_TEST_FAILURE:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

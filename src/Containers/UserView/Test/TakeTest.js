@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import Typography from 'material-ui/Typography';
-// import MobileStepper from 'material-ui/MobileStepper';
-// import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
-// import Radio, { RadioGroup } from 'material-ui/Radio';
-// import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form';
 import { Divider } from 'material-ui';
+import { BrowserRouter as Prompt } from 'react-router-dom';
 
 import Card from '../../../Components/Card';
 import Button from '../../../Components/Button';
@@ -21,6 +16,13 @@ class UserTest extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.props.history.action === 'POP') {
+      history.push('/modules/test');
+    }
+    return true;
+  }
+
   postQuestion(questionId, value) {
     if (value) {
       const val = parseInt(value, 10);
@@ -31,6 +33,11 @@ class UserTest extends React.Component {
   loadQuestion(question) {
     this.props.dispatch(TestActions.loadTestQuestion(question));
     history.push('/modules/test/question');
+  }
+
+  submitTest(testId, courseId) {
+    this.props.dispatch(TestActions.submitTest(testId, courseId, 2));
+    history.push('/modules/test/complete');
   }
 
   render() {
@@ -53,6 +60,7 @@ class UserTest extends React.Component {
     let count = 0;
     return (
       <div className="content">
+        <Prompt message="Are you sure you want to go to back?" />
         {test &&
           questions && (
             <Card width="95%" title={`${test.name} Overview`}>
@@ -79,73 +87,14 @@ class UserTest extends React.Component {
               <Divider />
               <br />
               <div className="alignRight">
-                <Button color="secondary" variant="raised">
+                <Button
+                  color="secondary"
+                  variant="raised"
+                  onClick={() => this.submitTest(test.id, this.props.courseId)}
+                >
                   Complete Test
                 </Button>
               </div>
-
-              {/* <FormControl component="fieldset">
-                <FormLabel component="legend">
-                  {questions[activeStep].question.title}
-                </FormLabel>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value={
-                    (this.state.value > 0 &&
-                      this.state.value[activeStep] &&
-                      this.state.value[activeStep].toString()) ||
-                    questions[activeStep].answerGivenId.toString()
-                  }
-                  onChange={this.handleChange}
-                >
-                  {questions[activeStep].question.questionOptions.map(option => (
-                    <FormControlLabel
-                      value={option.id.toString()}
-                      control={<Radio />}
-                      label={option.title}
-                      key={option.id}
-                    />
-                    ))}
-                </RadioGroup>
-              </FormControl> */}
-
-              {/* <MobileStepper
-                variant="progress"
-                steps={questions.length}
-                position="static"
-                activeStep={this.state.activeStep}
-                nextButton={
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      this.handleNext(questions[activeStep].questionId);
-                    }}
-                    disabled={this.state.activeStep === questions.length - 1}
-                  >
-                    Next
-                    <KeyboardArrowRight />
-                  </Button>
-                }
-                backButton={
-                  <Button
-                    size="small"
-                    onClick={this.handleBack}
-                    disabled={this.state.activeStep === 0}
-                  >
-                    <KeyboardArrowLeft />
-                    Back
-                  </Button>
-                }
-              />
-              <br />
-              {this.state.activeStep === questions.length - 1 && (
-                <div className="row alignRight">
-                  <Button color="secondary" variant="raised">
-                    Complete Test
-                  </Button>
-                </div>
-              )} */}
             </Card>
           )}
       </div>
@@ -157,11 +106,14 @@ UserTest.propTypes = {
   questions: PropTypes.array,
   test: PropTypes.object,
   dispatch: PropTypes.func,
+  courseId: PropTypes.number,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   test: state.TestReducer.test,
   questions: state.TestReducer.questions,
+  courseId: state.CourseReducer.course.id,
 });
 
 const mapDispatchToProps = dispatch => ({

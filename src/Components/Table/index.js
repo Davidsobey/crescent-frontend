@@ -40,6 +40,10 @@ class BasicTable extends React.Component {
     this.child.handleOpen();
   };
 
+  confirmDelete = id => () => {
+    console.log(id);
+  };
+
   render() {
     const {
       classes, data, header, del, edit,
@@ -114,6 +118,7 @@ class BasicTable extends React.Component {
               obj={this.state && this.state.obj}
               /* eslint-disable no-return-assign */
               onRef={ref => (this.child = ref)}
+              onClick={this.confirmDelete(this.state.obj)}
             />
           </TableBody>
         </Table>

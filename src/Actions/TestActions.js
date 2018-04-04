@@ -175,6 +175,30 @@ function loadNextQuestion(question) {
   };
 }
 
+function submitTest(testId, courseId, userId) {
+  function request() {
+    return { type: TestConstants.SUBMIT_TEST_REQUEST };
+  }
+  function success() {
+    return { type: TestConstants.SUBMIT_TEST_SUCCESS };
+  }
+  function failure(error) {
+    return { type: TestConstants.SUBMIT_TEST_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    TestService.submitTest(testId, courseId, userId).then(
+      dispatch(success()),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const TestActions = {
   create,
   getAll,
@@ -186,6 +210,7 @@ const TestActions = {
   loadTestQuestion,
   loadNextQuestion,
   loadQuestion1,
+  submitTest,
 };
 
 export default TestActions;
