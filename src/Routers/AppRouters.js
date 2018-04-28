@@ -37,6 +37,12 @@ import UserTest from '../Containers/UserView/Test/index';
 import TakeTest from '../Containers/UserView/Test/TakeTest';
 import Question from '../Containers/UserView/Test/Question';
 import TestEdit from '../Containers/Test/TestEdit/index';
+import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
+import PolicyView from '../Containers/Policy/PolicyView/index';
+import AcknowledgementCreate from '../Containers/Policy/PolicyAcknowledgement/Create';
+import AcknowledgementList from '../Containers/Policy/PolicyAcknowledgement/List';
+import AcknowledgePolicy from '../Containers/Policy/PolicyAcknowledgement/Acknowledge';
+
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -190,6 +196,31 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.TEST_EDIT}
                   component={withAuth(TestEdit)}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICIES_VIEW}
+                  component={withAuth(PolicyView)}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICIES_CREATE}
+                  component={withAuth(PolicyCreate)}
+                  exact
+                />
+                <Route
+                  path={Routes.ACKNOWLEDGEMENT_CREATE}
+                  component={withAuth(AcknowledgementCreate)}
+                  exact
+                />
+                <Route
+                  path={Routes.ACKNOWLEDGEMENT_VIEW}
+                  component={withAuth(AcknowledgementList)}
+                  exact
+                />
+                <Route
+                  path={Routes.ACKNOWLEDGE}
+                  component={withAuth(AcknowledgePolicy)}
                   exact
                 />
               </Switch>

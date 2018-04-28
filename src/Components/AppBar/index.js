@@ -28,6 +28,7 @@ import UserIcon from 'material-ui-icons/People';
 import ClientIcon from 'material-ui-icons/Person';
 import TestIcon from 'material-ui-icons/Create';
 import QuestionIcon from 'material-ui-icons/QuestionAnswer';
+import PolicyIcon from 'material-ui-icons/Gavel';
 
 import UserActions from '../../Actions/UserActions';
 import ExpandableMenu from '../../Components/ExpandableMenu';
@@ -146,6 +147,37 @@ const ModuleDetails = {
       subItemName: 'Module Material',
       subItemIcon: <AttachIcon />,
       subItemExtension: 'material/create',
+    },
+  ],
+};
+
+const PolicyDetails = {
+  listName: 'Policy',
+  listIcon: <PolicyIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Policy',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Policy List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+    {
+      key: 2,
+      subItemName: 'Create Acknowledgement',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'acknowledgement/create',
+    },
+    {
+      key: 3,
+      subItemName: 'Acknowledgement List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'acknowledgement/list',
     },
   ],
 };
@@ -374,6 +406,10 @@ class MiniDrawer extends React.Component {
             <ExpandableMenu
               color={theme.palette.accent[500]}
               details={QuestionDetails}
+            />
+            <ExpandableMenu
+              color={theme.palette.accent[500]}
+              details={PolicyDetails}
             />
             <ExpandableMenu
               color={theme.palette.accent[500]}
