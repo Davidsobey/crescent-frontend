@@ -3,9 +3,9 @@ import PolicyService from '../Services/PolicyService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
-function create(policy) {
+function create(policy, formfile) {
   function request() {
-    return { type: PolicyConstants.CREATE_REQUEST, policy };
+    return { type: PolicyConstants.CREATE_REQUEST };
   }
   function success() {
     return { type: PolicyConstants.CREATE_SUCCESS, policy };
@@ -15,10 +15,10 @@ function create(policy) {
   }
 
   return (dispatch) => {
-    dispatch(request({ policy }));
-    PolicyService.create(policy).then(
+    dispatch(request({ }));
+    PolicyService.create(policy, formfile).then(
       () => {
-        dispatch(success(policy));
+        dispatch(success());
         history.push('/policy/list');
         dispatch(AlertActions.success('Policy created.'));
       },

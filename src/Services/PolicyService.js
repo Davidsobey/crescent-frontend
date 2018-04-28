@@ -14,11 +14,19 @@ function filteredList(response, id) {
   return objects;
 }
 
-function create(policyVM) {
+function create(policyVM, formFile) {
+  // get the logged in user to know who is creating
+  const creator = Auth.getProfile();
+  const createdBy = creator.NameId;
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ PolicyVM: policyVM }),
+    body: JSON.stringify({
+      Name: policyVM.policyName,
+      Description: policyVM.policyDescription,
+      CreatedBy: createdBy,
+      FormFile: formFile,
+    }),
   };
 
   return Auth.fetch(

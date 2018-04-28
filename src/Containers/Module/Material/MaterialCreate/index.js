@@ -43,7 +43,7 @@ class MaterialCreate extends React.Component {
   };
 
   render() {
-    return (
+    return ( 
       <Card width="600px" title="Create New Material">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
