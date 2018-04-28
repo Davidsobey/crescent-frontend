@@ -1,77 +1,37 @@
-import ModuleConstants from '../Constants/ModuleConstants';
+import PolicyConstants from '../Constants/PolicyConstants';
 
-function ModuleReducer(state = {}, action) {
+function PolicyReducer(state = {}, action) {
   switch (action.type) {
-    case ModuleConstants.CREATE_REQUEST:
+    case PolicyConstants.CREATE_REQUEST:
       return {
         policies: action.policyName,
       };
-    case ModuleConstants.CREATE_SUCCESS:
+    case PolicyConstants.CREATE_SUCCESS:
       return {
         policies: action.policyName,
       };
-    case ModuleConstants.CREATE_FAILURE:
+    case PolicyConstants.CREATE_FAILURE:
       return {};
-
-    case ModuleConstants.GETALL_REQUEST:
+    case PolicyConstants.GETALL_REQUEST:
       return {
         loading: true,
       };
-    case ModuleConstants.GETALL_SUCCESS:
+    case PolicyConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         policies: action.policies,
       });
-    case ModuleConstants.GETALL_FAILURE:
+    case PolicyConstants.GETALL_FAILURE:
       return {
         policies: {},
       };
 
-    case ModuleConstants.LOADPOLICY_REQUEST:
-      return {
-        loading: true,
-      };
-    case ModuleConstants.LOADPOLICY_SUCCESS:
-      return Object.assign({}, state, {
-        policies: action.policies,
-        loading: false,
-      });
-    case ModuleConstants.LOADPOLICY_FAILURE:
-      return {
-        policies: {},
-      };
-
-    case ModuleConstants.CLEAR_POLICIES:
+    case PolicyConstants.CLEAR_POLICIES:
       return {
         policies: undefined,
       };
-
-    case ModuleConstants.POLICY_MATERIAL_REQUEST:
-      return Object.assign({}, state, {
-        loadingMaterial: true,
-      });
-    case ModuleConstants.POLICY_MATERIAL_SUCCESS:
-      return Object.assign({}, state, {
-        loadingMaterial: false,
-        policyMaterial: action.policyMaterials,
-      });
-    case ModuleConstants.POLICY_MATERIAL_FAILURE:
-      return Object.assign({}, state, { policyMaterial: [] });
-
-    case ModuleConstants.LOADTESTS_REQUEST:
-      return Object.assign({}, state, {
-        loadingTests: true,
-      });
-    case ModuleConstants.LOADTESTS_SUCCESS:
-      return Object.assign({}, state, {
-        loadingTests: false,
-        policyTests: action.policyTests,
-      });
-    case ModuleConstants.LOADTESTS_FAILURE:
-      return Object.assign({}, state, { policyTests: [] });
-
     default:
       return state;
   }
 }
 
-export default ModuleReducer;
+export default PolicyReducer;

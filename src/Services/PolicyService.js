@@ -17,7 +17,7 @@ function filteredList(response, id) {
 function create(policyVM, formFile) {
   // get the logged in user to know who is creating
   const creator = Auth.getProfile();
-  const createdBy = creator.NameId;
+  const createdBy = creator.nameid;
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
