@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
@@ -13,10 +14,11 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
-import { MenuItem } from 'material-ui/Menu';
+import MUIMenuItem from 'material-ui/Menu/MenuItem';
 import List, { ListItemIcon, ListItemText } from 'material-ui/List';
 
 import HomeIcon from 'material-ui-icons/Home';
+import PowerSettingsNew from 'material-ui-icons/PowerSettingsNew';
 import AddIcon from 'material-ui-icons/Add';
 import ListIcon from 'material-ui-icons/ViewList';
 import CourseIcon from 'material-ui-icons/ChromeReaderMode';
@@ -27,8 +29,12 @@ import ClientIcon from 'material-ui-icons/Person';
 import TestIcon from 'material-ui-icons/Create';
 import QuestionIcon from 'material-ui-icons/QuestionAnswer';
 
+import UserActions from '../../Actions/UserActions';
 import ExpandableMenu from '../../Components/ExpandableMenu';
 import Logo from '../../Images/LogoBackground.png';
+import MenuItem from './styles';
+import history from '../../Helpers/History';
+import ROUTES from '../../Routers/Routes';
 
 const drawerWidth = 240;
 
@@ -245,23 +251,19 @@ const ClientCourseDetails = {
   ],
 };
 
-// const ClientModuleDetails = {
-//   listName: 'Modules',
-//   listIcon: <ModuleIcon />,
-//   subItems: [
-//     {
-//       key: 0,
-//       subItemName: 'View My Modules',
-//       subItemIcon: <ListIcon />,
-//       subItemExtension: 'list',
-//     },
-//   ],
-// };
-
 class MiniDrawer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
   state = {
     open: true,
   };
+
+  handleLogout() {
+    this.props.dispatch(UserActions.logout);
+    history.push(ROUTES.LOGIN);
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -283,7 +285,10 @@ class MiniDrawer extends React.Component {
             this.state.open && classes.appBarShift,
           )}
         >
-          <Toolbar disableGutters={!this.state.open}>
+          <Toolbar
+            disableGutters={!this.state.open}
+            className="justify-content"
+          >
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -298,6 +303,11 @@ class MiniDrawer extends React.Component {
             <Typography variant="title" color="inherit" noWrap>
               Lunar Testing System
             </Typography>
+            <MenuItem onClick={this.handleLogout}>
+              <ListItemIcon>
+                <PowerSettingsNew />
+              </ListItemIcon>
+            </MenuItem>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -337,7 +347,7 @@ class MiniDrawer extends React.Component {
               </Typography>
             )}
             <Link to="/home">
-              <MenuItem>
+              <MUIMenuItem>
                 <ListItemIcon>
                   <HomeIcon className={classes.paperColor} />
                 </ListItemIcon>
@@ -347,7 +357,7 @@ class MiniDrawer extends React.Component {
                   disableTypography
                   primary="Home"
                 />
-              </MenuItem>
+              </MUIMenuItem>
             </Link>
             <ExpandableMenu
               color={theme.palette.accent[500]}
@@ -401,10 +411,17 @@ class MiniDrawer extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+const withConnect = connect(null, mapDispatchToProps);
+
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   children: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export default withConnect(withStyles(styles, { withTheme: true })(MiniDrawer));

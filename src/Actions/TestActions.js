@@ -56,13 +56,13 @@ function getAll() {
 
 function loadTest(id) {
   function request() {
-    return { type: TestConstants.LOADTEST_REQUEST };
+    return { type: TestConstants.LOAD_TEST_REQUEST };
   }
   function success(test) {
-    return { type: TestConstants.LOADTEST_SUCCESS, test };
+    return { type: TestConstants.LOAD_TEST_SUCCESS, test };
   }
   function failure(error) {
-    return { type: TestConstants.LOADTEST_FAILURE, error };
+    return { type: TestConstants.LOAD_TEST_FAILURE, error };
   }
 
   return (dispatch) => {
@@ -80,13 +80,13 @@ function loadTest(id) {
 
 function loadTestQuestions(userId, id) {
   function request() {
-    return { type: TestConstants.LOADTESTQUESTIONS_REQUEST };
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_REQUEST };
   }
   function success(questions) {
-    return { type: TestConstants.LOADTESTQUESTIONS_SUCCESS, questions };
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_SUCCESS, questions };
   }
   function failure(error) {
-    return { type: TestConstants.LOADTESTQUESTIONS_FAILURE, error };
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_FAILURE, error };
   }
 
   return (dispatch) => {
@@ -106,13 +106,13 @@ function markQuestion(id, answerId) {
   const payload = { id, answerId };
 
   function request() {
-    return { type: TestConstants.MARKTESTQUESTION_REQUEST };
+    return { type: TestConstants.MARK_TEST_QUESTION_REQUEST };
   }
   function success() {
-    return { type: TestConstants.MARKTESTQUESTION_SUCCESS, payload };
+    return { type: TestConstants.MARK_TEST_QUESTION_SUCCESS, payload };
   }
   function failure(error) {
-    return { type: TestConstants.MARKTESTQUESTION_FAILURE, error };
+    return { type: TestConstants.MARK_TEST_QUESTION_FAILURE, error };
   }
 
   return (dispatch) => {
@@ -127,31 +127,11 @@ function markQuestion(id, answerId) {
 
 function loadTestQuestion(question) {
   function success() {
-    return { type: TestConstants.LOADQUESTION_SUCCESS, question };
+    return { type: TestConstants.LOAD_QUESTION_SUCCESS, question };
   }
 
   return (dispatch) => {
     dispatch(success(question));
-  };
-}
-
-function loadQuestions(string) {
-  function success() {
-    return { type: TestConstants.LOADQUESTION_SUCCES, string };
-  }
-
-  return (dispatch) => {
-    dispatch(success());
-  };
-}
-
-function loadQuestion1(string) {
-  function success() {
-    return { type: TestConstants.LOADQUESTION_SUCCE, string };
-  }
-
-  return (dispatch) => {
-    dispatch(success(string));
   };
 }
 
@@ -167,7 +147,7 @@ function changeAnswer(value) {
 
 function loadNextQuestion(question) {
   function success() {
-    return { type: TestConstants.LOADQUESTION_SUCCESS, question };
+    return { type: TestConstants.LOAD_QUESTION_SUCCESS, question };
   }
 
   return (dispatch) => {
@@ -199,18 +179,28 @@ function submitTest(testId, courseId, userId) {
   };
 }
 
+function EditTest(testObject) {
+  function success() {
+    return { type: TestConstants.LOAD_TEST_EDIT, testObject };
+  }
+
+  console.log(testObject);
+  return (dispatch) => {
+    dispatch(success(testObject));
+  };
+}
+
 const TestActions = {
   create,
   getAll,
   loadTest,
   loadTestQuestions,
-  loadQuestions,
   markQuestion,
   changeAnswer,
   loadTestQuestion,
   loadNextQuestion,
-  loadQuestion1,
   submitTest,
+  EditTest,
 };
 
 export default TestActions;

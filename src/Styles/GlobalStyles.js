@@ -98,7 +98,7 @@ injectGlobal`
     display: inline-flex;
   }
 
-  .pushdown{
+  .push_down{
     margin-top:1.2rem ;
   }
 

@@ -12,6 +12,7 @@ function UserReducer(state = {}, action) {
       });
     case UserConstants.GETALL_FAILURE:
       return {
+        loading: false,
         error: action.error,
       };
     case UserConstants.REGISTER_REQUEST:
@@ -23,7 +24,7 @@ function UserReducer(state = {}, action) {
         users: action.userName,
       };
     case UserConstants.REGISTER_FAILURE:
-      return {};
+      return state;
     case UserConstants.ENROL_REQUEST:
       return {
         enrolments: action.enrolment,
@@ -33,7 +34,7 @@ function UserReducer(state = {}, action) {
         enrolments: action.enrolment,
       };
     case UserConstants.ENROL_FAILURE:
-      return {};
+      return state;
     case UserConstants.GETUSER_REQUEST:
       return {
         loading: true,
@@ -46,6 +47,20 @@ function UserReducer(state = {}, action) {
       return {
         error: action.error,
       };
+    case UserConstants.LOGIN_REQUEST:
+      return {
+        loading: true,
+        user: action.user,
+      };
+    case UserConstants.LOGIN_SUCCESS:
+      return {
+        loggedIn: true,
+        user: action.user,
+      };
+    case UserConstants.LOGIN_FAILURE:
+      return {};
+    case UserConstants.LOGOUT:
+      return {};
     default:
       return state;
   }

@@ -1,7 +1,9 @@
 import UserConstants from '../Constants/UserConstants';
+import AlertConstants from '../Constants/AlertConstants';
 import UserService from '../Services/UserService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
+import ROUTES from '../Routers/Routes';
 
 function login(username, password) {
   function request(user) {
@@ -10,32 +12,35 @@ function login(username, password) {
   function success(user) {
     return { type: UserConstants.LOGIN_SUCCESS, user };
   }
-  function failure(error) {
-    return { type: UserConstants.LOGIN_FAILURE, error };
+  function failure() {
+    return { type: UserConstants.LOGIN_FAILURE };
   }
 
   return (dispatch) => {
     dispatch(request({ username }));
     UserService.login(username, password).then(
       (user) => {
-        dispatch(success(user));
-        history.push('/home');
+        dispatch(success(user.userVM));
+        history.push(ROUTES.HOME);
       },
-      (error) => {
-        dispatch(failure(error));
-        dispatch(AlertActions.error(error));
+      () => {
+        dispatch(failure());
+        dispatch(AlertActions.error('Login Failed'));
       },
     );
   };
 }
 
-function logout() {
+function logout(dispatch) {
+  function request() {
+    return { type: UserConstants.LOGOUT };
+  }
+  dispatch(request());
   UserService.logout();
-  return { type: UserConstants.LOGOUT };
 }
 
 function close() {
-  return { type: UserConstants.LOGIN_CLOSE };
+  return { type: AlertConstants.CLEAR };
 }
 
 function register(user) {

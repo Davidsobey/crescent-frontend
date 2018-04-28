@@ -10,12 +10,6 @@ import TestActions from '../../../Actions/TestActions';
 import history from '../../../Helpers/History';
 
 class UserTest extends React.Component {
-  componentDidMount() {
-    if (!this.props.questions) {
-      this.props.dispatch(TestActions.loadQuestions(''));
-    }
-  }
-
   componentWillUnmount() {
     if (this.props.history.action === 'POP') {
       history.push('/modules/test');
@@ -41,21 +35,7 @@ class UserTest extends React.Component {
   }
 
   render() {
-    let { test } = this.props;
-    const { questions } = this.props;
-
-    if (!test) {
-      test = {
-        id: 4,
-        name: 'Example Test',
-        moduleID: 2,
-        totalMarks: 100,
-        module: null,
-        questions: null,
-        questionIds: null,
-        enrolments: null,
-      };
-    }
+    const { questions, test } = this.props;
 
     let count = 0;
     return (

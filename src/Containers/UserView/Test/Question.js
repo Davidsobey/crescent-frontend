@@ -14,12 +14,6 @@ import history from '../../../Helpers/History';
 class UserTestQuestion extends React.Component {
   constructor(props) {
     super(props);
-    if (!this.props.questions) {
-      this.props.dispatch(TestActions.loadQuestions(''));
-    }
-    if (!this.props.question) {
-      this.props.dispatch(TestActions.loadQuestion1(''));
-    }
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.loadQuestion = this.loadQuestion.bind(this);
@@ -78,21 +72,7 @@ class UserTestQuestion extends React.Component {
     return this.props.questions[index];
   }
   render() {
-    let { test } = this.props;
-    const { question, questions } = this.props;
-
-    if (!test) {
-      test = {
-        id: 4,
-        name: 'Example Test',
-        moduleID: 2,
-        totalMarks: 100,
-        module: null,
-        questions: null,
-        questionIds: null,
-        enrolments: null,
-      };
-    }
+    const { question, questions, test } = this.props;
 
     return (
       <div className="content">
@@ -167,7 +147,7 @@ class UserTestQuestion extends React.Component {
                   {questions &&
                   this.findIndex(question.questionId) !== questions.length - 1
                     ? 'Next'
-                    : 'Finalise'}
+                    : 'Finalize'}
                   <KeyboardArrowRight />
                 </Button>
               </div>

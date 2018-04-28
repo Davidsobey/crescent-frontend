@@ -25,14 +25,6 @@ class ModuleView extends React.Component {
     this.props.dispatch(ModuleActions.getAll());
   }
 
-  // courses.map((course) => {
-  //   if (module.couseID === course.id) {
-  //     formattedModule.couseID = course.name;
-  //     return formattedModule;
-  //   }
-  //   return formattedModule;
-  // });
-
   loadData = (modules, courses) => {
     const formattedArray = [];
     if (Array.isArray(modules) && Array.isArray(courses)) {
@@ -42,7 +34,7 @@ class ModuleView extends React.Component {
           id: module.id,
           description: module.description,
           name: module.name,
-          couse: courseMatch[0].name,
+          course: courseMatch[0].name,
         };
         formattedArray.push(newModule);
       });

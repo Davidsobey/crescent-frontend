@@ -42,7 +42,7 @@ function ClientReducer(state = {}, action) {
       };
     case ClientConstants.SUBSCRIBE_SUCCESS:
       return {
-        subcription: action.subscripton,
+        subcription: action.subscription,
       };
     case ClientConstants.SUBSCRIBE_FAILURE:
       return {};

@@ -1,7 +1,4 @@
-import TestConstants, {
-  questionsObj,
-  question,
-} from '../Constants/TestConstants';
+import TestConstants from '../Constants/TestConstants';
 
 function TestReducer(state = {}, action) {
   switch (action.type) {
@@ -30,43 +27,43 @@ function TestReducer(state = {}, action) {
         ...state,
         modules: {},
       };
-    case TestConstants.LOADTEST_REQUEST:
+    case TestConstants.LOAD_TEST_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case TestConstants.LOADTEST_SUCCESS:
+    case TestConstants.LOAD_TEST_SUCCESS:
       return {
         ...state,
         test: action.test,
       };
-    case TestConstants.LOADTEST_FAILURE:
+    case TestConstants.LOAD_TEST_FAILURE:
       return {
         ...state,
         modules: {},
       };
 
-    case TestConstants.LOADTESTQUESTIONS_REQUEST:
+    case TestConstants.LOAD_TEST_QUESTIONS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case TestConstants.LOADTESTQUESTIONS_SUCCESS: {
+    case TestConstants.LOAD_TEST_QUESTIONS_SUCCESS: {
       const ques = action.questions.sort((a, b) => a.id - b.id);
       return { ...state, questions: ques };
     }
-    case TestConstants.LOADTESTQUESTIONS_FAILURE:
+    case TestConstants.LOAD_TEST_QUESTIONS_FAILURE:
       return {
         ...state,
         modules: {},
       };
 
-    case TestConstants.MARKTESTQUESTION_REQUEST:
+    case TestConstants.MARK_TEST_QUESTION_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case TestConstants.MARKTESTQUESTION_SUCCESS: {
+    case TestConstants.MARK_TEST_QUESTION_SUCCESS: {
       const newData = state.questions.map((ques) => {
         if (ques.questionId === action.payload.id) {
           return { ...ques, answerGivenId: action.payload.answerId };
@@ -75,12 +72,12 @@ function TestReducer(state = {}, action) {
       });
       return { ...state, response: 'Question Marked', questions: newData };
     }
-    case TestConstants.MARKTESTQUESTION_FAILURE:
+    case TestConstants.MARK_TEST_QUESTION_FAILURE:
       return {
         ...state,
         error: action.error,
       };
-    case TestConstants.LOADQUESTION_SUCCESS:
+    case TestConstants.LOAD_QUESTION_SUCCESS:
       return {
         ...state,
         question: action.question,
@@ -92,16 +89,6 @@ function TestReducer(state = {}, action) {
           ...state.question,
           answerGivenId: action.value,
         },
-      };
-    case TestConstants.LOADQUESTION_SUCCES:
-      return {
-        ...state,
-        questions: questionsObj,
-      };
-    case TestConstants.LOADQUESTION_SUCCE:
-      return {
-        ...state,
-        question,
       };
     case TestConstants.SUBMIT_TEST_REQUEST:
       return {

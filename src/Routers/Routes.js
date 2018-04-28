@@ -1,3 +1,4 @@
+const LOGIN = '/';
 const HOME = '/home';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
@@ -11,13 +12,13 @@ const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
-const ENROLMENTS_CREATE = '/user/enrolment/create';
-const ENROLMENTS_LIST = '/user/enrolment/list';
+const ENROLLMENTS_CREATE = '/user/enrolment/create';
+const ENROLLMENTS_LIST = '/user/enrolment/list';
 const USER_ENROL = 'user/enrolment/create';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
-const SUBSCRIPTIONS_LIST = '/client/subcription/list';
+const SUBSCRIPTIONS_LIST = '/client/subscription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
@@ -26,8 +27,10 @@ const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
+const TEST_EDIT = '/test/edit';
 
 export default {
+  LOGIN,
   HOME,
   COURSE_CREATE,
   COURSE_VIEW,
@@ -41,8 +44,8 @@ export default {
   QUESTION_VIEW,
   USER_CREATE,
   USER_VIEW,
-  ENROLMENTS_CREATE,
-  ENROLMENTS_LIST,
+  ENROLLMENTS_CREATE,
+  ENROLLMENTS_LIST,
   USER_ENROL,
   CLIENT_CREATE,
   CLIENT_VIEW,
@@ -56,4 +59,5 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
+  TEST_EDIT,
 };

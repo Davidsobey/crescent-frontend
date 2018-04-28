@@ -30,6 +30,7 @@
     "form-data": "^2.3.2",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
+    "jwt-decode": "^2.2.0",
     "lint": "^1.1.2",
     "material-ui": "^1.0.0-beta.35",
     "material-ui-icons": "^1.0.0-beta.17",

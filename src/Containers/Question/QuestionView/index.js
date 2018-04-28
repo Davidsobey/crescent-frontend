@@ -25,14 +25,6 @@ class QuestionView extends React.Component {
     this.props.dispatch(QuestionActions.getAll());
   }
 
-  // Tests.map((Test) => {
-  //   if (Question.couseID === Test.id) {
-  //     formattedQuestion.couseID = Test.name;
-  //     return formattedQuestion;
-  //   }
-  //   return formattedQuestion;
-  // });
-
   loadData = (Questions, Tests) => {
     const formattedArray = [];
     if (Array.isArray(Questions)) {

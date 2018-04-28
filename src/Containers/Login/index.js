@@ -51,13 +51,10 @@ class Login extends React.Component {
           <br />
           <br />
           <div className="alignRight">
-            {this.props.loading ? (
-              <CircularProgress color="secondary" />
-            ) : (
-              <Button variant="raised" color="primary" type="submit">
-                Login
-              </Button>
-            )}
+            <Button variant="raised" color="primary" type="submit">
+              Login
+            </Button>
+            {this.props.loading && <CircularProgress />}
           </div>
         </Card>
       </form>
@@ -76,7 +73,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  loading: state.AuthenticationReducer.loading,
+  loading: state.UserReducer.loading,
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

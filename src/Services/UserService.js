@@ -1,5 +1,8 @@
 import AuthHeader from '../Helpers/AuthHeader';
 import CommonConstants from '../Constants/CommonConstants';
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+
+const Auth = new AuthMiddleware();
 
 const fetch = require('isomorphic-fetch');
 
@@ -14,40 +17,7 @@ function handleResponse(response) {
 }
 
 function login(username, password) {
-  const requestOptions = {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify({
-      email: username,
-      password,
-    }),
-  };
-
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Auth?',
-    requestOptions,
-  )
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject(response.statusText);
-      }
-
-      return response.json();
-    })
-    .then((user) => {
-      // login successful if there's a jwt token in the response
-      if (user && user.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user)); // eslint-disable-line no-undef
-      }
-
-      return user;
-    });
-}
-
-function logout() {
-  // remove user from local storage to log user out
-  localStorage.removeItem('user'); // eslint-disable-line no-undef
+  return Auth.login(username, password);
 }
 
 function getAll() {
@@ -68,7 +38,10 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`https://crescenttesting.azurewebsites.net/api/Users/${id}`, requestOptions).then(handleResponse);
+  return fetch(
+    `https://crescenttesting.azurewebsites.net/api/Users/${id}`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function register(user) {
@@ -114,15 +87,19 @@ function deleteUser(id) {
   return fetch(`${api}/Users/${id}`, requestOptions).then(handleResponse);
 }
 
+function logout() {
+  localStorage.clear();
+}
+
 const UserService = {
   login,
-  logout,
   register,
   getAll,
   getById,
   update,
   delete: deleteUser,
   enrol,
+  logout,
 };
 
 export default UserService;

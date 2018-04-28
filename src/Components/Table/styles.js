@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Edit, Delete } from 'material-ui-icons';
+
 import Button from '../Button';
 
 export const Actions = styled.div`
@@ -25,6 +27,17 @@ export const StyledButton = styled(Button)`
   }
 `;
 
+export const StyledEdit = styled(Edit)`
+  && {
+  color: #fdde83;
+  }
+`;
+
+export const StyledDelete = styled(Delete)`
+  && {
+    color: #760000  ;
+  }
+`;
 
 export const TableWrapper = styled.div``;
 

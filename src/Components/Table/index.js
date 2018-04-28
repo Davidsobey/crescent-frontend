@@ -8,10 +8,9 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import { Paper, Tooltip, IconButton } from 'material-ui';
-import { Edit, Delete } from 'material-ui-icons';
 
-import { Actions } from './styles';
-import CustomModal from '../../Components/Modal';
+import { Actions, StyledEdit, StyledDelete } from './styles';
+import CustomModal from '../../Components/Modal/index';
 import Button from '../Button';
 
 const styles = () => ({
@@ -40,18 +39,26 @@ class BasicTable extends React.Component {
     this.child.handleOpen();
   };
 
+  handleEdit(testObject) {
+    this.props.handleEdit(testObject);
+  }
+
   confirmDelete = id => () => {
     console.log(id);
   };
 
+  // handleEdit = (editObj) => {
+  //   this.props.dispatch(editObj);
+  // };
+
   render() {
     const {
-      classes, data, header, del, edit,
+      data, header, del, edit,
     } = this.props;
     let count = 0;
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
+      <Paper>
+        <Table>
           <TableHead>
             <TableRow>
               {header.map(head => <TableCell key={head}>{head}</TableCell>)}
@@ -88,22 +95,20 @@ class BasicTable extends React.Component {
                         {edit && (
                           <Tooltip id="tooltip-edit" title="Edit">
                             <IconButton
-                              className={classes.button}
-                              color="primary"
                               aria-label="Edit"
+                              onClick={() => this.handleEdit(obj)}
                             >
-                              <Edit />
+                              <StyledEdit />
                             </IconButton>
                           </Tooltip>
                         )}
                         {del && (
                           <Tooltip id="tooltip-delete" title="Delete">
                             <IconButton
-                              color="secondary"
                               aria-label="Delete"
                               onClick={() => this.handleDelete(obj)}
                             >
-                              <Delete />
+                              <StyledDelete />
                             </IconButton>
                           </Tooltip>
                         )}
@@ -128,11 +133,11 @@ class BasicTable extends React.Component {
 }
 
 BasicTable.propTypes = {
-  classes: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   header: PropTypes.array.isRequired,
   del: PropTypes.string,
   edit: PropTypes.string,
+  handleEdit: PropTypes.func,
 };
 
 export default withStyles(styles)(BasicTable);
