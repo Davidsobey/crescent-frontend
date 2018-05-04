@@ -10,20 +10,39 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import Table from '../../../Components/Table';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
-
-const header = ['ID', 'Name', 'Description', 'Category'];
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
 
 class ModuleView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { obj: {} };
     this.props.dispatch(CourseActions.getAll());
     this.props.dispatch(ModuleActions.getAll());
   }
+
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(ModuleActions.deleteModule(obj.id));
+    this.child.handleClose();
+  };
+
+  handleEdit = (editObj) => {
+    this.props.dispatch(ModuleActions.loadModule(editObj.id));
+  };
 
   loadData = (modules, courses) => {
     const formattedArray = [];
@@ -44,18 +63,70 @@ class ModuleView extends React.Component {
   };
 
   render() {
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Description',
+        accessor: 'description',
+      },
+      {
+        Header: 'Course',
+        accessor: 'course',
+      },
+      {
+        Header: 'Edit/Delete',
+        accessor: 'edit/delete',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-delete" title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => this.handleEdit(row.original)}
+              >
+                <StyledEdit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-delete" title="Delete">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => this.handleDelete(row.original)}
+              >
+                <StyledDelete />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+      },
+    ];
     const { courses, modules } = this.props;
     const data = this.loadData(modules, courses);
     return (
-      <Card width="800px" title="Module List">
-        {Array.isArray(modules) && Array.isArray(courses) ? (
-          <Table header={header} data={data} />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
-          </div>
-        )}
-      </Card>
+      <div>
+        <Card width="800px" title="Module List">
+          {Array.isArray(modules) && Array.isArray(courses) ? (
+            <ReactTable
+              columns={columns}
+              data={data}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          ) : (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          )}
+        </Card>
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
+      </div>
     );
   }
 }
@@ -63,6 +134,10 @@ class ModuleView extends React.Component {
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
   modules: state.ModuleReducer.modules,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
 });
 
 const withForm = reduxForm(
@@ -78,4 +153,4 @@ ModuleView.propTypes = {
   modules: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps), withForm)(ModuleView);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(ModuleView);

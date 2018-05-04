@@ -16,8 +16,10 @@ import Login from '../Containers/Login';
 import Home from '../Containers/Home';
 import CourseCreate from '../Containers/Course/CourseCreate/index';
 import CourseList from '../Containers/Course/CourseView/index';
+import CourseEdit from '../Containers/Course/CourseEdit/index';
 import ModuleCreate from '../Containers/Module/ModuleCreate/index';
 import ModuleList from '../Containers/Module/ModuleView/index';
+import ModuleEdit from '../Containers/Module/ModuleEdit/index';
 import MaterialCreate from '../Containers/Module/Material/MaterialCreate/index';
 import TestCreate from '../Containers/Test/TestCreate/index';
 import TestList from '../Containers/Test/TestView/index';
@@ -63,7 +65,11 @@ class AppRouters extends React.Component {
           SnackbarContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">{this.props.alert}</span>}
+          message={
+            <span id="message-id">
+              {typeof this.props.alert === 'string' && this.props.alert}
+            </span>
+          }
         />
         <Router history={history}>
           <Switch>
@@ -75,6 +81,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.COURSE_CREATE}
                   component={withAuth(CourseCreate)}
+                  exact
+                />
+                <Route
+                  path={Routes.COURSE_EDIT}
+                  component={withAuth(CourseEdit)}
                   exact
                 />
                 <Route
@@ -90,6 +101,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.MODULE_VIEW}
                   component={withAuth(ModuleList)}
+                  exact
+                />
+                <Route
+                  path={Routes.MODULE_EDIT}
+                  component={withAuth(ModuleEdit)}
                   exact
                 />
                 <Route

@@ -1,51 +1,62 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
 
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
-}
+const Auth = new AuthMiddleware();
 
-function create(courseName, courseDescription) {
+function create(courseName, courseDescription, courseCPD) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      Name: courseName,
+      Description: courseDescription,
+      cpdPoints: parseInt(courseCPD, 10),
+    }),
   };
-
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Courses?Name=${courseName}&Description=${courseDescription}&CategoryId=1&Grade=0`,
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses`, requestOptions);
 }
 
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Courses',
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses`, requestOptions);
 }
 
 function getCourse(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Courses/${id}`,
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/${id}`, requestOptions);
+}
+
+function editCourse(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      description: values.description,
+      cpdPoints: parseInt(values.cpdPoints, 10),
+    }),
+  };
+
+  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/${values.id}`, requestOptions);
+}
+
+function deleteCourse(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/Delete/${id}`, requestOptions);
 }
 
 const CourseService = {
   create,
   getAll,
   getCourse,
+  deleteCourse,
+  editCourse,
 };
 export default CourseService;

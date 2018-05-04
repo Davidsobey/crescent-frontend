@@ -11,7 +11,7 @@ import MuiTheme from '../src/Styles/MuiTheme';
 import AppRouter from './Routers/AppRouters';
 import configureStore from './Store/index';
 import { saveState } from './localStorage';
-
+import './web.config';
 
 const store = configureStore();
 store.subscribe(() => {

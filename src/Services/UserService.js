@@ -6,8 +6,6 @@ const Auth = new AuthMiddleware();
 
 const fetch = require('isomorphic-fetch');
 
-const api = CommonConstants.LIVE_API_ADDRESS;
-
 function handleResponse(response) {
   if (!response.ok) {
     return Promise.reject(response.statusText);
@@ -26,8 +24,8 @@ function getAll() {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Users',
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -38,8 +36,8 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Users/${id}`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users/${id}`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -51,7 +49,10 @@ function register(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${api}/Users`, requestOptions).then(handleResponse);
+  return fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function update(user) {
@@ -61,7 +62,10 @@ function update(user) {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${api}/Users/${user.id}`, requestOptions).then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users/${user.id}`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function enrol(enrolment) {
@@ -71,8 +75,8 @@ function enrol(enrolment) {
     body: JSON.stringify(enrolment.courseID),
   };
 
-  return fetch(
-    `${api}/Users/${enrolment.userID}/enrolments`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users/${enrolment.userID}/enrolments`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -84,7 +88,10 @@ function deleteUser(id) {
     headers: AuthHeader(),
   };
 
-  return fetch(`${api}/Users/${id}`, requestOptions).then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Users/${id}`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function logout() {

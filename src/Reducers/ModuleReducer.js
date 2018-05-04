@@ -1,4 +1,5 @@
 import ModuleConstants from '../Constants/ModuleConstants';
+import UserConstants from '../Constants/UserConstants';
 
 function ModuleReducer(state = {}, action) {
   switch (action.type) {
@@ -25,7 +26,6 @@ function ModuleReducer(state = {}, action) {
       return {
         modules: {},
       };
-
     case ModuleConstants.LOADMODULE_REQUEST:
       return {
         loading: true,
@@ -39,12 +39,10 @@ function ModuleReducer(state = {}, action) {
       return {
         modules: {},
       };
-
     case ModuleConstants.CLEAR_MODULES:
       return {
         modules: undefined,
       };
-
     case ModuleConstants.MODULE_MATERIAL_REQUEST:
       return Object.assign({}, state, {
         loadingMaterial: true,
@@ -68,7 +66,17 @@ function ModuleReducer(state = {}, action) {
       });
     case ModuleConstants.LOADTESTS_FAILURE:
       return Object.assign({}, state, { moduleTests: [] });
-
+    case UserConstants.LOGOUT:
+      return {};
+    case ModuleConstants.LOAD_MODULE_REQUEST:
+      return state;
+    case ModuleConstants.LOAD_MODULE_SUCCESS:
+      return Object.assign({}, state, {
+        module: action.module,
+        loading: false,
+      });
+    case ModuleConstants.LOAD_MODULE_FAILURE:
+      return state;
     default:
       return state;
   }

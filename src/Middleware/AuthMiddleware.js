@@ -1,11 +1,12 @@
 import React from 'react';
 import decode from 'jwt-decode';
+import CommonConstants from '../Constants/CommonConstants';
 
 class AuthMiddleware extends React.Component {
   // Initializing important variables
   constructor(domain) {
     super();
-    this.domain = domain || 'https://crescenttesting.azurewebsites.net/api'; // API server domain
+    this.domain = domain || `${CommonConstants.LIVE_PROD_ADDRESS}`; // API server domain
     this.fetch = this.fetch.bind(this); // React binding stuff
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
@@ -29,9 +30,6 @@ class AuthMiddleware extends React.Component {
   loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken(); // Getting token from localstorage
-    if (!!token && !this.isTokenExpired(token)) {
-      console.log(token);
-    }
     return !!token && !this.isTokenExpired(token); // handwaiving here
   }
 

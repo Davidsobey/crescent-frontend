@@ -1,4 +1,5 @@
 import TestConstants from '../Constants/TestConstants';
+import UserConstants from '../Constants/UserConstants';
 
 function TestReducer(state = {}, action) {
   switch (action.type) {
@@ -102,6 +103,8 @@ function TestReducer(state = {}, action) {
       return {
         ...state,
       };
+    case UserConstants.LOGOUT:
+      return {};
     default:
       return state;
   }

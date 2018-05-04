@@ -1,4 +1,7 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
+
+const Auth = new AuthMiddleware();
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -18,8 +21,8 @@ function create(moduleID, testName, totalMarks) {
     }),
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Tests',
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Tests`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -30,8 +33,8 @@ function getAll() {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Tests',
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Tests`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -42,8 +45,8 @@ function loadTest(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Tests/${id}`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Tests/${id}`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -54,8 +57,10 @@ function loadTestQuestions(userId, id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${userId}/${id}`,
+  return Auth.fetch(
+    `${
+      CommonConstants.LIVE_PROD_ADDRESS
+    }/EnrolmentTestQuestions/${userId}/${id}`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -67,8 +72,8 @@ function markQuestion(id, answerGivenId) {
     body: JSON.stringify({ id, answerGivenId }),
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${id}/Mark`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/EnrolmentTestQuestions/${id}/Mark`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -79,8 +84,10 @@ function submitTest(testId, courseId, userId) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
+  return Auth.fetch(
+    `${
+      CommonConstants.LIVE_PROD_ADDRESS
+    }/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
     requestOptions,
   ).then(handleResponse);
 }

@@ -1,8 +1,9 @@
+import FormData from 'form-data';
+
 import CommonConstants from '../Constants/CommonConstants';
+import AuthMiddleware from '../Middleware/AuthMiddleware';
 
-const FormData = require('form-data');
-const fetch = require('isomorphic-fetch');
-
+const Auth = new AuthMiddleware();
 const api = CommonConstants.LIVE_API_ADDRESS;
 
 function handleResponse(response) {
@@ -19,8 +20,7 @@ function getByID(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`${api}/Materials/${id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(`${api}/Materials/${id}`, requestOptions).then(handleResponse);
 }
 
 // post new material with file upload
@@ -33,10 +33,7 @@ function upload(moduleId, file) {
     body: fd,
   };
 
-  return fetch(
-    `${api}/Materials`,
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${api}/Materials`, requestOptions).then(handleResponse);
 }
 
 const ModuleServices = {

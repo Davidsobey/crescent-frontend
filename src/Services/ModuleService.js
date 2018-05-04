@@ -1,11 +1,7 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
 
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
-}
+const Auth = new AuthMiddleware();
 
 function filteredList(response, id) {
   const objects = response.filter(obj => obj.courseId === id);
@@ -25,22 +21,23 @@ function create(courseID, moduleName, moduleDescription) {
     // })
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Modules?Name=${moduleName}&Description=${moduleDescription}&CourseId=${courseID}`,
+  return Auth.fetch(
+    `${
+      CommonConstants.LIVE_PROD_ADDRESS
+    }/Modules?Name=${moduleName}&Description=${moduleDescription}&CourseId=${courseID}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Modules',
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function getModules(id) {
@@ -49,12 +46,10 @@ function getModules(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  const objectList = fetch(
-    'https://crescenttesting.azurewebsites.net/api/Modules',
+  const objectList = Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules`,
     requestOptions,
-  )
-    .then(handleResponse)
-    .then(data => filteredList(data, id));
+  ).then(data => filteredList(data, id));
 
   return objectList;
 }
@@ -65,10 +60,10 @@ function loadTests(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Modules/${id}/Tests`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${id}/Tests`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function delay() {
@@ -84,10 +79,10 @@ async function delayedLog(item) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Materials/${item}`,
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Materials/${item}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 async function processArray(array) {
@@ -102,11 +97,41 @@ function getModuleMaterial(ids) {
   return materialDetails;
 }
 
+function getModule(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${id}`,
+    requestOptions,
+  );
+}
+
+function editModule(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      description: values.description,
+      courseId: values.courseId,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${values.id}`,
+    requestOptions,
+  );
+}
+
 const ModuleServices = {
   create,
   getAll,
   getModules,
   getModuleMaterial,
   loadTests,
+  getModule,
+  editModule,
 };
 export default ModuleServices;

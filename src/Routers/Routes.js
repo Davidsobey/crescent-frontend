@@ -2,8 +2,10 @@ const LOGIN = '/';
 const HOME = '/home';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
+const COURSE_EDIT = '/course/edit';
 const MODULE_CREATE = '/module/create';
 const MODULE_VIEW = '/module/list';
+const MODULE_EDIT = '/module/edit';
 const MATERIAL_CREATE = '/module/material/create';
 const MATERIAL_VIEW = 'module/material/view';
 const TEST_CREATE = '/test/create';
@@ -34,8 +36,10 @@ export default {
   HOME,
   COURSE_CREATE,
   COURSE_VIEW,
+  COURSE_EDIT,
   MODULE_CREATE,
   MODULE_VIEW,
+  MODULE_EDIT,
   MATERIAL_CREATE,
   MATERIAL_VIEW,
   TEST_CREATE,

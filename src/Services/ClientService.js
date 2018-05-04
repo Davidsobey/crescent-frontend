@@ -1,6 +1,7 @@
 import CommonConstants from '../Constants/CommonConstants';
+import AuthMiddleware from '../Middleware/AuthMiddleware';
 
-const fetch = require('isomorphic-fetch');
+const Auth = new AuthMiddleware();
 
 const api = CommonConstants.LIVE_API_ADDRESS;
 
@@ -18,8 +19,7 @@ function create(client) {
     body: JSON.stringify(client),
   };
 
-  return fetch(`${api}/Clients`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(`${api}/Clients`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
@@ -28,8 +28,7 @@ function getAll() {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`${api}/Clients`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(`${api}/Clients`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -38,8 +37,7 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`${api}/Clients/${id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(`${api}/Clients/${id}`, requestOptions).then(handleResponse);
 }
 
 function subscribe(subscription) {
@@ -49,8 +47,10 @@ function subscribe(subscription) {
     body: JSON.stringify(subscription.courseID),
   };
 
-  return fetch(`${api}/Clients/${subscription.clientID}/subscriptions`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${api}/Clients/${subscription.clientID}/subscriptions`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 const ClientService = {

@@ -1,4 +1,7 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
+
+const Auth = new AuthMiddleware();
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -14,8 +17,10 @@ function create(question) {
     body: JSON.stringify(question),
   };
 
-  return fetch('https://crescenttesting.azurewebsites.net/api/Questions', requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Questions`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function getAll() {
@@ -24,8 +29,8 @@ function getAll() {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Questions',
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Questions`,
     requestOptions,
   ).then(handleResponse);
 }
@@ -36,8 +41,10 @@ function getById(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`/Questions/${id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Questions/${id}`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 function update(question) {
@@ -47,8 +54,10 @@ function update(question) {
     body: JSON.stringify(question),
   };
 
-  return fetch(`/Questions/${question.id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.LIVE_PROD_ADDRESS}/Questions/${question.id}`,
+    requestOptions,
+  ).then(handleResponse);
 }
 
 const QuestionServices = {

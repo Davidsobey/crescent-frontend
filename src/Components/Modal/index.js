@@ -33,7 +33,7 @@ class CustomModal extends React.Component {
     if (obj) {
       Object.keys(obj).forEach((prop) => {
         if (obj[prop] && !Array.isArray(obj[prop])) {
-          arr.push(obj[prop]);
+          arr.push(`${prop}: ${obj[prop]}`);
         }
       });
     }
@@ -45,7 +45,7 @@ class CustomModal extends React.Component {
       justifyContent: 'center',
       alignItems: 'center',
     };
-    const { del, obj } = this.props;
+    const { obj } = this.props;
     return (
       <Modal
         aria-labelledby="simple-modal-title"
@@ -56,7 +56,7 @@ class CustomModal extends React.Component {
       >
         <ModalPaper>
           <Typography variant="title" id="modal-title">
-            {`Are you sure you want to delete this ${del}?`}
+            {'Are you sure you want to delete this:'}
           </Typography>
           <br />
           {this.loadRows(obj, []).map(returnObj => (
@@ -88,7 +88,6 @@ class CustomModal extends React.Component {
 }
 
 CustomModal.propTypes = {
-  del: PropTypes.string,
   obj: PropTypes.object,
   onRef: PropTypes.func,
   onClick: PropTypes.func,
