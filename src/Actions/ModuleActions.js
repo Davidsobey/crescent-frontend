@@ -132,20 +132,20 @@ function moduleMaterial(materialIds) {
 
 function deleteModule(id) {
   function request() {
-    return { type: ModuleConstants.DELETE_REQUEST, id };
+    return { type: ModuleConstants.DELETE_MODULE_REQUEST };
   }
   function success() {
-    return { type: ModuleConstants.DELETE_SUCCESS, id };
+    return { type: ModuleConstants.DELETE_MODULE_SUCCESS };
   }
   function failure(error) {
-    return { type: ModuleConstants.DELETE_FAILURE, error };
+    return { type: ModuleConstants.DELETE_MODULE_FAILURE, error };
   }
 
   return (dispatch) => {
     dispatch(request());
-
-    ModuleService.deleteCourse(id).then(
-      () => dispatch(success(id)),
+    ModuleService.deleteModule(id).then(
+      () => dispatch(success()),
+      dispatch(AlertActions.success('Module deleted successfully.')),
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error || error));
@@ -204,7 +204,6 @@ function loadModule(id) {
     ModuleService.getModule(id).then(
       (module) => {
         dispatch(success(module));
-        history.push('/module/edit');
       },
       (error) => {
         dispatch(failure(error));
@@ -215,9 +214,13 @@ function loadModule(id) {
 }
 
 function editModule(values) {
+  function success() {
+    return { type: ModuleConstants.EDIT_MODULE_SUCCESS };
+  }
   return (dispatch) => {
     ModuleService.editModule(values).then(
       () => {
+        dispatch(success());
         history.push('/module/list');
         dispatch(AlertActions.success(`Module ${values.name} edited.`));
       },

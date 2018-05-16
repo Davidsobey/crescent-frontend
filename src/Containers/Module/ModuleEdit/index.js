@@ -34,7 +34,7 @@ class ModuleEdit extends React.Component {
 
   render() {
     return (
-      <Card width="600px" title="Create New Course">
+      <Card width="600px" title="Create New Module">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -51,7 +51,7 @@ class ModuleEdit extends React.Component {
               </Field>
               <Field
                 name="name"
-                label="Course Name"
+                label="Module Name"
                 margin="normal"
                 component={TextField}
               />
@@ -59,7 +59,7 @@ class ModuleEdit extends React.Component {
             <div>
               <Field
                 name="description"
-                label="Course Description"
+                label="Module Description"
                 margin="normal"
                 component={TextField}
               />
@@ -67,7 +67,7 @@ class ModuleEdit extends React.Component {
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Edit Course
+              Edit Module
             </Button>
           </div>
         </form>

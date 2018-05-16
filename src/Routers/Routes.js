@@ -10,6 +10,7 @@ const MATERIAL_CREATE = '/module/material/create';
 const MATERIAL_VIEW = 'module/material/view';
 const TEST_CREATE = '/test/create';
 const TEST_VIEW = '/test/list';
+const TEST_EDIT = '/test/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
 const USER_CREATE = '/user/create';
@@ -29,7 +30,6 @@ const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
-const TEST_EDIT = '/test/edit';
 
 export default {
   LOGIN,
@@ -44,6 +44,7 @@ export default {
   MATERIAL_VIEW,
   TEST_CREATE,
   TEST_VIEW,
+  TEST_EDIT,
   QUESTION_CREATE,
   QUESTION_VIEW,
   USER_CREATE,
@@ -63,5 +64,4 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
-  TEST_EDIT,
 };

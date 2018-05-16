@@ -6,7 +6,7 @@ class AuthMiddleware extends React.Component {
   // Initializing important variables
   constructor(domain) {
     super();
-    this.domain = domain || `${CommonConstants.LIVE_PROD_ADDRESS}`; // API server domain
+    this.domain = domain || `${CommonConstants.API_ENDPOINT}`; // API server domain
     this.fetch = this.fetch.bind(this); // React binding stuff
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);

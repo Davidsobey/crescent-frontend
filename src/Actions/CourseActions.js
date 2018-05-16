@@ -99,7 +99,6 @@ function loadCourse(id) {
     CourseService.getCourse(id).then(
       (course) => {
         dispatch(success(course));
-        history.push('/course/edit');
       },
       (error) => {
         dispatch(failure(error));

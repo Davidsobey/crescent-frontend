@@ -21,6 +21,7 @@ import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
+import history from '../../../Helpers/History';
 
 class ModuleView extends React.Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class ModuleView extends React.Component {
 
   handleEdit = (editObj) => {
     this.props.dispatch(ModuleActions.loadModule(editObj.id));
+    history.push('/module/edit');
   };
 
   loadData = (modules, courses) => {

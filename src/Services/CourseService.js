@@ -10,9 +10,10 @@ function create(courseName, courseDescription, courseCPD) {
       Name: courseName,
       Description: courseDescription,
       cpdPoints: parseInt(courseCPD, 10),
+      active: true,
     }),
   };
-  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses`, requestOptions);
 }
 
 function getAll() {
@@ -20,7 +21,7 @@ function getAll() {
     method: 'GET',
   };
 
-  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses`, requestOptions);
 }
 
 function getCourse(id) {
@@ -28,7 +29,7 @@ function getCourse(id) {
     method: 'GET',
   };
 
-  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/${id}`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses/${id}`, requestOptions);
 }
 
 function editCourse(values) {
@@ -42,14 +43,14 @@ function editCourse(values) {
     }),
   };
 
-  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/${values.id}`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses/${values.id}`, requestOptions);
 }
 
 function deleteCourse(id) {
   const requestOptions = {
     method: 'PUT',
   };
-  return Auth.fetch(`${CommonConstants.LIVE_PROD_ADDRESS}/Courses/Delete/${id}`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses/Delete/${id}`, requestOptions);
 }
 
 const CourseService = {

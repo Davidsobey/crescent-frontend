@@ -10,50 +10,136 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
-import history from '../../../Helpers/History';
-import Card from '../../../Components/Card/index';
-import Table from '../../../Components/Table/index';
+import Card from '../../../Components/Card';
+import ModuleActions from '../../../Actions/ModuleActions';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
 import TestActions from '../../../Actions/TestActions';
-
-const header = ['ID', 'Name', 'Module', 'Total Marks', 'Edit/Delete'];
+import history from '../../../Helpers/History';
 
 class TestView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { obj: {} };
+  }
+
+  componentWillMount() {
+    this.props.dispatch(ModuleActions.getAll());
     this.props.dispatch(TestActions.getAll());
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  handleEdit(testObject) {
-    this.props.dispatch(TestActions.EditTest(testObject));
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(TestActions.deleteTest(obj.id));
+    this.child.handleClose();
+  };
+
+  handleEdit = (obj) => {
+    this.props.dispatch(TestActions.loadTest(obj.id));
     history.push('/test/edit');
-  }
+  };
+
+  loadData = (children, parent) => {
+    const formattedArray = [];
+    if (Array.isArray(children) && Array.isArray(parent)) {
+      children.forEach((child) => {
+        const moduleMatch = parent.filter(parentObj => parentObj.id === child.moduleID);
+        const newTest = {
+          id: child.id,
+          name: child.name,
+          totalMarks: child.totalMarks,
+          moduleID: moduleMatch[0] ? moduleMatch[0].name : '',
+        };
+        formattedArray.push(newTest);
+      });
+      formattedArray.sort((a, b) => a.id - b.id);
+    }
+    return formattedArray;
+  };
 
   render() {
-    const { tests } = this.props;
-    return (
-      <Card width="800px" title="Test List">
-        {Array.isArray(tests) ? (
-          <Table
-            header={header}
-            data={tests}
-            del="Test"
-            edit="/test/edit"
-            handleEdit={this.handleEdit}
-          />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Total Marks',
+        accessor: 'totalMarks',
+      },
+      {
+        Header: 'Module',
+        accessor: 'moduleID',
+      },
+      {
+        Header: 'Edit/Delete',
+        accessor: 'edit/delete',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-delete" title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => this.handleEdit(row.original)}
+              >
+                <StyledEdit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-delete" title="Delete">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => this.handleDelete(row.original)}
+              >
+                <StyledDelete />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      </Card>
+        ),
+      },
+    ];
+    const { tests, modules } = this.props;
+    const data = this.loadData(tests, modules);
+    return (
+      <div>
+        <Card width="800px" title="Test List">
+          {Array.isArray(tests) && Array.isArray(modules) ? (
+            <ReactTable
+              columns={columns}
+              data={data}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          ) : (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          )}
+        </Card>
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
   tests: state.TestReducer.tests,
+  modules: state.ModuleReducer.modules,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -62,13 +148,14 @@ const mapDispatchToProps = dispatch => ({
 
 const withForm = reduxForm(
   {
-    form: 'courseView',
+    form: 'testView',
   },
   TestView,
 );
 
 TestView.propTypes = {
   tests: PropTypes.array,
+  modules: PropTypes.array,
   dispatch: PropTypes.func,
 };
 

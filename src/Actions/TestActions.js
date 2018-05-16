@@ -179,14 +179,45 @@ function submitTest(testId, courseId, userId) {
   };
 }
 
-function EditTest(testObject) {
+function editTest(values) {
   function success() {
-    return { type: TestConstants.LOAD_TEST_EDIT, testObject };
+    return { type: TestConstants.EDIT_TEST_SUCCESS };
+  }
+  return (dispatch) => {
+    TestService.editTest(values).then(
+      () => {
+        dispatch(success());
+        history.push('/test/list');
+        dispatch(AlertActions.success(`Test: ${values.name} edited.`));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function loadTestByModule(id) {
+  function request() {
+    return { type: TestConstants.LOADTEST_REQUEST };
+  }
+  function success(tests) {
+    return { type: TestConstants.LOADTEST_SUCCESS, tests };
+  }
+  function failure(error) {
+    return { type: TestConstants.LOADTEST_FAILURE, error };
   }
 
-  console.log(testObject);
   return (dispatch) => {
-    dispatch(success(testObject));
+    dispatch(request());
+
+    TestService.getTests(id).then(
+      tests => dispatch(success(tests)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
   };
 }
 
@@ -200,7 +231,8 @@ const TestActions = {
   loadTestQuestion,
   loadNextQuestion,
   submitTest,
-  EditTest,
+  editTest,
+  loadTestByModule,
 };
 
 export default TestActions;

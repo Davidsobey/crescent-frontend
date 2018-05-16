@@ -24,7 +24,7 @@ function ModuleReducer(state = {}, action) {
       });
     case ModuleConstants.GETALL_FAILURE:
       return {
-        modules: {},
+        modules: undefined,
       };
     case ModuleConstants.LOADMODULE_REQUEST:
       return {
@@ -37,12 +37,10 @@ function ModuleReducer(state = {}, action) {
       });
     case ModuleConstants.LOADMODULE_FAILURE:
       return {
-        modules: {},
-      };
-    case ModuleConstants.CLEAR_MODULES:
-      return {
         modules: undefined,
       };
+    case ModuleConstants.CLEAR_MODULES:
+      return {};
     case ModuleConstants.MODULE_MATERIAL_REQUEST:
       return Object.assign({}, state, {
         loadingMaterial: true,
@@ -77,6 +75,23 @@ function ModuleReducer(state = {}, action) {
       });
     case ModuleConstants.LOAD_MODULE_FAILURE:
       return state;
+    case ModuleConstants.DELETE_REQUEST:
+      return state;
+    case ModuleConstants.DELETE_SUCCESS:
+      return Object.assign({}, state, {
+        module: {},
+        loading: false,
+      });
+    case ModuleConstants.DELETE_FAILURE:
+      return Object.assign({}, state, {
+        module: {},
+        loading: false,
+      });
+    case ModuleConstants.EDIT_MODULE_SUCCESS:
+      return Object.assign({}, state, {
+        module: undefined,
+        loading: false,
+      });
     default:
       return state;
   }

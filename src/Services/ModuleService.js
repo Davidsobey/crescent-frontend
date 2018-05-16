@@ -11,7 +11,6 @@ function filteredList(response, id) {
 function create(courseID, moduleName, moduleDescription) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     // body: JSON.stringify({
     //   name: courseName,
     //   description: courseDescription,
@@ -23,7 +22,7 @@ function create(courseID, moduleName, moduleDescription) {
 
   return Auth.fetch(
     `${
-      CommonConstants.LIVE_PROD_ADDRESS
+      CommonConstants.API_ENDPOINT
     }/Modules?Name=${moduleName}&Description=${moduleDescription}&CourseId=${courseID}`,
     requestOptions,
   );
@@ -34,20 +33,16 @@ function getAll() {
     method: 'GET',
   };
 
-  return Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules`,
-    requestOptions,
-  );
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Modules`, requestOptions);
 }
 
 function getModules(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   const objectList = Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules`,
+    `${CommonConstants.API_ENDPOINT}/Modules`,
     requestOptions,
   ).then(data => filteredList(data, id));
 
@@ -57,11 +52,10 @@ function getModules(id) {
 function loadTests(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${id}/Tests`,
+    `${CommonConstants.API_ENDPOINT}/Modules/${id}/Tests`,
     requestOptions,
   );
 }
@@ -76,11 +70,10 @@ async function delayedLog(item) {
   await delay();
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Materials/${item}`,
+    `${CommonConstants.API_ENDPOINT}/Materials/${item}`,
     requestOptions,
   );
 }
@@ -103,7 +96,7 @@ function getModule(id) {
   };
 
   return Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${id}`,
+    `${CommonConstants.API_ENDPOINT}/Modules/${id}`,
     requestOptions,
   );
 }
@@ -116,11 +109,22 @@ function editModule(values) {
       name: values.name,
       description: values.description,
       courseId: values.courseId,
+      active: true,
     }),
   };
 
   return Auth.fetch(
-    `${CommonConstants.LIVE_PROD_ADDRESS}/Modules/${values.id}`,
+    `${CommonConstants.API_ENDPOINT}/Modules/${values.id}`,
+    requestOptions,
+  );
+}
+
+function deleteModule(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Modules/Delete/${id}`,
     requestOptions,
   );
 }
@@ -133,5 +137,6 @@ const ModuleServices = {
   loadTests,
   getModule,
   editModule,
+  deleteModule,
 };
 export default ModuleServices;

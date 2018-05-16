@@ -106,7 +106,7 @@ class TestCreate extends React.Component {
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Create Course
+              Create Test
             </Button>
           </div>
         </form>
@@ -133,7 +133,7 @@ function mapStateToProps(state) {
 
 const withForm = reduxForm(
   {
-    form: 'courseCreate',
+    form: 'testCreate',
     validate,
   },
   TestCreate,

@@ -77,7 +77,7 @@ class ModuleCreate extends React.Component {
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Create Course
+              Create Module
             </Button>
           </div>
         </form>

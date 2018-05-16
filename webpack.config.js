@@ -41,7 +41,7 @@ module.exports = (env) => {
           test: /\.(jpe?g|png|gif|svg)$/i,
           loader: 'url-loader',
         },
-        { test: /\.(config)$/, loader: 'file-loader?name=[name].[ext]' },
+        // { test: /\.(config)$/, loader: 'file-loader?name=[name].[ext]' },
       ],
     },
     plugins: [CSSExtract],

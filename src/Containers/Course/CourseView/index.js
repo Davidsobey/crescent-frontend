@@ -14,6 +14,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import CourseActions from '../../../Actions/CourseActions';
 import { StyledDelete } from '../../../Styles/Delete';
@@ -43,6 +44,7 @@ class CourseView extends React.Component {
 
   handleEdit = (editObj) => {
     this.props.dispatch(CourseActions.loadCourse(editObj.id));
+    history.push('/course/edit');
   };
 
   render() {

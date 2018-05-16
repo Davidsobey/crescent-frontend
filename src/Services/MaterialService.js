@@ -4,14 +4,7 @@ import CommonConstants from '../Constants/CommonConstants';
 import AuthMiddleware from '../Middleware/AuthMiddleware';
 
 const Auth = new AuthMiddleware();
-const api = CommonConstants.LIVE_API_ADDRESS;
-
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
-}
+const api = CommonConstants.API_ENDPOINT;
 
 // get material by ID
 function getByID(id) {
@@ -20,7 +13,7 @@ function getByID(id) {
     headers: { 'Content-Type': 'application/json' },
   };
 
-  return Auth.fetch(`${api}/Materials/${id}`, requestOptions).then(handleResponse);
+  return Auth.fetch(`${api}/Materials/${id}`, requestOptions);
 }
 
 // post new material with file upload
@@ -33,7 +26,7 @@ function upload(moduleId, file) {
     body: fd,
   };
 
-  return Auth.fetch(`${api}/Materials`, requestOptions).then(handleResponse);
+  return Auth.fetch(`${api}/Materials`, requestOptions);
 }
 
 const ModuleServices = {
