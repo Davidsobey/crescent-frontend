@@ -4,7 +4,7 @@ const APIConstants = {
 };
 
 const CommonConstants = {
-  API_ENDPOINT: APIConstants.LIVE_API_ADDRESS,
+  API_ENDPOINT: APIConstants.LIVE_PROD_ADDRESS,
 };
 
 export default CommonConstants;

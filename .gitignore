@@ -9,3 +9,5 @@ public
 .DS_Store
 npm-debug.log
 .idea
+public/dist/bundle.js.map
+public/dist/bundle.js
