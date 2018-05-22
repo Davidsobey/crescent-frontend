@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import UserServices from '../Services/UserService';
 import AuthMiddleware from './AuthMiddleware';
 
-export default function withAuth(AuthComponent) {
-  const Auth = new AuthMiddleware('http://localhost:8080');
-  return class AuthWrapped extends Component {
+export default function withAuth(AuthComponent, AllowedRoles) {
+  const Auth = new AuthMiddleware('');
+
+  class AuthWrapped extends Component {
     static propTypes = {
       history: PropTypes.object.isRequired,
+      role: PropTypes.string.isRequired,
     };
-
     constructor() {
       super();
-      this.state = {
-        user: null,
-      };
+      this.roleCheck = this.roleCheck.bind(this);
     }
-
     componentWillMount() {
       if (!Auth.loggedIn()) {
         this.props.history.replace('/');
@@ -33,13 +33,37 @@ export default function withAuth(AuthComponent) {
       }
     }
 
+    roleCheck(roles, userRole) {
+      let isValidRole = false;
+      if (roles) {
+        roles.map((role) => {
+          if (!isValidRole) {
+            if (role === userRole) {
+              isValidRole = true;
+            }
+          }
+          return isValidRole;
+        });
+      } else {
+        isValidRole = true;
+      }
+
+      return isValidRole;
+    }
+
     render() {
       if (this.state.user) {
-        return (
-          <AuthComponent history={this.props.history} user={this.state.user} />
-        );
+        if (this.roleCheck(AllowedRoles, this.props.role)) {
+          return <AuthComponent history={this.props.history} />;
+        }
       }
-      return null;
+
+      return <div>Sorry you are not authorized!</div>;
     }
-  };
+  }
+  const mapStateToProps = state => ({
+    role: state.UserReducer.user.role.name,
+  });
+
+  return connect(mapStateToProps)(AuthWrapped);
 }

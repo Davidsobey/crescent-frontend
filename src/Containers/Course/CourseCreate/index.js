@@ -23,7 +23,7 @@ const validate = () => {
 /* eslint-disable react/prefer-stateless-function */
 class CourseCreate extends React.Component {
   submit = (values) => {
-    this.props.dispatch(CourseActions.create(values.courseName, values.courseDescription));
+    this.props.dispatch(CourseActions.create(values));
   };
 
   render() {
@@ -47,6 +47,14 @@ class CourseCreate extends React.Component {
               <Field
                 name="courseDescription"
                 label="Course Description"
+                margin="normal"
+                component={TextField}
+              />
+            </div>
+            <div>
+              <Field
+                name="courseCPD"
+                label="Course CPD Points"
                 margin="normal"
                 component={TextField}
               />

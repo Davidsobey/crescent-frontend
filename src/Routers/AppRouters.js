@@ -16,8 +16,10 @@ import Login from '../Containers/Login';
 import Home from '../Containers/Home';
 import CourseCreate from '../Containers/Course/CourseCreate/index';
 import CourseList from '../Containers/Course/CourseView/index';
+import CourseEdit from '../Containers/Course/CourseEdit/index';
 import ModuleCreate from '../Containers/Module/ModuleCreate/index';
 import ModuleList from '../Containers/Module/ModuleView/index';
+import ModuleEdit from '../Containers/Module/ModuleEdit/index';
 import MaterialCreate from '../Containers/Module/Material/MaterialCreate/index';
 import TestCreate from '../Containers/Test/TestCreate/index';
 import TestList from '../Containers/Test/TestView/index';
@@ -69,7 +71,11 @@ class AppRouters extends React.Component {
           SnackbarContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">{this.props.alert}</span>}
+          message={
+            <span id="message-id">
+              {typeof this.props.alert === 'string' && this.props.alert}
+            </span>
+          }
         />
         <Router history={history}>
           <Switch>
@@ -77,125 +83,219 @@ class AppRouters extends React.Component {
             <AppBar>
               <Switch>
                 {/* Authenticated Routes */}
-                <Route path={Routes.HOME} component={withAuth(Home)} exact />
+                <Route
+                  path={Routes.HOME}
+                  component={withAuth(Home, ['Admin', 'Regular', 'Client'])}
+                  exact
+                />
                 <Route
                   path={Routes.COURSE_CREATE}
-                  component={withAuth(CourseCreate)}
+                  component={withAuth(CourseCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
+                  exact
+                />
+                <Route
+                  path={Routes.COURSE_EDIT}
+                  component={withAuth(CourseEdit, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.COURSE_VIEW}
-                  component={withAuth(CourseList)}
+                  component={withAuth(CourseList, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.MODULE_CREATE}
-                  component={withAuth(ModuleCreate)}
+                  component={withAuth(ModuleCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.MODULE_VIEW}
-                  component={withAuth(ModuleList)}
+                  component={withAuth(ModuleList, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
+                  exact
+                />
+                <Route
+                  path={Routes.MODULE_EDIT}
+                  component={withAuth(ModuleEdit, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.MATERIAL_CREATE}
-                  component={withAuth(MaterialCreate)}
+                  component={withAuth(MaterialCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.TEST_CREATE}
-                  component={withAuth(TestCreate)}
+                  component={withAuth(TestCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.TEST_VIEW}
-                  component={withAuth(TestList)}
+                  component={withAuth(TestList, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.QUESTION_CREATE}
-                  component={withAuth(QuestionCreate)}
+                  component={withAuth(QuestionCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.QUESTION_VIEW}
-                  component={withAuth(QuestionList)}
+                  component={withAuth(QuestionList, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USER_CREATE}
-                  component={withAuth(UserCreate)}
+                  component={withAuth(UserCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USER_VIEW}
-                  component={withAuth(UserView)}
+                  component={withAuth(UserView, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USER_ENROL}
-                  component={withAuth(EnrolmentCreate)}
+                  component={withAuth(EnrolmentCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.CLIENT_CREATE}
-                  component={withAuth(ClientCreate)}
+                  component={withAuth(ClientCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.CLIENT_CREATE}
-                  component={withAuth(ClientCreate)}
+                  component={withAuth(ClientCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.CLIENT_VIEW}
-                  component={withAuth(ClientView)}
+                  component={withAuth(ClientView, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.CLIENT_SUBSCRIBE}
-                  component={withAuth(SubscriptionCreate)}
+                  component={withAuth(SubscriptionCreate, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_COURSES}
-                  component={withAuth(UsersCourseView)}
+                  component={withAuth(UsersCourseView, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_COURSE}
-                  component={withAuth(UserCourseDetail)}
+                  component={withAuth(UserCourseDetail, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_MODULES}
-                  component={withAuth(UsersModuleView)}
+                  component={withAuth(UsersModuleView, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_MODULE}
-                  component={withAuth(UserModuleDetail)}
+                  component={withAuth(UserModuleDetail, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_TEST}
-                  component={withAuth(UserTest)}
+                  component={withAuth(UserTest, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_START_TEST}
-                  component={withAuth(TakeTest)}
+                  component={withAuth(TakeTest, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_QUESTION}
-                  component={withAuth(Question)}
+                  component={withAuth(Question, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.TEST_EDIT}
-                  component={withAuth(TestEdit)}
+                  component={withAuth(TestEdit, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route

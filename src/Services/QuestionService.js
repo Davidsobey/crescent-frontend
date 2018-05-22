@@ -1,54 +1,52 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
 
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
-}
+const Auth = new AuthMiddleware();
 
 function create(question) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(question),
   };
 
-  return fetch('https://crescenttesting.azurewebsites.net/api/Questions', requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions`,
+    requestOptions,
+  );
 }
 
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Questions',
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function getById(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(`/Questions/${id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/${id}`,
+    requestOptions,
+  );
 }
 
 function update(question) {
   const requestOptions = {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(question),
   };
 
-  return fetch(`/Questions/${question.id}`, requestOptions)
-    .then(handleResponse);
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/${question.id}`,
+    requestOptions,
+  );
 }
 
 const QuestionServices = {

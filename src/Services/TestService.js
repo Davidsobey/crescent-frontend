@@ -1,16 +1,16 @@
-const fetch = require('isomorphic-fetch');
+import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
 
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
+const Auth = new AuthMiddleware();
+
+function filteredList(response, id) {
+  const objects = response.filter(obj => obj.courseId === id);
+  return objects;
 }
 
 function create(moduleID, testName, totalMarks) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       name: testName,
       moduleID,
@@ -18,71 +18,103 @@ function create(moduleID, testName, totalMarks) {
     }),
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Tests',
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Tests`, requestOptions);
 }
 
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    'https://crescenttesting.azurewebsites.net/api/Tests',
-    requestOptions,
-  ).then(handleResponse);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Tests`, requestOptions);
 }
 
 function loadTest(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Tests/${id}`,
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Tests/${id}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function loadTestQuestions(userId, id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${userId}/${id}`,
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/EnrolmentTestQuestions/${userId}/${id}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function markQuestion(id, answerGivenId) {
   const requestOptions = {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id, answerGivenId }),
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/EnrolmentTestQuestions/${id}/Mark`,
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/EnrolmentTestQuestions/${id}/Mark`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function submitTest(testId, courseId, userId) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return fetch(
-    `https://crescenttesting.azurewebsites.net/api/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
+  return Auth.fetch(
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
     requestOptions,
-  ).then(handleResponse);
+  );
+}
+
+function editTest(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      totalMarks: values.totalMarks,
+      moduleID: values.moduleID,
+      active: true,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Tests/${values.id}`,
+    requestOptions,
+  );
+}
+
+function deleteTest(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Tests/Delete/${id}`,
+    requestOptions,
+  );
+}
+
+function getTests(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  const objectList = Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/tests`,
+    requestOptions,
+  ).then(data => filteredList(data, id));
+
+  return objectList;
 }
 
 const ModuleServices = {
@@ -92,5 +124,8 @@ const ModuleServices = {
   loadTestQuestions,
   markQuestion,
   submitTest,
+  editTest,
+  deleteTest,
+  getTests,
 };
 export default ModuleServices;

@@ -1,4 +1,5 @@
 import QuestionConstants from '../Constants/QuestionConstants';
+import UserConstants from '../Constants/UserConstants';
 
 function QuestionReducer(state = {}, action) {
   switch (action.type) {
@@ -36,6 +37,8 @@ function QuestionReducer(state = {}, action) {
       return {
         Questions: {},
       };
+    case UserConstants.LOGOUT:
+      return {};
     default:
       return state;
   }

@@ -2,12 +2,15 @@ const LOGIN = '/';
 const HOME = '/home';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
+const COURSE_EDIT = '/course/edit';
 const MODULE_CREATE = '/module/create';
 const MODULE_VIEW = '/module/list';
+const MODULE_EDIT = '/module/edit';
 const MATERIAL_CREATE = '/module/material/create';
 const MATERIAL_VIEW = 'module/material/view';
 const TEST_CREATE = '/test/create';
 const TEST_VIEW = '/test/list';
+const TEST_EDIT = '/test/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
 const USER_CREATE = '/user/create';
@@ -27,7 +30,6 @@ const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
-const TEST_EDIT = '/test/edit';
 const POLICIES_VIEW = '/policies/list';
 const POLICIES_CREATE = '/policies/create';
 const ACKNOWLEDGEMENT_CREATE = '/policies/acknowledgements/create';
@@ -38,12 +40,15 @@ export default {
   HOME,
   COURSE_CREATE,
   COURSE_VIEW,
+  COURSE_EDIT,
   MODULE_CREATE,
   MODULE_VIEW,
+  MODULE_EDIT,
   MATERIAL_CREATE,
   MATERIAL_VIEW,
   TEST_CREATE,
   TEST_VIEW,
+  TEST_EDIT,
   QUESTION_CREATE,
   QUESTION_VIEW,
   USER_CREATE,
@@ -63,7 +68,6 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
-  TEST_EDIT,
   POLICIES_CREATE,
   POLICIES_VIEW,
   ACKNOWLEDGEMENT_CREATE,

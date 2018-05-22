@@ -1,4 +1,5 @@
 import ClientConstants from '../Constants/ClientConstants';
+import UserConstants from '../Constants/UserConstants';
 
 function ClientReducer(state = {}, action) {
   switch (action.type) {
@@ -45,6 +46,8 @@ function ClientReducer(state = {}, action) {
         subcription: action.subscription,
       };
     case ClientConstants.SUBSCRIBE_FAILURE:
+      return {};
+    case UserConstants.LOGOUT:
       return {};
     default:
       return state;

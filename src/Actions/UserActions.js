@@ -23,9 +23,9 @@ function login(username, password) {
         dispatch(success(user.userVM));
         history.push(ROUTES.HOME);
       },
-      () => {
+      (error) => {
         dispatch(failure());
-        dispatch(AlertActions.error('Login Failed'));
+        dispatch(AlertActions.error(error));
       },
     );
   };

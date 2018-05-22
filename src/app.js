@@ -12,7 +12,6 @@ import AppRouter from './Routers/AppRouters';
 import configureStore from './Store/index';
 import { saveState } from './localStorage';
 
-
 const store = configureStore();
 store.subscribe(() => {
   saveState(store.getState());

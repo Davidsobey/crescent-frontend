@@ -306,7 +306,9 @@ class MiniDrawer extends React.Component {
   };
 
   render() {
-    const { classes, theme, children } = this.props;
+    const {
+      classes, theme, children, role,
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -372,65 +374,67 @@ class MiniDrawer extends React.Component {
             </div>
           </div>
           <Divider />
-          <List>
-            {this.state.open && (
-              <Typography className="user-type" type="subheading">
-                Admin View
-              </Typography>
-            )}
-            <Link to="/home">
-              <MUIMenuItem>
-                <ListItemIcon>
-                  <HomeIcon className={classes.paperColor} />
-                </ListItemIcon>
-                <ListItemText
-                  inset
-                  className={classes.paperColor}
-                  disableTypography
-                  primary="Home"
+          {role !== 'User' && (
+            <List>
+              {this.state.open && (
+                <Typography className="user-type" type="subheading">
+                  Admin View
+                </Typography>
+              )}
+              <Link to="/home">
+                <MUIMenuItem>
+                  <ListItemIcon>
+                    <HomeIcon className={classes.paperColor} />
+                  </ListItemIcon>
+                  <ListItemText
+                    inset
+                    className={classes.paperColor}
+                    disableTypography
+                    primary="Home"
+                  />
+                </MUIMenuItem>
+              </Link>
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={CourseDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={ModuleDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={TestDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={QuestionDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={UserDetails}
+              />
+              {role !== 'Client' && (
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ClientDetails}
                 />
-              </MUIMenuItem>
-            </Link>
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={CourseDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={ModuleDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={TestDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={QuestionDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={PolicyDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={UserDetails}
-            />
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={ClientDetails}
-            />
-          </List>
-          {this.state.open && (
-            <Typography className="user-type" type="subheading">
-              User View
-            </Typography>
+              )}
+            </List>
           )}
-          <List>
-            <ExpandableMenu
-              color={theme.palette.accent[500]}
-              details={ClientCourseDetails}
-            />
-          </List>
+          {(role === 'User' || role === 'Admin') && (
+            <List>
+              {this.state.open && (
+                <Typography className="user-type" type="subheading">
+                  User View
+                </Typography>
+              )}
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={ClientCourseDetails}
+              />
+            </List>
+          )}
           {/* <List>
             <ExpandableMenu
               color={theme.palette.accent[500]}
@@ -447,17 +451,22 @@ class MiniDrawer extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  role: state.UserReducer.user.role.name,
+});
+
 const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const withConnect = connect(null, mapDispatchToProps);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   children: PropTypes.object,
   dispatch: PropTypes.func,
+  role: PropTypes.string,
 };
 
 export default withConnect(withStyles(styles, { withTheme: true })(MiniDrawer));
