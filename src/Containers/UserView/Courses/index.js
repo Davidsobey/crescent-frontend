@@ -14,7 +14,6 @@ import { CircularProgress } from 'material-ui/Progress';
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
-import UserActions from '../../../Actions/UserActions';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 
@@ -23,7 +22,6 @@ const header = ['ID', 'Name', 'Description', 'View Course Details'];
 class UserView extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(UserActions.loadUser(2));
     this.loadCourse = this.loadCourse.bind(this);
     this.manipulateData = this.manipulateData.bind(this);
   }
