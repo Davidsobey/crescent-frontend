@@ -72,7 +72,7 @@ class AcknowledgementCreate extends React.Component {
           </div>
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
-              Create Acknowledgement
+              Assign Policy
             </Button>
           </div>
         </form>

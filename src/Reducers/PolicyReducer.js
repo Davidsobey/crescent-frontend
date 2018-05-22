@@ -24,7 +24,18 @@ function PolicyReducer(state = {}, action) {
       return {
         policies: {},
       };
-
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_REQUEST:
+      return {
+        loading: true,
+      };
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS:
+      return Object.assign({}, state, {
+        policies: action.policies,
+      });
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE:
+      return {
+        policies: {},
+      };
     case PolicyConstants.CLEAR_POLICIES:
       return {
         policies: undefined,

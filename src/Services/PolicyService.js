@@ -146,7 +146,7 @@ function deletePolicy(id) {
     .then(handleResponse);
 }
 
-function loadAcknowledgements(id) {
+function getAcknowledgementsForPolicy(id) {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -194,7 +194,7 @@ const PolicyServices = {
   getAll,
   getPolicies,
   getPolicyMaterial,
-  loadAcknowledgements,
+  getAcknowledgementsForPolicy,
   getClientPolicies,
   getUserOutstandingPolicies,
   acknowledgePolicy,
