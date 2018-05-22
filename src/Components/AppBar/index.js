@@ -374,7 +374,7 @@ class MiniDrawer extends React.Component {
             </div>
           </div>
           <Divider />
-          {role !== 'User' && (
+          {role !== 'Regular' && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
@@ -414,7 +414,11 @@ class MiniDrawer extends React.Component {
                 color={theme.palette.accent[500]}
                 details={UserDetails}
               />
-              {role !== 'Client' && (
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={PolicyDetails}
+              />
+              {role === 'Admin' && (
                 <ExpandableMenu
                   color={theme.palette.accent[500]}
                   details={ClientDetails}
@@ -422,7 +426,7 @@ class MiniDrawer extends React.Component {
               )}
             </List>
           )}
-          {(role === 'User' || role === 'Admin') && (
+          {(role === 'Regular') && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
