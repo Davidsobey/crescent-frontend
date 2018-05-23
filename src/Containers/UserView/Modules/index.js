@@ -69,7 +69,7 @@ class UserView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.UserReducer.user,
+  user: state.LoginReducer.user,
 });
 
 const withForm = reduxForm(

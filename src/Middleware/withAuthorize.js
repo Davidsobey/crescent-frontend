@@ -34,7 +34,7 @@ export default function withAuthorize(AuthComponent, AllowedRoles) {
     }
   }
   const mapStateToProps = state => ({
-    role: state.UserReducer.user.role.name,
+    role: state.LoginReducer.user.role.name,
   });
 
   return connect(mapStateToProps)(AuthWrapped);

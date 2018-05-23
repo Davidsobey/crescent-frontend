@@ -92,7 +92,7 @@ class AcknowledgementsView extends React.Component {
 
 const mapStateToProps = state => ({
   acknowledgements: state.PolicyReducer.policies,
-  userId: state.UserReducer.user.Id,
+  userId: state.LoginReducer.user.Id,
 });
 
 const mapDispatchToProps = dispatch => ({

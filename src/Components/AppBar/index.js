@@ -152,7 +152,7 @@ const ModuleDetails = {
 };
 
 const PolicyDetails = {
-  listName: 'Policy',
+  listName: 'Policies',
   listIcon: <PolicyIcon />,
   subItems: [
     {
@@ -171,13 +171,13 @@ const PolicyDetails = {
       key: 2,
       subItemName: 'Create Acknowledgement',
       subItemIcon: <AddIcon />,
-      subItemExtension: 'acknowledgement/create',
+      subItemExtension: 'acknowledgements/create',
     },
     {
       key: 3,
       subItemName: 'Acknowledgement List',
       subItemIcon: <ListIcon />,
-      subItemExtension: 'acknowledgement/list',
+      subItemExtension: 'acknowledgements/list',
     },
   ],
 };

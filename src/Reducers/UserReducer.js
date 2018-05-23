@@ -7,9 +7,9 @@ function UserReducer(state = {}, action) {
         loading: true,
       };
     case UserConstants.GETALL_SUCCESS:
-      return Object.assign({}, state, {
+      return {
         users: action.users,
-      });
+      };
     case UserConstants.GETALL_FAILURE:
       return {
         loading: false,
@@ -47,20 +47,7 @@ function UserReducer(state = {}, action) {
       return {
         error: action.error,
       };
-    case UserConstants.LOGIN_REQUEST:
-      return {
-        loading: true,
-        user: action.user,
-      };
-    case UserConstants.LOGIN_SUCCESS:
-      return {
-        loggedIn: true,
-        user: action.user,
-      };
-    case UserConstants.LOGIN_FAILURE:
-      return {};
-    case UserConstants.LOGOUT:
-      return {};
+
     default:
       return state;
   }

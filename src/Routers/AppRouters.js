@@ -276,8 +276,8 @@ function mapStateToProps(state) {
     alert: state.AlertReducer.message,
     open: state.AlertReducer.open,
     role:
-      state.UserReducer.user && state.UserReducer.user.role
-        ? state.UserReducer.user.role.name
+      state.LoginReducer.user && state.LoginReducer.user.role
+        ? state.LoginReducer.user.role.name
         : '',
   };
 }
