@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,7 +9,7 @@ import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import PolicyActions from '../../../Actions/PolicyActions';
 
-const header = ['ID', 'Name', 'Description', 'Category', 'Grade'];
+const header = ['ID', 'Name', 'Description'];
 
 class PolicyView extends React.Component {
   constructor(props) {

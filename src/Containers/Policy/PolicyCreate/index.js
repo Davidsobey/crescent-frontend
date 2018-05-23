@@ -1,4 +1,3 @@
-// do a file upload
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';

@@ -43,8 +43,6 @@ import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
 import AcknowledgementCreate from '../Containers/Policy/PolicyAcknowledgement/Create';
 import AcknowledgementList from '../Containers/Policy/PolicyAcknowledgement/View';
-import AcknowledgePolicy from '../Containers/Policy/PolicyAcknowledgement/Acknowledge';
-
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -297,11 +295,6 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.ACKNOWLEDGEMENT_VIEW}
                   component={withAuth(AcknowledgementList, ['Admin', 'Client'])}
-                  exact
-                />
-                <Route
-                  path={Routes.ACKNOWLEDGE}
-                  component={withAuth(AcknowledgePolicy, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
               </Switch>
