@@ -426,7 +426,7 @@ class MiniDrawer extends React.Component {
               )}
             </List>
           )}
-          {(role === 'Regular') && (
+          {role === 'Regular' && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
@@ -455,15 +455,11 @@ class MiniDrawer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  role: state.UserReducer.user.role.name,
-});
-
 const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(null, mapDispatchToProps);
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
