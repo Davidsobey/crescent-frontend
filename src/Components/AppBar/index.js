@@ -28,6 +28,7 @@ import UserIcon from 'material-ui-icons/People';
 import ClientIcon from 'material-ui-icons/Person';
 import TestIcon from 'material-ui-icons/Create';
 import QuestionIcon from 'material-ui-icons/QuestionAnswer';
+import PolicyIcon from 'material-ui-icons/Gavel';
 
 import UserActions from '../../Actions/UserActions';
 import ExpandableMenu from '../../Components/ExpandableMenu';
@@ -146,6 +147,37 @@ const ModuleDetails = {
       subItemName: 'Module Material',
       subItemIcon: <AttachIcon />,
       subItemExtension: 'material/create',
+    },
+  ],
+};
+
+const PolicyDetails = {
+  listName: 'Policies',
+  listIcon: <PolicyIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Create Policy',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'create',
+    },
+    {
+      key: 1,
+      subItemName: 'Policy List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+    {
+      key: 2,
+      subItemName: 'Create Acknowledgement',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'acknowledgements/create',
+    },
+    {
+      key: 3,
+      subItemName: 'Acknowledgement List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'acknowledgements/list',
     },
   ],
 };
@@ -342,7 +374,7 @@ class MiniDrawer extends React.Component {
             </div>
           </div>
           <Divider />
-          {role !== 'User' && (
+          {role !== 'Regular' && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
@@ -382,7 +414,11 @@ class MiniDrawer extends React.Component {
                 color={theme.palette.accent[500]}
                 details={UserDetails}
               />
-              {role !== 'Client' && (
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={PolicyDetails}
+              />
+              {role === 'Admin' && (
                 <ExpandableMenu
                   color={theme.palette.accent[500]}
                   details={ClientDetails}
@@ -390,7 +426,7 @@ class MiniDrawer extends React.Component {
               )}
             </List>
           )}
-          {(role === 'User' || role === 'Admin') && (
+          {role === 'Regular' && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
@@ -419,15 +455,11 @@ class MiniDrawer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  role: state.UserReducer.user.role.name,
-});
-
 const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(null, mapDispatchToProps);
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,

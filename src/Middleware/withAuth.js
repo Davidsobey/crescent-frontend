@@ -57,12 +57,11 @@ export default function withAuth(AuthComponent, AllowedRoles) {
           return <AuthComponent history={this.props.history} />;
         }
       }
-
       return <div>Sorry you are not authorized!</div>;
     }
   }
   const mapStateToProps = state => ({
-    role: state.UserReducer.user.role.name,
+    role: state.LoginReducer.user.role.name,
   });
 
   return connect(mapStateToProps)(AuthWrapped);
