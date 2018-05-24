@@ -36,6 +36,16 @@ function PolicyReducer(state = {}, action) {
       return {
         policies: {},
       };
+    case PolicyConstants.ACKNOWLEDGE_REQUEST:
+      return {
+        loading: true,
+      };
+    case PolicyConstants.ACKNOWLEDGE_SUCCESS:
+      return {
+        policy: action.policyName,
+      };
+    case PolicyConstants.ACKNOWLEDGE_FAILURE:
+      return {};
     case PolicyConstants.CLEAR_POLICIES:
       return {
         policies: undefined,

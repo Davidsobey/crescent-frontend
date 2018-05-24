@@ -1,13 +1,7 @@
 import AuthMiddleware from '../Middleware/AuthMiddleware';
+import CommonConstants from '../Constants/CommonConstants';
 
 const Auth = new AuthMiddleware();
-
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-  return response.json();
-}
 
 function filteredList(response, id) {
   const objects = response.filter(obj => obj.courseId === id);
@@ -30,9 +24,9 @@ function create(policyVM, formFile) {
   };
 
   return Auth.fetch(
-    'https://crescenttesting.azurewebsites.net/api/Policies',
+    `${CommonConstants.API_ENDPOINT}/Policies`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function getAll() {
@@ -42,22 +36,21 @@ function getAll() {
   };
 
   return Auth.fetch(
-    'https://crescenttesting.azurewebsites.net/api/Policies',
+    `${CommonConstants.API_ENDPOINT}/Policies`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
-function getPolicies(id) {
+function getPolicy(id) {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
 
   const objectList = Auth.fetch(
-    'https://crescenttesting.azurewebsites.net/api/Policies',
+    `${CommonConstants.API_ENDPOINT}/Policies/${id}`,
     requestOptions,
   )
-    .then(handleResponse)
     .then(data => filteredList(data, id));
 
   return objectList;
@@ -70,10 +63,9 @@ function getClientPolicies(id) {
   };
 
   const objectList = Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/CreatedBy/${id}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/CreatedBy/${id}`,
     requestOptions,
   )
-    .then(handleResponse)
     .then(data => filteredList(data, id));
 
   return objectList;
@@ -86,10 +78,9 @@ function getUserOutstandingPolicies(id) {
   };
 
   const objectList = Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/Acknowledgements/${id}/Outstanding`,
+    `${CommonConstants.API_ENDPOINT}/Policies/Acknowledgements/${id}/Outstanding`,
     requestOptions,
   )
-    .then(handleResponse)
     .then(data => filteredList(data, id));
 
   return objectList;
@@ -103,9 +94,9 @@ function acknowledgePolicy(Acknowledgement, userId, policyId) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/${policyId}/Acknowledgements/${userId}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${policyId}/Acknowledgements/${userId}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function createAcknowledgement(userId, policyId) {
@@ -115,9 +106,9 @@ function createAcknowledgement(userId, policyId) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/${policyId}/Acknowledgements/${userId}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${policyId}/Acknowledgements/${userId}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function editPolicy(id, policyVM) {
@@ -128,9 +119,9 @@ function editPolicy(id, policyVM) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/${id}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${id}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function deletePolicy(id) {
@@ -140,10 +131,9 @@ function deletePolicy(id) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/Delete/${id}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/Delete/${id}`,
     requestOptions,
-  )
-    .then(handleResponse);
+  );
 }
 
 function getAcknowledgementsForPolicy(id) {
@@ -153,9 +143,9 @@ function getAcknowledgementsForPolicy(id) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Policies/${id}/Acknowledgements`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${id}/Acknowledgements`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 function delay() {
@@ -174,7 +164,7 @@ async function delayedLog(item) {
   return Auth.fetch(
     `https://crescenttesting.azurewebsites.net/api/Materials/${item}`,
     requestOptions,
-  ).then(handleResponse);
+  );
 }
 
 async function processArray(array) {
@@ -192,7 +182,7 @@ function getPolicyMaterial(ids) {
 const PolicyServices = {
   create,
   getAll,
-  getPolicies,
+  getPolicy,
   getPolicyMaterial,
   getAcknowledgementsForPolicy,
   getClientPolicies,
