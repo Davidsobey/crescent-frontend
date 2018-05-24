@@ -16,11 +16,10 @@ import Table from '../../../Components/Table';
 import TestActions from '../../../Actions/TestActions';
 import QuestionActions from '../../../Actions/QuestionActions';
 
-const header = ['ID', 'Name', 'Description', 'Category'];
-
 class QuestionView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { obj: {} };
     this.props.dispatch(TestActions.getAll());
     this.props.dispatch(QuestionActions.getAll());
   }
@@ -28,10 +27,9 @@ class QuestionView extends React.Component {
   loadData = (Questions, Tests) => {
     const formattedArray = [];
     if (Array.isArray(Questions)) {
-      Questions.forEach((Question) => {
+      Questions.forEach(Question => {
         const TestMatch = Tests.filter(Test => Test.id === Question.TestId);
         const newQuestion = {
-          id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
           test: TestMatch[0].name,
@@ -46,16 +44,64 @@ class QuestionView extends React.Component {
   render() {
     const { Tests, Questions } = this.props;
     const data = this.loadData(Questions, Tests);
-    return (
-      <Card width="800px" title="Question List">
-        {Array.isArray(Questions) && Array.isArray(Tests) ? (
-          <Table header={header} data={data} />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'title',
+      },
+      {
+        Header: 'Allocated Marks',
+        accessor: 'allocatedMarks',
+      },
+      {
+        Header: 'Test',
+        accessor: 'test',
+      },
+      {
+        Header: 'Edit/Delete',
+        accessor: 'edit/delete',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-delete" title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => this.handleEdit(row.original)}
+              >
+                <StyledEdit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-delete" title="Delete">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => this.handleDelete(row.original)}
+              >
+                <StyledDelete />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      </Card>
+        ),
+      },
+    ];
+    return (
+      <div>
+        <Card width="800px" title="Question List">
+          <div>
+            <ReactTable
+              columns={data}
+              data={this.loadData}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          </div>
+        </Card>
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
+      </div>
     );
   }
 }
@@ -69,7 +115,7 @@ const withForm = reduxForm(
   {
     form: 'QuestionView',
   },
-  QuestionView,
+  QuestionView
 );
 
 QuestionView.propTypes = {

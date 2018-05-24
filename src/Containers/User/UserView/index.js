@@ -20,14 +20,14 @@ const header = ['ID', 'Name', 'Email', 'Client', 'Role'];
 class UserView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { obj: {} };
     this.props.dispatch(UserActions.getAll());
   }
 
-  manipulateData = (users) => {
+  manipulateData = users => {
     const data = [];
-    users.forEach((user) => {
+    users.forEach(user => {
       const newUser = {
-        id: user.id,
         name: user.name,
         email: user.email,
         client: user.client.name,
@@ -40,16 +40,68 @@ class UserView extends React.Component {
 
   render() {
     const { users } = this.props;
-    return (
-      <Card width="800px" title="User List">
-        {Array.isArray(users) ? (
-          <Table header={header} data={this.manipulateData(users)} />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+      },
+      {
+        Header: 'Client',
+        accessor: 'client',
+      },
+      {
+        Header: 'Role',
+        accessor: 'role',
+      },
+      {
+        Header: 'Edit/Delete',
+        accessor: 'edit/delete',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-delete" title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => this.handleEdit(row.original)}
+              >
+                <StyledEdit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-delete" title="Delete">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => this.handleDelete(row.original)}
+              >
+                <StyledDelete />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      </Card>
+        ),
+      },
+    ];
+    return (
+      <div>
+        <Card width="800px" title="User List">
+          <div>
+            <ReactTable
+              columns={columns}
+              data={this.manipulateData}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          </div>
+        </Card>
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
+      </div>
     );
   }
 }
@@ -62,7 +114,7 @@ const withForm = reduxForm(
   {
     form: 'userView',
   },
-  UserView,
+  UserView
 );
 
 UserView.propTypes = {
