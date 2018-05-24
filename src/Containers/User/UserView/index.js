@@ -9,13 +9,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import Table from '../../../Components/Table';
 import UserActions from '../../../Actions/UserActions';
-
-const header = ['ID', 'Name', 'Email', 'Client', 'Role'];
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
 
 class UserView extends React.Component {
   constructor(props) {
@@ -24,9 +27,9 @@ class UserView extends React.Component {
     this.props.dispatch(UserActions.getAll());
   }
 
-  manipulateData = users => {
+  manipulateData = (users) => {
     const data = [];
-    users.forEach(user => {
+    users.forEach((user) => {
       const newUser = {
         name: user.name,
         email: user.email,
@@ -39,7 +42,7 @@ class UserView extends React.Component {
   };
 
   render() {
-    const { users } = this.props;
+    const data = this.manipulateData(this.props.users);
     const columns = [
       {
         Header: 'Name',
@@ -88,7 +91,7 @@ class UserView extends React.Component {
           <div>
             <ReactTable
               columns={columns}
-              data={this.manipulateData}
+              data={data}
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
@@ -114,7 +117,7 @@ const withForm = reduxForm(
   {
     form: 'userView',
   },
-  UserView
+  UserView,
 );
 
 UserView.propTypes = {

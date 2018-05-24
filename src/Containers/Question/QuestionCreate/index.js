@@ -36,11 +36,7 @@ class QuestionCreate extends React.Component {
   };
 
   submit = (values) => {
-    this.props.dispatch(QuestionActions.create(
-      values.test,
-      values.questionTitle,
-      values.questionAllocatedMarks,
-    ));
+    this.props.dispatch(QuestionActions.create(values));
   };
 
   render() {
@@ -103,7 +99,9 @@ class QuestionCreate extends React.Component {
             </div>
             {this.props.modules && (
               <div className="width200">
-                {this.props.modules && this.props.tests ? (
+                {this.props.modules &&
+                this.props.tests &&
+                this.props.tests.length > 0 ? (
                   <Field name="test" label="Test Name" component={Select}>
                     {this.props.tests.map(test => (
                       <MenuItem value={test.id} key={test.id}>
@@ -120,7 +118,7 @@ class QuestionCreate extends React.Component {
                 )}
                 <div>
                   <Field
-                    name="QuestionTitle"
+                    name="questionTitle"
                     label="Question Title"
                     margin="normal"
                     component={TextField}
@@ -128,7 +126,7 @@ class QuestionCreate extends React.Component {
                 </div>
                 <div>
                   <Field
-                    name="QuestionAllocatedMarks"
+                    name="questionAllocatedMarks"
                     label="Allocated Marks"
                     margin="normal"
                     component={TextField}

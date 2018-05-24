@@ -9,12 +9,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import Table from '../../../Components/Table';
 import TestActions from '../../../Actions/TestActions';
 import QuestionActions from '../../../Actions/QuestionActions';
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
 
 class QuestionView extends React.Component {
   constructor(props) {
@@ -24,11 +29,21 @@ class QuestionView extends React.Component {
     this.props.dispatch(QuestionActions.getAll());
   }
 
-  loadData = (Questions, Tests) => {
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(QuestionActions.deleteQuestion(obj.id));
+    this.child.handleClose();
+  };
+
+  loadData = (Tests, Questions) => {
     const formattedArray = [];
     if (Array.isArray(Questions)) {
-      Questions.forEach(Question => {
-        const TestMatch = Tests.filter(Test => Test.id === Question.TestId);
+      Questions.forEach((Question) => {
+        const TestMatch = Tests.filter(Test => Test.id === Question.testId);
         const newQuestion = {
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
@@ -42,8 +57,11 @@ class QuestionView extends React.Component {
   };
 
   render() {
-    const { Tests, Questions } = this.props;
-    const data = this.loadData(Questions, Tests);
+    const { tests, questions } = this.props;
+    let data;
+    if (tests && questions) {
+      data = this.loadData(tests, questions);
+    }
     const columns = [
       {
         Header: 'Name',
@@ -87,8 +105,8 @@ class QuestionView extends React.Component {
         <Card width="800px" title="Question List">
           <div>
             <ReactTable
-              columns={data}
-              data={this.loadData}
+              columns={columns}
+              data={data}
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
@@ -107,21 +125,21 @@ class QuestionView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  Tests: state.TestReducer.Tests,
-  Questions: state.QuestionReducer.Questions,
+  tests: state.TestReducer.tests,
+  questions: state.QuestionReducer.questions,
 });
 
 const withForm = reduxForm(
   {
     form: 'QuestionView',
   },
-  QuestionView
+  QuestionView,
 );
 
 QuestionView.propTypes = {
-  Tests: PropTypes.array,
+  tests: PropTypes.array,
   dispatch: PropTypes.func,
-  Questions: PropTypes.array,
+  questions: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export default compose(connect(mapStateToProps), withForm)(QuestionView);

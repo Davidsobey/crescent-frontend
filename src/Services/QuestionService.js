@@ -6,7 +6,11 @@ const Auth = new AuthMiddleware();
 function create(question) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(question),
+    body: JSON.stringify({
+      title: question.questionTitle,
+      allocatedMarks: question.questionAllocatedMarks,
+      testId: question.test,
+    }),
   };
 
   return Auth.fetch(
@@ -49,11 +53,22 @@ function update(question) {
   );
 }
 
+function deleteQuestion(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/Delete/${id}`,
+    requestOptions,
+  );
+}
+
 const QuestionServices = {
   create,
   getAll,
   getById,
   update,
+  deleteQuestion,
 };
 
 export default QuestionServices;

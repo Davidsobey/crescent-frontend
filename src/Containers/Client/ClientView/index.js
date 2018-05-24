@@ -9,13 +9,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import Table from '../../../Components/Table';
 import ClientActions from '../../../Actions/ClientActions';
-
-const header = ['ID', 'Name', 'Email'];
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
 
 class ClientView extends React.Component {
   constructor(props) {
@@ -99,7 +102,7 @@ const withForm = reduxForm(
   {
     form: 'clientView',
   },
-  ClientView
+  ClientView,
 );
 
 ClientView.propTypes = {
