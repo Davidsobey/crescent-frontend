@@ -102,11 +102,26 @@ function deleteQuestion(id) {
   };
 }
 
+function editQuestion(values) {
+  return (dispatch) => {
+    QuestionService.editQuestion(values).then(
+      () => {
+        history.push('/question/list');
+        dispatch(AlertActions.success(`Question ${values.title} edited.`));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const QuestionActions = {
   create,
   getAll,
   getByID,
   deleteQuestion,
+  editQuestion,
 };
 
 export default QuestionActions;

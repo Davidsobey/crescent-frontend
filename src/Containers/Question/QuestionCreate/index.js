@@ -24,6 +24,7 @@ const validate = () => {
 
 class QuestionCreate extends React.Component {
   componentDidMount() {
+    this.props.dispatch(ModuleActions.clearModules());
     this.props.dispatch(CourseActions.getAll());
   }
 

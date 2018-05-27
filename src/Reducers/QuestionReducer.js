@@ -14,11 +14,12 @@ function QuestionReducer(state = {}, action) {
   switch (action.type) {
     case QuestionConstants.CREATE_REQUEST:
       return {
-        loading: true,
+        question: action.QuestionName,
       };
     case QuestionConstants.CREATE_SUCCESS:
       return {
-        Question: action.QuestionName,
+        question: action.QuestionName,
+        loading: true,
       };
     case QuestionConstants.CREATE_FAILURE:
       return {};
@@ -40,19 +41,23 @@ function QuestionReducer(state = {}, action) {
       };
     case QuestionConstants.GETBYID_SUCCESS:
       return Object.assign({}, state, {
-        questions: action.questions,
+        question: action.question,
       });
+    case QuestionConstants.GETBYID_FAILURE:
+      return {
+        question: {},
+      };
     case QuestionConstants.GETBYID_FAILURE:
       return {
         questions: {},
       };
     case QuestionConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
-        courses: state.courses.filter(obj => filterById(obj.id, action.id)),
         loading: true,
       });
     case QuestionConstants.DELETE_SUCCESS:
       return Object.assign({}, state, {
+        questions: state.questions.filter(obj => filterById(obj.id, action.id)),
         loading: false,
       });
     case QuestionConstants.DELETE_FAILURE:

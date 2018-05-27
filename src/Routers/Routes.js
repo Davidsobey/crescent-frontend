@@ -13,6 +13,7 @@ const TEST_VIEW = '/test/list';
 const TEST_EDIT = '/test/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
+const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const ENROLLMENTS_CREATE = '/user/enrolment/create';
@@ -47,6 +48,7 @@ export default {
   TEST_EDIT,
   QUESTION_CREATE,
   QUESTION_VIEW,
+  QUESTION_EDIT,
   USER_CREATE,
   USER_VIEW,
   ENROLLMENTS_CREATE,

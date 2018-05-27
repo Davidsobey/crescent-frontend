@@ -63,12 +63,30 @@ function deleteQuestion(id) {
   );
 }
 
+function editQuestion(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      title: values.title,
+      allocatedMarks: values.allocatedMarks,
+      testId: parseInt(values.testId, 10),
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/${values.id}`,
+    requestOptions,
+  );
+}
+
 const QuestionServices = {
   create,
   getAll,
   getById,
   update,
   deleteQuestion,
+  editQuestion,
 };
 
 export default QuestionServices;

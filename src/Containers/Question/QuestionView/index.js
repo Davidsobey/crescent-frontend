@@ -13,9 +13,15 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import TestActions from '../../../Actions/TestActions';
 import QuestionActions from '../../../Actions/QuestionActions';
+
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
 import { StyledDelete } from '../../../Styles/Delete';
@@ -56,6 +62,21 @@ class QuestionView extends React.Component {
     return formattedArray;
   };
 
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(QuestionActions.deleteQuestion(obj.id));
+    this.child.handleClose();
+  };
+
+  handleEdit = (editObj) => {
+    this.props.dispatch(QuestionActions.getByID(editObj.id));
+    history.push('/question/edit');
+  };
+
   render() {
     const { tests, questions } = this.props;
     let data;
@@ -64,7 +85,7 @@ class QuestionView extends React.Component {
     }
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Question Name',
         accessor: 'title',
       },
       {
@@ -102,15 +123,17 @@ class QuestionView extends React.Component {
     ];
     return (
       <div>
-        <Card width="800px" title="Question List">
+        <Card width="800px" title="Course List">
           <div>
-            <ReactTable
-              columns={columns}
-              data={data}
-              filterable
-              defaultPageSize={10}
-              className="-striped -highlight"
-            />
+            {Array.isArray(data) && (
+              <ReactTable
+                columns={columns}
+                data={data}
+                filterable
+                defaultPageSize={10}
+                className="-striped -highlight"
+              />
+            )}
           </div>
         </Card>
         <CustomModal
@@ -139,7 +162,7 @@ const withForm = reduxForm(
 QuestionView.propTypes = {
   tests: PropTypes.array,
   dispatch: PropTypes.func,
-  questions: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  questions: PropTypes.array,
 };
 
 export default compose(connect(mapStateToProps), withForm)(QuestionView);
