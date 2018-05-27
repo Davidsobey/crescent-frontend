@@ -19,6 +19,7 @@ function QuestionReducer(state = {}, action) {
     case QuestionConstants.CREATE_SUCCESS:
       return {
         question: action.QuestionName,
+        loading: true,
       };
     case QuestionConstants.CREATE_FAILURE:
       return {};
@@ -45,6 +46,10 @@ function QuestionReducer(state = {}, action) {
     case QuestionConstants.GETBYID_FAILURE:
       return {
         question: {},
+      };
+    case QuestionConstants.GETBYID_FAILURE:
+      return {
+        questions: {},
       };
     case QuestionConstants.DELETE_REQUEST:
       return Object.assign({}, state, {

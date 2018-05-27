@@ -6,7 +6,11 @@ const Auth = new AuthMiddleware();
 function create(question) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(question),
+    body: JSON.stringify({
+      title: question.questionTitle,
+      allocatedMarks: question.questionAllocatedMarks,
+      testId: question.test,
+    }),
   };
 
   return Auth.fetch(

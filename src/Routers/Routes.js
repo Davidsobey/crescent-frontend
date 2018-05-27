@@ -31,10 +31,6 @@ const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
-const POLICIES_VIEW = '/policies/list';
-const POLICIES_CREATE = '/policies/create';
-const ACKNOWLEDGEMENT_CREATE = '/policies/acknowledgements/create';
-const ACKNOWLEDGEMENT_VIEW = '/policies/acknowledgements/view';
 
 export default {
   LOGIN,
@@ -70,8 +66,4 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
-  POLICIES_CREATE,
-  POLICIES_VIEW,
-  ACKNOWLEDGEMENT_CREATE,
-  ACKNOWLEDGEMENT_VIEW,
 };

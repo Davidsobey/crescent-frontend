@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { MenuItem } from 'material-ui/Menu';
+import { CircularProgress } from 'material-ui/Progress';
 
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
@@ -41,14 +42,22 @@ class ModuleEdit extends React.Component {
           autoComplete="off"
         >
           <div>
+            {!this.props.loading ? (
+              <div>
+                <Field name="courseId" label="Course Name" component={Select}>
+                  {this.props.courses.map(course => (
+                    <MenuItem value={course.id} key={course.id}>
+                      {course.name}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </div>
+            ) : (
+              <div className="center">
+                <CircularProgress color="secondary" />
+              </div>
+            )}
             <div>
-              <Field name="courseId" label="Course Name" component={Select}>
-                {this.props.courses.map(course => (
-                  <MenuItem value={course.id} key={course.id}>
-                    {course.name}
-                  </MenuItem>
-                ))}
-              </Field>
               <Field
                 name="name"
                 label="Module Name"
@@ -80,6 +89,7 @@ ModuleEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
   courses: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -96,6 +106,7 @@ const FormState = connect(
   state => ({
     initialValues: state.ModuleReducer.module,
     courses: state.CourseReducer.courses,
+    loading: state.ModuleReducer.loading,
   }),
   mapDispatchToProps,
 )(ModuleEdited);

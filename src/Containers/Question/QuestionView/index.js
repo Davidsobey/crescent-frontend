@@ -17,26 +17,40 @@ import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import TestActions from '../../../Actions/TestActions';
 import QuestionActions from '../../../Actions/QuestionActions';
+
 import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
 
 class QuestionView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { obj: {} };
-    this.props.dispatch(QuestionActions.getAll());
     this.props.dispatch(TestActions.getAll());
+    this.props.dispatch(QuestionActions.getAll());
   }
 
-  loadData = (Questions, Tests) => {
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(QuestionActions.deleteQuestion(obj.id));
+    this.child.handleClose();
+  };
+
+  loadData = (Tests, Questions) => {
     const formattedArray = [];
     if (Array.isArray(Questions)) {
       Questions.forEach((Question) => {
         const TestMatch = Tests.filter(Test => Test.id === Question.testId);
         const newQuestion = {
-          id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
           test: TestMatch[0].name,
@@ -65,7 +79,10 @@ class QuestionView extends React.Component {
 
   render() {
     const { tests, questions } = this.props;
-    const data = this.loadData(questions, tests);
+    let data;
+    if (tests && questions) {
+      data = this.loadData(tests, questions);
+    }
     const columns = [
       {
         Header: 'Question Name',

@@ -54,7 +54,7 @@ class TestEdit extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Courses
+                  Loading Modules
                 </div>
               )}
               <Field
