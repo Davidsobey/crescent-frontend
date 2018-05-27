@@ -75,10 +75,53 @@ function getByID(id) {
   };
 }
 
+function deleteQuestion(id) {
+  function request() {
+    return { type: QuestionConstants.DELETE_REQUEST, id };
+  }
+  function success() {
+    return { type: QuestionConstants.DELETE_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.DELETE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.deleteQuestion(id).then(
+      () => {
+        dispatch(success(id));
+        dispatch(AlertActions.success('Question deleted.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function editQuestion(values) {
+  return (dispatch) => {
+    QuestionService.editQuestion(values).then(
+      () => {
+        history.push('/question/list');
+        dispatch(AlertActions.success(`Question ${values.title} edited.`));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const QuestionActions = {
   create,
   getAll,
   getByID,
+  deleteQuestion,
+  editQuestion,
 };
 
 export default QuestionActions;

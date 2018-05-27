@@ -1,15 +1,24 @@
+import { isNumber } from 'util';
+
 import QuestionConstants from '../Constants/QuestionConstants';
 import UserConstants from '../Constants/UserConstants';
+
+function filterById(id, delId) {
+  if (isNumber(id) && id !== 0 && id !== delId) {
+    return true;
+  }
+  return false;
+}
 
 function QuestionReducer(state = {}, action) {
   switch (action.type) {
     case QuestionConstants.CREATE_REQUEST:
       return {
-        Questions: action.QuestionName,
+        question: action.QuestionName,
       };
     case QuestionConstants.CREATE_SUCCESS:
       return {
-        Questions: action.QuestionName,
+        question: action.QuestionName,
       };
     case QuestionConstants.CREATE_FAILURE:
       return {};
@@ -19,11 +28,11 @@ function QuestionReducer(state = {}, action) {
       };
     case QuestionConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
-        Questions: action.Questions,
+        questions: action.questions,
       });
     case QuestionConstants.GETALL_FAILURE:
       return {
-        Questions: {},
+        questions: {},
       };
     case QuestionConstants.GETBYID_REQUEST:
       return {
@@ -31,12 +40,23 @@ function QuestionReducer(state = {}, action) {
       };
     case QuestionConstants.GETBYID_SUCCESS:
       return Object.assign({}, state, {
-        Questions: action.Questions,
+        question: action.question,
       });
     case QuestionConstants.GETBYID_FAILURE:
       return {
-        Questions: {},
+        question: {},
       };
+    case QuestionConstants.DELETE_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case QuestionConstants.DELETE_SUCCESS:
+      return Object.assign({}, state, {
+        questions: state.questions.filter(obj => filterById(obj.id, action.id)),
+        loading: false,
+      });
+    case QuestionConstants.DELETE_FAILURE:
+      return state;
     case UserConstants.LOGOUT:
       return {};
     default:

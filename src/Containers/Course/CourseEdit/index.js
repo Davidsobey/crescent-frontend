@@ -24,7 +24,7 @@ let CourseEdit = (props) => {
     handleSubmit: PropTypes.func,
   };
   return (
-    <Card width="600px" title="Create New Course">
+    <Card width="600px" title="Edit Course">
       <form onSubmit={props.handleSubmit(submit)} noValidate autoComplete="off">
         <div>
           <div>

@@ -25,6 +25,7 @@ import TestCreate from '../Containers/Test/TestCreate/index';
 import TestList from '../Containers/Test/TestView/index';
 import QuestionList from '../Containers/Question/QuestionView/index';
 import QuestionCreate from '../Containers/Question/QuestionCreate/index';
+import QuestionEdit from '../Containers/Question/QuestionEdit/index';
 import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
@@ -139,6 +140,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.QUESTION_VIEW}
                   component={withAuth(QuestionList, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.QUESTION_EDIT}
+                  component={withAuth(QuestionEdit, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
