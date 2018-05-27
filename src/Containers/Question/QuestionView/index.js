@@ -22,10 +22,6 @@ import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
-import IconButton from '../../../Styles/IconButton';
-import CustomModal from '../../../Components/Modal/index';
-import { StyledDelete } from '../../../Styles/Delete';
-import { StyledEdit } from '../../../Styles/Edit';
 
 class QuestionView extends React.Component {
   constructor(props) {
@@ -51,6 +47,7 @@ class QuestionView extends React.Component {
       Questions.forEach((Question) => {
         const TestMatch = Tests.filter(Test => Test.id === Question.testId);
         const newQuestion = {
+          id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
           test: TestMatch[0].name,
@@ -123,7 +120,7 @@ class QuestionView extends React.Component {
     ];
     return (
       <div>
-        <Card width="800px" title="Course List">
+        <Card width="800px" title="Question List">
           <div>
             {Array.isArray(data) && (
               <ReactTable
