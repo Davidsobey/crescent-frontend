@@ -32,18 +32,15 @@ class MaterialCreate extends React.Component {
     this.setState({
       selectedFile: event.target.files[0],
     });
-  }
+  };
 
   submit = (values) => {
     const file = this.state.selectedFile;
-    this.props.dispatch(ModuleActions.uploadMaterial(
-      values.ModuleId,
-      file,
-    ));
+    this.props.dispatch(ModuleActions.uploadMaterial(values.ModuleId, file));
   };
 
   render() {
-    return ( 
+    return (
       <Card width="600px" title="Create New Material">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
@@ -63,7 +60,7 @@ class MaterialCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Modules
+                  Loading Modules
                 </div>
               )}
               <div>
