@@ -3,8 +3,11 @@ const APIConstants = {
   LIVE_PROD_ADDRESS: 'https://lunarprod.azurewebsites.net/api',
 };
 
+export const hostname = window && window.location && window.location.hostname;
 const CommonConstants = {
-  API_ENDPOINT: APIConstants.LIVE_DEV_ADDRESS,
+  API_ENDPOINT: hostname.startsWith('lunartesting')
+    ? APIConstants.LIVE_PROD_ADDRESS
+    : APIConstants.LIVE_DEV_ADDRESS,
 };
 
 export default CommonConstants;

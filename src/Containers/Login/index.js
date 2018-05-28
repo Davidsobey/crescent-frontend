@@ -12,6 +12,7 @@ import Button from '../../Components/Button';
 import UserActions from '../../Actions/UserActions';
 import Card from '../../Components/Card';
 import Image from '../../Images/Logo.png';
+import CommonConstants, { hostname } from '../../Constants/CommonConstants';
 
 const validate = (values) => {
   const errors = {};
@@ -58,6 +59,8 @@ class Login extends React.Component {
           </div>
         </Card>
       </form>
+      {console.log(CommonConstants)}
+      {console.log(hostname)}
     </div>
   );
 }
