@@ -47,9 +47,10 @@ class QuestionCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.courses ? (
                 <Field
                   name="course"
@@ -70,7 +71,7 @@ class QuestionCreate extends React.Component {
                 </div>
               )}
             </div>
-            <div className="width200">
+            <div>
               {this.props.modules ? (
                 <Field
                   name="module"
@@ -99,7 +100,7 @@ class QuestionCreate extends React.Component {
               )}
             </div>
             {this.props.modules && (
-              <div className="width200">
+              <div>
                 {this.props.modules &&
                 this.props.tests &&
                 this.props.tests.length > 0 ? (
@@ -117,27 +118,32 @@ class QuestionCreate extends React.Component {
                     </Typography>
                   </div>
                 )}
-                <div>
-                  <Field
-                    name="questionTitle"
-                    label="Question Title"
-                    margin="normal"
-                    component={TextField}
-                  />
-                </div>
-                <div>
-                  <Field
-                    name="questionAllocatedMarks"
-                    label="Allocated Marks"
-                    margin="normal"
-                    component={TextField}
-                  />
-                </div>
               </div>
             )}
+            <div>
+              <Field
+                name="questionTitle"
+                label="Question Title"
+                margin="normal"
+                component={TextField}
+              />
+            </div>
+            <div>
+              <Field
+                name="questionAllocatedMarks"
+                label="Allocated Marks"
+                margin="normal"
+                component={TextField}
+              />
+            </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Create Question
             </Button>
           </div>

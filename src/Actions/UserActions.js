@@ -91,6 +91,26 @@ function getAll() {
   };
 }
 
+// function getAllRoles() {
+//   function request() {
+//     return { type: UserConstants.GET_ALL_ROLES_REQUEST };
+//   }
+//   function success(roles) {
+//     return { type: UserConstants.GET_ALL_ROLES_SUCCESS, roles };
+//   }
+//   function failure(error) {
+//     return { type: UserConstants.roles, error };
+//   }
+//   return (dispatch) => {
+//     dispatch(request());
+
+//     UserService.getAllRoles().then(
+//       roles => dispatch(success(roles)),
+//       error => dispatch(failure(error)),
+//     );
+//   };
+// }
+
 function enrol(enrolment) {
   function request() {
     return { type: UserConstants.ENROL_REQUEST, enrolment };
@@ -182,6 +202,7 @@ const UserActions = {
   delete: deleteUser,
   loadUser,
   enrol,
+  // getAllRoles,
 };
 
 export default UserActions;

@@ -18,6 +18,14 @@ function getAll() {
   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Users`, requestOptions);
 }
 
+// function getAllRoles() {
+//   const requestOptions = {
+//     method: 'GET',
+//   };
+
+//   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Roles`, requestOptions);
+// }
+
 function getById(id) {
   const requestOptions = {
     method: 'GET',
@@ -89,6 +97,7 @@ const UserService = {
   delete: deleteUser,
   enrol,
   logout,
+  // getAllRoles,
 };
 
 export default UserService;

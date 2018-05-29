@@ -105,11 +105,39 @@ function getAll() {
   };
 }
 
+function deleteClient(id) {
+  function request() {
+    return { type: ClientConstants.DELETE_CLIENT_REQUEST, id };
+  }
+  function success() {
+    return { type: ClientConstants.DELETE_CLIENT_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: ClientConstants.DELETE_CLIENT_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ClientService.deleteClient(id).then(
+      () => {
+        dispatch(success(id));
+        dispatch(AlertActions.success('Client deleted.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const clientActions = {
   create,
   getAll,
   getById,
   subscribe,
+  deleteClient,
 };
 
 export default clientActions;

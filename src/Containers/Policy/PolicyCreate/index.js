@@ -23,14 +23,11 @@ class PolicyCreate extends React.Component {
     this.setState({
       selectedFile: event.target.files[0],
     });
-  }
+  };
 
   submit = (values) => {
     const file = this.state.selectedFile;
-    this.props.dispatch(PolicyActions.create(
-      values,
-      file,
-    ));
+    this.props.dispatch(PolicyActions.create(values, file));
   };
 
   render() {
@@ -40,9 +37,10 @@ class PolicyCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               <div>
                 <Field
                   name="name"
@@ -64,8 +62,13 @@ class PolicyCreate extends React.Component {
               </div>
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Create Policy
             </Button>
           </div>

@@ -42,10 +42,21 @@ function subscribe(subscription) {
   );
 }
 
+function deleteClient(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/Delete/${id}`,
+    requestOptions,
+  );
+}
+
 const ClientService = {
   create,
   getAll,
   getById,
   subscribe,
+  deleteClient,
 };
 export default ClientService;

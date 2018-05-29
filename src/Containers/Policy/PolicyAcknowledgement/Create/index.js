@@ -37,9 +37,10 @@ class AcknowledgementCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.users ? (
                 <Field name="user" label="User Name" component={Select}>
                   {this.props.users.map(user => (
@@ -51,9 +52,9 @@ class AcknowledgementCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Users
+                  Loading Users
                 </div>
-                )}
+              )}
               {this.props.policies ? (
                 <Field name="policy" label="Policy Name" component={Select}>
                   {this.props.policies.map(policy => (
@@ -65,13 +66,18 @@ class AcknowledgementCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Policies
+                  Loading Policies
                 </div>
-                )}
+              )}
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Assign Policy
             </Button>
           </div>
