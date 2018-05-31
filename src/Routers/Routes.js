@@ -21,6 +21,7 @@ const ENROLLMENTS_LIST = '/user/enrolment/list';
 const USER_ENROL = 'user/enrolment/create';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
+const CLIENT_EDIT = '/client/edit';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subscription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
@@ -55,6 +56,7 @@ export default {
   ENROLLMENTS_LIST,
   USER_ENROL,
   CLIENT_CREATE,
+  CLIENT_EDIT,
   CLIENT_VIEW,
   SUBSCRIPTIONS_CREATE,
   SUBSCRIPTIONS_LIST,

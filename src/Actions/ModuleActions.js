@@ -221,7 +221,7 @@ function editModule(values) {
     ModuleService.editModule(values).then(
       () => {
         dispatch(success());
-        history.push('/module/list');
+        history.push('/test/create');
         dispatch(AlertActions.success(`Module ${values.name} edited.`));
       },
       (error) => {

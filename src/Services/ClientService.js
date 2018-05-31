@@ -52,11 +52,40 @@ function deleteClient(id) {
   );
 }
 
+function getClient(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/${id}`,
+    requestOptions,
+  );
+}
+
+function editClient(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      email: values.email,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/${values.id}`,
+    requestOptions,
+  );
+}
+
 const ClientService = {
   create,
   getAll,
   getById,
   subscribe,
   deleteClient,
+  getClient,
+  editClient,
 };
 export default ClientService;

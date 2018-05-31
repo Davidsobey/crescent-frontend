@@ -19,7 +19,7 @@ function create(moduleID, testName, totalMarks) {
     TestService.create(moduleID, testName, totalMarks).then(
       () => {
         dispatch(success(testName));
-        history.push('/test/list');
+        history.push('/question/create');
         dispatch(AlertActions.success(`Test ${testName} created.`));
       },
       (error) => {

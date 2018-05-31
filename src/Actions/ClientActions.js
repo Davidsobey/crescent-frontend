@@ -132,12 +132,54 @@ function deleteClient(id) {
   };
 }
 
+function loadClient(id) {
+  function request() {
+    return { type: ClientConstants.LOAD_CLIENT_REQUEST };
+  }
+  function success(client) {
+    return { type: ClientConstants.LOAD_CLIENT_SUCCESS, client };
+  }
+  function failure(error) {
+    return { type: ClientConstants.LOAD_CLIENT_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(id));
+
+    ClientService.getClient(id).then(
+      (client) => {
+        dispatch(success(client));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function editClient(values) {
+  return (dispatch) => {
+    ClientService.editClient(values).then(
+      () => {
+        history.push('/client/list');
+        dispatch(AlertActions.success(`Client ${values.name} edited.`));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const clientActions = {
   create,
   getAll,
   getById,
   subscribe,
   deleteClient,
+  loadClient,
+  editClient,
 };
 
 export default clientActions;

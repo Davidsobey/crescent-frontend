@@ -66,6 +66,14 @@ function ClientReducer(state = {}, action) {
       });
     case ClientConstants.DELETE_FAILURES:
       return state;
+    case ClientConstants.LOAD_CLIENT_REQUEST:
+      return state;
+    case ClientConstants.LOAD_CLIENT_SUCCESS:
+      return Object.assign({}, state, {
+        client: action.client,
+      });
+    case ClientConstants.LOAD_CLIENT_FAILURE:
+      return state;
     case UserConstants.LOGOUT:
       return {};
     default:

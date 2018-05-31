@@ -31,6 +31,7 @@ import UserView from '../Containers/User/UserView/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
+import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
 import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
@@ -164,13 +165,13 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
-                  path={Routes.CLIENT_CREATE}
-                  component={withAuth(ClientCreate, ['Admin'])}
+                  path={Routes.CLIENT_VIEW}
+                  component={withAuth(ClientView, ['Admin'])}
                   exact
                 />
                 <Route
-                  path={Routes.CLIENT_VIEW}
-                  component={withAuth(ClientView, ['Admin'])}
+                  path={Routes.CLIENT_EDIT}
+                  component={withAuth(ClientEdit, ['Admin'])}
                   exact
                 />
                 <Route

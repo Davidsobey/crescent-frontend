@@ -19,7 +19,7 @@ function create(question) {
     QuestionService.create(question).then(
       () => {
         dispatch(success(question));
-        history.push('/question/list');
+        history.push('/question/create');
         dispatch(AlertActions.success('Question created.'));
       },
       (error) => {
@@ -116,12 +116,22 @@ function editQuestion(values) {
   };
 }
 
+function clearModules() {
+  function clear() {
+    return { type: QuestionConstants.CLEAR_QUESTION };
+  }
+  return (dispatch) => {
+    dispatch(clear());
+  };
+}
+
 const QuestionActions = {
   create,
   getAll,
   getByID,
   deleteQuestion,
   editQuestion,
+  clearModules,
 };
 
 export default QuestionActions;
