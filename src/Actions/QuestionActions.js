@@ -75,10 +75,35 @@ function getByID(id) {
   };
 }
 
+function loadQuestionsByTest(testId) {
+  function request() {
+    return { type: QuestionConstants.LOADQUESTIONS_REQUEST };
+  }
+  function success(tests) {
+    return { type: QuestionConstants.LOADQUESTIONS_SUCCESS, tests };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.LOADQUESTIONS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.getQuestionsForTest(testId).then(
+      questions => dispatch(success(questions)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const QuestionActions = {
   create,
   getAll,
   getByID,
+  loadQuestionsByTest,
 };
 
 export default QuestionActions;
