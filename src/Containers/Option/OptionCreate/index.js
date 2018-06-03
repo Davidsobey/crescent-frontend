@@ -96,7 +96,7 @@ class OptionCreate extends React.Component {
               ) : (
                 <div>
                   <Typography variant="caption" component="p">
-                    Choose a course to load related modules
+                    Choose a module to load related tests
                   </Typography>
                 </div>
               )}
@@ -124,7 +124,7 @@ class OptionCreate extends React.Component {
               ) : (
                 <div>
                   <Typography variant="caption" component="p">
-                    Choose a module to load related tests
+                    Choose a test to load related questions
                   </Typography>
                 </div>
               )}
