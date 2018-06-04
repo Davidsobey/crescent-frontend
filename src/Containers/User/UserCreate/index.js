@@ -28,7 +28,7 @@ const validate = () => {
 class UserCreate extends React.Component {
   componentDidMount() {
     this.props.dispatch(ClientActions.getAll());
-    // this.props.dispatch(UserActions.getAllRoles());
+    this.props.dispatch(UserActions.getAllRoles());
   }
 
   submit = (values) => {
@@ -61,12 +61,20 @@ class UserCreate extends React.Component {
               </div>
             )}
             <div>
-              <Field
-                name="roleId"
-                label="Role"
-                margin="normal"
-                component={TextField}
-              />
+              {this.props.roles ? (
+                <Field name="roleId" label="Role" component={Select}>
+                  {this.props.roles.map(role => (
+                    <MenuItem value={role.id} key={role.id}>
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </Field>
+              ) : (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Roles
+                </div>
+              )}
             </div>
             <div>
               <Field
@@ -84,23 +92,6 @@ class UserCreate extends React.Component {
                 component={TextField}
               />
             </div>
-
-            {
-              //   this.props.clients ? (
-              //   <Field name="Role" label="Role" component={Select}>
-              //     {this.props.roles.map(role => (
-              //       <MenuItem value={role.id} key={role.id}>
-              //         {role.name}
-              //       </MenuItem>
-              //     ))}
-              //   </Field>
-              // ) : (
-              //   <div>
-              //     <LinearProgress color="secondary" />
-              //     Loading Courses
-              //   </div>
-              // )
-            }
           </div>
           <div className="formAlignRight">
             <Button
@@ -122,12 +113,12 @@ UserCreate.propTypes = {
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
   clients: PropTypes.array,
-  // roles: PropTypes.array,
+  roles: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
   clients: state.ClientReducer.clients,
-  // roles: state.UserReducer.roles,
+  roles: state.UserReducer.roles,
 });
 
 const withForm = reduxForm(

@@ -16,6 +16,7 @@ const QUESTION_VIEW = '/question/list';
 const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
+const USER_EDIT = '/user/edit';
 const ENROLLMENTS_CREATE = '/user/enrolment/create';
 const ENROLLMENTS_LIST = '/user/enrolment/list';
 const USER_ENROL = 'user/enrolment/create';
@@ -52,6 +53,7 @@ export default {
   QUESTION_EDIT,
   USER_CREATE,
   USER_VIEW,
+  USER_EDIT,
   ENROLLMENTS_CREATE,
   ENROLLMENTS_LIST,
   USER_ENROL,

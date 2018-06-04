@@ -91,25 +91,25 @@ function getAll() {
   };
 }
 
-// function getAllRoles() {
-//   function request() {
-//     return { type: UserConstants.GET_ALL_ROLES_REQUEST };
-//   }
-//   function success(roles) {
-//     return { type: UserConstants.GET_ALL_ROLES_SUCCESS, roles };
-//   }
-//   function failure(error) {
-//     return { type: UserConstants.roles, error };
-//   }
-//   return (dispatch) => {
-//     dispatch(request());
+function getAllRoles() {
+  function request() {
+    return { type: UserConstants.GET_ALL_ROLES_REQUEST };
+  }
+  function success(roles) {
+    return { type: UserConstants.GET_ALL_ROLES_SUCCESS, roles };
+  }
+  function failure(error) {
+    return { type: UserConstants.roles, error };
+  }
+  return (dispatch) => {
+    dispatch(request());
 
-//     UserService.getAllRoles().then(
-//       roles => dispatch(success(roles)),
-//       error => dispatch(failure(error)),
-//     );
-//   };
-// }
+    UserService.getAllRoles().then(
+      roles => dispatch(success(roles)),
+      error => dispatch(failure(error)),
+    );
+  };
+}
 
 function enrol(enrolment) {
   function request() {
@@ -190,8 +190,24 @@ function deleteUser(id) {
   };
 }
 
-// function enrolUser(id) {
-// }
+function editUser(values) {
+  function success() {
+    return { type: UserConstants.EDIT_USER_SUCCESS };
+  }
+  return (dispatch) => {
+    UserService.editUser(values).then(
+      () => {
+        dispatch(success());
+        history.push('/user/view');
+        dispatch(AlertActions.success(`User ${values.name} edited.`));
+      },
+      (error) => {
+        history.push('/user/view');
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
 
 const UserActions = {
   login,
@@ -202,7 +218,8 @@ const UserActions = {
   deleteUser,
   loadUser,
   enrol,
-  // getAllRoles,
+  getAllRoles,
+  editUser,
 };
 
 export default UserActions;

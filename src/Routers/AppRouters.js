@@ -28,6 +28,7 @@ import QuestionCreate from '../Containers/Question/QuestionCreate/index';
 import QuestionEdit from '../Containers/Question/QuestionEdit/index';
 import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
+import UserEdit from '../Containers/User/UserEdit/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
@@ -155,6 +156,11 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
+                  path={Routes.USER_EDIT}
+                  component={withAuth(UserEdit, ['Admin'])}
+                  exact
+                />
+                <Route
                   path={Routes.USER_ENROL}
                   component={withAuth(EnrolmentCreate, ['Admin', 'Client'])}
                   exact
@@ -230,6 +236,7 @@ class AppRouters extends React.Component {
                   component={withAuth(Question, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
+
                 <Route
                   path={Routes.TEST_EDIT}
                   component={withAuth(TestEdit, ['Admin', 'Regular', 'Client'])}

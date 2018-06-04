@@ -16,13 +16,13 @@ function getAll() {
   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Users`, requestOptions);
 }
 
-// function getAllRoles() {
-//   const requestOptions = {
-//     method: 'GET',
-//   };
+function getAllRoles() {
+  const requestOptions = {
+    method: 'GET',
+  };
 
-//   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Roles`, requestOptions);
-// }
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Roles`, requestOptions);
+}
 
 function getById(id) {
   const requestOptions = {
@@ -81,6 +81,24 @@ function deleteUser(id) {
   );
 }
 
+function editUser(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      email: values.email,
+      roleId: values.roleId,
+      clientId: values.clientId,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Users/${values.id}`,
+    requestOptions,
+  );
+}
+
 function logout() {
   localStorage.clear();
 }
@@ -94,7 +112,8 @@ const UserService = {
   deleteUser,
   enrol,
   logout,
-  // getAllRoles,
+  getAllRoles,
+  editUser,
 };
 
 export default UserService;

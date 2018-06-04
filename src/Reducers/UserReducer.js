@@ -23,6 +23,19 @@ function UserReducer(state = {}, action) {
         loading: false,
         error: action.error,
       };
+    case UserConstants.GET_ALL_ROLES_REQUEST:
+      return {
+        loading: true,
+      };
+    case UserConstants.GET_ALL_ROLES_SUCCESS:
+      return {
+        roles: action.roles,
+      };
+    case UserConstants.GET_ALL_ROLES_FAILURE:
+      return {
+        loading: false,
+        roles: [],
+      };
     case UserConstants.REGISTER_REQUEST:
       return {
         users: action.userName,
