@@ -59,8 +59,6 @@ class Login extends React.Component {
           </div>
         </Card>
       </form>
-      {console.log(CommonConstants)}
-      {console.log(hostname)}
     </div>
   );
 }

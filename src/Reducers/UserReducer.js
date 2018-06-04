@@ -1,4 +1,12 @@
+import { isNumber } from 'util';
 import UserConstants from '../Constants/UserConstants';
+
+function filterById(id, delId) {
+  if (isNumber(id) && id !== 0 && id !== delId) {
+    return true;
+  }
+  return false;
+}
 
 function UserReducer(state = {}, action) {
   switch (action.type) {
@@ -47,7 +55,17 @@ function UserReducer(state = {}, action) {
       return {
         error: action.error,
       };
-
+    case UserConstants.DELETE_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case UserConstants.DELETE_SUCCESS:
+      return Object.assign({}, state, {
+        users: state.users.filter(obj => filterById(obj.id, action.id)),
+        loading: false,
+      });
+    case UserConstants.DELETE_FAILURE:
+      return state;
     default:
       return state;
   }

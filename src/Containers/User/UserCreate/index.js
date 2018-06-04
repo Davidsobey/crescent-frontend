@@ -47,7 +47,7 @@ class UserCreate extends React.Component {
         >
           <div>
             {this.props.clients ? (
-              <Field name="Client" label="Client Name" component={Select}>
+              <Field name="clientId" label="Client Name" component={Select}>
                 {this.props.clients.map(client => (
                   <MenuItem value={client.id} key={client.id}>
                     {client.name}
@@ -57,9 +57,17 @@ class UserCreate extends React.Component {
             ) : (
               <div>
                 <LinearProgress color="secondary" />
-                Loading Courses
+                Loading Client
               </div>
             )}
+            <div>
+              <Field
+                name="roleId"
+                label="Role"
+                margin="normal"
+                component={TextField}
+              />
+            </div>
             <div>
               <Field
                 name="email"

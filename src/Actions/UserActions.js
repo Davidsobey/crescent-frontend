@@ -61,7 +61,7 @@ function register(user) {
       () => {
         dispatch(success(user));
         history.push('/user/list');
-        dispatch(AlertActions.success(`User ${user} created successfully.`));
+        dispatch(AlertActions.success(`User ${user.name} created successfully.`));
       },
       (error) => {
         dispatch(failure(error));
@@ -179,7 +179,7 @@ function deleteUser(id) {
   return (dispatch) => {
     dispatch(request(id));
 
-    UserService.delete(id).then(
+    UserService.deleteUser(id).then(
       () => {
         dispatch(success(id));
       },
@@ -199,7 +199,7 @@ const UserActions = {
   close,
   register,
   getAll,
-  delete: deleteUser,
+  deleteUser,
   loadUser,
   enrol,
   // getAllRoles,
