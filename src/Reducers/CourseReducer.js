@@ -40,7 +40,7 @@ function CourseReducer(state = {}, action) {
     case CourseConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
         courses: state.courses.filter(obj => filterById(obj.id, action.id)),
-        loading: false,
+        loading: true,
       });
     case CourseConstants.DELETE_SUCCESS:
       return Object.assign({}, state, {

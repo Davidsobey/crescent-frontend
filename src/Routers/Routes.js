@@ -15,6 +15,7 @@ const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
 const OPTION_CREATE = '/option/create';
 const OPTION_VIEW = '/option/view';
+const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const ENROLLMENTS_CREATE = '/user/enrolment/create';
@@ -51,6 +52,7 @@ export default {
   QUESTION_VIEW,
   OPTION_CREATE,
   OPTION_VIEW,
+  QUESTION_EDIT,
   USER_CREATE,
   USER_VIEW,
   ENROLLMENTS_CREATE,

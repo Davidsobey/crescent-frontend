@@ -11,7 +11,11 @@ function filteredList(response, id) {
 function create(question) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(question),
+    body: JSON.stringify({
+      title: question.questionTitle,
+      allocatedMarks: question.questionAllocatedMarks,
+      testId: question.test,
+    }),
   };
 
   return Auth.fetch(
@@ -67,12 +71,41 @@ function getQuestionsForTest(testId) {
   return objectList;
 }
 
-const QuestionServices = {
+function deleteQuestion(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/Delete/${id}`,
+    requestOptions,
+  );
+}
+
+function editQuestion(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      title: values.title,
+      allocatedMarks: values.allocatedMarks,
+      testId: parseInt(values.testId, 10),
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/${values.id}`,
+    requestOptions,
+  );
+}
+
+const QuestionService = {
   create,
   getAll,
   getById,
   update,
   getQuestionsForTest,
+  deleteQuestion,
+  editQuestion,
 };
 
-export default QuestionServices;
+export default QuestionService;

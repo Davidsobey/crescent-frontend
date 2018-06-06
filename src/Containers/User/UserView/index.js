@@ -9,17 +9,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import { CircularProgress } from 'material-ui/Progress';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import Table from '../../../Components/Table';
 import UserActions from '../../../Actions/UserActions';
-
-const header = ['ID', 'Name', 'Email', 'Client', 'Role'];
+import IconButton from '../../../Styles/IconButton';
+import CustomModal from '../../../Components/Modal/index';
+import { StyledDelete } from '../../../Styles/Delete';
+import { StyledEdit } from '../../../Styles/Edit';
 
 class UserView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { obj: {} };
     this.props.dispatch(UserActions.getAll());
   }
 
@@ -27,7 +31,6 @@ class UserView extends React.Component {
     const data = [];
     users.forEach((user) => {
       const newUser = {
-        id: user.id,
         name: user.name,
         email: user.email,
         client: user.client.name,
@@ -39,17 +42,69 @@ class UserView extends React.Component {
   };
 
   render() {
-    const { users } = this.props;
-    return (
-      <Card width="800px" title="User List">
-        {Array.isArray(users) ? (
-          <Table header={header} data={this.manipulateData(users)} />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+    const data = this.manipulateData(this.props.users);
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+      },
+      {
+        Header: 'Client',
+        accessor: 'client',
+      },
+      {
+        Header: 'Role',
+        accessor: 'role',
+      },
+      {
+        Header: 'Edit/Delete',
+        accessor: 'edit/delete',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-delete" title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => this.handleEdit(row.original)}
+              >
+                <StyledEdit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-delete" title="Delete">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => this.handleDelete(row.original)}
+              >
+                <StyledDelete />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      </Card>
+        ),
+      },
+    ];
+    return (
+      <div>
+        <Card width="800px" title="User List">
+          <div>
+            <ReactTable
+              columns={columns}
+              data={data}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          </div>
+        </Card>
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
+      </div>
     );
   }
 }
