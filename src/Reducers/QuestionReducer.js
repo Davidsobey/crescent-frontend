@@ -47,10 +47,6 @@ function QuestionReducer(state = {}, action) {
       return {
         question: {},
       };
-    case QuestionConstants.GETBYID_FAILURE:
-      return {
-        questions: {},
-      };
     case QuestionConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
         loading: true,

@@ -31,6 +31,9 @@ import UserView from '../Containers/User/UserView/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
+import PolicyView from '../Containers/Policy/PolicyView/index';
+import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
+import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
 import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
@@ -171,6 +174,21 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.CLIENT_VIEW}
                   component={withAuth(ClientView, ['Admin'])}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICY_CREATE}
+                  component={withAuth(PolicyCreate, ['Admin'])}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICY_VIEW}
+                  component={withAuth(PolicyView, ['Admin'])}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICY_EDIT}
+                  component={withAuth(PolicyEdit, ['Admin'])}
                   exact
                 />
                 <Route

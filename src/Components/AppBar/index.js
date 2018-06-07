@@ -152,7 +152,7 @@ const ModuleDetails = {
 };
 
 const PolicyDetails = {
-  listName: 'Policies',
+  listName: 'Policy',
   listIcon: <PolicyIcon />,
   subItems: [
     {

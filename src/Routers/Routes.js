@@ -24,6 +24,9 @@ const CLIENT_VIEW = '/client/list';
 const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
 const SUBSCRIPTIONS_LIST = '/client/subscription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
+const POLICY_CREATE = '/policy/create';
+const POLICY_VIEW = '/policy/list';
+const POLICY_EDIT = '/policy/edit';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -59,6 +62,9 @@ export default {
   SUBSCRIPTIONS_CREATE,
   SUBSCRIPTIONS_LIST,
   CLIENT_SUBSCRIBE,
+  POLICY_CREATE,
+  POLICY_VIEW,
+  POLICY_EDIT,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,

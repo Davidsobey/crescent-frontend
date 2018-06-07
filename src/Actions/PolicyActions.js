@@ -15,7 +15,7 @@ function create(policy, formfile) {
   }
 
   return (dispatch) => {
-    dispatch(request({ }));
+    dispatch(request({}));
     PolicyService.create(policy, formfile).then(
       () => {
         dispatch(success());
@@ -86,13 +86,22 @@ function acknowledge(acknowledgement, userId, policyId) {
 
 function getOutstandingPoliciesForUser(userId) {
   function request() {
-    return { type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_REQUEST, userId };
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_REQUEST,
+      userId,
+    };
   }
   function success(policies) {
-    return { type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS, policies };
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS,
+      policies,
+    };
   }
   function failure(error) {
-    return { type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE, error };
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE,
+      error,
+    };
   }
 
   return (dispatch) => {
@@ -122,7 +131,7 @@ function getAll() {
   return (dispatch) => {
     dispatch(request());
 
-    PolicyService.getPolicies().then(
+    PolicyService.getAll().then(
       policies => dispatch(success(policies)),
       (error) => {
         dispatch(failure(error));
@@ -241,6 +250,32 @@ function clearPolicies() {
   };
 }
 
+function loadPolicy(id) {
+  function request() {
+    return { type: PolicyConstants.LOAD_POLICY_REQUEST };
+  }
+  function success(policy) {
+    return { type: PolicyConstants.LOAD_POLICY_SUCCESS, policy };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.LOAD_POLICY_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(id));
+
+    PolicyService.getPolicy(id).then(
+      (policy) => {
+        dispatch(success(policy));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -252,6 +287,7 @@ const PolicyActions = {
   editPolicy,
   deletePolicy,
   getOutstandingPoliciesForUser,
+  loadPolicy,
 };
 
 export default PolicyActions;

@@ -22,10 +22,6 @@ import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
-import IconButton from '../../../Styles/IconButton';
-import CustomModal from '../../../Components/Modal/index';
-import { StyledDelete } from '../../../Styles/Delete';
-import { StyledEdit } from '../../../Styles/Edit';
 
 class QuestionView extends React.Component {
   constructor(props) {
