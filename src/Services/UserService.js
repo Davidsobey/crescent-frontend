@@ -63,7 +63,7 @@ function enrol(enrolment) {
     method: 'POST',
   };
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.user.id}/enrolments?courseId=${enrolment.course.id}`,
+    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolments?courseId=${enrolment.courseID}`,
     requestOptions,
   );
 }

@@ -42,7 +42,7 @@ class EnrolmentCreate extends React.Component {
           <div>
             <div>
               {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select}>
+                <Field name="courseID" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -56,7 +56,7 @@ class EnrolmentCreate extends React.Component {
                 </div>
               )}
               {this.props.users ? (
-                <Field name="user" label="User Name" component={Select}>
+                <Field name="userID" label="User Name" component={Select}>
                   {this.props.users.map(user => (
                     <MenuItem value={user.id} key={user.id}>
                       {user.name}

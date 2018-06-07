@@ -42,7 +42,7 @@ class SubscriptionCreate extends React.Component {
           <div>
             <div>
               {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select}>
+                <Field name="courseID" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -56,7 +56,7 @@ class SubscriptionCreate extends React.Component {
                 </div>
               )}
               {this.props.clients ? (
-                <Field name="client" label="Client Name" component={Select}>
+                <Field name="clientID" label="Client Name" component={Select}>
                   {this.props.clients.map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
