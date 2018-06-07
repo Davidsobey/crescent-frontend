@@ -240,7 +240,7 @@ const UserDetails = {
       key: 2,
       subItemName: 'Enrol',
       subItemIcon: <AttachIcon />,
-      subItemExtension: 'enrolment/create',
+      subItemExtension: 'enrol',
     },
   ],
 };

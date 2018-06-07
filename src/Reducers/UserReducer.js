@@ -48,14 +48,14 @@ function UserReducer(state = {}, action) {
       return state;
     case UserConstants.ENROL_REQUEST:
       return {
-        enrolments: action.enrolment,
+        enrolment: action.enrolment,
       };
     case UserConstants.ENROL_SUCCESS:
       return {
-        enrolments: action.enrolment,
+        enrolment: action.enrolment,
       };
     case UserConstants.ENROL_FAILURE:
-      return state;
+      return {};
     case UserConstants.GETUSER_REQUEST:
       return {
         loading: true,

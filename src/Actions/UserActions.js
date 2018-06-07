@@ -119,7 +119,7 @@ function enrol(enrolment) {
     return { type: UserConstants.ENROL_SUCCESS, enrolment };
   }
   function failure(error) {
-    return { type: UserConstants.REGISTER_FAILURE, error };
+    return { type: UserConstants.ENROL_FAILURE, error };
   }
 
   return (dispatch) => {

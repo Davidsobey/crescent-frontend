@@ -32,7 +32,7 @@ class EnrolmentCreate extends React.Component {
 
   render() {
     return (
-      <Card width="600px" title="Enrol A User">
+      <Card width="600px" title="Enrol in Course">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate

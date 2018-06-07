@@ -17,14 +17,10 @@ const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const USER_EDIT = '/user/edit';
-const ENROLLMENTS_CREATE = '/user/enrolment/create';
-const ENROLLMENTS_LIST = '/user/enrolment/list';
-const USER_ENROL = 'user/enrolment/create';
+const USER_ENROL = '/user/enrol';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const CLIENT_EDIT = '/client/edit';
-const SUBSCRIPTIONS_CREATE = '/client/subscription/create';
-const SUBSCRIPTIONS_LIST = '/client/subscription/list';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
@@ -54,14 +50,10 @@ export default {
   USER_CREATE,
   USER_VIEW,
   USER_EDIT,
-  ENROLLMENTS_CREATE,
-  ENROLLMENTS_LIST,
   USER_ENROL,
   CLIENT_CREATE,
   CLIENT_EDIT,
   CLIENT_VIEW,
-  SUBSCRIPTIONS_CREATE,
-  SUBSCRIPTIONS_LIST,
   CLIENT_SUBSCRIBE,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
