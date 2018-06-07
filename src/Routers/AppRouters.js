@@ -29,12 +29,14 @@ import OptionList from '../Containers/Option/OptionView/index';
 import OptionCreate from '../Containers/Option/OptionCreate/index';
 import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
+import UserEdit from '../Containers/User/UserEdit/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
 import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
+import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
 import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
@@ -163,13 +165,13 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
-                  path={Routes.USER_ENROL}
-                  component={withAuth(EnrolmentCreate, ['Admin', 'Client'])}
+                  path={Routes.USER_EDIT}
+                  component={withAuth(UserEdit, ['Admin'])}
                   exact
                 />
                 <Route
-                  path={Routes.CLIENT_CREATE}
-                  component={withAuth(ClientCreate, ['Admin'])}
+                  path={Routes.USER_ENROL}
+                  component={withAuth(EnrolmentCreate, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
@@ -195,6 +197,8 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.POLICY_EDIT}
                   component={withAuth(PolicyEdit, ['Admin'])}
+                  path={Routes.CLIENT_EDIT}
+                  component={withAuth(ClientEdit, ['Admin'])}
                   exact
                 />
                 <Route
@@ -253,6 +257,7 @@ class AppRouters extends React.Component {
                   component={withAuth(Question, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
+
                 <Route
                   path={Routes.TEST_EDIT}
                   component={withAuth(TestEdit, ['Admin', 'Regular', 'Client'])}

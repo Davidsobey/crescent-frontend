@@ -4,8 +4,6 @@ import AuthMiddleware from '../Middleware/AuthMiddleware';
 
 const Auth = new AuthMiddleware();
 
-const fetch = require('isomorphic-fetch');
-
 function login(username, password) {
   return Auth.login(username, password);
 }
@@ -16,6 +14,14 @@ function getAll() {
   };
 
   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Users`, requestOptions);
+}
+
+function getAllRoles() {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Roles`, requestOptions);
 }
 
 function getById(id) {
@@ -30,12 +36,13 @@ function getById(id) {
 }
 
 function register(user) {
+  const newUser = { ...user, password: 'changeMe!' };
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(user),
+    body: JSON.stringify(newUser),
   };
 
-  return fetch(`${CommonConstants.API_ENDPOINT}/Users`, requestOptions);
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Users`, requestOptions);
 }
 
 function update(user) {
@@ -54,11 +61,9 @@ function update(user) {
 function enrol(enrolment) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(enrolment.courseID),
   };
-
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolments`,
+    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolment?courseId=${enrolment.courseID}`,
     requestOptions,
   );
 }
@@ -67,11 +72,27 @@ function enrol(enrolment) {
 function deleteUser(id) {
   const requestOptions = {
     method: 'DELETE',
-    headers: AuthHeader(),
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Users/Delete/${id}`,
+    requestOptions,
+  );
+}
+
+function editUser(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      email: values.email,
+      roleId: values.roleId,
+      clientId: values.clientId,
+    }),
   };
 
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${id}`,
+    `${CommonConstants.API_ENDPOINT}/Users/${values.id}`,
     requestOptions,
   );
 }
@@ -86,9 +107,11 @@ const UserService = {
   getAll,
   getById,
   update,
-  delete: deleteUser,
+  deleteUser,
   enrol,
   logout,
+  getAllRoles,
+  editUser,
 };
 
 export default UserService;

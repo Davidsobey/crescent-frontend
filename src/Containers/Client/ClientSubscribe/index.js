@@ -37,11 +37,12 @@ class SubscriptionCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select}>
+                <Field name="courseID" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -51,11 +52,11 @@ class SubscriptionCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Courses
+                  Loading Courses
                 </div>
-                )}
+              )}
               {this.props.clients ? (
-                <Field name="client" label="Client Name" component={Select}>
+                <Field name="clientID" label="Client Name" component={Select}>
                   {this.props.clients.map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
@@ -65,13 +66,18 @@ class SubscriptionCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Clients
+                  Loading Clients
                 </div>
-                )}
+              )}
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Subscribe
             </Button>
           </div>

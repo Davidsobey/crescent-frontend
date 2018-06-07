@@ -60,6 +60,10 @@ function QuestionReducer(state = {}, action) {
       return state;
     case UserConstants.LOGOUT:
       return {};
+    case QuestionConstants.CLEAR_QUESTION:
+      return {
+        question: {},
+      };
     default:
       return state;
   }

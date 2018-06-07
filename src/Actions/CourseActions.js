@@ -20,7 +20,7 @@ function create(values) {
     CourseService.create(courseName, courseDescription, courseCPD).then(
       () => {
         dispatch(success(courseName));
-        history.push('/course/list');
+        history.push('/module/create');
         dispatch(AlertActions.success(`Course ${courseName} created.`));
       },
       (error) => {

@@ -43,10 +43,6 @@ class BasicTable extends React.Component {
     this.props.handleEdit(testObject);
   }
 
-  confirmDelete = id => () => {
-    console.log(id);
-  };
-
   // handleEdit = (editObj) => {
   //   this.props.dispatch(editObj);
   // };

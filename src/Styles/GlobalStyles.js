@@ -115,6 +115,23 @@ injectGlobal`
     display: flex !important;
     justify-content: flex-end !important;
   }
+  
+  .formAlignRight{
+    display: flex !important;
+    justify-content: flex-end !important;
+  }
+
+  .buttonFormat{
+    margin-left: 260px !important;
+    margin-top: 15px !important;
+  }
+  
+  .centerForm{
+    display: flex !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
  
   .test-table{
     display: table;

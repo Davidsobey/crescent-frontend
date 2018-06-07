@@ -13,6 +13,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import ClientActions from '../../../Actions/ClientActions';
 import IconButton from '../../../Styles/IconButton';
@@ -26,6 +27,22 @@ class ClientView extends React.Component {
     this.state = { obj: {} };
     this.props.dispatch(ClientActions.getAll());
   }
+
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(ClientActions.deleteClient(obj.id));
+    this.child.handleClose();
+  };
+
+  handleEdit = (editObj) => {
+    this.props.dispatch(ClientActions.loadClient(editObj.id));
+    history.push('/client/edit');
+  };
+
   render() {
     const { clients } = this.props;
     const columns = [
@@ -36,14 +53,6 @@ class ClientView extends React.Component {
       {
         Header: 'Email',
         accessor: 'email',
-      },
-      {
-        Header: 'Client',
-        accessor: 'client',
-      },
-      {
-        Header: 'Role',
-        accessor: 'role',
       },
       {
         Header: 'Edit/Delete',

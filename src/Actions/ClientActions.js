@@ -46,7 +46,7 @@ function subscribe(subscription) {
     ClientService.subscribe(subscription).then(
       () => {
         dispatch(success(subscription));
-        history.push(`/client/${subscription.clientId}.list`);
+        history.push(`/client/${subscription.clientID}.list`);
         dispatch(AlertActions.success('Subscription created.'));
       },
       (error) => {
@@ -105,11 +105,81 @@ function getAll() {
   };
 }
 
+function deleteClient(id) {
+  function request() {
+    return { type: ClientConstants.DELETE_CLIENT_REQUEST, id };
+  }
+  function success() {
+    return { type: ClientConstants.DELETE_CLIENT_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: ClientConstants.DELETE_CLIENT_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ClientService.deleteClient(id).then(
+      () => {
+        dispatch(success(id));
+        dispatch(AlertActions.success('Client deleted.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function loadClient(id) {
+  function request() {
+    return { type: ClientConstants.LOAD_CLIENT_REQUEST };
+  }
+  function success(client) {
+    return { type: ClientConstants.LOAD_CLIENT_SUCCESS, client };
+  }
+  function failure(error) {
+    return { type: ClientConstants.LOAD_CLIENT_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(id));
+
+    ClientService.getClient(id).then(
+      (client) => {
+        dispatch(success(client));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function editClient(values) {
+  return (dispatch) => {
+    ClientService.editClient(values).then(
+      () => {
+        history.push('/client/list');
+        dispatch(AlertActions.success(`Client ${values.name} edited.`));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const clientActions = {
   create,
   getAll,
   getById,
   subscribe,
+  deleteClient,
+  loadClient,
+  editClient,
 };
 
 export default clientActions;

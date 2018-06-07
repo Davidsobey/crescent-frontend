@@ -40,9 +40,10 @@ class ModuleCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.courses ? (
                 <Field name="course" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
@@ -75,8 +76,13 @@ class ModuleCreate extends React.Component {
               </div>
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Create Module
             </Button>
           </div>

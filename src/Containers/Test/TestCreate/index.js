@@ -43,9 +43,10 @@ class TestCreate extends React.Component {
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.courses ? (
                 <Field
                   name="course"
@@ -104,8 +105,13 @@ class TestCreate extends React.Component {
               </div>
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Create Test
             </Button>
           </div>

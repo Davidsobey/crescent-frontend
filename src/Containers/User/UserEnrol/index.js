@@ -26,22 +26,23 @@ class EnrolmentCreate extends React.Component {
     this.props.dispatch(UserActions.getAll());
   }
   submit = (values) => {
-    const subscription = Object.assign({}, values);
-    this.props.dispatch(UserActions.subscribe(subscription));
+    const enrolment = Object.assign({}, values);
+    this.props.dispatch(UserActions.enrol(enrolment));
   };
 
   render() {
     return (
-      <Card width="600px" title="Enrol A User">
+      <Card width="600px" title="Enrol in Course">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
+          className="centerForm"
         >
           <div>
-            <div className="width200">
+            <div>
               {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select}>
+                <Field name="courseID" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -51,11 +52,11 @@ class EnrolmentCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Courses
+                  Loading Courses
                 </div>
-                )}
+              )}
               {this.props.users ? (
-                <Field name="user" label="User Name" component={Select}>
+                <Field name="userID" label="User Name" component={Select}>
                   {this.props.users.map(user => (
                     <MenuItem value={user.id} key={user.id}>
                       {user.name}
@@ -65,13 +66,18 @@ class EnrolmentCreate extends React.Component {
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
-                    Loading Users
+                  Loading Users
                 </div>
-                )}
+              )}
             </div>
           </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Enrol
             </Button>
           </div>

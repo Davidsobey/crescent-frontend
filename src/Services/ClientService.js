@@ -33,11 +33,47 @@ function getById(id) {
 function subscribe(subscription) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(subscription.courseID),
   };
 
   return Auth.fetch(
-    `${api}/Clients/${subscription.clientID}/subscriptions`,
+    `${api}/Clients/${subscription.clientID}/Subscription?courseId=${subscription.courseID}`,
+    requestOptions,
+  );
+}
+
+function deleteClient(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/Delete/${id}`,
+    requestOptions,
+  );
+}
+
+function getClient(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/${id}`,
+    requestOptions,
+  );
+}
+
+function editClient(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      name: values.name,
+      email: values.email,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/${values.id}`,
     requestOptions,
   );
 }
@@ -47,5 +83,8 @@ const ClientService = {
   getAll,
   getById,
   subscribe,
+  deleteClient,
+  getClient,
+  editClient,
 };
 export default ClientService;

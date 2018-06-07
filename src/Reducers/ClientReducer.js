@@ -1,5 +1,13 @@
+import { isNumber } from 'util';
 import ClientConstants from '../Constants/ClientConstants';
 import UserConstants from '../Constants/UserConstants';
+
+function filterById(id, delId) {
+  if (isNumber(id) && id !== 0 && id !== delId) {
+    return true;
+  }
+  return false;
+}
 
 function ClientReducer(state = {}, action) {
   switch (action.type) {
@@ -47,6 +55,25 @@ function ClientReducer(state = {}, action) {
       };
     case ClientConstants.SUBSCRIBE_FAILURE:
       return {};
+    case ClientConstants.DELETE_REQUESTS:
+      return {
+        loading: true,
+      };
+    case ClientConstants.DELETE_SUCCESSS:
+      return Object.assign({}, state, {
+        clients: state.clients.filter(obj => filterById(obj.id, action.id)),
+        loading: false,
+      });
+    case ClientConstants.DELETE_FAILURES:
+      return state;
+    case ClientConstants.LOAD_CLIENT_REQUEST:
+      return state;
+    case ClientConstants.LOAD_CLIENT_SUCCESS:
+      return Object.assign({}, state, {
+        client: action.client,
+      });
+    case ClientConstants.LOAD_CLIENT_FAILURE:
+      return state;
     case UserConstants.LOGOUT:
       return {};
     default:

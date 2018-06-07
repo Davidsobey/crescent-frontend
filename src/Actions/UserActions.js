@@ -61,7 +61,7 @@ function register(user) {
       () => {
         dispatch(success(user));
         history.push('/user/list');
-        dispatch(AlertActions.success(`User ${user} created successfully.`));
+        dispatch(AlertActions.success(`User ${user.name} created successfully.`));
       },
       (error) => {
         dispatch(failure(error));
@@ -91,6 +91,26 @@ function getAll() {
   };
 }
 
+function getAllRoles() {
+  function request() {
+    return { type: UserConstants.GET_ALL_ROLES_REQUEST };
+  }
+  function success(roles) {
+    return { type: UserConstants.GET_ALL_ROLES_SUCCESS, roles };
+  }
+  function failure(error) {
+    return { type: UserConstants.roles, error };
+  }
+  return (dispatch) => {
+    dispatch(request());
+
+    UserService.getAllRoles().then(
+      roles => dispatch(success(roles)),
+      error => dispatch(failure(error)),
+    );
+  };
+}
+
 function enrol(enrolment) {
   function request() {
     return { type: UserConstants.ENROL_REQUEST, enrolment };
@@ -99,7 +119,7 @@ function enrol(enrolment) {
     return { type: UserConstants.ENROL_SUCCESS, enrolment };
   }
   function failure(error) {
-    return { type: UserConstants.REGISTER_FAILURE, error };
+    return { type: UserConstants.ENROL_FAILURE, error };
   }
 
   return (dispatch) => {
@@ -108,7 +128,7 @@ function enrol(enrolment) {
     UserService.enrol(enrolment).then(
       () => {
         dispatch(success(enrolment));
-        history.push(`/user/${enrolment.userId}/list`);
+        history.push(`/user/${enrolment.userID}/list`);
         dispatch(AlertActions.success('User enrolled successfully.'));
       },
       (error) => {
@@ -159,7 +179,7 @@ function deleteUser(id) {
   return (dispatch) => {
     dispatch(request(id));
 
-    UserService.delete(id).then(
+    UserService.deleteUser(id).then(
       () => {
         dispatch(success(id));
       },
@@ -170,8 +190,24 @@ function deleteUser(id) {
   };
 }
 
-// function enrolUser(id) {
-// }
+function editUser(values) {
+  function success() {
+    return { type: UserConstants.EDIT_USER_SUCCESS };
+  }
+  return (dispatch) => {
+    UserService.editUser(values).then(
+      () => {
+        dispatch(success());
+        history.push('/user/view');
+        dispatch(AlertActions.success(`User ${values.name} edited.`));
+      },
+      (error) => {
+        history.push('/user/view');
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
 
 const UserActions = {
   login,
@@ -179,9 +215,11 @@ const UserActions = {
   close,
   register,
   getAll,
-  delete: deleteUser,
+  deleteUser,
   loadUser,
   enrol,
+  getAllRoles,
+  editUser,
 };
 
 export default UserActions;

@@ -48,6 +48,7 @@ class QuestionView extends React.Component {
       Questions.forEach((Question) => {
         const TestMatch = Tests.filter(Test => Test.id === Question.testId);
         const newQuestion = {
+          id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
           test: TestMatch[0].name,
@@ -137,7 +138,7 @@ class QuestionView extends React.Component {
     ];
     return (
       <div>
-        <Card width="800px" title="Course List">
+        <Card width="800px" title="Question List">
           <div>
             {Array.isArray(data) && (
               <ReactTable

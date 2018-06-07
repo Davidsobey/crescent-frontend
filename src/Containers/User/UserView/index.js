@@ -13,6 +13,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import UserActions from '../../../Actions/UserActions';
 import IconButton from '../../../Styles/IconButton';
@@ -27,17 +28,35 @@ class UserView extends React.Component {
     this.props.dispatch(UserActions.getAll());
   }
 
+  handleDelete = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+  };
+
+  confirmDelete = obj => () => {
+    this.props.dispatch(UserActions.deleteUser(obj.id));
+    this.child.handleClose();
+  };
+
+  handleEdit = (editObj) => {
+    this.props.dispatch(UserActions.loadUser(editObj.id));
+    history.push('/user/edit');
+  };
+
   manipulateData = (users) => {
     const data = [];
-    users.forEach((user) => {
-      const newUser = {
-        name: user.name,
-        email: user.email,
-        client: user.client.name,
-        role: user.role.name,
-      };
-      data.push(newUser);
-    });
+    if (users) {
+      users.forEach((user) => {
+        const newUser = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          client: user.client.name,
+          role: user.role.name,
+        };
+        data.push(newUser);
+      });
+    }
     return data;
   };
 
