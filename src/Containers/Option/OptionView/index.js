@@ -12,6 +12,7 @@ import Card from '../../../Components/Card';
 import QuestionActions from '../../../Actions/QuestionActions';
 import OptionActions from '../../../Actions/OptionActions';
 import { StyledDelete } from '../../../Styles/Delete';
+import { StyledArrow } from '../../../Styles/Arrow';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
@@ -75,6 +76,7 @@ class OptionView extends React.Component {
       {
         Header: 'Edit/Delete',
         accessor: 'edit/delete',
+        Filter: <div />,
         Cell: row => (
           <div>
             <Tooltip id="tooltip-delete" title="Edit">
@@ -91,6 +93,22 @@ class OptionView extends React.Component {
                 onClick={() => this.handleDelete(row.original)}
               >
                 <StyledDelete />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+      },
+      {
+        Header: 'Question Options',
+        accessor: 'questionOptions',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-options" title="Options">
+              <IconButton
+                aria-label="Options"
+                onClick={() => this.handleOption(row.original)}
+              >
+                <StyledArrow />
               </IconButton>
             </Tooltip>
           </div>
@@ -149,4 +167,10 @@ OptionView.propTypes = {
   options: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(OptionView);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  withForm,
+)(OptionView);

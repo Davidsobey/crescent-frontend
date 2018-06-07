@@ -48,6 +48,7 @@ class ClientView extends React.Component {
       {
         Header: 'Edit/Delete',
         accessor: 'edit/delete',
+        Filter: <div />,
         Cell: row => (
           <div>
             <Tooltip id="tooltip-delete" title="Edit">
