@@ -23,7 +23,8 @@ class SubscriptionCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(CourseActions.getAll());
-    this.props.dispatch(ClientActions.getAll());
+    const userVM = localStorage.getItem('userVM');
+    this.props.dispatch(ClientActions.getAllUnsubscribed(userVM.clientId));
   }
   submit = (values) => {
     const subscription = Object.assign({}, values);

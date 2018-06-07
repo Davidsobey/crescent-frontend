@@ -24,6 +24,14 @@ function getAll() {
   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses`, requestOptions);
 }
 
+function getAllUnsubscribedCourses(clientId) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses/Unsubscribed/${clientId}`, requestOptions);
+}
+
 function getCourse(id) {
   const requestOptions = {
     method: 'GET',
@@ -59,5 +67,6 @@ const CourseService = {
   getCourse,
   deleteCourse,
   editCourse,
+  getAllUnsubscribedCourses,
 };
 export default CourseService;

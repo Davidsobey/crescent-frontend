@@ -15,7 +15,11 @@ class AuthMiddleware extends React.Component {
   setToken(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken.value);
+
+    // Save attached user info to localStorage
+    localStorage.setItem('userVM', idToken.userVM);
   }
+
 
   getToken() {
     // Retrieves the user token from localStorage

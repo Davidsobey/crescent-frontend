@@ -55,6 +55,31 @@ function getAll() {
   };
 }
 
+function getAllUnsubscribed(clientId) {
+  function request() {
+    return { type: CourseConstants.GETUNSUBSCRIBED_REQUEST };
+  }
+  function success(courses) {
+    return { type: CourseConstants.GETUNSUBSCRIBED_SUCCESS, courses };
+  }
+  function failure(error) {
+    return { type: CourseConstants.GETUNSUBSCRIBED_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    CourseService.getAllUnsubscribedCourses(clientId).then(
+      courses => dispatch(success(courses)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+
 function deleteCourse(id) {
   function request() {
     return { type: CourseConstants.DELETE_REQUEST, id };
@@ -128,6 +153,7 @@ const CourseActions = {
   loadCourse,
   deleteCourse,
   editCourse,
+  getAllUnsubscribed,
 };
 
 export default CourseActions;
