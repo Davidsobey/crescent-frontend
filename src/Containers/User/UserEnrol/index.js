@@ -26,8 +26,8 @@ class EnrolmentCreate extends React.Component {
     this.props.dispatch(UserActions.getAll());
   }
   submit = (values) => {
-    const subscription = Object.assign({}, values);
-    this.props.dispatch(UserActions.subscribe(subscription));
+    const enrolment = Object.assign({}, values);
+    this.props.dispatch(UserActions.enrol(enrolment));
   };
 
   render() {

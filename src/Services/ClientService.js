@@ -33,11 +33,10 @@ function getById(id) {
 function subscribe(subscription) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(subscription.courseID),
   };
 
   return Auth.fetch(
-    `${api}/Clients/${subscription.clientID}/subscriptions`,
+    `${api}/Clients/${subscription.client.id}/subscription?userId=${subscription.course.id}`,
     requestOptions,
   );
 }

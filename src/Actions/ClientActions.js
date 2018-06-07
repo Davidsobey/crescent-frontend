@@ -46,7 +46,7 @@ function subscribe(subscription) {
     ClientService.subscribe(subscription).then(
       () => {
         dispatch(success(subscription));
-        history.push(`/client/${subscription.clientId}.list`);
+        history.push(`/client/${subscription.client.Id}.list`);
         dispatch(AlertActions.success('Subscription created.'));
       },
       (error) => {

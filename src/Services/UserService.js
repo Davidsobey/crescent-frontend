@@ -61,11 +61,9 @@ function update(user) {
 function enrol(enrolment) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(enrolment.courseID),
   };
-
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolments`,
+    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.user.id}/enrolments?courseId=${enrolment.course.id}`,
     requestOptions,
   );
 }
