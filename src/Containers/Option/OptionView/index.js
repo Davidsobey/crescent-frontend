@@ -1,9 +1,3 @@
-/**
- *
- * CourseView
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,24 +9,21 @@ import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import ModuleActions from '../../../Actions/ModuleActions';
+import QuestionActions from '../../../Actions/QuestionActions';
+import OptionActions from '../../../Actions/OptionActions';
 import { StyledDelete } from '../../../Styles/Delete';
+import { StyledArrow } from '../../../Styles/Arrow';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
-import TestActions from '../../../Actions/TestActions';
 import history from '../../../Helpers/History';
 
-class TestView extends React.Component {
+class OptionView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { obj: {} };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(ModuleActions.getAll());
-    this.props.dispatch(TestActions.getAll());
-    this.handleEdit = this.handleEdit.bind(this);
+    this.props.dispatch(QuestionActions.getAll());
+    this.props.dispatch(OptionActions.getAll());
   }
 
   handleDelete = (obj) => {
@@ -41,27 +32,27 @@ class TestView extends React.Component {
   };
 
   confirmDelete = obj => () => {
-    this.props.dispatch(TestActions.deleteTest(obj.id));
+    this.props.dispatch(OptionActions.deleteOption(obj.id));
     this.child.handleClose();
   };
 
-  handleEdit = (obj) => {
-    this.props.dispatch(TestActions.loadTest(obj.id));
-    history.push('/test/edit');
+  handleEdit = (editObj) => {
+    this.props.dispatch(OptionActions.loadOption(editObj.id));
+    history.push('/option/edit');
   };
 
-  loadData = (children, parent) => {
+  loadData = (options, questions) => {
     const formattedArray = [];
-    if (Array.isArray(children) && Array.isArray(parent)) {
-      children.forEach((child) => {
-        const moduleMatch = parent.filter(parentObj => parentObj.id === child.moduleID);
-        const newTest = {
-          id: child.id,
-          name: child.name,
-          totalMarks: child.totalMarks,
-          moduleID: moduleMatch[0] ? moduleMatch[0].name : '',
+    if (Array.isArray(options) && Array.isArray(questions)) {
+      options.forEach((option) => {
+        const questionMatch = questions.filter(question => question.id === option.questionId);
+        const newOption = {
+          id: option.id,
+          title: option.title,
+          isAnswer: option.isAnswer,
+          question: questionMatch[0].name,
         };
-        formattedArray.push(newTest);
+        formattedArray.push(newOption);
       });
       formattedArray.sort((a, b) => a.id - b.id);
     }
@@ -71,16 +62,16 @@ class TestView extends React.Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Title',
+        accessor: 'title',
       },
       {
-        Header: 'Total Marks',
-        accessor: 'totalMarks',
+        Header: 'Is Answer',
+        accessor: 'isAnswer',
       },
       {
-        Header: 'Module',
-        accessor: 'moduleID',
+        Header: 'Question',
+        accessor: 'question',
       },
       {
         Header: 'Edit/Delete',
@@ -107,13 +98,29 @@ class TestView extends React.Component {
           </div>
         ),
       },
+      {
+        Header: 'Question Options',
+        accessor: 'questionOptions',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-options" title="Options">
+              <IconButton
+                aria-label="Options"
+                onClick={() => this.handleOption(row.original)}
+              >
+                <StyledArrow />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+      },
     ];
-    const { tests, modules } = this.props;
-    const data = this.loadData(tests, modules);
+    const { questions, options } = this.props;
+    const data = this.loadData(options, questions);
     return (
       <div>
-        <Card width="800px" title="Test List">
-          {Array.isArray(tests) && Array.isArray(modules) ? (
+        <Card width="800px" title="Option List">
+          {Array.isArray(options) && Array.isArray(questions) ? (
             <ReactTable
               columns={columns}
               data={data}
@@ -139,8 +146,8 @@ class TestView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tests: state.TestReducer.tests,
-  modules: state.ModuleReducer.modules,
+  questions: state.QuestionReducer.questions,
+  options: state.OptionReducer.options,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -149,15 +156,21 @@ const mapDispatchToProps = dispatch => ({
 
 const withForm = reduxForm(
   {
-    form: 'testView',
+    form: 'optionView',
   },
-  TestView,
+  OptionView,
 );
 
-TestView.propTypes = {
-  tests: PropTypes.array,
-  modules: PropTypes.array,
+OptionView.propTypes = {
+  questions: PropTypes.array,
   dispatch: PropTypes.func,
+  options: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(TestView);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  withForm,
+)(OptionView);

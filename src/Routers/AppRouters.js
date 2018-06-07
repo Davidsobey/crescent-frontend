@@ -25,13 +25,17 @@ import TestCreate from '../Containers/Test/TestCreate/index';
 import TestList from '../Containers/Test/TestView/index';
 import QuestionList from '../Containers/Question/QuestionView/index';
 import QuestionCreate from '../Containers/Question/QuestionCreate/index';
-import QuestionEdit from '../Containers/Question/QuestionEdit/index';
+import OptionList from '../Containers/Option/OptionView/index';
+import OptionCreate from '../Containers/Option/OptionCreate/index';
 import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
 import UserEdit from '../Containers/User/UserEdit/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
+import PolicyView from '../Containers/Policy/PolicyView/index';
+import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
+import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -141,8 +145,13 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
-                  path={Routes.QUESTION_EDIT}
-                  component={withAuth(QuestionEdit, ['Admin', 'Client'])}
+                  path={Routes.OPTION_CREATE}
+                  component={withAuth(OptionCreate, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.OPTION_VIEW}
+                  component={withAuth(OptionList, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
@@ -176,6 +185,18 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
+                  path={Routes.POLICY_CREATE}
+                  component={withAuth(PolicyCreate, ['Admin'])}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICY_VIEW}
+                  component={withAuth(PolicyView, ['Admin'])}
+                  exact
+                />
+                <Route
+                  path={Routes.POLICY_EDIT}
+                  component={withAuth(PolicyEdit, ['Admin'])}
                   path={Routes.CLIENT_EDIT}
                   component={withAuth(ClientEdit, ['Admin'])}
                   exact

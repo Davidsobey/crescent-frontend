@@ -14,7 +14,6 @@ function create(policyVM, formFile) {
   const createdBy = creator.nameid;
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       Name: policyVM.policyName,
       Description: policyVM.policyDescription,
@@ -23,35 +22,26 @@ function create(policyVM, formFile) {
     }),
   };
 
-  return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Policies`,
-    requestOptions,
-  );
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Policies`, requestOptions);
 }
 
 function getAll() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
-  return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Policies`,
-    requestOptions,
-  );
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Policies`, requestOptions);
 }
 
 function getPolicy(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   const objectList = Auth.fetch(
     `${CommonConstants.API_ENDPOINT}/Policies/${id}`,
     requestOptions,
-  )
-    .then(data => filteredList(data, id));
+  );
 
   return objectList;
 }
@@ -59,14 +49,12 @@ function getPolicy(id) {
 function getClientPolicies(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   const objectList = Auth.fetch(
     `${CommonConstants.API_ENDPOINT}/Policies/CreatedBy/${id}`,
     requestOptions,
-  )
-    .then(data => filteredList(data, id));
+  ).then(data => filteredList(data, id));
 
   return objectList;
 }
@@ -74,14 +62,14 @@ function getClientPolicies(id) {
 function getUserOutstandingPolicies(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   const objectList = Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Policies/Acknowledgements/${id}/Outstanding`,
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Policies/Acknowledgements/${id}/Outstanding`,
     requestOptions,
-  )
-    .then(data => filteredList(data, id));
+  ).then(data => filteredList(data, id));
 
   return objectList;
 }
@@ -89,12 +77,13 @@ function getUserOutstandingPolicies(id) {
 function acknowledgePolicy(Acknowledgement, userId, policyId) {
   const requestOptions = {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ acknowledgement: Acknowledgement }),
   };
 
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Policies/${policyId}/Acknowledgements/${userId}`,
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Policies/${policyId}/Acknowledgements/${userId}`,
     requestOptions,
   );
 }
@@ -106,7 +95,9 @@ function createAcknowledgement(userId, policyId) {
   };
 
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Policies/${policyId}/Acknowledgements/${userId}`,
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Policies/${policyId}/Acknowledgements/${userId}`,
     requestOptions,
   );
 }
@@ -114,7 +105,6 @@ function createAcknowledgement(userId, policyId) {
 function editPolicy(id, policyVM) {
   const requestOptions = {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ PolicyVM: policyVM }),
   };
 
@@ -127,7 +117,6 @@ function editPolicy(id, policyVM) {
 function deletePolicy(id) {
   const requestOptions = {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
@@ -139,7 +128,6 @@ function deletePolicy(id) {
 function getAcknowledgementsForPolicy(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
@@ -158,7 +146,6 @@ async function delayedLog(item) {
   await delay();
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
