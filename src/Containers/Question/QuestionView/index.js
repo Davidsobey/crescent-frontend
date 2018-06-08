@@ -90,7 +90,7 @@ class QuestionView extends React.Component {
         accessor: 'allocatedMarks',
       },
       {
-        Header: 'Test',
+        Header: 'Assessment',
         accessor: 'test',
       },
       {

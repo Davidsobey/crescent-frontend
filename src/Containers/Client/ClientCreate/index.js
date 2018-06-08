@@ -48,7 +48,7 @@ class ClientCreate extends React.Component {
             <div>
               <Field
                 name="email"
-                label="Email"
+                label="Client Code"
                 margin="normal"
                 component={TextField}
               />
