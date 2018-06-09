@@ -38,7 +38,7 @@ class QuestionEdit extends React.Component {
           autoComplete="off"
         >
           <div>
-            <Field name="testId" label="Test Name" component={Select}>
+            <Field name="testId" label="Assessment Name" component={Select}>
               {this.props.tests.map(test => (
                 <MenuItem value={test.id} key={test.id}>
                   {test.name}

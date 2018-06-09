@@ -35,7 +35,7 @@ class TestEdit extends React.Component {
 
   render() {
     return (
-      <Card width="600px" title="Edit Test">
+      <Card width="600px" title="Edit Assessment">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -59,7 +59,7 @@ class TestEdit extends React.Component {
               )}
               <Field
                 name="name"
-                label="Test Name"
+                label="Assessment Name"
                 margin="normal"
                 component={TextField}
               />

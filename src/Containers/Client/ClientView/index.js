@@ -51,7 +51,7 @@ class ClientView extends React.Component {
         accessor: 'name',
       },
       {
-        Header: 'Email',
+        Header: 'Code',
         accessor: 'email',
       },
       {

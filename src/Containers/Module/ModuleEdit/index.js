@@ -60,7 +60,7 @@ class ModuleEdit extends React.Component {
             <div>
               <Field
                 name="name"
-                label="Module Name"
+                label="Name"
                 margin="normal"
                 component={TextField}
               />
@@ -68,7 +68,7 @@ class ModuleEdit extends React.Component {
             <div>
               <Field
                 name="description"
-                label="Module Description"
+                label="Key Outcome"
                 margin="normal"
                 component={TextField}
               />

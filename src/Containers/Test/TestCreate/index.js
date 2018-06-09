@@ -38,7 +38,7 @@ class TestCreate extends React.Component {
 
   render() {
     return (
-      <Card width="600px" title="Create New Test">
+      <Card width="600px" title="Create New Assessment">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate

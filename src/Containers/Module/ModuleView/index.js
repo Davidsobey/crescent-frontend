@@ -71,7 +71,7 @@ class ModuleView extends React.Component {
         accessor: 'name',
       },
       {
-        Header: 'Description',
+        Header: 'Key Outcome',
         accessor: 'description',
       },
       {
