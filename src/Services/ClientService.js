@@ -68,7 +68,7 @@ function editClient(values) {
     body: JSON.stringify({
       id: parseInt(values.id, 10),
       name: values.name,
-      email: values.email,
+      clientCode: values.clientCode,
     }),
   };
 
