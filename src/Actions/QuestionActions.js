@@ -116,7 +116,7 @@ function editQuestion(values) {
   };
 }
 
-function clearModules() {
+function clearQuestion() {
   function clear() {
     return { type: QuestionConstants.CLEAR_QUESTION };
   }
@@ -131,7 +131,7 @@ const QuestionActions = {
   getByID,
   deleteQuestion,
   editQuestion,
-  clearModules,
+  clearQuestion,
 };
 
 export default QuestionActions;

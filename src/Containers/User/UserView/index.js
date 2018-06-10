@@ -25,6 +25,9 @@ class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { obj: {} };
+  }
+
+  componentDidMount() {
     this.props.dispatch(UserActions.getAll());
   }
 
@@ -145,4 +148,7 @@ UserView.propTypes = {
   dispatch: PropTypes.func,
 };
 
-export default compose(connect(mapStateToProps), withForm)(UserView);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(UserView);

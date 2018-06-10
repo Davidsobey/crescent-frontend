@@ -191,13 +191,9 @@ function deleteUser(id) {
 }
 
 function editUser(values) {
-  function success() {
-    return { type: UserConstants.EDIT_USER_SUCCESS };
-  }
   return (dispatch) => {
     UserService.editUser(values).then(
       () => {
-        dispatch(success());
         history.push('/user/view');
         dispatch(AlertActions.success(`User ${values.name} edited.`));
       },

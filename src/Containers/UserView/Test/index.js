@@ -15,7 +15,7 @@ class UserTest extends React.Component {
   }
 
   render() {
-    const { test } = this.props;
+    const { test, user } = this.props;
 
     return (
       <div className="content">
@@ -29,7 +29,7 @@ class UserTest extends React.Component {
             <div className="row alignRight">
               <Button
                 color="secondary"
-                onClick={() => this.beginTest(2, test.id)}
+                onClick={() => this.beginTest(user.id, test.id)}
               >
                 Begin Test
               </Button>
@@ -43,15 +43,20 @@ class UserTest extends React.Component {
 
 UserTest.propTypes = {
   test: PropTypes.object,
+  user: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   test: state.TestReducer.test,
+  user: state.LoginReducer.user,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTest);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserTest);

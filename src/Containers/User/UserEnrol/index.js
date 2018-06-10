@@ -55,6 +55,8 @@ class EnrolmentCreate extends React.Component {
                   Loading Courses
                 </div>
               )}
+            </div>
+            <div>
               {this.props.users ? (
                 <Field name="userID" label="User Name" component={Select}>
                   {this.props.users.map(user => (
@@ -107,4 +109,7 @@ const withForm = reduxForm(
   EnrolmentCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(EnrolmentCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(EnrolmentCreate);

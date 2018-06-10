@@ -89,6 +89,7 @@ function editQuestion(values) {
       title: values.title,
       allocatedMarks: values.allocatedMarks,
       testId: parseInt(values.testId, 10),
+      // questionDifficulty: parseInt(2, 10),
     }),
   };
 

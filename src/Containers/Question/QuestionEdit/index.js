@@ -28,7 +28,6 @@ class QuestionEdit extends React.Component {
   submit = (values) => {
     this.props.dispatch(QuestionActions.editQuestion(values));
   };
-
   render() {
     return (
       <Card width="600px" title="Edit Question">

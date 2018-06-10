@@ -114,13 +114,14 @@ class BasicTable extends React.Component {
                 </TableRow>
               );
             })}
+            {(del && (
             <CustomModal
               del={del}
               obj={this.state && this.state.obj}
               /* eslint-disable no-return-assign */
               onRef={ref => (this.child = ref)}
               onClick={this.confirmDelete(this.state.obj)}
-            />
+            />))}
           </TableBody>
         </Table>
       </Paper>
