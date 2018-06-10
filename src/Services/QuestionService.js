@@ -3,6 +3,11 @@ import CommonConstants from '../Constants/CommonConstants';
 
 const Auth = new AuthMiddleware();
 
+function filteredList(response, id) {
+  const objects = response.filter(obj => obj.courseId === id);
+  return objects;
+}
+
 function create(question) {
   const requestOptions = {
     method: 'POST',
@@ -53,6 +58,19 @@ function update(question) {
   );
 }
 
+function getQuestionsForTest(testId) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  const objectList = Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions`,
+    requestOptions,
+  ).then(data => filteredList(data, testId));
+
+  return objectList;
+}
+
 function deleteQuestion(id) {
   const requestOptions = {
     method: 'PUT',
@@ -80,13 +98,14 @@ function editQuestion(values) {
   );
 }
 
-const QuestionServices = {
+const QuestionService = {
   create,
   getAll,
   getById,
   update,
+  getQuestionsForTest,
   deleteQuestion,
   editQuestion,
 };
 
-export default QuestionServices;
+export default QuestionService;

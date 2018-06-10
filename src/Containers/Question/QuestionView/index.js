@@ -20,6 +20,7 @@ import QuestionActions from '../../../Actions/QuestionActions';
 
 import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
+import { StyledArrow } from '../../../Styles/Arrow';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
 
@@ -96,6 +97,7 @@ class QuestionView extends React.Component {
       {
         Header: 'Edit/Delete',
         accessor: 'edit/delete',
+        Filter: <div />,
         Cell: row => (
           <div>
             <Tooltip id="tooltip-delete" title="Edit">
@@ -112,6 +114,22 @@ class QuestionView extends React.Component {
                 onClick={() => this.handleDelete(row.original)}
               >
                 <StyledDelete />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+      },
+      {
+        Header: 'Question Options',
+        Filter: <div />,
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-options" title="Options">
+              <IconButton
+                aria-label="Options"
+                onClick={() => this.handleOption(row.original)}
+              >
+                <StyledArrow />
               </IconButton>
             </Tooltip>
           </div>
@@ -162,4 +180,7 @@ QuestionView.propTypes = {
   questions: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps), withForm)(QuestionView);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(QuestionView);

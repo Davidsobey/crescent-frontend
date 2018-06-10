@@ -1,4 +1,13 @@
+import { isNumber } from 'util';
+
 import PolicyConstants from '../Constants/PolicyConstants';
+
+function filterById(id, delId) {
+  if (isNumber(id) && id !== 0 && id !== delId) {
+    return true;
+  }
+  return false;
+}
 
 function PolicyReducer(state = {}, action) {
   switch (action.type) {
@@ -50,6 +59,26 @@ function PolicyReducer(state = {}, action) {
       return {
         policies: undefined,
       };
+    case PolicyConstants.LOAD_POLICY_REQUEST:
+      return {
+        loading: true,
+      };
+    case PolicyConstants.LOAD_POLICY_SUCCESS:
+      return Object.assign({}, state, {
+        policy: action.policy,
+        loading: false,
+      });
+    case PolicyConstants.DELETEPOLICY_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case PolicyConstants.DELETEPOLICY_SUCCESS:
+      return Object.assign({}, state, {
+        policy: state.policy.filter(obj => filterById(obj.id, action.id)),
+        loading: false,
+      });
+    case PolicyConstants.DELETEPOLICY_FAILURE:
+      return state;
     default:
       return state;
   }

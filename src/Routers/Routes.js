@@ -13,6 +13,8 @@ const TEST_VIEW = '/test/list';
 const TEST_EDIT = '/test/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
+const OPTION_CREATE = '/option/create';
+const OPTION_VIEW = '/option/view';
 const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
@@ -22,6 +24,9 @@ const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const CLIENT_EDIT = '/client/edit';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
+const POLICY_CREATE = '/policy/create';
+const POLICY_VIEW = '/policy/list';
+const POLICY_EDIT = '/policy/edit';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -46,6 +51,8 @@ export default {
   TEST_EDIT,
   QUESTION_CREATE,
   QUESTION_VIEW,
+  OPTION_CREATE,
+  OPTION_VIEW,
   QUESTION_EDIT,
   USER_CREATE,
   USER_VIEW,
@@ -55,6 +62,9 @@ export default {
   CLIENT_EDIT,
   CLIENT_VIEW,
   CLIENT_SUBSCRIBE,
+  POLICY_CREATE,
+  POLICY_VIEW,
+  POLICY_EDIT,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,

@@ -1,9 +1,3 @@
-/**
- *
- * ModuleView
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,20 +9,21 @@ import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
 import Card from '../../../Components/Card';
-import CourseActions from '../../../Actions/CourseActions';
-import ModuleActions from '../../../Actions/ModuleActions';
+import QuestionActions from '../../../Actions/QuestionActions';
+import OptionActions from '../../../Actions/OptionActions';
 import { StyledDelete } from '../../../Styles/Delete';
+import { StyledArrow } from '../../../Styles/Arrow';
 import { StyledEdit } from '../../../Styles/Edit';
 import IconButton from '../../../Styles/IconButton';
 import CustomModal from '../../../Components/Modal/index';
 import history from '../../../Helpers/History';
 
-class ModuleView extends React.Component {
+class OptionView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { obj: {} };
-    this.props.dispatch(CourseActions.getAll());
-    this.props.dispatch(ModuleActions.getAll());
+    this.props.dispatch(QuestionActions.getAll());
+    this.props.dispatch(OptionActions.getAll());
   }
 
   handleDelete = (obj) => {
@@ -37,27 +32,27 @@ class ModuleView extends React.Component {
   };
 
   confirmDelete = obj => () => {
-    this.props.dispatch(ModuleActions.deleteModule(obj.id));
+    this.props.dispatch(OptionActions.deleteOption(obj.id));
     this.child.handleClose();
   };
 
   handleEdit = (editObj) => {
-    this.props.dispatch(ModuleActions.loadModule(editObj.id));
-    history.push('/module/edit');
+    this.props.dispatch(OptionActions.loadOption(editObj.id));
+    history.push('/option/edit');
   };
 
-  loadData = (modules, courses) => {
+  loadData = (options, questions) => {
     const formattedArray = [];
-    if (Array.isArray(modules) && Array.isArray(courses)) {
-      modules.forEach((module) => {
-        const courseMatch = courses.filter(course => course.id === module.courseId);
-        const newModule = {
-          id: module.id,
-          description: module.description,
-          name: module.name,
-          course: courseMatch[0].name,
+    if (Array.isArray(options) && Array.isArray(questions)) {
+      options.forEach((option) => {
+        const questionMatch = questions.filter(question => question.id === option.questionId);
+        const newOption = {
+          id: option.id,
+          title: option.title,
+          isAnswer: option.isAnswer,
+          question: questionMatch[0].name,
         };
-        formattedArray.push(newModule);
+        formattedArray.push(newOption);
       });
       formattedArray.sort((a, b) => a.id - b.id);
     }
@@ -67,16 +62,16 @@ class ModuleView extends React.Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Title',
+        accessor: 'title',
       },
       {
-        Header: 'Key Outcome',
-        accessor: 'description',
+        Header: 'Is Answer',
+        accessor: 'isAnswer',
       },
       {
-        Header: 'Course',
-        accessor: 'course',
+        Header: 'Question',
+        accessor: 'question',
       },
       {
         Header: 'Edit/Delete',
@@ -103,13 +98,29 @@ class ModuleView extends React.Component {
           </div>
         ),
       },
+      {
+        Header: 'Question Options',
+        accessor: 'questionOptions',
+        Cell: row => (
+          <div>
+            <Tooltip id="tooltip-options" title="Options">
+              <IconButton
+                aria-label="Options"
+                onClick={() => this.handleOption(row.original)}
+              >
+                <StyledArrow />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+      },
     ];
-    const { courses, modules } = this.props;
-    const data = this.loadData(modules, courses);
+    const { questions, options } = this.props;
+    const data = this.loadData(options, questions);
     return (
       <div>
-        <Card width="800px" title="Module List">
-          {Array.isArray(modules) && Array.isArray(courses) ? (
+        <Card width="800px" title="Option List">
+          {Array.isArray(options) && Array.isArray(questions) ? (
             <ReactTable
               columns={columns}
               data={data}
@@ -135,8 +146,8 @@ class ModuleView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  courses: state.CourseReducer.courses,
-  modules: state.ModuleReducer.modules,
+  questions: state.QuestionReducer.questions,
+  options: state.OptionReducer.options,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -145,15 +156,21 @@ const mapDispatchToProps = dispatch => ({
 
 const withForm = reduxForm(
   {
-    form: 'courseView',
+    form: 'optionView',
   },
-  ModuleView,
+  OptionView,
 );
 
-ModuleView.propTypes = {
-  courses: PropTypes.array,
+OptionView.propTypes = {
+  questions: PropTypes.array,
   dispatch: PropTypes.func,
-  modules: PropTypes.array,
+  options: PropTypes.array,
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(ModuleView);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  withForm,
+)(OptionView);
