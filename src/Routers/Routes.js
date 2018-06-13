@@ -13,8 +13,7 @@ const TEST_VIEW = '/test/list';
 const TEST_EDIT = '/test/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
-const OPTION_CREATE = '/option/create';
-const OPTION_VIEW = '/option/view';
+const OPTIONS = '/question/options';
 const QUESTION_EDIT = '/question/edit';
 const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
@@ -51,8 +50,7 @@ export default {
   TEST_EDIT,
   QUESTION_CREATE,
   QUESTION_VIEW,
-  OPTION_CREATE,
-  OPTION_VIEW,
+  OPTIONS,
   QUESTION_EDIT,
   USER_CREATE,
   USER_VIEW,

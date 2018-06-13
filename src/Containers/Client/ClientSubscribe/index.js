@@ -55,6 +55,8 @@ class SubscriptionCreate extends React.Component {
                   Loading Courses
                 </div>
               )}
+            </div>
+            <div>
               {this.props.clients ? (
                 <Field name="clientID" label="Client Name" component={Select}>
                   {this.props.clients.map(client => (
@@ -107,4 +109,7 @@ const withForm = reduxForm(
   SubscriptionCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(SubscriptionCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(SubscriptionCreate);

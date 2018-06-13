@@ -26,8 +26,7 @@ import TestList from '../Containers/Test/TestView/index';
 import QuestionList from '../Containers/Question/QuestionView/index';
 import QuestionCreate from '../Containers/Question/QuestionCreate/index';
 import QuestionEdit from '../Containers/Question/QuestionEdit/index';
-import OptionList from '../Containers/Option/OptionView/index';
-import OptionCreate from '../Containers/Option/OptionCreate/index';
+import Options from '../Containers/Option/OptionCreate/index';
 import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
 import UserEdit from '../Containers/User/UserEdit/index';
@@ -152,12 +151,7 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.OPTION_CREATE}
-                  component={withAuth(OptionCreate, ['Admin', 'Client'])}
-                  exact
-                />
-                <Route
-                  path={Routes.OPTION_VIEW}
-                  component={withAuth(OptionList, ['Admin', 'Client'])}
+                  component={withAuth(Options, ['Admin', 'Client'])}
                   exact
                 />
                 <Route

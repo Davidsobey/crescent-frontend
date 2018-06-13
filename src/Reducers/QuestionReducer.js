@@ -58,6 +58,20 @@ function QuestionReducer(state = {}, action) {
       });
     case QuestionConstants.DELETE_FAILURE:
       return state;
+    case QuestionConstants.OPTIONS_REQUEST:
+      return {
+        question: action.obj,
+        loading: true,
+      };
+    case QuestionConstants.OPTIONS_SUCCESS:
+      return Object.assign({}, state, {
+        options: action.questionOptions,
+      });
+    case QuestionConstants.OPTIONS_FAILURE:
+      return {
+        question: {},
+        options: {},
+      };
     case UserConstants.LOGOUT:
       return {};
     case QuestionConstants.CLEAR_QUESTION:

@@ -2,29 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Field, reduxForm } from 'redux-form';
-import { MenuItem } from 'material-ui/Menu';
-import Typography from 'material-ui/Typography';
+import { reduxForm } from 'redux-form';
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from 'material-ui/Table';
+import Tooltip from 'material-ui/Tooltip';
+import { Paper, Checkbox } from 'material-ui';
 
 import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
-import Checkbox from '../../../Components/Checkbox';
-import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
 import QuestionActions from '../../../Actions/QuestionActions';
-import LinearProgress from '../../../Components/LinearProgress';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 import TestActions from '../../../Actions/TestActions';
 import OptionActions from '../../../Actions/OptionActions';
+import { StyledDelete } from '../../../Styles/Delete';
+import IconButton from '../../../Styles/IconButton';
 
 const validate = () => {
   const errors = {};
 
   return errors;
 };
+const header = ['Question Title', 'Correct Answer', 'Remove Answer'];
 
 class OptionCreate extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     options: props.options,
+  //   };
+  // }
+
   componentDidMount() {
     this.props.dispatch(CourseActions.getAll());
   }
@@ -39,7 +52,7 @@ class OptionCreate extends React.Component {
 
   loadQuestions = (values) => {
     this.props.dispatch(QuestionActions.loadQuestionsByTest(values.target.value));
-  }
+  };
 
   submit = (values) => {
     this.props.dispatch(OptionActions.create(
@@ -51,130 +64,53 @@ class OptionCreate extends React.Component {
 
   render() {
     return (
-      <Card width="600px" title="Create New Question Option">
+      <Card width="850px" title={`${this.props.question.title} - Options`}>
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
           autoComplete="off"
         >
-          <div>
-            <div className="width200">
-              {this.props.courses ? (
-                <Field
-                  name="course"
-                  onChange={this.loadModules}
-                  label="Course Name"
-                  component={Select}
-                >
-                  {this.props.courses.map(course => (
-                    <MenuItem value={course.id} key={course.id}>
-                      {course.name}
-                    </MenuItem>
-                  ))}
-                </Field>
-              ) : (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Courses
-                </div>
-              )}
-            </div>
-            <div className="width200">
-              {this.props.modules ? (
-                <Field
-                  name="module"
-                  label="Module Name"
-                  component={Select}
-                  onChange={this.loadTests}
-                >
-                  {this.props.modules.map(module => (
-                    <MenuItem value={module.id} key={module.id}>
-                      {module.name}
-                    </MenuItem>
-                  ))}
-                </Field>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    Choose a module to load related tests
-                  </Typography>
-                </div>
-              )}
-              {this.props.modulesLoading && (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading modules
-                </div>
-              )}
-            </div>
-            <div className="width200">
-              {this.props.tests ? (
-                <Field
-                  name="test"
-                  label="Test Name"
-                  component={Select}
-                  onChange={this.loadQuestions}
-                >
-                  {this.props.tests.map(test => (
-                    <MenuItem value={test.id} key={test.id}>
-                      {test.name}
-                    </MenuItem>
-                  ))}
-                </Field>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    Choose a test to load related questions
-                  </Typography>
-                </div>
-              )}
-              {this.props.testsLoading && (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading tests
-                </div>
-              )}
-            </div>
-            {this.props.tests && (
-              <div className="width200">
-                {this.props.tests && this.props.questions ? (
-                  <Field
-                    name="test"
-                    label="Test Name"
-                    component={Select}
-                  >
-                    {this.props.questions.map(question => (
-                      <MenuItem value={question.id} key={question.id}>
-                        {question.name}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                ) : (
-                  <div>
-                    <Typography variant="caption" component="p">
-                      Choose a question for the new question option
-                    </Typography>
-                  </div>
-                )}
-                <div>
-                  <Field
-                    name="OptionTitle"
-                    label="Question Option Title"
-                    margin="normal"
-                    component={TextField}
-                  />
-                </div>
-                <div>
-                  <Field
-                    name="OptionIsAnswer"
-                    label="Is This Option The Answer?"
-                    margin="normal"
-                    component={Checkbox}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {header.map(head => <TableCell key={head}>{head}</TableCell>)}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.options.map(option => (
+                  <TableRow key={option.id}>
+                    <TableCell>
+                      <TextField
+                        id={option.title}
+                        label={option.title}
+                        value={option.title}
+                        margin="normal"
+                        width="50px"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Checkbox />
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip id="tooltip-delete" title="Delete">
+                        <IconButton
+                          aria-label="Delete"
+                          onClick={() => this.handleDelete(option)}
+                        >
+                          <StyledDelete />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+          <br />
+          <br />
+          <br />
+
           <div className="alignRight">
             <Button variant="raised" color="primary" type="submit">
               Create Option
@@ -189,21 +125,13 @@ class OptionCreate extends React.Component {
 OptionCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  questions: PropTypes.array,
-  tests: PropTypes.array,
-  courses: PropTypes.array,
-  modules: PropTypes.array,
-  modulesLoading: PropTypes.bool,
-  testsLoading: PropTypes.bool,
+  question: PropTypes.object,
+  options: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
-  tests: state.TestReducer.tests,
-  courses: state.CourseReducer.courses,
-  modules: state.ModuleReducer.modules,
-  questions: state.QuestionReducer.questions,
-  modulesLoading: state.ModuleReducer.loading,
-  testsLoading: state.TestReducer.loading,
+  question: state.QuestionReducer.question,
+  options: state.QuestionReducer.options,
 });
 
 const withForm = reduxForm(
@@ -214,4 +142,7 @@ const withForm = reduxForm(
   OptionCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(OptionCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(OptionCreate);

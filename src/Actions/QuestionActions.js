@@ -116,6 +116,33 @@ function editQuestion(values) {
   };
 }
 
+function getOptions(obj) {
+  function request() {
+    return { type: QuestionConstants.OPTIONS_REQUEST, obj };
+  }
+  function success(questionOptions) {
+    return { type: QuestionConstants.OPTIONS_SUCCESS, questionOptions };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.OPTIONS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.getOptions(obj.id).then(
+      (questionOptions) => {
+        dispatch(success(questionOptions));
+        history.push('/question/options');
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 function clearQuestion() {
   function clear() {
     return { type: QuestionConstants.CLEAR_QUESTION };
@@ -132,6 +159,7 @@ const QuestionActions = {
   deleteQuestion,
   editQuestion,
   clearQuestion,
+  getOptions,
 };
 
 export default QuestionActions;

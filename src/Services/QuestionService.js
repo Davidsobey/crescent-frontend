@@ -99,6 +99,17 @@ function editQuestion(values) {
   );
 }
 
+function getOptions(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Questions/${id}/QuestionOptions`,
+    requestOptions,
+  );
+}
+
 const QuestionService = {
   create,
   getAll,
@@ -107,6 +118,7 @@ const QuestionService = {
   getQuestionsForTest,
   deleteQuestion,
   editQuestion,
+  getOptions,
 };
 
 export default QuestionService;

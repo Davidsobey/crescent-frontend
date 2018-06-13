@@ -71,8 +71,12 @@ class QuestionView extends React.Component {
   };
 
   handleEdit = (editObj) => {
-    this.props.dispatch(QuestionActions.getByID(editObj.id));
+    this.props.dispatch(QuestionActions.getByID(editObj));
     history.push('/question/edit');
+  };
+
+  handleOption = (editObj) => {
+    this.props.dispatch(QuestionActions.getOptions(editObj));
   };
 
   render() {
