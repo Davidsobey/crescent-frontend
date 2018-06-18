@@ -85,6 +85,25 @@ class AuthMiddleware extends React.Component {
       .then(response => response.json());
   }
 
+  fetchMaterial(url, options) {
+    const headers = {
+      Accept: 'application/json',
+    };
+
+    // Setting Authorization header
+    // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+    if (this.loggedIn()) {
+      headers.Authorization = `Bearer ${this.getToken()}`;
+    }
+
+    return fetch(url, {
+      headers,
+      ...options,
+    })
+      .then(this.checkStatus)
+      .then(response => response.json());
+  }
+
   checkStatus(response) {
     // raises an error in case response status is not a success
     if (response.status >= 200 && response.status < 300) {
