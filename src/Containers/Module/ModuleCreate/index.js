@@ -61,7 +61,7 @@ class ModuleCreate extends React.Component {
               <div>
                 <Field
                   name="moduleName"
-                  label="Module Name"
+                  label="Name"
                   margin="normal"
                   component={TextField}
                 />
@@ -69,7 +69,7 @@ class ModuleCreate extends React.Component {
               <div>
                 <Field
                   name="moduleDescription"
-                  label="Module Description"
+                  label="Key Outcome"
                   margin="normal"
                   component={TextField}
                 />

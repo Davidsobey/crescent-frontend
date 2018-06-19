@@ -28,6 +28,17 @@ function CourseReducer(state = {}, action) {
       });
     case CourseConstants.GETALL_FAILURE:
       return state;
+    case CourseConstants.GETUNSUBSCRIBED_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case CourseConstants.GETUNSUBSCRIBED_SUCCESS:
+      return Object.assign({}, state, {
+        courses: action.courses,
+        loading: false,
+      });
+    case CourseConstants.GETUNSUBSCRIBED_FAILURE:
+      return state;
     case CourseConstants.LOADCOURSE_REQUEST:
       return state;
     case CourseConstants.LOADCOURSE_SUCCESS:

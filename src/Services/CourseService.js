@@ -3,13 +3,13 @@ import CommonConstants from '../Constants/CommonConstants';
 
 const Auth = new AuthMiddleware();
 
-function create(courseName, courseDescription, courseCPD) {
+function create(courseName, courseDescription, cpdHours) {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify({
       Name: courseName,
       Description: courseDescription,
-      cpdPoints: parseInt(courseCPD, 10),
+      cpdHours: parseInt(cpdHours, 10),
       active: true,
     }),
   };
@@ -22,6 +22,14 @@ function getAll() {
   };
 
   return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses`, requestOptions);
+}
+
+function getAllUnsubscribedCourses(clientId) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/Courses/Unsubscribed/${clientId}`, requestOptions);
 }
 
 function getCourse(id) {
@@ -39,7 +47,7 @@ function editCourse(values) {
       id: parseInt(values.id, 10),
       name: values.name,
       description: values.description,
-      cpdPoints: parseInt(values.cpdPoints, 10),
+      cpdHours: parseInt(values.cpdHours, 10),
     }),
   };
 
@@ -59,5 +67,6 @@ const CourseService = {
   getCourse,
   deleteCourse,
   editCourse,
+  getAllUnsubscribedCourses,
 };
 export default CourseService;

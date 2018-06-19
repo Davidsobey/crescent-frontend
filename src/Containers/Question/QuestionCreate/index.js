@@ -105,7 +105,7 @@ class QuestionCreate extends React.Component {
                 {this.props.modules &&
                 this.props.tests &&
                 this.props.tests.length > 0 ? (
-                  <Field name="test" label="Test Name" component={Select}>
+                  <Field name="test" label="Assessment Name" component={Select}>
                     {this.props.tests.map(test => (
                       <MenuItem value={test.id} key={test.id}>
                         {test.name}

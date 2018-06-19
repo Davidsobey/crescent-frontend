@@ -54,8 +54,8 @@ class CourseCreate extends React.Component {
             </div>
             <div>
               <Field
-                name="courseCPD"
-                label="Course CPD Points"
+                name="cpdHours"
+                label="Course CPD Hours"
                 margin="normal"
                 component={TextField}
               />

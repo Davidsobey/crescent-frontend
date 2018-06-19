@@ -112,7 +112,7 @@ class TestView extends React.Component {
     const data = this.loadData(tests, modules);
     return (
       <div>
-        <Card width="800px" title="Test List">
+        <Card width="800px" title="Assessment List">
           {Array.isArray(tests) && Array.isArray(modules) ? (
             <ReactTable
               columns={columns}

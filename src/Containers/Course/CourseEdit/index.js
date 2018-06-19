@@ -45,8 +45,8 @@ let CourseEdit = (props) => {
           </div>
           <div>
             <Field
-              name="cpdPoints"
-              label="Course CPD Points"
+              name="cpdHours"
+              label="Course CPD Hours"
               margin="normal"
               component={TextField}
             />

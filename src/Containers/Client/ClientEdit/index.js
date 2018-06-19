@@ -37,8 +37,8 @@ let ClientEdit = (props) => {
           </div>
           <div>
             <Field
-              name="email"
-              label="Client Email"
+              name="clientCode"
+              label="Client Code"
               margin="normal"
               component={TextField}
             />

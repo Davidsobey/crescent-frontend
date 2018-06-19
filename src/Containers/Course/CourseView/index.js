@@ -59,8 +59,8 @@ class CourseView extends React.Component {
         accessor: 'description',
       },
       {
-        Header: 'CPD Points',
-        accessor: 'cpdPoints',
+        Header: 'CPD Hours',
+        accessor: 'cpdHours',
       },
       {
         Header: 'Edit/Delete',

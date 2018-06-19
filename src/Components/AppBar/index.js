@@ -184,18 +184,18 @@ const PolicyDetails = {
 };
 
 const TestDetails = {
-  listName: 'Test',
+  listName: 'Assessment',
   listIcon: <TestIcon />,
   subItems: [
     {
       key: 0,
-      subItemName: 'Create Test',
+      subItemName: 'Create Assessment',
       subItemIcon: <AddIcon />,
       subItemExtension: 'create',
     },
     {
       key: 1,
-      subItemName: 'Test List',
+      subItemName: 'Assessment List',
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
     },

@@ -18,6 +18,8 @@ function getByID(id) {
 
 // post new material with file upload
 function upload(moduleId, file) {
+  console.log(`ModuleId:  + ${moduleId}`);
+  console.log(`FormFile: + ${file}`);
   const fd = new FormData();
   fd.append('ModuleId', moduleId);
   fd.append('FormFile', file);
@@ -26,7 +28,7 @@ function upload(moduleId, file) {
     body: fd,
   };
 
-  return Auth.fetch(`${api}/Materials`, requestOptions);
+  return Auth.fetchMaterial(`${api}/Materials`, requestOptions);
 }
 
 const ModuleServices = {

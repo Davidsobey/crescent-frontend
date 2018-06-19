@@ -15,7 +15,11 @@ class AuthMiddleware extends React.Component {
   setToken(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken.value);
+
+    // Save attached user info to localStorage
+    localStorage.setItem('userVM', idToken.userVM);
   }
+
 
   getToken() {
     // Retrieves the user token from localStorage
@@ -65,6 +69,25 @@ class AuthMiddleware extends React.Component {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+    };
+
+    // Setting Authorization header
+    // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+    if (this.loggedIn()) {
+      headers.Authorization = `Bearer ${this.getToken()}`;
+    }
+
+    return fetch(url, {
+      headers,
+      ...options,
+    })
+      .then(this.checkStatus)
+      .then(response => response.json());
+  }
+
+  fetchMaterial(url, options) {
+    const headers = {
+      Accept: 'application/json',
     };
 
     // Setting Authorization header
