@@ -14,16 +14,9 @@ function create(questionId, title, isAnswer) {
   }
 
   return (dispatch) => {
-    const option = {
-      title,
-      isAnswer,
-      questionId,
-      question: null,
-      active: true,
-    };
     dispatch(request());
     OptionServices.create(questionId, title, isAnswer).then(
-      () => {
+      (option) => {
         dispatch(success(option));
         dispatch(AlertActions.success('Option created.'));
       },
@@ -34,7 +27,6 @@ function create(questionId, title, isAnswer) {
     );
   };
 }
-
 const OptionActions = {
   create,
 };
