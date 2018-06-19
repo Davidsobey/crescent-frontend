@@ -52,7 +52,7 @@ export default function withAuth(AuthComponent, AllowedRoles) {
     }
 
     render() {
-      if (this.state.user) {
+      if (this.state && this.state.user) {
         if (this.roleCheck(AllowedRoles, this.props.role)) {
           return <AuthComponent history={this.props.history} />;
         }

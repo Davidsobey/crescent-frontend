@@ -2,12 +2,27 @@ import { isNumber } from 'util';
 
 import QuestionConstants from '../Constants/QuestionConstants';
 import UserConstants from '../Constants/UserConstants';
+import OptionConstants from '../Constants/OptionConstants';
 
 function filterById(id, delId) {
   if (isNumber(id) && id !== 0 && id !== delId) {
     return true;
   }
   return false;
+}
+
+function findIndex(state, obj) {
+  let id = 0;
+  let position = 0;
+  state.map((object) => {
+    if (object.id === obj.id) {
+      /* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: true}}] */
+      id = position;
+    }
+    position += 1;
+    return position;
+  });
+  return id;
 }
 
 function QuestionReducer(state = {}, action) {
@@ -72,6 +87,41 @@ function QuestionReducer(state = {}, action) {
         question: {},
         options: {},
       };
+    case QuestionConstants.OPTIONS_ISANSWER_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case QuestionConstants.OPTIONS_ISANSWER_SUCCESS:
+      return Object.assign({}, state, {
+        options: {
+          ...Object.values(state.options),
+          [findIndex(Object.values(state.options), action.values)]: {
+            ...action.values,
+            isAnswer: !action.values.isAnswer,
+          },
+        },
+      });
+    case QuestionConstants.OPTIONS_ISANSWER_FAILURE:
+      return state;
+    case QuestionConstants.DELETE_QO_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case QuestionConstants.DELETE_QO_SUCCESS:
+      return Object.assign({}, state, {
+        options: state.options.filter(obj => filterById(obj.id, action.id)),
+        loading: false,
+      });
+    case QuestionConstants.DELETE_QO_FAILURE:
+      return state;
+    case OptionConstants.CREATE_REQUEST:
+      return state;
+    case OptionConstants.CREATE_SUCCESS:
+      return Object.assign({}, state, {
+        options: state.options.concat(action.option),
+      });
+    case OptionConstants.CREATE_FAILURE:
+      return {};
     case UserConstants.LOGOUT:
       return {};
     case QuestionConstants.CLEAR_QUESTION:

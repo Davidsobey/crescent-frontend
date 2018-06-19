@@ -143,6 +143,61 @@ function getOptions(obj) {
   };
 }
 
+function editOptionIsAnswer(values) {
+  function request() {
+    return { type: QuestionConstants.OPTIONS_ISANSWER_REQUEST };
+  }
+  function success() {
+    return { type: QuestionConstants.OPTIONS_ISANSWER_SUCCESS, values };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.OPTIONS_ISANSWER_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.editOptionIsAnswer(values).then(
+      (questionOptions) => {
+        dispatch(success(questionOptions));
+        history.push('/question/options');
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function deleteQuestionOption(id) {
+  function request() {
+    return { type: QuestionConstants.DELETE_QO_REQUEST };
+  }
+  function success() {
+    return { type: QuestionConstants.DELETE_QO_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.DELETE_QO_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.deleteQuestionOption(id).then(
+      () => {
+        dispatch(success(id));
+        dispatch(AlertActions.success('Question Option deleted.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+
 function clearQuestion() {
   function clear() {
     return { type: QuestionConstants.CLEAR_QUESTION };
@@ -160,6 +215,8 @@ const QuestionActions = {
   editQuestion,
   clearQuestion,
   getOptions,
+  editOptionIsAnswer,
+  deleteQuestionOption,
 };
 
 export default QuestionActions;

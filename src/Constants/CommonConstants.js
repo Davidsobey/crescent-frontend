@@ -5,7 +5,7 @@ const APIConstants = {
 
 export const hostname = window && window.location && window.location.hostname;
 const CommonConstants = {
-  API_ENDPOINT: hostname.startsWith('lunartesting')
+  API_ENDPOINT: hostname.startsWith('lunartesting.azurewebsites')
     ? APIConstants.LIVE_PROD_ADDRESS
     : APIConstants.LIVE_DEV_ADDRESS,
 };

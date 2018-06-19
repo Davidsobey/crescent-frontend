@@ -110,6 +110,33 @@ function getOptions(id) {
   );
 }
 
+function editOptionIsAnswer(values) {
+  const isAnswer = !values.isAnswer;
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      id: parseInt(values.id, 10),
+      title: values.title,
+      isAnswer,
+    }),
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/QuestionOptions/${values.id}`,
+    requestOptions,
+  );
+}
+
+function deleteQuestionOption(id) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/QuestionOptions/Delete/${id}`,
+    requestOptions,
+  );
+}
+
 const QuestionService = {
   create,
   getAll,
@@ -119,6 +146,8 @@ const QuestionService = {
   deleteQuestion,
   editQuestion,
   getOptions,
+  editOptionIsAnswer,
+  deleteQuestionOption,
 };
 
 export default QuestionService;

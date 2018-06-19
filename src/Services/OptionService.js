@@ -3,10 +3,14 @@ import CommonConstants from '../Constants/CommonConstants';
 
 const Auth = new AuthMiddleware();
 
-function create(option) {
+function create(questionId, title, isAnswer) {
   const requestOptions = {
     method: 'POST',
-    body: JSON.stringify(option),
+    body: JSON.stringify({
+      title,
+      isAnswer,
+      questionId,
+    }),
   };
 
   return Auth.fetch(
