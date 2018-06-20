@@ -157,7 +157,7 @@ const mapStateToProps = state => ({
   question: state.QuestionReducer.question,
   options: Array.isArray(state.QuestionReducer.options)
     ? state.QuestionReducer.options
-    : Object.values(state.QuestionReducer.options),
+    : state.QuestionReducer.options && Object.values(state.QuestionReducer.options),
 });
 
 const withForm = reduxForm(
