@@ -35,6 +35,9 @@ import ClientCreate from '../Containers/Client/ClientCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
 import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
+import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
+import PolicyAcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
+import PolicyAcknowledgementView from '../Containers/Policy/Acknowledgement/View';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -186,17 +189,29 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.POLICY_CREATE}
-                  component={withAuth(PolicyCreate, ['Admin'])}
+                  component={withAuth(PolicyCreate, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.POLICY_VIEW}
-                  component={withAuth(PolicyView, ['Admin'])}
+                  component={withAuth(PolicyView, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.POLICY_EDIT}
-                  component={withAuth(PolicyEdit, ['Admin'])}
+                  component={withAuth(PolicyEdit, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}
+                  component={withAuth(PolicyAcknowledgementCreate, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_VIEW}
+                  component={withAuth(PolicyAcknowledgementView, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_MATERIAL_CREATE}
+                  component={withAuth(PolicyMaterialCreate, ['Admin', 'Client'])}
                 />
                 <Route
                   path={Routes.CLIENT_EDIT}

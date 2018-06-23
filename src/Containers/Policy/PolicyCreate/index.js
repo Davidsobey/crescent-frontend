@@ -15,19 +15,8 @@ const validate = () => {
 };
 
 class PolicyCreate extends React.Component {
-  state = {
-    selectedFile: null,
-  };
-
-  fileSelectedHandler = (event) => {
-    this.setState({
-      selectedFile: event.target.files[0],
-    });
-  };
-
   submit = (values) => {
-    const file = this.state.selectedFile;
-    this.props.dispatch(PolicyActions.create(values, file));
+    this.props.dispatch(PolicyActions.create(values));
   };
 
   render() {
@@ -56,9 +45,6 @@ class PolicyCreate extends React.Component {
                   margin="normal"
                   component={TextField}
                 />
-              </div>
-              <div>
-                <input type="file" onChange={this.fileSelectedHandler} />
               </div>
             </div>
           </div>

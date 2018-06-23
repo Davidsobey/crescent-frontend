@@ -8,7 +8,7 @@ function filteredList(response, id) {
   return objects;
 }
 
-function create(policyVM, formFile) {
+function create(policyVM) {
   // get the logged in user to know who is creating
   const creator = Auth.getProfile();
   const createdBy = creator.nameid;
@@ -18,7 +18,6 @@ function create(policyVM, formFile) {
       Name: policyVM.policyName,
       Description: policyVM.policyDescription,
       CreatedBy: createdBy,
-      FormFile: formFile,
     }),
   };
 

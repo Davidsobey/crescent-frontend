@@ -21,6 +21,12 @@ function PolicyReducer(state = {}, action) {
       };
     case PolicyConstants.CREATE_FAILURE:
       return {};
+    case PolicyConstants.UPLOAD_MATERIAL_REQUEST:
+      return {};
+    case PolicyConstants.UPLOAD_MATERIAL_SUCCESS:
+      return {};
+    case PolicyConstants.UPLOAD_MATERIAL_FAILURE:
+      return {};
     case PolicyConstants.GETALL_REQUEST:
       return {
         loading: true,
@@ -79,6 +85,17 @@ function PolicyReducer(state = {}, action) {
       });
     case PolicyConstants.DELETEPOLICY_FAILURE:
       return state;
+    case PolicyConstants.GET_MATERIAL_REQUEST:
+      return Object.assign({}, state, {
+        loadingMaterial: true,
+      });
+    case PolicyConstants.GET_MATERIAL_SUCCESS:
+      return Object.assign({}, state, {
+        loadingMaterial: false,
+        policyMaterial: action.material,
+      });
+    case PolicyConstants.GET_MATERIAL_FAILURE:
+      return Object.assign({}, state, { policyMaterial: [] });
     default:
       return state;
   }

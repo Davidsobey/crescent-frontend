@@ -1,5 +1,6 @@
 import PolicyConstants from '../Constants/PolicyConstants';
 import PolicyService from '../Services/PolicyService';
+import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
@@ -165,6 +166,30 @@ function getPolicy(policyId) {
   };
 }
 
+function getMaterial(materialId) {
+  function request() {
+    return { type: PolicyConstants.GET_MATERIAL_REQUEST };
+  }
+  function success(material) {
+    return { type: PolicyConstants.GET_MATERIAL_SUCCESS, material };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.GET_MATERIAL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    MaterialService.getPolicyMaterialByID(materialId).then(
+      policies => dispatch(success(policies)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 function getClientPolicies(clientId) {
   function request() {
     return { type: PolicyConstants.GETCLIENTPOLICIES_REQUEST, clientId };
@@ -276,6 +301,33 @@ function loadPolicy(id) {
   };
 }
 
+function uploadMaterial(policyId, file) {
+  function request() {
+    return { type: PolicyConstants.UPLOAD_REQUEST, file };
+  }
+  function success() {
+    return { type: PolicyConstants.UPLOAD_SUCCESS, file };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.UPLOAD_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ file }));
+    MaterialService.upload(policyId, file).then(
+      () => {
+        dispatch(success(file));
+        history.push('/policy/material/list');
+        dispatch(AlertActions.success('Material created successfully.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error || error));
+      },
+    );
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -288,6 +340,8 @@ const PolicyActions = {
   deletePolicy,
   getOutstandingPoliciesForUser,
   loadPolicy,
+  uploadMaterial,
+  getMaterial,
 };
 
 export default PolicyActions;
