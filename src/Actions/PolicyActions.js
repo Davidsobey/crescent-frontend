@@ -303,13 +303,13 @@ function loadPolicy(id) {
 
 function uploadMaterial(policyId, file) {
   function request() {
-    return { type: PolicyConstants.UPLOAD_REQUEST, file };
+    return { type: PolicyConstants.UPLOAD_MATERIAL_REQUEST, file };
   }
   function success() {
-    return { type: PolicyConstants.UPLOAD_SUCCESS, file };
+    return { type: PolicyConstants.UPLOAD_MATERIAL_SUCCESS, file };
   }
   function failure(error) {
-    return { type: PolicyConstants.UPLOAD_FAILURE, error };
+    return { type: PolicyConstants.UPLOAD_MATERIAL_FAILURE, error };
   }
 
   return (dispatch) => {

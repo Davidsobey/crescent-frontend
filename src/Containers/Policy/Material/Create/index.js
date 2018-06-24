@@ -91,7 +91,7 @@ PolicyMaterialCreate.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  policies: state.PoliciesReducer.policies,
+  policies: state.PolicyReducer.policies,
 });
 
 const withForm = reduxForm(
