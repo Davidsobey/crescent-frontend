@@ -72,7 +72,7 @@ class UserTest extends React.Component {
                   variant="raised"
                   onClick={() => this.submitTest(test.id, this.props.courseId)}
                 >
-                  Complete Test
+                  Complete Assignment
                 </Button>
               </div>
             </Card>

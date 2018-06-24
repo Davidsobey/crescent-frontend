@@ -15,11 +15,13 @@ class AuthMiddleware extends React.Component {
   setToken(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken.value);
-
-    // Save attached user info to localStorage
-    localStorage.setItem('userVM', idToken.userVM);
   }
 
+  setLoggedInUserInfo(userVM) {
+    // Save attached user info to localStorage
+    localStorage.setItem('clientID', userVM.clientId);
+    localStorage.setItem('roleID', userVM.roleId);
+  }
 
   getToken() {
     // Retrieves the user token from localStorage
@@ -60,6 +62,7 @@ class AuthMiddleware extends React.Component {
       }),
     }).then((res) => {
       this.setToken(res.token); // Setting the token in localStorage
+      this.setLoggedInUserInfo(res.userVM);
       return Promise.resolve(res);
     });
   }

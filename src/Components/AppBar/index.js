@@ -169,18 +169,6 @@ const PolicyDetails = {
     },
     {
       key: 2,
-      subItemName: 'Create Acknowledgement',
-      subItemIcon: <AddIcon />,
-      subItemExtension: 'acknowledgement/create',
-    },
-    {
-      key: 3,
-      subItemName: 'Acknowledgement List',
-      subItemIcon: <ListIcon />,
-      subItemExtension: 'acknowledgement/list',
-    },
-    {
-      key: 4,
       subItemName: 'Upload Policy Material',
       subItemIcon: <AddIcon />,
       subItemExtension: 'material/create',
