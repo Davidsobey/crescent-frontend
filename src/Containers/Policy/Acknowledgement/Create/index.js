@@ -41,7 +41,7 @@ class AcknowledgementCreate extends React.Component {
           <div>
             <div>
               {this.props.users ? (
-                <Field name="user" label="User Name" component={Select}>
+                <Field name="userID" label="User Name" component={Select}>
                   {this.props.users.map(user => (
                     <MenuItem value={user.id} key={user.id}>
                       {user.name}
@@ -55,7 +55,7 @@ class AcknowledgementCreate extends React.Component {
                 </div>
               )}
               {this.props.policies ? (
-                <Field name="policy" label="Policy Name" component={Select}>
+                <Field name="policyID" label="Policy Name" component={Select}>
                   {this.props.policies.map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
                       {policy.name}

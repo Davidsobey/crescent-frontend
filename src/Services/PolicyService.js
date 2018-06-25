@@ -87,7 +87,7 @@ function acknowledgePolicy(Acknowledgement, userId, policyId) {
   );
 }
 
-function createAcknowledgement(userId, policyId) {
+function createAcknowledgement(acknowledgement) {
   const requestOptions = {
     method: 'POST',
     headders: { 'Content-Type': 'application/json' },
@@ -96,7 +96,7 @@ function createAcknowledgement(userId, policyId) {
   return Auth.fetch(
     `${
       CommonConstants.API_ENDPOINT
-    }/Policies/${policyId}/Acknowledgements/${userId}`,
+    }/Policies/${acknowledgement.policyID}/Acknowledgements/${acknowledgement.userID}`,
     requestOptions,
   );
 }

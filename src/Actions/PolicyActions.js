@@ -31,24 +31,24 @@ function create(policy, formfile) {
   };
 }
 
-function createAcknowledgement(userId, policyId) {
+function createAcknowledgement(acknowledgement) {
   function request() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST, userId };
+    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST, acknowledgement };
   }
   function success() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS, userId };
+    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS, acknowledgement };
   }
   function failure(error) {
     return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE, error };
   }
 
   return (dispatch) => {
-    dispatch(request({ userId }));
-    PolicyService.createAcknowledgement(userId, policyId).then(
+    dispatch(request({ acknowledgement }));
+    PolicyService.createAcknowledgement(acknowledgement).then(
       () => {
-        dispatch(success(userId));
-        history.push('/policy/acknowledgement/list');
-        dispatch(AlertActions.success('Acknowledgement created.'));
+        dispatch(success(acknowledgement));
+        history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
+        dispatch(AlertActions.success('Acknowledgement created'));
       },
       (error) => {
         dispatch(failure(error));
