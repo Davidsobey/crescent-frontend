@@ -14,7 +14,6 @@ import LinearProgress from '../../../../Components/LinearProgress';
 
 const validate = () => {
   const errors = {};
-
   return errors;
 };
 

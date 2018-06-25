@@ -173,6 +173,12 @@ const PolicyDetails = {
       subItemIcon: <AddIcon />,
       subItemExtension: 'material/create',
     },
+    {
+      key: 3,
+      subItemName: 'Assign Acknowledgement',
+      subItemIcon: <AddIcon />,
+      subItemExtension: 'acknowledgement/create',
+    },
   ],
 };
 
