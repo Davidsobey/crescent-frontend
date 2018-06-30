@@ -71,7 +71,7 @@ function uploadMaterial(moduleId, file) {
     MaterialService.upload(moduleId, file).then(
       () => {
         dispatch(success(file));
-        history.push('/module/material/list');
+        history.push('/module/list');
         dispatch(AlertActions.success('Material created successfully.'));
       },
       (error) => {

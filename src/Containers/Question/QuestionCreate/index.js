@@ -178,4 +178,7 @@ const withForm = reduxForm(
   QuestionCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(QuestionCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(QuestionCreate);

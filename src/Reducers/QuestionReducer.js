@@ -33,8 +33,8 @@ function QuestionReducer(state = {}, action) {
       };
     case QuestionConstants.CREATE_SUCCESS:
       return {
-        question: action.QuestionName,
-        loading: true,
+        question: action.question,
+        loading: false,
       };
     case QuestionConstants.CREATE_FAILURE:
       return {};
@@ -121,7 +121,7 @@ function QuestionReducer(state = {}, action) {
         options: state.options.concat(action.option),
       });
     case OptionConstants.CREATE_FAILURE:
-      return {};
+      return state;
     case UserConstants.LOGOUT:
       return {};
     case QuestionConstants.CLEAR_QUESTION:
