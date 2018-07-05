@@ -12,7 +12,6 @@ import Button from '../../Components/Button';
 import UserActions from '../../Actions/UserActions';
 import Card from '../../Components/Card';
 import Image from '../../Images/Logo.png';
-import CommonConstants, { hostname } from '../../Constants/CommonConstants';
 
 const validate = (values) => {
   const errors = {};
@@ -74,7 +73,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  loading: state.UserReducer.loading,
+  loading: state.LoginReducer.loading,
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

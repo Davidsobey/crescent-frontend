@@ -25,6 +25,7 @@ const validate = () => {
 class QuestionCreate extends React.Component {
   componentDidMount() {
     this.props.dispatch(ModuleActions.clearModules());
+    this.props.dispatch(TestActions.clearTests());
     this.props.dispatch(QuestionActions.clearQuestion());
     this.props.dispatch(CourseActions.getAll());
   }
@@ -100,7 +101,7 @@ class QuestionCreate extends React.Component {
                 </div>
               )}
             </div>
-            {this.props.modules && (
+            {this.props.tests && (
               <div>
                 {this.props.modules &&
                 this.props.tests &&

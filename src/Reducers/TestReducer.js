@@ -121,6 +121,8 @@ function TestReducer(state = {}, action) {
       return {
         modules: undefined,
       };
+    case TestConstants.CLEAR_TESTS:
+      return {};
     default:
       return state;
   }

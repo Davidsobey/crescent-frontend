@@ -48,18 +48,20 @@ class TestCreate extends React.Component {
           <div>
             <div>
               {this.props.courses ? (
-                <Field
-                  name="course"
-                  onChange={this.loadModules}
-                  label="Course Name"
-                  component={Select}
-                >
-                  {this.props.courses.map(course => (
-                    <MenuItem value={course.id} key={course.id}>
-                      {course.name}
-                    </MenuItem>
-                  ))}
-                </Field>
+                <div>
+                  <Field
+                    name="course"
+                    onChange={this.loadModules}
+                    label="Course Name"
+                    component={Select}
+                  >
+                    {this.props.courses.map(course => (
+                      <MenuItem value={course.id} key={course.id}>
+                        {course.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
@@ -67,13 +69,15 @@ class TestCreate extends React.Component {
                 </div>
               )}
               {this.props.modules ? (
-                <Field name="module" label="Module Name" component={Select}>
-                  {this.props.modules.map(module => (
-                    <MenuItem value={module.id} key={module.id}>
-                      {module.name}
-                    </MenuItem>
-                  ))}
-                </Field>
+                <div>
+                  <Field name="module" label="Module Name" component={Select}>
+                    {this.props.modules.map(module => (
+                      <MenuItem value={module.id} key={module.id}>
+                        {module.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
               ) : (
                 <div>
                   <Typography variant="caption" component="p">
@@ -90,7 +94,7 @@ class TestCreate extends React.Component {
               <div>
                 <Field
                   name="testName"
-                  label="Test Name"
+                  label="Assessment Name"
                   margin="normal"
                   component={TextField}
                 />
@@ -145,4 +149,7 @@ const withForm = reduxForm(
   TestCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(TestCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(TestCreate);
