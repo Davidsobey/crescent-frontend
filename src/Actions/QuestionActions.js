@@ -19,7 +19,7 @@ function create(question) {
     QuestionService.create(question).then(
       () => {
         dispatch(success(question));
-        history.push('/question/create');
+        history.push('/question/options');
         dispatch(AlertActions.success('Question created.'));
       },
       (error) => {

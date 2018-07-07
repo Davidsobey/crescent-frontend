@@ -221,6 +221,15 @@ function loadTestByModule(id) {
   };
 }
 
+function clearTests() {
+  function clear() {
+    return { type: TestConstants.CLEAR_TESTS };
+  }
+  return (dispatch) => {
+    dispatch(clear());
+  };
+}
+
 const TestActions = {
   create,
   getAll,
@@ -232,6 +241,7 @@ const TestActions = {
   loadNextQuestion,
   submitTest,
   editTest,
+  clearTests,
   loadTestByModule,
 };
 
