@@ -69,15 +69,17 @@ class TestCreate extends React.Component {
                 </div>
               )}
               {this.props.modules ? (
-                <div>
-                  <Field name="module" label="Module Name" component={Select}>
-                    {this.props.modules.map(module => (
-                      <MenuItem value={module.id} key={module.id}>
-                        {module.name}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </div>
+                <Field
+                  name="module"
+                  label="Module Name"
+                  component={Select}
+                >
+                  {this.props.modules.map(module => (
+                    <MenuItem value={module.id} key={module.id}>
+                      {module.name}
+                    </MenuItem>
+                  ))}
+                </Field>
               ) : (
                 <div>
                   <Typography variant="caption" component="p">
