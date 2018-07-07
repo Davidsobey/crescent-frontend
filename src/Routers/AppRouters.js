@@ -13,6 +13,7 @@ import Routes from './Routes';
 import AppBar from '../Components/AppBar';
 
 import Login from '../Containers/Login';
+import ChangePassword from '../Containers/ChangePassword';
 import Home from '../Containers/Home';
 import CourseCreate from '../Containers/Course/CourseCreate/index';
 import CourseList from '../Containers/Course/CourseView/index';
@@ -83,6 +84,7 @@ class AppRouters extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Login} />
+            <Route path={Routes.CHANGEPASSWORD} component={ChangePassword} exact />
             <AppBar role={this.props.role}>
               <Switch>
                 {/* Authenticated Routes */}
@@ -202,7 +204,10 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.POLICY_MATERIAL_CREATE}
-                  component={withAuth(PolicyMaterialCreate, ['Admin', 'Client'])}
+                  component={withAuth(PolicyMaterialCreate, [
+                    'Admin',
+                    'Client',
+                  ])}
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}

@@ -54,6 +54,8 @@ class AcknowledgementCreate extends React.Component {
                   Loading Users
                 </div>
               )}
+            </div>
+            <div>
               {this.props.policies ? (
                 <Field name="policyID" label="Policy Name" component={Select}>
                   {this.props.policies.map(policy => (
@@ -106,4 +108,7 @@ const withForm = reduxForm(
   AcknowledgementCreate,
 );
 
-export default compose(connect(mapStateToProps), withForm)(AcknowledgementCreate);
+export default compose(
+  connect(mapStateToProps),
+  withForm,
+)(AcknowledgementCreate);

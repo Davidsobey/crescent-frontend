@@ -1,5 +1,6 @@
 const LOGIN = '/';
 const HOME = '/home';
+const CHANGEPASSWORD = '/change-password';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
 const COURSE_EDIT = '/course/edit';
@@ -74,4 +75,5 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
+  CHANGEPASSWORD,
 };

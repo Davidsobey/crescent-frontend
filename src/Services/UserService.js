@@ -61,9 +61,13 @@ function update(user) {
 function enrol(enrolment) {
   const requestOptions = {
     method: 'POST',
+    body: JSON.stringify({
+      courseId: enrolment.courseId,
+      userId: enrolment.userId,
+    }),
   };
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolment?courseId=${enrolment.courseID}`,
+    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolment`,
     requestOptions,
   );
 }
@@ -97,6 +101,19 @@ function editUser(values) {
   );
 }
 
+function changePassword(values) {
+  const requestOptions = {
+    method: 'PUT',
+    body: JSON.stringify({
+      email: values.email,
+      oldPassword: values.password,
+      newPassword: values.newPassword,
+    }),
+  };
+
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/auth`, requestOptions);
+}
+
 function logout() {
   localStorage.clear();
 }
@@ -112,6 +129,7 @@ const UserService = {
   logout,
   getAllRoles,
   editUser,
+  changePassword,
 };
 
 export default UserService;

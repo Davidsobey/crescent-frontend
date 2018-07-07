@@ -76,11 +76,9 @@ class CourseDetail extends React.Component {
                     <ExpansionPanelDetails className="justify-content">
                       <div>
                         <div>
-                          <Typography>{module.description}</Typography>
-                        </div>
-                        <br />
-                        <div>
-                          <Typography>Module Material</Typography>
+                          <Typography variant="title">
+                            Module Material
+                          </Typography>
                           {moduleMaterial && moduleMaterial.length > 0 ? (
                             moduleMaterial.map(material => (
                               <Button
@@ -110,7 +108,7 @@ class CourseDetail extends React.Component {
                           )}
                         </div>
                         <div>
-                          <Typography>Module Tests</Typography>
+                          <Typography variant="title">Module Tests</Typography>
                           {moduleTests && moduleTests.length > 0 ? (
                             moduleTests.map(test => (
                               <Button

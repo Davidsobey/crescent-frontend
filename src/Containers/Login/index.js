@@ -7,6 +7,7 @@ import { FormControl } from 'material-ui/Form';
 import { TextField } from 'redux-form-material-ui';
 import { Field, reduxForm } from 'redux-form';
 import { CircularProgress } from 'material-ui/Progress';
+import { Link } from 'react-router-dom';
 
 import Button from '../../Components/Button';
 import UserActions from '../../Actions/UserActions';
@@ -50,11 +51,18 @@ class Login extends React.Component {
           </FormControl>
           <br />
           <br />
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
-              Login
-            </Button>
-            {this.props.loading && <CircularProgress />}
+          <div>
+            <div className="alignRight">
+              <Button variant="raised" color="primary" type="submit">
+                Login
+              </Button>
+              {this.props.loading && <CircularProgress />}
+            </div>
+            <div className="alignRight">
+              <Button size="small" color="primary" component={Link} to="/change-password">
+                Forgot Password
+              </Button>
+            </div>
           </div>
         </Card>
       </form>
@@ -76,7 +84,10 @@ const mapStateToProps = state => ({
   loading: state.LoginReducer.loading,
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 const withForm = reduxForm(
   {
@@ -86,4 +97,7 @@ const withForm = reduxForm(
   Login,
 );
 
-export default compose(withForm, withConnect)(Login);
+export default compose(
+  withForm,
+  withConnect,
+)(Login);

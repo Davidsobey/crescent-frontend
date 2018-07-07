@@ -33,10 +33,16 @@ function create(policy, formfile) {
 
 function createAcknowledgement(acknowledgement) {
   function request() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST, acknowledgement };
+    return {
+      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST,
+      acknowledgement,
+    };
   }
   function success() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS, acknowledgement };
+    return {
+      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS,
+      acknowledgement,
+    };
   }
   function failure(error) {
     return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE, error };
@@ -303,10 +309,10 @@ function loadPolicy(id) {
 
 function uploadMaterial(policyId, file) {
   function request() {
-    return { type: PolicyConstants.UPLOAD_MATERIAL_REQUEST, file };
+    return { type: PolicyConstants.UPLOAD_MATERIAL_REQUEST };
   }
   function success() {
-    return { type: PolicyConstants.UPLOAD_MATERIAL_SUCCESS, file };
+    return { type: PolicyConstants.UPLOAD_MATERIAL_SUCCESS };
   }
   function failure(error) {
     return { type: PolicyConstants.UPLOAD_MATERIAL_FAILURE, error };
@@ -314,10 +320,19 @@ function uploadMaterial(policyId, file) {
 
   return (dispatch) => {
     dispatch(request({ file }));
-    MaterialService.upload(policyId, file).then(
-      () => {
-        dispatch(success(file));
-        history.push('/policy/material/list');
+    PolicyService.uploadCreate(policyId).then(
+      (policyMaterialId) => {
+        dispatch(success());
+        MaterialService.uploadPolicyMaterial(policyMaterialId, file).then(
+          () => {
+            history.push('/policy/list');
+            dispatch(AlertActions.success('Policy Material created successfully.'));
+          },
+          (error) => {
+            dispatch(failure(error));
+            dispatch(AlertActions.error(error || error));
+          },
+        );
         dispatch(AlertActions.success('Material created successfully.'));
       },
       (error) => {

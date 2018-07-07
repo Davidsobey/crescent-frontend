@@ -26,8 +26,7 @@ class EnrolmentCreate extends React.Component {
     this.props.dispatch(UserActions.getAll());
   }
   submit = (values) => {
-    const enrolment = Object.assign({}, values);
-    this.props.dispatch(UserActions.enrol(enrolment));
+    this.props.dispatch(UserActions.enrol(values));
   };
 
   render() {
@@ -42,7 +41,7 @@ class EnrolmentCreate extends React.Component {
           <div>
             <div>
               {this.props.courses ? (
-                <Field name="courseID" label="Course Name" component={Select}>
+                <Field name="courseId" label="Course Name" component={Select}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -58,7 +57,7 @@ class EnrolmentCreate extends React.Component {
             </div>
             <div>
               {this.props.users ? (
-                <Field name="userID" label="User Name" component={Select}>
+                <Field name="userId" label="User Name" component={Select}>
                   {this.props.users.map(user => (
                     <MenuItem value={user.id} key={user.id}>
                       {user.name}

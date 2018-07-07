@@ -128,7 +128,7 @@ function enrol(enrolment) {
     UserService.enrol(enrolment).then(
       () => {
         dispatch(success(enrolment));
-        history.push(`/user/${enrolment.userID}/list`);
+        history.push('/user/list');
         dispatch(AlertActions.success('User enrolled successfully.'));
       },
       (error) => {
@@ -205,6 +205,20 @@ function editUser(values) {
   };
 }
 
+function changePassword(values) {
+  return (dispatch) => {
+    UserService.changePassword(values).then(
+      () => {
+        history.push('/home');
+        dispatch(AlertActions.success('Password Changed.'));
+      },
+      (error) => {
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const UserActions = {
   login,
   logout,
@@ -216,6 +230,7 @@ const UserActions = {
   enrol,
   getAllRoles,
   editUser,
+  changePassword,
 };
 
 export default UserActions;

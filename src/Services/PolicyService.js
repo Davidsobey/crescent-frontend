@@ -94,9 +94,9 @@ function createAcknowledgement(acknowledgement) {
   };
 
   return Auth.fetch(
-    `${
-      CommonConstants.API_ENDPOINT
-    }/Policies/${acknowledgement.policyID}/Acknowledgements/${acknowledgement.userID}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${
+      acknowledgement.policyID
+    }/Acknowledgements/${acknowledgement.userID}`,
     requestOptions,
   );
 }
@@ -165,6 +165,19 @@ function getPolicyMaterial(ids) {
   return materialDetails;
 }
 
+function uploadCreate(policyId) {
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify({
+      policyId,
+    }),
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/PolicyMaterials`,
+    requestOptions,
+  );
+}
+
 const PolicyServices = {
   create,
   getAll,
@@ -177,5 +190,6 @@ const PolicyServices = {
   createAcknowledgement,
   deletePolicy,
   editPolicy,
+  uploadCreate,
 };
 export default PolicyServices;
