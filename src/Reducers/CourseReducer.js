@@ -40,14 +40,18 @@ function CourseReducer(state = {}, action) {
     case CourseConstants.GETUNSUBSCRIBED_FAILURE:
       return state;
     case CourseConstants.LOADCOURSE_REQUEST:
-      return state;
+      return {
+        loading: true,
+      };
     case CourseConstants.LOADCOURSE_SUCCESS:
       return Object.assign({}, state, {
         course: action.course,
         loading: false,
       });
     case CourseConstants.LOADCOURSE_FAILURE:
-      return state;
+      return {
+        courses: undefined,
+      };
     case CourseConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
         courses: state.courses.filter(obj => filterById(obj.id, action.id)),
@@ -59,6 +63,8 @@ function CourseReducer(state = {}, action) {
       });
     case CourseConstants.DELETE_FAILURE:
       return state;
+    case CourseConstants.CLEAR_COURSES:
+      return {};
     case UserConstants.LOGOUT:
       return {};
     default:
