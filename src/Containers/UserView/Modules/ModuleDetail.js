@@ -25,7 +25,7 @@ class CourseDetail extends React.Component {
   };
 
   render() {
-    const { course, modules } = this.props;
+    const { course, modules, material } = this.props;
     const { expanded } = this.state;
 
     return (
@@ -61,7 +61,7 @@ class CourseDetail extends React.Component {
                         color="secondary"
                         onClick={() => {
                           window.open(
-                            'https://crescenttesting.azurewebsites.net/ModuleMaterial/1.pdf',
+                            `https://crescenttesting.azurewebsites.net/ModuleMaterial/${material.fileName}`,
                             '_blank',
                           );
                         }}
@@ -91,11 +91,13 @@ class CourseDetail extends React.Component {
 CourseDetail.propTypes = {
   course: PropTypes.object,
   modules: PropTypes.object,
+  material: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   course: state.CourseReducer.course,
   modules: state.ModuleReducer.modules,
+  material: state.ModuleReducer.modulematerial,
 });
 
 const mapDispatchToProps = dispatch => ({

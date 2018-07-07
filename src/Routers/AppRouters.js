@@ -13,6 +13,7 @@ import Routes from './Routes';
 import AppBar from '../Components/AppBar';
 
 import Login from '../Containers/Login';
+import ChangePassword from '../Containers/ChangePassword';
 import Home from '../Containers/Home';
 import CourseCreate from '../Containers/Course/CourseCreate/index';
 import CourseList from '../Containers/Course/CourseView/index';
@@ -35,6 +36,8 @@ import ClientCreate from '../Containers/Client/ClientCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
 import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
+import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
+import AcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -81,6 +84,7 @@ class AppRouters extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Login} />
+            <Route path={Routes.CHANGEPASSWORD} component={ChangePassword} exact />
             <AppBar role={this.props.role}>
               <Switch>
                 {/* Authenticated Routes */}
@@ -186,17 +190,28 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.POLICY_CREATE}
-                  component={withAuth(PolicyCreate, ['Admin'])}
+                  component={withAuth(PolicyCreate, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.POLICY_VIEW}
-                  component={withAuth(PolicyView, ['Admin'])}
+                  component={withAuth(PolicyView, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.POLICY_EDIT}
-                  component={withAuth(PolicyEdit, ['Admin'])}
+                  component={withAuth(PolicyEdit, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_MATERIAL_CREATE}
+                  component={withAuth(PolicyMaterialCreate, [
+                    'Admin',
+                    'Client',
+                  ])}
+                />
+                <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}
+                  component={withAuth(AcknowledgementCreate, ['Admin'])}
                 />
                 <Route
                   path={Routes.CLIENT_EDIT}

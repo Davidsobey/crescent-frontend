@@ -1,5 +1,6 @@
 import PolicyConstants from '../Constants/PolicyConstants';
 import PolicyService from '../Services/PolicyService';
+import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
@@ -30,24 +31,30 @@ function create(policy, formfile) {
   };
 }
 
-function createAcknowledgement(userId, policyId) {
+function createAcknowledgement(acknowledgement) {
   function request() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST, userId };
+    return {
+      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST,
+      acknowledgement,
+    };
   }
   function success() {
-    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS, userId };
+    return {
+      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS,
+      acknowledgement,
+    };
   }
   function failure(error) {
     return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE, error };
   }
 
   return (dispatch) => {
-    dispatch(request({ userId }));
-    PolicyService.createAcknowledgement(userId, policyId).then(
+    dispatch(request({ acknowledgement }));
+    PolicyService.createAcknowledgement(acknowledgement).then(
       () => {
-        dispatch(success(userId));
-        history.push('/policy/acknowledgement/list');
-        dispatch(AlertActions.success('Acknowledgement created.'));
+        dispatch(success(acknowledgement));
+        history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
+        dispatch(AlertActions.success('Acknowledgement created'));
       },
       (error) => {
         dispatch(failure(error));
@@ -156,6 +163,30 @@ function getPolicy(policyId) {
     dispatch(request());
 
     PolicyService.getPolicy(policyId).then(
+      policies => dispatch(success(policies)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function getMaterial(materialId) {
+  function request() {
+    return { type: PolicyConstants.GET_MATERIAL_REQUEST };
+  }
+  function success(material) {
+    return { type: PolicyConstants.GET_MATERIAL_SUCCESS, material };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.GET_MATERIAL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    MaterialService.getPolicyMaterialByID(materialId).then(
       policies => dispatch(success(policies)),
       (error) => {
         dispatch(failure(error));
@@ -276,6 +307,42 @@ function loadPolicy(id) {
   };
 }
 
+function uploadMaterial(policyId, file) {
+  function request() {
+    return { type: PolicyConstants.UPLOAD_MATERIAL_REQUEST };
+  }
+  function success() {
+    return { type: PolicyConstants.UPLOAD_MATERIAL_SUCCESS };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.UPLOAD_MATERIAL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ file }));
+    PolicyService.uploadCreate(policyId).then(
+      (policyMaterialId) => {
+        dispatch(success());
+        MaterialService.uploadPolicyMaterial(policyMaterialId, file).then(
+          () => {
+            history.push('/policy/list');
+            dispatch(AlertActions.success('Policy Material created successfully.'));
+          },
+          (error) => {
+            dispatch(failure(error));
+            dispatch(AlertActions.error(error || error));
+          },
+        );
+        dispatch(AlertActions.success('Material created successfully.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error || error));
+      },
+    );
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -288,6 +355,8 @@ const PolicyActions = {
   deletePolicy,
   getOutstandingPoliciesForUser,
   loadPolicy,
+  uploadMaterial,
+  getMaterial,
 };
 
 export default PolicyActions;

@@ -10,6 +10,9 @@ import TestActions from '../../../Actions/TestActions';
 import history from '../../../Helpers/History';
 
 class UserTest extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(TestActions.loadTestQuestions(this.props.user.id, this.props.test.id));
+  }
   componentWillUnmount() {
     if (this.props.history.action === 'POP') {
       history.push('/modules/test');
@@ -72,7 +75,7 @@ class UserTest extends React.Component {
                   variant="raised"
                   onClick={() => this.submitTest(test.id, this.props.courseId)}
                 >
-                  Complete Test
+                  Complete Assignment
                 </Button>
               </div>
             </Card>
@@ -85,6 +88,7 @@ class UserTest extends React.Component {
 UserTest.propTypes = {
   questions: PropTypes.array,
   test: PropTypes.object,
+  user: PropTypes.object,
   dispatch: PropTypes.func,
   courseId: PropTypes.number,
   history: PropTypes.object,
@@ -94,10 +98,14 @@ const mapStateToProps = state => ({
   test: state.TestReducer.test,
   questions: state.TestReducer.questions,
   courseId: state.CourseReducer.course.id,
+  user: state.LoginReducer.user,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTest);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserTest);

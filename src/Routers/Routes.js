@@ -1,5 +1,6 @@
 const LOGIN = '/';
 const HOME = '/home';
+const CHANGEPASSWORD = '/change-password';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
 const COURSE_EDIT = '/course/edit';
@@ -9,7 +10,7 @@ const MODULE_EDIT = '/module/edit';
 const MATERIAL_CREATE = '/module/material/create';
 const MATERIAL_VIEW = 'module/material/view';
 const TEST_CREATE = '/assessment/create';
-const TEST_VIEW = '/assessment/view';
+const TEST_VIEW = '/assessment/list';
 const TEST_EDIT = '/assessment/edit';
 const QUESTION_CREATE = '/question/create';
 const QUESTION_VIEW = '/question/list';
@@ -26,6 +27,8 @@ const CLIENT_SUBSCRIBE = '/client/subscription/create';
 const POLICY_CREATE = '/policy/create';
 const POLICY_VIEW = '/policy/list';
 const POLICY_EDIT = '/policy/edit';
+const POLICY_MATERIAL_CREATE = '/policy/material/create';
+const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -63,6 +66,8 @@ export default {
   POLICY_CREATE,
   POLICY_VIEW,
   POLICY_EDIT,
+  POLICY_MATERIAL_CREATE,
+  POLICY_ACKNOWLEDGEMENT_CREATE,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,
@@ -70,4 +75,5 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
+  CHANGEPASSWORD,
 };

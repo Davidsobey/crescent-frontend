@@ -8,7 +8,7 @@ function filteredList(response, id) {
   return objects;
 }
 
-function create(policyVM, formFile) {
+function create(policyVM) {
   // get the logged in user to know who is creating
   const creator = Auth.getProfile();
   const createdBy = creator.nameid;
@@ -18,7 +18,6 @@ function create(policyVM, formFile) {
       Name: policyVM.policyName,
       Description: policyVM.policyDescription,
       CreatedBy: createdBy,
-      FormFile: formFile,
     }),
   };
 
@@ -88,16 +87,16 @@ function acknowledgePolicy(Acknowledgement, userId, policyId) {
   );
 }
 
-function createAcknowledgement(userId, policyId) {
+function createAcknowledgement(acknowledgement) {
   const requestOptions = {
     method: 'POST',
     headders: { 'Content-Type': 'application/json' },
   };
 
   return Auth.fetch(
-    `${
-      CommonConstants.API_ENDPOINT
-    }/Policies/${policyId}/Acknowledgements/${userId}`,
+    `${CommonConstants.API_ENDPOINT}/Policies/${
+      acknowledgement.policyID
+    }/Acknowledgements/${acknowledgement.userID}`,
     requestOptions,
   );
 }
@@ -166,6 +165,19 @@ function getPolicyMaterial(ids) {
   return materialDetails;
 }
 
+function uploadCreate(policyId) {
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify({
+      policyId,
+    }),
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/PolicyMaterials`,
+    requestOptions,
+  );
+}
+
 const PolicyServices = {
   create,
   getAll,
@@ -178,5 +190,6 @@ const PolicyServices = {
   createAcknowledgement,
   deletePolicy,
   editPolicy,
+  uploadCreate,
 };
 export default PolicyServices;

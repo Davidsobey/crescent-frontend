@@ -57,22 +57,30 @@ function getAll() {
 // testing
 function uploadMaterial(moduleId, file) {
   function request() {
-    return { type: ModuleConstants.UPLOAD_REQUEST, file };
+    return { type: ModuleConstants.UPLOAD_REQUEST };
   }
   function success() {
-    return { type: ModuleConstants.UPLOAD_SUCCESS, file };
+    return { type: ModuleConstants.UPLOAD_SUCCESS };
   }
   function failure(error) {
     return { type: ModuleConstants.UPLOAD_FAILURE, error };
   }
 
   return (dispatch) => {
-    dispatch(request({ file }));
-    MaterialService.upload(moduleId, file).then(
-      () => {
-        dispatch(success(file));
-        history.push('/module/material/list');
-        dispatch(AlertActions.success('Material created successfully.'));
+    dispatch(request());
+    MaterialService.uploadCreate(moduleId).then(
+      (materialId) => {
+        dispatch(success());
+        MaterialService.upload(materialId, file).then(
+          () => {
+            history.push('/module/list');
+            dispatch(AlertActions.success('Material created successfully.'));
+          },
+          (error) => {
+            dispatch(failure(error));
+            dispatch(AlertActions.error(error || error));
+          },
+        );
       },
       (error) => {
         dispatch(failure(error));

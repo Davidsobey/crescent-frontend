@@ -133,6 +133,15 @@ function loadCourse(id) {
   };
 }
 
+function clearCourses() {
+  function clear() {
+    return { type: CourseConstants.CLEAR_COURSES };
+  }
+  return (dispatch) => {
+    dispatch(clear());
+  };
+}
+
 function editCourse(values) {
   return (dispatch) => {
     CourseService.editCourse(values).then(
@@ -147,6 +156,30 @@ function editCourse(values) {
   };
 }
 
+function loadCoursesByClientSubscriptions(clientId) {
+  function request() {
+    return { type: CourseConstants.LOADCOURSE_REQUEST };
+  }
+  function success(modules) {
+    return { type: CourseConstants.LOADCOURSE_SUCCESS, modules };
+  }
+  function failure(error) {
+    return { type: CourseConstants.LOADCOURSE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    CourseService.getAllSubscribedCourses(clientId).then(
+      courses => dispatch(success(courses)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error || error));
+      },
+    );
+  };
+}
+
 const CourseActions = {
   create,
   getAll,
@@ -154,6 +187,8 @@ const CourseActions = {
   deleteCourse,
   editCourse,
   getAllUnsubscribed,
+  loadCoursesByClientSubscriptions,
+  clearCourses,
 };
 
 export default CourseActions;

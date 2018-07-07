@@ -42,9 +42,6 @@ class OptionCreate extends React.Component {
     this.state = { ticked: false };
     this.submit = this.submit.bind(this);
   }
-  loadQuestions = (values) => {
-    this.props.dispatch(QuestionActions.loadQuestionsByTest(values.target.value));
-  };
 
   handleCheckChange = (values) => {
     this.props.dispatch(QuestionActions.editOptionIsAnswer(values));
@@ -71,7 +68,14 @@ class OptionCreate extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Card width="850px" title={`${this.props.question.title} - Options`}>
+      <Card
+        width="850px"
+        title={`${
+          this.props.question.questionTitle
+            ? this.props.question.questionTitle
+            : this.props.question.title
+        } - Options`}
+      >
         <Paper>
           <Table>
             <TableHead>
@@ -80,36 +84,40 @@ class OptionCreate extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.options.map(option => (
-                <TableRow key={option.id}>
-                  <TableCell>
-                    <TextField
-                      id={option.title}
-                      label={option.title}
-                      value={option.title}
-                      margin="normal"
-                      width="50px"
-                      disabled
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox
-                      checked={option.isAnswer}
-                      onChange={() => this.handleCheckChange(option)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip id="tooltip-delete" title="Delete">
-                      <IconButton
-                        aria-label="Delete"
-                        onClick={() => this.handleDelete(option)}
-                      >
-                        <StyledDelete />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {this.props.options ? (
+                this.props.options.map(option => (
+                  <TableRow key={option.id}>
+                    <TableCell>
+                      <TextField
+                        id={option.title}
+                        label={option.title}
+                        value={option.title}
+                        margin="normal"
+                        width="50px"
+                        disabled
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Checkbox
+                        checked={option.isAnswer}
+                        onChange={() => this.handleCheckChange(option)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip id="tooltip-delete" title="Delete">
+                        <IconButton
+                          aria-label="Delete"
+                          onClick={() => this.handleDelete(option)}
+                        >
+                          <StyledDelete />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow />
+              )}
             </TableBody>
           </Table>
         </Paper>
@@ -121,7 +129,7 @@ class OptionCreate extends React.Component {
           <div className={classes.createNew}>
             <Field
               name="questionTitle"
-              label="Question Title"
+              label="Option Title"
               margin="normal"
               component={TextField}
             />
@@ -157,7 +165,8 @@ const mapStateToProps = state => ({
   question: state.QuestionReducer.question,
   options: Array.isArray(state.QuestionReducer.options)
     ? state.QuestionReducer.options
-    : state.QuestionReducer.options && Object.values(state.QuestionReducer.options),
+    : state.QuestionReducer.options &&
+      Object.values(state.QuestionReducer.options),
 });
 
 const withForm = reduxForm(

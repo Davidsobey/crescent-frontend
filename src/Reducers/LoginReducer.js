@@ -5,15 +5,17 @@ function UserReducer(state = {}, action) {
     case UserConstants.LOGIN_REQUEST:
       return {
         loading: true,
-        user: action.user,
       };
     case UserConstants.LOGIN_SUCCESS:
       return {
         loggedIn: true,
+        loading: false,
         user: action.user,
       };
     case UserConstants.LOGIN_FAILURE:
-      return {};
+      return {
+        loading: false,
+      };
     case UserConstants.LOGOUT:
       return {};
     default:
