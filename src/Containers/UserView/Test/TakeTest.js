@@ -32,9 +32,9 @@ class UserTest extends React.Component {
     history.push('/modules/test/question');
   }
 
-  submitTest(testId, courseId) {
-    this.props.dispatch(TestActions.submitTest(testId, courseId, 2));
-    history.push('/modules/test/complete');
+  submitTest(testId, courseId, userId) {
+    this.props.dispatch(TestActions.submitTest(testId, courseId, userId));
+    history.push('/home');
   }
 
   render() {
@@ -73,7 +73,13 @@ class UserTest extends React.Component {
                 <Button
                   color="secondary"
                   variant="raised"
-                  onClick={() => this.submitTest(test.id, this.props.courseId)}
+                  onClick={() =>
+                    this.submitTest(
+                      test.id,
+                      this.props.courseId,
+                      this.props.user.id,
+                    )
+                  }
                 >
                   Complete Assignment
                 </Button>

@@ -51,14 +51,15 @@ function loadTestQuestions(userId, id) {
   );
 }
 
-function markQuestion(id, answerGivenId) {
+function markQuestion(id, answerGiven) {
   const requestOptions = {
     method: 'PUT',
-    body: JSON.stringify({ id, answerGivenId }),
   };
 
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/EnrolmentTestQuestions/${id}/Mark`,
+    `${
+      CommonConstants.API_ENDPOINT
+    }/EnrolmentTestQuestions/${id}/Mark/${answerGiven}`,
     requestOptions,
   );
 }
