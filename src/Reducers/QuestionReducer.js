@@ -33,7 +33,7 @@ function QuestionReducer(state = {}, action) {
       };
     case QuestionConstants.CREATE_SUCCESS:
       return {
-        question: action.question,
+        question: action.questionResponse,
         loading: false,
       };
     case QuestionConstants.CREATE_FAILURE:
@@ -118,7 +118,9 @@ function QuestionReducer(state = {}, action) {
       return state;
     case OptionConstants.CREATE_SUCCESS:
       return Object.assign({}, state, {
-        options: state.options.concat(action.option),
+        options: state.options
+          ? state.options.concat(action.option)
+          : [action.option],
       });
     case OptionConstants.CREATE_FAILURE:
       return state;

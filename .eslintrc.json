@@ -8,6 +8,7 @@
     "react/require-default-props": 0,
     "max-len": "off",
     "no-nested-ternary": "off",
+    "no-array-index-key": "off",
     "class-methods-use-this": "off"
   },
   "globals": {

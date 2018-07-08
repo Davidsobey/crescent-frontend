@@ -65,6 +65,19 @@ function markQuestion(id, answerGivenId) {
 
 function submitTest(testId, courseId, userId) {
   const requestOptions = {
+    method: 'PUT',
+  };
+
+  return Auth.fetch(
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
+    requestOptions,
+  );
+}
+
+function enrolmentTest(testId, courseId, userId) {
+  const requestOptions = {
     method: 'POST',
   };
 
@@ -127,5 +140,6 @@ const ModuleServices = {
   editTest,
   deleteTest,
   getTests,
+  enrolmentTest,
 };
 export default ModuleServices;

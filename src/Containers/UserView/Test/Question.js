@@ -96,7 +96,7 @@ class UserTestQuestion extends React.Component {
                     >
                       {question.question.questionOptions.map(option => (
                         <FormControlLabel
-                          value={option.id.toString()}
+                          value={`${option.id}`}
                           control={<Radio />}
                           label={option.title}
                           key={option.id}
@@ -175,4 +175,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTestQuestion);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserTestQuestion);

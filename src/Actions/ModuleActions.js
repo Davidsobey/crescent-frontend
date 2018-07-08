@@ -114,7 +114,7 @@ function loadModuleByCourse(id) {
   };
 }
 
-function moduleMaterial(materialIds) {
+function moduleMaterial(moduleId) {
   function request() {
     return { type: ModuleConstants.MODULE_MATERIAL_REQUEST };
   }
@@ -128,7 +128,7 @@ function moduleMaterial(materialIds) {
   return (dispatch) => {
     dispatch(request());
 
-    ModuleService.getModuleMaterial(materialIds).then(
+    ModuleService.getModuleMaterial(moduleId).then(
       moduleMaterials => dispatch(success(moduleMaterials)),
       (error) => {
         dispatch(failure(error));

@@ -84,7 +84,7 @@ class OptionCreate extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.options ? (
+              {Array.isArray(this.props.options) ? (
                 this.props.options.map(option => (
                   <TableRow key={option.id}>
                     <TableCell>
@@ -115,6 +115,37 @@ class OptionCreate extends React.Component {
                     </TableCell>
                   </TableRow>
                 ))
+              ) : this.props.options ? (
+                <TableRow key={this.props.options.id}>
+                  <TableCell>
+                    <TextField
+                      id={this.props.options.title}
+                      label={this.props.options.title}
+                      value={this.props.options.title}
+                      margin="normal"
+                      width="50px"
+                      disabled
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={this.props.options.isAnswer}
+                      onChange={() =>
+                        this.handleCheckChange(this.props.options)
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip id="tooltip-delete" title="Delete">
+                      <IconButton
+                        aria-label="Delete"
+                        onClick={() => this.handleDelete(this.props.options)}
+                      >
+                        <StyledDelete />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
               ) : (
                 <TableRow />
               )}
