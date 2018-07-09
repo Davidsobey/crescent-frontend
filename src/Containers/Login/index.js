@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import Button from '../../Components/Button';
 import UserActions from '../../Actions/UserActions';
 import Card from '../../Components/Card';
-import Image from '../../Images/Logo.png';
 
 const validate = (values) => {
   const errors = {};
@@ -33,9 +32,16 @@ class Login extends React.Component {
 
   render = () => (
     <div className="content">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <form name="form" onSubmit={this.props.handleSubmit(this.submit)}>
-        <img src={Image} className="center-img" width="200px" alt="Crescent" />
-        <Card width="500px" title="Lunar Testing Login">
+        <Card width="500px" img="test">
           <br />
           <br />
           <FormControl fullWidth>
@@ -59,7 +65,12 @@ class Login extends React.Component {
               {this.props.loading && <CircularProgress />}
             </div>
             <div className="alignRight">
-              <Button size="small" color="primary" component={Link} to="/change-password">
+              <Button
+                size="small"
+                color="primary"
+                component={Link}
+                to="/change-password"
+              >
                 Forgot Password
               </Button>
             </div>

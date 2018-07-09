@@ -35,7 +35,7 @@ export const StyledEdit = styled(Edit)`
 
 export const StyledDelete = styled(Delete)`
   && {
-    color: #760000  ;
+    color: #7ee6b3  ;
   }
 `;
 

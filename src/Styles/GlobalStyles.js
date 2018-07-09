@@ -18,7 +18,7 @@ injectGlobal`
     min-width: 100%;
     display: flex;
     background: #0033aa; /* Old browsers */
-    background: linear-gradient(135deg,#ff1616 0%,#ff6000c4 21%,#ff9400 51%,#ff4300 79%,#ff3d00f5 79%,#ff0000 100%);
+    background: linear-gradient(135deg,#16ff7e 0%,#00ff95c4 21%,#00ff89 51%,#00ffbe 79%,#00ffc4 79%,#1cf97f 100%)
   }
 
   a{
@@ -147,9 +147,9 @@ injectGlobal`
   }
 
   .button-not-completed{
-    border: 1px solid #760000 !important;
-    color: #760000 !important;
-    background-color: #7600001a !important;
+    border: 1px solid #7ee6b3 !important;
+    color: #7ee6b3 !important;
+    background-color: #7ee6b31a !important;
     margin: 5px !important;
   }
 

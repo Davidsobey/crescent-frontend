@@ -15,6 +15,6 @@ export const StyledButton = styled(Button)`
 
 export const StyledDelete = styled(Delete)`
   && {
-    color: #760000;
+    color: #7ee6b3;
   }
 `;
