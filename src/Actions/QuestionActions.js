@@ -7,8 +7,8 @@ function create(question) {
   function request() {
     return { type: QuestionConstants.CREATE_REQUEST, question };
   }
-  function success() {
-    return { type: QuestionConstants.CREATE_SUCCESS, question };
+  function success(questionResponse) {
+    return { type: QuestionConstants.CREATE_SUCCESS, questionResponse };
   }
   function failure(error) {
     return { type: QuestionConstants.CREATE_FAILURE, error };
@@ -17,9 +17,9 @@ function create(question) {
   return (dispatch) => {
     dispatch(request({ question }));
     QuestionService.create(question).then(
-      () => {
-        dispatch(success(question));
-        history.push('/question/options');
+      (questionResponse) => {
+        dispatch(success(questionResponse));
+        history.push('/question/list');
         dispatch(AlertActions.success('Question created.'));
       },
       (error) => {
@@ -196,7 +196,6 @@ function deleteQuestionOption(id) {
     );
   };
 }
-
 
 function clearQuestion() {
   function clear() {

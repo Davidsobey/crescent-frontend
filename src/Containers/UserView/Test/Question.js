@@ -19,11 +19,11 @@ class UserTestQuestion extends React.Component {
     this.loadQuestion = this.loadQuestion.bind(this);
   }
 
-  handleNext = (questionId, answerGivenId) => {
+  handleNext = (question, answerGivenId) => {
     if (answerGivenId) {
-      this.postQuestion(questionId, answerGivenId);
+      this.postQuestion(question.id, answerGivenId);
     }
-    this.loadQuestion(questionId, 1);
+    this.loadQuestion(question.questionId, 1);
   };
 
   handleBack = (questionId, answerGivenId) => {
@@ -33,9 +33,9 @@ class UserTestQuestion extends React.Component {
     this.loadQuestion(questionId, -1);
   };
 
-  handleRedirect = (questionId, answerGivenId) => {
+  handleRedirect = (question, answerGivenId) => {
     if (answerGivenId) {
-      this.postQuestion(questionId, answerGivenId);
+      this.postQuestion(question.id, answerGivenId);
     }
     history.push('/modules/test');
   };
@@ -96,7 +96,7 @@ class UserTestQuestion extends React.Component {
                     >
                       {question.question.questionOptions.map(option => (
                         <FormControlLabel
-                          value={option.id.toString()}
+                          value={`${option.id}`}
                           control={<Radio />}
                           label={option.title}
                           key={option.id}
@@ -111,7 +111,7 @@ class UserTestQuestion extends React.Component {
                     color="secondary"
                     onClick={() =>
                       this.handleRedirect(
-                        question.questionId,
+                        question,
                         question.answerGivenId,
                       )
                     }
@@ -138,10 +138,7 @@ class UserTestQuestion extends React.Component {
                 <Button
                   size="small"
                   onClick={() => {
-                    this.handleNext(
-                      question.questionId,
-                      question.answerGivenId,
-                    );
+                    this.handleNext(question, question.answerGivenId);
                   }}
                 >
                   {questions &&
@@ -175,4 +172,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTestQuestion);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserTestQuestion);

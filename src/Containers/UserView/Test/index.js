@@ -9,13 +9,13 @@ import Button from '../../../Components/Button';
 import TestActions from '../../../Actions/TestActions';
 
 class UserTest extends React.Component {
-  beginTest(userId, id) {
-    this.props.dispatch(TestActions.loadTestQuestions(userId, id));
+  beginTest(userId, testId, courseId) {
+    this.props.dispatch(TestActions.enrolmentTest(testId, courseId, userId));
     history.push('/modules/test');
   }
 
   render() {
-    const { test, user } = this.props;
+    const { test, user, course } = this.props;
 
     return (
       <div className="content">
@@ -29,7 +29,7 @@ class UserTest extends React.Component {
             <div className="row alignRight">
               <Button
                 color="secondary"
-                onClick={() => this.beginTest(user.id, test.id)}
+                onClick={() => this.beginTest(user.id, test.id, course.id)}
               >
                 Begin Assignment
               </Button>
@@ -44,12 +44,14 @@ class UserTest extends React.Component {
 UserTest.propTypes = {
   test: PropTypes.object,
   user: PropTypes.object,
+  course: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   test: state.TestReducer.test,
   user: state.LoginReducer.user,
+  course: state.CourseReducer.course,
 });
 
 const mapDispatchToProps = dispatch => ({

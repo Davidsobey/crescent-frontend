@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
-import { Typography } from 'material-ui/Typography';
+import Typography from 'material-ui/Typography';
 
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
-import UserActions from '../../../Actions/UserActions';
 import CourseActions from '../../../Actions/CourseActions';
+import UserActions from '../../../Actions/UserActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
 const validate = () => {
@@ -19,24 +19,28 @@ const validate = () => {
   return errors;
 };
 
-/* eslint-disable react/prefer-stateless-function */
 class EnrolmentCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(UserActions.getAll());
     this.props.dispatch(CourseActions.clearCourses());
   }
+
   submit = (values) => {
-    this.props.dispatch(UserActions.enrol(values));
+    const enrolment = Object.assign({}, values);
+    console.log(enrolment);
+    this.props.dispatch(UserActions.enrol(enrolment));
   };
 
   loadCourses = (values) => {
-    this.props.dispatch(CourseActions.loadCoursesByClientSubscriptions(values.target.key));
+    const user = this.props.users.find(x => x.id === values.target.value);
+    this.props.dispatch(CourseActions
+      .loadCoursesByClientSubscriptions(user.clientId));
   };
 
   render() {
     return (
-      <Card width="600px" title="Enrol in Course">
+      <Card width="600px" title="Enrol A User In A Course">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -46,18 +50,20 @@ class EnrolmentCreate extends React.Component {
           <div>
             <div>
               {this.props.users ? (
-                <Field
-                  name="userId"
-                  label="User Name"
-                  component={Select}
-                  onChange={this.loadCourses}
-                >
-                  {this.props.users.map(user => (
-                    <MenuItem value={user.id} key={user.clientId}>
-                      {user.name}
-                    </MenuItem>
-                  ))}
-                </Field>
+                <div>
+                  <Field
+                    name="user"
+                    onChange={this.loadCourses}
+                    label="User Name"
+                    component={Select}
+                  >
+                    {this.props.users.map(user => (
+                      <MenuItem value={user.id} key={user.id}>
+                        {user.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
               ) : (
                 <div>
                   <LinearProgress color="secondary" />
@@ -65,7 +71,11 @@ class EnrolmentCreate extends React.Component {
                 </div>
               )}
               {this.props.courses ? (
-                <Field name="courseId" label="Course Name" component={Select}>
+                <Field
+                  name="course"
+                  label="Course Name"
+                  component={Select}
+                >
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -82,7 +92,7 @@ class EnrolmentCreate extends React.Component {
               {this.props.courseLoading && (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading courses...
+                  Loading Courses...
                 </div>
               )}
             </div>
@@ -94,7 +104,7 @@ class EnrolmentCreate extends React.Component {
               color="primary"
               type="submit"
             >
-              Enrol
+              Enrol User
             </Button>
           </div>
         </form>
@@ -107,15 +117,17 @@ EnrolmentCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
-  users: PropTypes.array,
   courseLoading: PropTypes.bool,
+  users: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
-  courses: state.CourseReducer.courses,
-  users: state.UserReducer.users,
-  courseLoading: state.CourseReducer.loading,
-});
+function mapStateToProps(state) {
+  return {
+    courses: state.CourseReducer.courses,
+    courseLoading: state.CourseReducer.loading,
+    users: state.UserReducer.users,
+  };
+}
 
 const withForm = reduxForm(
   {

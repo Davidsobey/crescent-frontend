@@ -29,6 +29,7 @@ const POLICY_VIEW = '/policy/list';
 const POLICY_EDIT = '/policy/edit';
 const POLICY_MATERIAL_CREATE = '/policy/material/create';
 const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
+const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/view';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -68,6 +69,7 @@ export default {
   POLICY_EDIT,
   POLICY_MATERIAL_CREATE,
   POLICY_ACKNOWLEDGEMENT_CREATE,
+  POLICY_ACKNOWLEDGEMENT_VIEW,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,

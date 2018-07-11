@@ -62,12 +62,12 @@ function enrol(enrolment) {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify({
-      courseId: enrolment.courseId,
-      userId: enrolment.userId,
+      courseId: enrolment.course,
+      userId: enrolment.user,
     }),
   };
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.userID}/enrolment`,
+    `${CommonConstants.API_ENDPOINT}/Users/${enrolment.user}/enrolment`,
     requestOptions,
   );
 }

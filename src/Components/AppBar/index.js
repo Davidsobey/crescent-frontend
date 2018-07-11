@@ -179,6 +179,12 @@ const PolicyDetails = {
       subItemIcon: <AddIcon />,
       subItemExtension: 'acknowledgement/create',
     },
+    {
+      key: 4,
+      subItemName: 'View Outstanding Acknowledgements',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'acknowledgement/list',
+    },
   ],
 };
 

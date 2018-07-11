@@ -60,35 +60,21 @@ function loadTests(id) {
   );
 }
 
-function delay() {
-  return new Promise(resolve => setTimeout(resolve, 300));
-}
+// function delay() {
+//   return new Promise(resolve => setTimeout(resolve, 300));
+// }
 
-let materialDetails = [];
+// async function delayedLog(item) {
+//   await delay();
+//   const requestOptions = {
+//     method: 'GET',
+//   };
 
-async function delayedLog(item) {
-  await delay();
-  const requestOptions = {
-    method: 'GET',
-  };
-
-  return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Materials/${item}`,
-    requestOptions,
-  );
-}
-
-async function processArray(array) {
-  materialDetails = [];
-  const promises = array.map(delayedLog);
-  const a = await Promise.all(promises).then(result => result);
-  return a;
-}
-
-function getModuleMaterial(ids) {
-  materialDetails = processArray(ids);
-  return materialDetails;
-}
+//   return Auth.fetch(
+//     `${CommonConstants.API_ENDPOINT}/Materials/${item}`,
+//     requestOptions,
+//   );
+// }
 
 function getModule(id) {
   const requestOptions = {
@@ -97,6 +83,17 @@ function getModule(id) {
 
   return Auth.fetch(
     `${CommonConstants.API_ENDPOINT}/Modules/${id}`,
+    requestOptions,
+  );
+}
+
+function getModuleMaterial(moduleId) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Modules/${moduleId}/Materials`,
     requestOptions,
   );
 }

@@ -51,19 +51,33 @@ function loadTestQuestions(userId, id) {
   );
 }
 
-function markQuestion(id, answerGivenId) {
+function markQuestion(id, answerGiven) {
   const requestOptions = {
     method: 'PUT',
-    body: JSON.stringify({ id, answerGivenId }),
   };
 
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/EnrolmentTestQuestions/${id}/Mark`,
+    `${
+      CommonConstants.API_ENDPOINT
+    }/EnrolmentTestQuestions/${id}/Mark/${answerGiven}`,
     requestOptions,
   );
 }
 
 function submitTest(testId, courseId, userId) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+
+  return Auth.fetch(
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Tests/${testId}/EnrolmentTest/${courseId}/${userId}`,
+    requestOptions,
+  );
+}
+
+function enrolmentTest(testId, courseId, userId) {
   const requestOptions = {
     method: 'POST',
   };
@@ -127,5 +141,6 @@ const ModuleServices = {
   editTest,
   deleteTest,
   getTests,
+  enrolmentTest,
 };
 export default ModuleServices;

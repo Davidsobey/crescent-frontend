@@ -38,6 +38,7 @@ import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
 import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
 import AcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
+import AcknowledgementView from '../Containers/Policy/Acknowledgement/View';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -212,6 +213,14 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}
                   component={withAuth(AcknowledgementCreate, ['Admin'])}
+                />
+                <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_VIEW}
+                  component={withAuth(AcknowledgementView, [
+                    'Admin',
+                    'Client',
+                    'Regular',
+                  ])}
                 />
                 <Route
                   path={Routes.CLIENT_EDIT}

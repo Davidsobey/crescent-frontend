@@ -27,7 +27,7 @@ const CourseConstants = {
   EDIT_SUCCESS: 'EDIT_COURSE_SUCCESS',
   EDIT_FAILURE: 'EDIT_COURSE_FAILURE',
 
-  CLEAR_MODULES: 'CLEAR_MODULES',
+  CLEAR_COURSES: 'CLEAR_COURSES',
 };
 
 export default CourseConstants;

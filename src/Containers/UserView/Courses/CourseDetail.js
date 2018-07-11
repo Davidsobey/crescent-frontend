@@ -11,7 +11,7 @@ import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import history from '../../../Helpers/History';
-import Button from '../../../Components/Button';
+import Button from './style';
 import ModuleActions from '../../../Actions/ModuleActions';
 import TestActions from '../../../Actions/TestActions';
 
@@ -24,10 +24,10 @@ class CourseDetail extends React.Component {
     this.setState({
       expanded: expanded ? module.id : false,
     });
-    if (module.moduleMaterialIds) {
-      this.props.dispatch(ModuleActions.moduleMaterial(module.moduleMaterialIds));
+    if (expanded) {
+      this.props.dispatch(ModuleActions.moduleMaterial(this.props.modules[0].id));
+      this.props.dispatch(ModuleActions.loadModuleTests(this.props.modules[0].id));
     }
-    this.props.dispatch(ModuleActions.loadModuleTests(module.id));
   };
 
   loadTest(id) {
@@ -80,22 +80,25 @@ class CourseDetail extends React.Component {
                             Module Material
                           </Typography>
                           {moduleMaterial && moduleMaterial.length > 0 ? (
-                            moduleMaterial.map(material => (
-                              <Button
-                                key={material.id}
-                                color="secondary"
-                                onClick={() =>
-                                  window.open(
-                                    `https://crescenttesting.azurewebsites.net/ModuleMaterial/${
-                                      material.filePath
-                                    }`,
-                                    '_blank',
-                                  )
-                                }
-                              >
-                                {material.filePath}
-                              </Button>
-                            ))
+                            moduleMaterial.map((material, index) => {
+                              const abc = material + index;
+                              return (
+                                <Button
+                                  key={abc}
+                                  color="primary"
+                                  variant="raised"
+                                  onClick={() =>
+                                    window.open(`${material}`, '_blank')
+                                  }
+                                >
+                                  {
+                                    material.split('/')[
+                                      material.split('/').length - 1
+                                    ]
+                                  }
+                                </Button>
+                              );
+                            })
                           ) : this.props.loadingMaterial ? (
                             <div>
                               <LinearProgress color="secondary" />

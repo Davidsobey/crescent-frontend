@@ -160,8 +160,8 @@ function loadCoursesByClientSubscriptions(clientId) {
   function request() {
     return { type: CourseConstants.LOADCOURSE_REQUEST };
   }
-  function success(modules) {
-    return { type: CourseConstants.LOADCOURSE_SUCCESS, modules };
+  function success(courses) {
+    return { type: CourseConstants.LOADCOURSE_SUCCESS, courses };
   }
   function failure(error) {
     return { type: CourseConstants.LOADCOURSE_FAILURE, error };
