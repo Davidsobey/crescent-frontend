@@ -45,7 +45,7 @@ function CourseReducer(state = {}, action) {
       };
     case CourseConstants.LOADCOURSE_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
+        course: action.course,
         loading: false,
       });
     case CourseConstants.LOADCOURSE_FAILURE:

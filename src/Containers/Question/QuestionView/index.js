@@ -51,7 +51,7 @@ class QuestionView extends React.Component {
           id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
-          test: TestMatch[0].name,
+          test: TestMatch[0].name ? TestMatch[0].name : '',
         };
         formattedArray.push(newQuestion);
       });

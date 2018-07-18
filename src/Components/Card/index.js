@@ -14,7 +14,7 @@ function Card(props) {
       <div>
         <div>
           {props.img ? (
-            <CardMedia>
+            <CardMedia src={Image}>
               <img
                 src={Image}
                 className="center-img"
