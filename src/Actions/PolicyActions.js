@@ -4,7 +4,7 @@ import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
-function create(policy, formfile) {
+function create(policy) {
   function request() {
     return { type: PolicyConstants.CREATE_REQUEST };
   }
@@ -17,7 +17,7 @@ function create(policy, formfile) {
 
   return (dispatch) => {
     dispatch(request({}));
-    PolicyService.create(policy, formfile).then(
+    PolicyService.create(policy).then(
       () => {
         dispatch(success());
         history.push('/policy/list');
