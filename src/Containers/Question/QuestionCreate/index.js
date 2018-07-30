@@ -15,6 +15,7 @@ import LinearProgress from '../../../Components/LinearProgress';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 import TestActions from '../../../Actions/TestActions';
+import history from '../../../Helpers/History';
 
 const validate = () => {
   const errors = {};
@@ -24,10 +25,20 @@ const validate = () => {
 
 class QuestionCreate extends React.Component {
   componentDidMount() {
-    this.props.dispatch(ModuleActions.clearModules());
-    this.props.dispatch(TestActions.clearTests());
-    this.props.dispatch(QuestionActions.clearQuestion());
     this.props.dispatch(CourseActions.getAll());
+    if (this.props.newCourseId){
+      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId))
+      this.props.dispatch(TestActions.loadTestByModule(this.props.newModuleId));
+    }
+    else {
+      this.props.dispatch(ModuleActions.clearModules());
+      this.props.dispatch(TestActions.clearTests());
+    }
+    this.props.dispatch(QuestionActions.clearQuestion());
+  }
+  
+  componentWillMount () {
+    this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId, test: this.props.newTestId });
   }
 
   loadModules = (values) => {
@@ -162,6 +173,9 @@ QuestionCreate.propTypes = {
   courses: PropTypes.array,
   modules: PropTypes.array,
   modulesLoading: PropTypes.bool,
+  newCourseId: PropTypes.number,
+  newModuleId: PropTypes.number,
+  newTestId: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
@@ -169,6 +183,9 @@ const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
   modules: state.ModuleReducer.modules,
   modulesLoading: state.ModuleReducer.loading,
+  newCourseId: state.CourseReducer.newCourseId,
+  newModuleId: state.ModuleReducer.newModuleId,
+  newTestId: state.TestReducer.newTestId,
 });
 
 const withForm = reduxForm(

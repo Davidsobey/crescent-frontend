@@ -4,15 +4,26 @@ import UserConstants from '../Constants/UserConstants';
 function ModuleReducer(state = {}, action) {
   switch (action.type) {
     case ModuleConstants.CREATE_REQUEST:
-      return {
-        modules: action.moduleName,
-      };
+      return Object.assign({}, state, {
+        loading: true,
+      });
     case ModuleConstants.CREATE_SUCCESS:
-      return {
-        modules: action.moduleName,
-      };
+      return Object.assign({}, state, {
+        newModuleId: action.newModuleId,
+        loading: false,
+      });
     case ModuleConstants.CREATE_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        loading: false,
+      });
+    case ModuleConstants.OPENREDIRECTMODAL_REQUEST:
+      return Object.assign({}, state, {
+        openRedirectModal: true,
+      });
+    case ModuleConstants.CLOSEREDIRECTMODAL_REQUEST:
+      return Object.assign({}, state, {
+        openRedirectModal: false,
+      });
 
     case ModuleConstants.GETALL_REQUEST:
       return {
@@ -27,9 +38,9 @@ function ModuleReducer(state = {}, action) {
         modules: undefined,
       };
     case ModuleConstants.LOADMODULE_REQUEST:
-      return {
+      return Object.assign({}, state, {
         loading: true,
-      };
+      });
     case ModuleConstants.LOADMODULE_SUCCESS:
       return Object.assign({}, state, {
         modules: action.modules,
@@ -91,6 +102,18 @@ function ModuleReducer(state = {}, action) {
       return Object.assign({}, state, {
         module: undefined,
         loading: false,
+      });
+    case ModuleConstants.UPLOAD_REQUEST:
+      return Object.assign({}, state, {
+        uploading: true,
+      });
+    case ModuleConstants.UPLOAD_SUCCESS:
+      return Object.assign({}, state, {
+        uploading: false,
+      });
+    case ModuleConstants.UPLOAD_FAILURE:
+      return Object.assign({}, state, {
+        uploading: false,
       });
     default:
       return state;

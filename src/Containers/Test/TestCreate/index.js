@@ -14,6 +14,8 @@ import TestActions from '../../../Actions/TestActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 import CourseActions from '../../../Actions/CourseActions';
 import LinearProgress from '../../../Components/LinearProgress';
+import OptionsModal from '../../../Components/OptionsModal';
+import history from '../../../Helpers/History';
 
 const validate = () => {
   const errors = {};
@@ -21,11 +23,24 @@ const validate = () => {
   return errors;
 };
 
+const options = [
+  // {label: 'Create another assignment'},
+  {label: 'Create another module', url: '/module/create'},
+  {label: 'Create questions for this assignment', url: '/question/create'},
+];
+
 class TestCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(CourseActions.getAll());
-    this.props.dispatch(ModuleActions.clearModules());
+    if (this.props.newCourseId)
+      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId))
+    else
+      this.props.dispatch(ModuleActions.clearModules());
+  }
+
+  componentWillMount () {
+    this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId });
   }
 
   submit = (values) => {
@@ -35,6 +50,14 @@ class TestCreate extends React.Component {
   loadModules = (values) => {
     this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
   };
+
+  onContinue = (index) => {
+    this.props.dispatch(TestActions.closeRedirectModal());
+    // if (index==0)
+    //   this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId, testName: '', testMarks: '' });
+    // else
+      history.push(options[index].url);
+  }
 
   render() {
     return (
@@ -122,6 +145,12 @@ class TestCreate extends React.Component {
             </Button>
           </div>
         </form>
+        <OptionsModal
+          title="Test created successfully."
+          open={this.props.openRedirectModal?this.props.openRedirectModal:false}
+          onClick={this.onContinue.bind(this)}
+          options={options}
+        />
       </Card>
     );
   }
@@ -133,6 +162,9 @@ TestCreate.propTypes = {
   modules: PropTypes.array,
   courses: PropTypes.array,
   moduleLoading: PropTypes.bool,
+  newCourseId: PropTypes.number,
+  newModuleId: PropTypes.number,
+  openRedirectModal: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
@@ -140,6 +172,9 @@ function mapStateToProps(state) {
     modules: state.ModuleReducer.modules,
     moduleLoading: state.ModuleReducer.loading,
     courses: state.CourseReducer.courses,
+    newCourseId: state.CourseReducer.newCourseId,
+    newModuleId: state.ModuleReducer.newModuleId,
+    openRedirectModal: state.TestReducer.openRedirectModal,
   };
 }
 

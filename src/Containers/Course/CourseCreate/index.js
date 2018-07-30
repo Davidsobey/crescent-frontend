@@ -6,8 +6,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
+import LinearProgress from '../../../Components/LinearProgress';
 
 import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
@@ -29,6 +31,7 @@ class CourseCreate extends React.Component {
   render() {
     return (
       <Card width="600px" title="Create New Course">
+        {this.props.loading && <LinearProgress color="secondary" />}
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -77,9 +80,18 @@ class CourseCreate extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.CourseReducer.loading,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
 CourseCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 const withForm = reduxForm(
@@ -90,4 +102,4 @@ const withForm = reduxForm(
   CourseCreate,
 );
 
-export default compose(withForm)(CourseCreate);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(CourseCreate);

@@ -1,4 +1,7 @@
 import QuestionConstants from '../Constants/QuestionConstants';
+import CourseConstants from '../Constants/CourseConstants';
+import ModuleConstants from '../Constants/ModuleConstants';
+import TestConstants from '../Constants/TestConstants';
 import QuestionService from '../Services/QuestionService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
@@ -13,13 +16,26 @@ function create(question) {
   function failure(error) {
     return { type: QuestionConstants.CREATE_FAILURE, error };
   }
+  function course_success(newCourseId) {
+    return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
+  }
+  function module_success(newModuleId) {
+    return { type: ModuleConstants.CREATE_SUCCESS, newModuleId };
+  }
+  function test_success(newTestId) {
+    return { type: TestConstants.CREATE_SUCCESS, newTestId };
+  }
 
   return (dispatch) => {
     dispatch(request({ question }));
     QuestionService.create(question).then(
       (questionResponse) => {
+        console.log('questionResponse', questionResponse);
         dispatch(success(questionResponse));
-        history.push('/question/list');
+        dispatch(course_success(questionResponse.test.module.courseId));
+        dispatch(module_success(questionResponse.test.moduleId));
+        dispatch(test_success(questionResponse.testId));
+        history.push('/question/options');
         dispatch(AlertActions.success('Question created.'));
       },
       (error) => {

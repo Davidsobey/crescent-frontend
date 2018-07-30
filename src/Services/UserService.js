@@ -64,6 +64,7 @@ function enrol(enrolment) {
     body: JSON.stringify({
       courseId: enrolment.course,
       userId: enrolment.user,
+      deadline: enrolment.deadline,
     }),
   };
   return Auth.fetch(

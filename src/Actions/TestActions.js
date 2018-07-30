@@ -1,4 +1,6 @@
 import TestConstants from '../Constants/TestConstants';
+import ModuleConstants from '../Constants/ModuleConstants';
+import CourseConstants from '../Constants/CourseConstants';
 import TestService from '../Services/TestService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
@@ -7,26 +9,48 @@ function create(moduleID, testName, totalMarks) {
   function request() {
     return { type: TestConstants.CREATE_REQUEST, testName };
   }
-  function success() {
-    return { type: TestConstants.CREATE_SUCCESS, testName };
+  function success(newTestId) {
+    return { type: TestConstants.CREATE_SUCCESS, testName, newTestId };
   }
   function failure(error) {
     return { type: TestConstants.CREATE_FAILURE, error };
+  }
+  function openmodal_request() {
+    return { type: TestConstants.OPENREDIRECTMODAL_REQUEST };
+  }
+  function course_success(newCourseId) {
+    return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
+  }
+  function module_success(newModuleId) {
+    return { type: ModuleConstants.CREATE_SUCCESS, newModuleId };
   }
 
   return (dispatch) => {
     dispatch(request({ testName }));
     TestService.create(moduleID, testName, totalMarks).then(
-      () => {
-        dispatch(success(testName));
-        history.push('/question/create');
-        dispatch(AlertActions.success(`Test ${testName} created.`));
+      (test) => {
+        console.log('test', test);
+        dispatch(success(test.id));
+        dispatch(course_success(test.module.courseId));
+        dispatch(module_success(test.moduleId));
+        dispatch(openmodal_request());
+        // dispatch(AlertActions.success(`Test ${testName} created.`));
       },
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );
+  };
+}
+
+function closeRedirectModal() {
+  function request() {
+    return { type: TestConstants.CLOSEREDIRECTMODAL_REQUEST };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
   };
 }
 
@@ -256,6 +280,7 @@ function clearTests() {
 
 const TestActions = {
   create,
+  closeRedirectModal,
   getAll,
   loadTest,
   loadTestQuestions,

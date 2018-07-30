@@ -18,6 +18,7 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.CREATE_SUCCESS:
       return {
         policies: action.policyName,
+        newPolicyId: action.newPolicyId,
       };
     case PolicyConstants.CREATE_FAILURE:
       return {};
@@ -28,9 +29,9 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.UPLOAD_MATERIAL_FAILURE:
       return {};
     case PolicyConstants.GETALL_REQUEST:
-      return {
+      return Object.assign({}, state, {
         loading: true,
-      };
+      });
     case PolicyConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         policies: action.policies,
@@ -45,11 +46,23 @@ function PolicyReducer(state = {}, action) {
       };
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS:
       return Object.assign({}, state, {
-        policies: action.policies,
+        policyAcknowledgements: action.policies,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE:
       return {
-        policies: {},
+        policyAcknowledgements: {},
+      };
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST:
+      return {
+        loading: true,
+      };
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_SUCCESS:
+      return Object.assign({}, state, {
+        policyAcknowledgements: action.policies,
+      });
+    case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_FAILURE:
+      return {
+        policyAcknowledgements: {},
       };
     case PolicyConstants.ACKNOWLEDGE_REQUEST:
       return {
@@ -96,6 +109,18 @@ function PolicyReducer(state = {}, action) {
       });
     case PolicyConstants.GET_MATERIAL_FAILURE:
       return Object.assign({}, state, { policyMaterial: [] });
+    case PolicyConstants.GET_MATERIALS_REQUEST:
+      return Object.assign({}, state, {
+        loadingMaterial: true,
+      });
+    case PolicyConstants.GET_MATERIALS_SUCCESS:
+      return Object.assign({}, state, {
+        loadingMaterial: false,
+        policyMaterials: action.materials,
+        policyId: action.policyId,
+      });
+    case PolicyConstants.GET_MATERIALS_FAILURE:
+      return Object.assign({}, state, { policyMaterials: [] });
     default:
       return state;
   }

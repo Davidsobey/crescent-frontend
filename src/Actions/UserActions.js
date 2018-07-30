@@ -128,7 +128,7 @@ function enrol(enrolment) {
     UserService.enrol(enrolment).then(
       () => {
         dispatch(success(enrolment));
-        history.push('/user/list');
+        history.push('/user/enrol/list');
         dispatch(AlertActions.success('User enrolled successfully.'));
       },
       (error) => {

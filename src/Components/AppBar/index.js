@@ -248,6 +248,12 @@ const UserDetails = {
       subItemIcon: <AttachIcon />,
       subItemExtension: 'enrol',
     },
+    {
+      key: 3,
+      subItemName: 'Enrolment List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'enrol/list',
+    },
   ],
 };
 
@@ -283,6 +289,19 @@ const ClientCourseDetails = {
     {
       key: 0,
       subItemName: 'View My Courses',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'list',
+    },
+  ],
+};
+
+const ClientPolicyDetails = {
+  listName: 'Policies',
+  listIcon: <PolicyIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'View My Policies',
       subItemIcon: <ListIcon />,
       subItemExtension: 'list',
     },
@@ -442,6 +461,10 @@ class MiniDrawer extends React.Component {
               <ExpandableMenu
                 color={theme.palette.accent[500]}
                 details={ClientCourseDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={ClientPolicyDetails}
               />
             </List>
           )}

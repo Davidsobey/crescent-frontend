@@ -7,8 +7,8 @@ function create(values) {
   function request() {
     return { type: CourseConstants.CREATE_REQUEST };
   }
-  function success() {
-    return { type: CourseConstants.CREATE_SUCCESS };
+  function success(newCourseId) {
+    return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
   function failure(error) {
     return { type: CourseConstants.CREATE_FAILURE, error };
@@ -18,8 +18,8 @@ function create(values) {
   return (dispatch) => {
     dispatch(request({ courseName }));
     CourseService.create(courseName, courseDescription, courseCPD).then(
-      () => {
-        dispatch(success(courseName));
+      (course) => {
+        dispatch(success(course.id));
         history.push('/module/create');
         dispatch(AlertActions.success(`Course ${courseName} created.`));
       },

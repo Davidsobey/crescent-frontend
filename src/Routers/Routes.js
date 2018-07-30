@@ -20,6 +20,7 @@ const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const USER_EDIT = '/user/edit';
 const USER_ENROL = '/user/enrol';
+const USER_ENROL_VIEW = '/user/enrol/list';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const CLIENT_EDIT = '/client/edit';
@@ -29,7 +30,8 @@ const POLICY_VIEW = '/policy/list';
 const POLICY_EDIT = '/policy/edit';
 const POLICY_MATERIAL_CREATE = '/policy/material/create';
 const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
-const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/view';
+const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/list';
+const POLICY_ACKNOWLEDGEMENT_DETAIL = '/policy/acknowledgement/detail';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -37,6 +39,7 @@ const USERS_VIEW_MODULE = '/modules/moduledetail';
 const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
+const USERS_VIEW_POLICIES = '/policies/list';
 
 export default {
   LOGIN,
@@ -60,6 +63,7 @@ export default {
   USER_VIEW,
   USER_EDIT,
   USER_ENROL,
+  USER_ENROL_VIEW,
   CLIENT_CREATE,
   CLIENT_EDIT,
   CLIENT_VIEW,
@@ -70,6 +74,7 @@ export default {
   POLICY_MATERIAL_CREATE,
   POLICY_ACKNOWLEDGEMENT_CREATE,
   POLICY_ACKNOWLEDGEMENT_VIEW,
+  POLICY_ACKNOWLEDGEMENT_DETAIL,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,
@@ -77,5 +82,6 @@ export default {
   USERS_VIEW_TEST,
   USERS_START_TEST,
   USERS_QUESTION,
+  USERS_VIEW_POLICIES,
   CHANGEPASSWORD,
 };

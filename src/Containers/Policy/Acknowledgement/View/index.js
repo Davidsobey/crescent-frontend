@@ -8,72 +8,89 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import history from '../../../../Helpers/History';
 import Card from '../../../../Components/Card';
 import PolicyActions from '../../../../Actions/PolicyActions';
+import UserActions from '../../../../Actions/UserActions';
 import { StyledDelete } from '../../../../Styles/Delete';
 import { StyledEdit } from '../../../../Styles/Edit';
 import IconButton from '../../../../Styles/IconButton';
 import CustomModal from '../../../../Components/Modal/index';
+import Button from '../../../../Components/Button/index';
 
 class PolicyAcknowledgementView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { obj: {} };
+   // this.state = { obj: {} };
   }
 
   componentWillMount() {
-    this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser());
+    this.props.dispatch(UserActions.getAll());
+    this.props.dispatch(PolicyActions.getOutstandingPoliciesForClient(this.props.user.clientId));
   }
 
-  acknowledge = (obj) => {
-    this.setState({ obj });
-    this.child.handleOpen();
+  loadPolicy = (id) => {
+    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id));
+    history.push({pathname: '/policy/acknowledgement/detail', state: {policyId: id}});
   };
 
-  confirmDelete = obj => () => {
-    this.props.dispatch(PolicyActions.acknowledge(obj.id));
-    this.child.handleClose();
-  };
-
-  viewPolicy = () => {
-    // load the material file
-
+  manipulateData = (policyAcknowledgements) => {
+    var getUserNameById = userId => {
+      if (this.props.users) {
+        let user = this.props.users.filter(user => user.id == userId);
+        return user.length > 0 ? user[0].name : '';
+      }
+      return '';
+    };
+    const data = [];
+    policyAcknowledgements.forEach((policyAcknowledgement) => {
+      const newPolicyAcknowledgement = {
+        policyId: policyAcknowledgement.policyID,
+        userId: policyAcknowledgement.userID,
+        userName: getUserNameById(policyAcknowledgement.userID),
+        policyName: policyAcknowledgement.policyName,
+        description: policyAcknowledgement.policyDescription,
+        acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
+      };
+      data.push(newPolicyAcknowledgement);
+    });
+    console.log(data);
+    return data;
   };
 
   render() {
-    const { policyAcknowledgements } = this.props;
+    const { policyAcknowledgements, user } = this.props;
     const columns = [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'User Name',
+        accessor: 'userName',
+      },
+      {
+        Header: 'Policy Name',
+        accessor: 'policyName',
       },
       {
         Header: 'Description',
         accessor: 'description',
       },
       {
-        Header: 'View/Acknowledge',
+        Header: 'Acknowledged',
+        accessor: 'acknowledged',
+      },
+      { 
+        Header: 'View Policy Details',
         accessor: 'view/acknowledge',
         Filter: <div />,
-        Cell: row => (
+        Cell: row => (row.original.userId == user.id&&row.original.acknowledged=='No' ?
           <div>
-            <Tooltip id="tooltip-delete" title="View">
-              <IconButton
-                aria-label="Acknowledge"
-                onClick={() => this.viewPolicy(row.original)}
-              >
-                <StyledEdit />
-              </IconButton>
-            </Tooltip>
-            <Tooltip id="tooltip-delete" title="Acknowledge">
-              <IconButton
-                aria-label="Acknowledge"
-                onClick={() => this.acknowledge(row.original)}
-              >
-                <StyledDelete />
-              </IconButton>
-            </Tooltip>
-          </div>
+            <Button
+              className="small-font"
+              color="primary"
+              onClick={() => this.loadPolicy(row.original.policyId)}
+            >
+              View Policy Details
+            </Button>
+          </div> : <div></div>
         ),
       },
     ];
@@ -84,7 +101,7 @@ class PolicyAcknowledgementView extends React.Component {
             {Array.isArray(policyAcknowledgements) && (
               <ReactTable
                 columns={columns}
-                data={policyAcknowledgements}
+                data={this.manipulateData(policyAcknowledgements)}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"
@@ -92,12 +109,6 @@ class PolicyAcknowledgementView extends React.Component {
             )}
           </div>
         </Card>
-        <CustomModal
-          obj={this.state && this.state.obj}
-          /* eslint-disable no-return-assign */
-          onRef={ref => (this.child = ref)}
-          onClick={this.acknowledge(this.state.obj)}
-        />
       </div>
     );
   }
@@ -105,6 +116,8 @@ class PolicyAcknowledgementView extends React.Component {
 
 const mapStateToProps = state => ({
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
+  user: state.LoginReducer.user,
+  users: state.UserReducer.users,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -120,6 +133,8 @@ const withForm = reduxForm(
 
 PolicyAcknowledgementView.propTypes = {
   policyAcknowledgements: PropTypes.array,
+  user: PropTypes.object,
+  users: PropTypes.array,
   dispatch: PropTypes.func,
 };
 

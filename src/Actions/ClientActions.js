@@ -172,6 +172,26 @@ function editClient(values) {
   };
 }
 
+function getUserEnrolments(id) {
+  function request() {
+    return { type: ClientConstants.GETUSERENROLMENTS_REQUEST };
+  }
+  function success(userEnrolments) {
+    return { type: ClientConstants.GETUSERENROLMENTS_SUCCESS, userEnrolments };
+  }
+  function failure(error) {
+    return { type: ClientConstants.GETUSERENROLMENTS_FAILURE, error };
+  }
+  return (dispatch) => {
+    dispatch(request());
+
+    ClientService.getUserEnrolments(id).then(
+      userEnrolments => dispatch(success(userEnrolments)),
+      error => dispatch(failure(error)),
+    );
+  };
+}
+
 const clientActions = {
   create,
   getAll,
@@ -180,6 +200,7 @@ const clientActions = {
   deleteClient,
   loadClient,
   editClient,
+  getUserEnrolments,
 };
 
 export default clientActions;

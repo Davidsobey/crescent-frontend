@@ -31,6 +31,7 @@ import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
 import UserEdit from '../Containers/User/UserEdit/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
+import EnrolmentList from '../Containers/User/UserEnrolView/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
@@ -38,7 +39,8 @@ import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
 import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
 import AcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
-import AcknowledgementView from '../Containers/Policy/Acknowledgement/View';
+import AcknowledgementView from '../Containers/Policy/Acknowledgement/View/index';
+import AcknowledgementDetail from '../Containers/Policy/Acknowledgement/Detail/index';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -50,6 +52,8 @@ import TakeTest from '../Containers/UserView/Test/TakeTest';
 import Question from '../Containers/UserView/Test/Question';
 import TestEdit from '../Containers/Test/TestEdit/index';
 import Options from '../Containers/Option/OptionCreate/index';
+import UsersPolicyView from '../Containers/UserView/Policies/index';
+import UserPolicyDetail from '../Containers/UserView/Policies/PolicyDetail';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -180,6 +184,11 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
+                  path={Routes.USER_ENROL_VIEW}
+                  component={withAuth(EnrolmentList, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
                   path={Routes.CLIENT_CREATE}
                   component={withAuth(ClientCreate, ['Admin'])}
                   exact
@@ -217,6 +226,14 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_VIEW}
                   component={withAuth(AcknowledgementView, [
+                    'Admin',
+                    'Client',
+                    'Regular',
+                  ])}
+                />
+                <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_DETAIL}
+                  component={withAuth(AcknowledgementDetail, [
                     'Admin',
                     'Client',
                     'Regular',
@@ -283,10 +300,27 @@ class AppRouters extends React.Component {
                   component={withAuth(Question, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
-
                 <Route
                   path={Routes.TEST_EDIT}
                   component={withAuth(TestEdit, ['Admin', 'Regular', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_POLICIES}
+                  component={withAuth(UsersPolicyView, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_POLICY}
+                  component={withAuth(UserPolicyDetail, [
+                    'Admin',
+                    'Regular',
+                    'Client',
+                  ])}
                   exact
                 />
               </Switch>

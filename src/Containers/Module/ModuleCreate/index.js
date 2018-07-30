@@ -12,6 +12,8 @@ import Button from '../../../Components/Button';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 import LinearProgress from '../../../Components/LinearProgress';
+import OptionsModal from '../../../Components/OptionsModal';
+import history from '../../../Helpers/History';
 
 const validate = () => {
   const errors = {};
@@ -19,10 +21,20 @@ const validate = () => {
   return errors;
 };
 
+const options = [
+  {label: 'Create another module'},
+  {label: 'Create an assignment for this module', url: '/assessment/create'},
+  {label: 'Upload module material for this module', url: '/module/material/create'},
+];
+
 class ModuleCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(CourseActions.getAll());
+  }
+  
+  componentWillMount () {
+    this.props.initialize({ course: this.props.newCourseId });
   }
 
   submit = (values) => {
@@ -33,9 +45,18 @@ class ModuleCreate extends React.Component {
     ));
   };
 
+  onContinue = (index) => {
+    this.props.dispatch(ModuleActions.closeRedirectModal());
+    if (index==0)
+      this.props.initialize({ course: this.props.newCourseId, moduleName: '', moduleDescription: '' });
+    else
+      history.push(options[index].url);
+  }
+
   render() {
     return (
       <Card width="600px" title="Create New Module">
+        {this.props.loading && <LinearProgress color="secondary" />}
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -45,7 +66,7 @@ class ModuleCreate extends React.Component {
           <div>
             <div>
               {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select}>
+                <Field name="course" label="Course Name" component={Select} >
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -87,6 +108,12 @@ class ModuleCreate extends React.Component {
             </Button>
           </div>
         </form>
+        <OptionsModal
+          title="Module created successfully."
+          open={this.props.openRedirectModal?this.props.openRedirectModal:false}
+          onClick={this.onContinue.bind(this)}
+          options={options}
+        />
       </Card>
     );
   }
@@ -96,10 +123,16 @@ ModuleCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
+  newCourseId: PropTypes.number,
+  openRedirectModal: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
+  newCourseId: state.CourseReducer.newCourseId,
+  openRedirectModal: state.ModuleReducer.openRedirectModal,
+  loading: state.ModuleReducer.loading,
 });
 
 const withForm = reduxForm(

@@ -49,7 +49,9 @@ class UserView extends React.Component {
   manipulateData = (users) => {
     const data = [];
     if (users) {
-      users.forEach((user) => {
+      users
+      .filter(user => (user.role.name == 'Admin' && this.props.user.role.name == 'Client' ? false : true) )
+      .forEach((user) => {
         const newUser = {
           id: user.id,
           name: user.name,
@@ -133,6 +135,7 @@ class UserView extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.LoginReducer.user,
   users: state.UserReducer.users,
 });
 
@@ -144,6 +147,7 @@ const withForm = reduxForm(
 );
 
 UserView.propTypes = {
+  user: PropTypes.object,
   users: PropTypes.array,
   dispatch: PropTypes.func,
 };

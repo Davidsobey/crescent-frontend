@@ -23,6 +23,10 @@ class MaterialCreate extends React.Component {
     super(props);
     this.props.dispatch(ModuleActions.getAll());
   }
+  
+  componentWillMount () {
+    this.props.initialize({ ModuleId: this.props.newModuleId });
+  }
 
   state = {
     selectedFile: null,
@@ -42,6 +46,7 @@ class MaterialCreate extends React.Component {
   render() {
     return (
       <Card width="600px" title="Create New Material">
+        {this.props.uploading && <LinearProgress color="secondary" />}
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -89,10 +94,14 @@ MaterialCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   modules: PropTypes.array,
+  newModuleId: PropTypes.number,
+  uploading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   modules: state.ModuleReducer.modules,
+  newModuleId: state.ModuleReducer.newModuleId,
+  uploading: state.ModuleReducer.uploading,
 });
 
 const withForm = reduxForm(

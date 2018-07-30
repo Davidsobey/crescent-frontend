@@ -12,11 +12,18 @@ function filterById(id, delId) {
 function CourseReducer(state = {}, action) {
   switch (action.type) {
     case CourseConstants.CREATE_REQUEST:
-      return state;
+      return Object.assign({}, state, {
+        loading: true,
+      });
     case CourseConstants.CREATE_SUCCESS:
-      return state;
+      return Object.assign({}, state, {
+        loading: false,
+        newCourseId: action.newCourseId,
+      });
     case CourseConstants.CREATE_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        loading: false,
+      });
     case CourseConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
         loading: true,

@@ -1,4 +1,5 @@
 import ModuleConstants from '../Constants/ModuleConstants';
+import CourseConstants from '../Constants/CourseConstants';
 import ModuleService from '../Services/ModuleService';
 import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
@@ -8,26 +9,44 @@ function create(courseID, moduleName, moduleDescription) {
   function request() {
     return { type: ModuleConstants.CREATE_REQUEST, moduleName };
   }
-  function success() {
-    return { type: ModuleConstants.CREATE_SUCCESS, moduleName };
+  function success(newModuleId) {
+    return { type: ModuleConstants.CREATE_SUCCESS, newModuleId };
   }
   function failure(error) {
     return { type: ModuleConstants.CREATE_FAILURE, error };
+  }
+  function openmodal_request() {
+    return { type: ModuleConstants.OPENREDIRECTMODAL_REQUEST };
+  }
+  function course_success(newCourseId) {
+    return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
 
   return (dispatch) => {
     dispatch(request({ moduleName }));
     ModuleService.create(courseID, moduleName, moduleDescription).then(
-      () => {
-        dispatch(success(moduleName));
-        history.push('/module/list');
-        dispatch(AlertActions.success(`Module ${moduleName} created.`));
+      (module) => {
+        console.log('module', module);
+        dispatch(success(module.id));
+        dispatch(course_success(module.courseId));
+        dispatch(openmodal_request());
+        // dispatch(AlertActions.success(`Module ${moduleName} created.`));
       },
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error || error));
       },
     );
+  };
+}
+
+function closeRedirectModal() {
+  function request() {
+    return { type: ModuleConstants.CLOSEREDIRECTMODAL_REQUEST };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
   };
 }
 
@@ -241,6 +260,7 @@ function editModule(values) {
 
 const ModuleActions = {
   create,
+  closeRedirectModal,
   getAll,
   uploadMaterial,
   loadModuleByCourse,

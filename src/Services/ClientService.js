@@ -78,6 +78,17 @@ function editClient(values) {
   );
 }
 
+function getUserEnrolments(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Clients/${id}/UserEnrolments`,
+    requestOptions,
+  );
+}
+
 const ClientService = {
   create,
   getAll,
@@ -86,5 +97,6 @@ const ClientService = {
   deleteClient,
   getClient,
   editClient,
+  getUserEnrolments,
 };
 export default ClientService;

@@ -22,6 +22,10 @@ class PolicyMaterialCreate extends React.Component {
     super(props);
     this.props.dispatch(PolicyActions.getAll());
   }
+  
+  componentWillMount () {
+    this.props.initialize({ PolicyId: this.props.newPolicyId });
+  }
 
   state = {
     selectedFile: null,
@@ -88,10 +92,12 @@ PolicyMaterialCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   policies: PropTypes.array,
+  newPolicyId: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
+  newPolicyId: state.PolicyReducer.newPolicyId,
 });
 
 const withForm = reduxForm(

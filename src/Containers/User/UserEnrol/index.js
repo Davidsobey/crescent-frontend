@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
 
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
@@ -24,10 +25,19 @@ class EnrolmentCreate extends React.Component {
     super(props);
     this.props.dispatch(UserActions.getAll());
     this.props.dispatch(CourseActions.clearCourses());
+    this.state = {
+      value: this.props.value,
+      data: '',
+      selectedDate: '',
+    };
+  }
+
+  handleDateChange = (e) => {
+    this.setState({ selectedDate: e.target.value });
   }
 
   submit = (values) => {
-    const enrolment = Object.assign({}, values);
+    const enrolment = Object.assign({}, values, {deadline: this.state.selectedDate});
     this.props.dispatch(UserActions.enrol(enrolment));
   };
 
@@ -38,6 +48,9 @@ class EnrolmentCreate extends React.Component {
   };
 
   render() {
+    const { selectedDate } = this.state;
+    const val = this.state.value || null;
+
     return (
       <Card width="600px" title="Enrol A User In A Course">
         <form
@@ -56,7 +69,9 @@ class EnrolmentCreate extends React.Component {
                     label="User Name"
                     component={Select}
                   >
-                    {this.props.users.map(user => (
+                    {this.props.users
+                    .filter(user => (this.props.user.role.name=='Admin' ||this.props.user.clientId==user.clientId))
+                    .map(user => (
                       <MenuItem value={user.id} key={user.id}>
                         {user.name}
                       </MenuItem>
@@ -94,6 +109,18 @@ class EnrolmentCreate extends React.Component {
                   Loading Courses...
                 </div>
               )}
+              <div>
+                <TextField
+                  onChange={this.handleDateChange}
+                  id="deadline"
+                  label="Deadline"
+                  type="date"
+                  value={selectedDate}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </div>
             </div>
           </div>
           <div className="formAlignRight">
@@ -118,6 +145,7 @@ EnrolmentCreate.propTypes = {
   courses: PropTypes.array,
   courseLoading: PropTypes.bool,
   users: PropTypes.array,
+  user: PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -125,6 +153,7 @@ function mapStateToProps(state) {
     courses: state.CourseReducer.courses,
     courseLoading: state.CourseReducer.loading,
     users: state.UserReducer.users,
+    user: state.LoginReducer.user,
   };
 }
 

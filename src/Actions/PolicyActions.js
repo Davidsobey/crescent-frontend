@@ -8,8 +8,8 @@ function create(policy) {
   function request() {
     return { type: PolicyConstants.CREATE_REQUEST };
   }
-  function success() {
-    return { type: PolicyConstants.CREATE_SUCCESS, policy };
+  function success(newPolicyId) {
+    return { type: PolicyConstants.CREATE_SUCCESS, policy, newPolicyId };
   }
   function failure(error) {
     return { type: PolicyConstants.CREATE_FAILURE, error };
@@ -18,9 +18,10 @@ function create(policy) {
   return (dispatch) => {
     dispatch(request({}));
     PolicyService.create(policy).then(
-      () => {
-        dispatch(success());
-        history.push('/policy/list');
+      (policy) => {
+        console.log('policy', policy);
+        dispatch(success(policy.id));
+        history.push('/policy/material/create');
         dispatch(AlertActions.success('Policy created.'));
       },
       (error) => {
@@ -53,7 +54,7 @@ function createAcknowledgement(acknowledgement) {
     PolicyService.createAcknowledgement(acknowledgement).then(
       () => {
         dispatch(success(acknowledgement));
-        history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
+        //history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
         dispatch(AlertActions.success('Acknowledgement created'));
       },
       (error) => {
@@ -64,7 +65,7 @@ function createAcknowledgement(acknowledgement) {
   };
 }
 
-function acknowledge(acknowledgement, userId, policyId) {
+function acknowledge(userId, policyId, successUrl) {
   function request() {
     return { type: PolicyConstants.ACKNOWLEDGE_REQUEST, userId };
   }
@@ -77,10 +78,10 @@ function acknowledge(acknowledgement, userId, policyId) {
 
   return (dispatch) => {
     dispatch(request({ userId }));
-    PolicyService.acknowledgePolicy(acknowledgement, userId, policyId).then(
+    PolicyService.acknowledgePolicy(userId, policyId).then(
       () => {
         dispatch(success(userId));
-        history.push('/policy/acknowledgement/list');
+        history.push(successUrl);
         dispatch(AlertActions.success('Policy has been acknowledged.'));
       },
       (error) => {
@@ -115,6 +116,39 @@ function getOutstandingPoliciesForUser(userId) {
     dispatch(request({ userId }));
 
     PolicyService.getOutstandingPoliciesForUser(userId).then(
+      policies => dispatch(success(policies)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+function getOutstandingPoliciesForClient(clientId) {
+  function request() {
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST,
+      clientId,
+    };
+  }
+  function success(policies) {
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_SUCCESS,
+      policies,
+    };
+  }
+  function failure(error) {
+    return {
+      type: PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_FAILURE,
+      error,
+    };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ clientId }));
+
+    PolicyService.getOutstandingPoliciesForClient(clientId).then(
       policies => dispatch(success(policies)),
       (error) => {
         dispatch(failure(error));
@@ -343,6 +377,32 @@ function uploadMaterial(policyId, file) {
   };
 }
 
+function getMaterialsForPolicy(policyId) {
+  function request() {
+    return { type: PolicyConstants.GET_MATERIALS_REQUEST };
+  }
+  function success(materials) {
+    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, materials };
+  }
+  function failure(error) {
+    return { type: PolicyConstants.GET_MATERIALS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(policyId));
+
+    PolicyService.getMaterialsForPolicy(policyId).then(
+      (materials) => {
+        dispatch(success(materials));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -354,9 +414,11 @@ const PolicyActions = {
   editPolicy,
   deletePolicy,
   getOutstandingPoliciesForUser,
+  getOutstandingPoliciesForClient,
   loadPolicy,
   uploadMaterial,
   getMaterial,
+  getMaterialsForPolicy,
 };
 
 export default PolicyActions;

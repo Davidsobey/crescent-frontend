@@ -37,6 +37,7 @@ class UserCreate extends React.Component {
   };
 
   render() {
+    let {user} = this.props;
     return (
       <Card width="600px" title="Create New User">
         <form
@@ -63,7 +64,9 @@ class UserCreate extends React.Component {
             <div>
               {this.props.roles ? (
                 <Field name="roleId" label="Role" component={Select}>
-                  {this.props.roles.map(role => (
+                  {this.props.roles
+                  .filter(role => (role.name == 'Admin' && user.role.name == 'Client' ? false : true) )
+                  .map(role => (
                     <MenuItem value={role.id} key={role.id}>
                       {role.name}
                     </MenuItem>
@@ -112,11 +115,13 @@ class UserCreate extends React.Component {
 UserCreate.propTypes = {
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
+  user: PropTypes.object,
   clients: PropTypes.array,
   roles: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
+  user: state.LoginReducer.user,
   clients: state.ClientReducer.clients,
   roles: state.UserReducer.roles,
 });

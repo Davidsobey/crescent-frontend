@@ -12,9 +12,18 @@ function TestReducer(state = {}, action) {
       return {
         ...state,
         test: action.testName,
+        newTestId: action.newTestId
       };
     case TestConstants.CREATE_FAILURE:
       return { ...state };
+    case TestConstants.OPENREDIRECTMODAL_REQUEST:
+      return Object.assign({}, state, {
+        openRedirectModal: true,
+      });
+    case TestConstants.CLOSEREDIRECTMODAL_REQUEST:
+      return Object.assign({}, state, {
+        openRedirectModal: false,
+      });
 
     case TestConstants.GETALL_REQUEST:
       return {
@@ -109,9 +118,9 @@ function TestReducer(state = {}, action) {
     case TestConstants.EDIT_TEST_SUCCESS:
       return { test: undefined };
     case TestConstants.LOADTEST_REQUEST:
-      return {
+      return Object.assign({}, state, {
         loading: true,
-      };
+      });
     case TestConstants.LOADTEST_SUCCESS:
       return Object.assign({}, state, {
         tests: action.tests,

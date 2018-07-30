@@ -59,7 +59,7 @@ function getClientPolicies(id) {
   return objectList;
 }
 
-function getUserOutstandingPolicies(id) {
+function getOutstandingPoliciesForUser(id) {
   const requestOptions = {
     method: 'GET',
   };
@@ -69,15 +69,31 @@ function getUserOutstandingPolicies(id) {
       CommonConstants.API_ENDPOINT
     }/Policies/Acknowledgements/${id}/Outstanding`,
     requestOptions,
-  ).then(data => filteredList(data, id));
+  )
+  //.then(data => filteredList(data, id));
 
   return objectList;
 }
 
-function acknowledgePolicy(Acknowledgement, userId, policyId) {
+function getOutstandingPoliciesForClient(id) {
   const requestOptions = {
-    method: 'PUT',
-    body: JSON.stringify({ acknowledgement: Acknowledgement }),
+    method: 'GET',
+  };
+
+  const objectList = Auth.fetch(
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Policies/Acknowledgements/Client/${id}`,
+    requestOptions,
+  )
+  //.then(data => filteredList(data, id));
+
+  return objectList;
+}
+
+function acknowledgePolicy(userId, policyId) {
+  const requestOptions = {
+    method: 'PUT'
   };
 
   return Auth.fetch(
@@ -179,6 +195,18 @@ function uploadCreate(policyId) {
   );
 }
 
+
+function getMaterialsForPolicy(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Policies/${id}/materials`,
+    requestOptions,
+  );
+}
+
 const PolicyServices = {
   create,
   getAll,
@@ -186,11 +214,13 @@ const PolicyServices = {
   getPolicyMaterial,
   getAcknowledgementsForPolicy,
   getClientPolicies,
-  getUserOutstandingPolicies,
+  getOutstandingPoliciesForUser,
+  getOutstandingPoliciesForClient,
   acknowledgePolicy,
   createAcknowledgement,
   deletePolicy,
   editPolicy,
   uploadCreate,
+  getMaterialsForPolicy,
 };
 export default PolicyServices;

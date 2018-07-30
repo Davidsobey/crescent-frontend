@@ -24,6 +24,11 @@ class AcknowledgementCreate extends React.Component {
     this.props.dispatch(PolicyActions.getAll());
     this.props.dispatch(UserActions.getAll());
   }
+  
+  componentWillMount () {
+    this.props.initialize({ policyID: this.props.newPolicyId });
+  }
+
   submit = (values) => {
     const acknowledgement = Object.assign({}, values);
     this.props.dispatch(PolicyActions.createAcknowledgement(acknowledgement));
@@ -93,11 +98,13 @@ AcknowledgementCreate.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   policies: PropTypes.array,
   users: PropTypes.array,
+  newPolicyId: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
   users: state.UserReducer.users,
+  newPolicyId: state.PolicyReducer.newPolicyId,
 });
 
 const withForm = reduxForm(
