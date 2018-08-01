@@ -55,27 +55,37 @@ class UsersPolicyDetails extends React.Component {
     const { user, policyMaterials } = this.props;
     console.log('policy', policyMaterials);
     return (
-      <Card width="800px" title="My Policy List">
-        {Array.isArray(policyMaterials) ? (
+      <Card width="800px" title={'Policy Acknowledgement - ' + this.props.policyName}>
+        <div>
+          Description : {this.props.policyDescription}
+        </div>
+        {this.props.policyMaterials_loading ? (
+          <div className="center">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
           <div>
             <Table
               header={header}
               data={this.manipulateData(policyMaterials)}
             />
-            <div className="formAlignRight">
-              <Button
-                className="buttonFormat"
-                variant="raised"
-                color="primary"
-                onClick={() => this.acknowldegePolicy()}
-              >
-                Acknowldege
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+            {this.props.policy_acknowledging ? (
+              <div style={{width: '400px'}}>
+                <LinearProgress color="secondary" />
+                Assigning Policy
+              </div>
+            ) : (
+              <div className="formAlignRight">
+                <Button
+                  className="buttonFormat"
+                  variant="raised"
+                  color="primary"
+                  onClick={() => this.acknowldegePolicy()}
+                >
+                  Acknowldege
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </Card>
@@ -86,7 +96,11 @@ class UsersPolicyDetails extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyMaterials: state.PolicyReducer.policyMaterials,
+  policyMaterials_loading: state.PolicyReducer.loading,
   policyId: state.PolicyReducer.policyId,
+  policyName: state.PolicyReducer.policyName,
+  policyDescription: state.PolicyReducer.policyDescription,
+  policy_acknowledging: state.PolicyReducer.acknowledging,
 });
 
 const withForm = reduxForm(
@@ -97,10 +111,14 @@ const withForm = reduxForm(
 );
 
 UsersPolicyDetails.propTypes = {
+  dispatch: PropTypes.func,
   user: PropTypes.object,
   policyMaterials: PropTypes.array,
+  policyMaterials_loading: PropTypes.bool,
   policyId: PropTypes.object,
-  dispatch: PropTypes.func,
+  policyName: PropTypes.string,
+  policyDescription: PropTypes.string,
+  policy_acknowledging: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps), withForm)(UsersPolicyDetails);

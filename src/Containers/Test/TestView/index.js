@@ -59,7 +59,7 @@ class TestView extends React.Component {
           id: child.id,
           name: child.name,
           totalMarks: child.totalMarks,
-          moduleID: moduleMatch[0] ? moduleMatch[0].name : '',
+          moduleID: moduleMatch.length ? moduleMatch[0].name : '',
         };
         formattedArray.push(newTest);
       });
@@ -113,7 +113,11 @@ class TestView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Assessment List">
-          {Array.isArray(tests) && Array.isArray(modules) ? (
+          {this.props.tests_loading || this.props.modules_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
             <ReactTable
               columns={columns}
               data={data}
@@ -121,10 +125,6 @@ class TestView extends React.Component {
               defaultPageSize={10}
               className="-striped -highlight"
             />
-          ) : (
-            <div className="center">
-              <CircularProgress color="secondary" />
-            </div>
           )}
         </Card>
         <CustomModal
@@ -140,7 +140,9 @@ class TestView extends React.Component {
 
 const mapStateToProps = state => ({
   tests: state.TestReducer.tests,
+  tests_loading: state.TestReducer.loading,
   modules: state.ModuleReducer.modules,
+  modules_loading: state.ModuleReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -155,9 +157,11 @@ const withForm = reduxForm(
 );
 
 TestView.propTypes = {
-  tests: PropTypes.array,
-  modules: PropTypes.array,
   dispatch: PropTypes.func,
+  tests: PropTypes.array,
+  tests_loading: PropTypes.bool,
+  modules: PropTypes.array,
+  modules_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(TestView);

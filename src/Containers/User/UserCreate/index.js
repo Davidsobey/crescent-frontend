@@ -24,6 +24,9 @@ const validate = () => {
 
   return errors;
 };
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
 
 class UserCreate extends React.Component {
   componentDidMount() {
@@ -42,13 +45,12 @@ class UserCreate extends React.Component {
       <Card width="600px" title="Create New User">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
-          noValidate
           autoComplete="off"
           className="centerForm"
         >
           <div>
             {this.props.clients ? (
-              <Field name="clientId" label="Client Name" component={Select}>
+              <Field name="clientId" label="Client Name" component={Select} validate={[ required ]}>
                 {this.props.clients.map(client => (
                   <MenuItem value={client.id} key={client.id}>
                     {client.name}
@@ -63,7 +65,7 @@ class UserCreate extends React.Component {
             )}
             <div>
               {this.props.roles ? (
-                <Field name="roleId" label="Role" component={Select}>
+                <Field name="roleId" label="Role" component={Select} validate={[ required ]}>
                   {this.props.roles
                   .filter(role => (role.name == 'Admin' && user.role.name == 'Client' ? false : true) )
                   .map(role => (
@@ -85,6 +87,7 @@ class UserCreate extends React.Component {
                 label="Email"
                 margin="normal"
                 component={TextField}
+                validate={[ required, email ]}
               />
             </div>
             <div>
@@ -93,19 +96,27 @@ class UserCreate extends React.Component {
                 label="Name"
                 margin="normal"
                 component={TextField}
+                validate={[ required ]}
               />
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create User
-            </Button>
-          </div>
+          {this.props.user_creating ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating User
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create User
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
@@ -118,12 +129,14 @@ UserCreate.propTypes = {
   user: PropTypes.object,
   clients: PropTypes.array,
   roles: PropTypes.array,
+  user_creating: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   clients: state.ClientReducer.clients,
   roles: state.UserReducer.roles,
+  user_creating: state.UserReducer.creating,
 });
 
 const withForm = reduxForm(

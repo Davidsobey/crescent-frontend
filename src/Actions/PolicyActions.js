@@ -34,16 +34,10 @@ function create(policy) {
 
 function createAcknowledgement(acknowledgement) {
   function request() {
-    return {
-      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST,
-      acknowledgement,
-    };
+    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST, acknowledgement };
   }
   function success() {
-    return {
-      type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS,
-      acknowledgement,
-    };
+    return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS, acknowledgement };
   }
   function failure(error) {
     return { type: PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE, error };
@@ -356,10 +350,10 @@ function uploadMaterial(policyId, file) {
     dispatch(request({ file }));
     PolicyService.uploadCreate(policyId).then(
       (policyMaterialId) => {
-        dispatch(success());
         MaterialService.uploadPolicyMaterial(policyMaterialId, file).then(
           () => {
             history.push('/policy/list');
+            dispatch(success());
             dispatch(AlertActions.success('Policy Material created successfully.'));
           },
           (error) => {
@@ -367,7 +361,6 @@ function uploadMaterial(policyId, file) {
             dispatch(AlertActions.error(error || error));
           },
         );
-        dispatch(AlertActions.success('Material created successfully.'));
       },
       (error) => {
         dispatch(failure(error));
@@ -377,12 +370,12 @@ function uploadMaterial(policyId, file) {
   };
 }
 
-function getMaterialsForPolicy(policyId) {
+function getMaterialsForPolicy(policyId, policyName, policyDescription) {
   function request() {
     return { type: PolicyConstants.GET_MATERIALS_REQUEST };
   }
   function success(materials) {
-    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, materials };
+    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials };
   }
   function failure(error) {
     return { type: PolicyConstants.GET_MATERIALS_FAILURE, error };
@@ -394,6 +387,7 @@ function getMaterialsForPolicy(policyId) {
     PolicyService.getMaterialsForPolicy(policyId).then(
       (materials) => {
         dispatch(success(materials));
+        history.push('/policy/acknowledgement/detail');
       },
       (error) => {
         dispatch(failure(error));

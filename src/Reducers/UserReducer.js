@@ -11,18 +11,21 @@ function filterById(id, delId) {
 function UserReducer(state = {}, action) {
   switch (action.type) {
     case UserConstants.GETALL_REQUEST:
-      return {
+      return Object.assign({}, state, {
+        users: [],
         loading: true,
-      };
+      });
     case UserConstants.GETALL_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         users: action.users,
-      };
+        loading: false,
+      });
     case UserConstants.GETALL_FAILURE:
-      return {
+      return Object.assign({}, state, {
+        users: [],
         loading: false,
         error: action.error,
-      };
+      });
     case UserConstants.GET_ALL_ROLES_REQUEST:
       return {
         loading: true,
@@ -37,25 +40,34 @@ function UserReducer(state = {}, action) {
         roles: [],
       };
     case UserConstants.REGISTER_REQUEST:
-      return {
+      return Object.assign({}, state, {
         users: action.userName,
-      };
+        creating: true,
+      });
     case UserConstants.REGISTER_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         users: action.userName,
-      };
+        creating: false,
+      });
     case UserConstants.REGISTER_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        creating: false,
+      });
     case UserConstants.ENROL_REQUEST:
-      return {
+      return Object.assign({}, state, {
         enrolment: action.enrolment,
-      };
+        enrolling: true,
+      });
     case UserConstants.ENROL_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         enrolment: action.enrolment,
-      };
+        enrolling: false,
+      });
     case UserConstants.ENROL_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        enrolment: undefined,
+        enrolling: false,
+      });
     case UserConstants.GETUSER_REQUEST:
       return {
         loading: true,

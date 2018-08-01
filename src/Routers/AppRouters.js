@@ -221,7 +221,7 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}
-                  component={withAuth(AcknowledgementCreate, ['Admin'])}
+                  component={withAuth(AcknowledgementCreate, ['Admin', 'Client'])}
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_VIEW}

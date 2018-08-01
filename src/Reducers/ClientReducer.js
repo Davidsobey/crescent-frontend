@@ -75,13 +75,20 @@ function ClientReducer(state = {}, action) {
     case ClientConstants.LOAD_CLIENT_FAILURE:
       return state;
     case ClientConstants.GETUSERENROLMENTS_REQUEST:
-      return state;
+      return Object.assign({}, state, {
+        userEnrolments: [],
+        loading: true,
+      });
     case ClientConstants.GETUSERENROLMENTS_SUCCESS:
       return Object.assign({}, state, {
         userEnrolments: action.userEnrolments,
+        loading: false,
       });
     case ClientConstants.GETUSERENROLMENTS_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        userEnrolments: [],
+        loading: false,
+      });
     case UserConstants.LOGOUT:
       return {};
     default:

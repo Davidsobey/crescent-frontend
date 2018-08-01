@@ -9,11 +9,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-// import { CircularProgress } from 'material-ui/Progress';
+import { CircularProgress } from 'material-ui/Progress';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import CourseActions from '../../../Actions/CourseActions';
@@ -92,7 +93,11 @@ class CourseView extends React.Component {
       <div>
         <Card width="800px" title="Course List">
           <div>
-            {Array.isArray(courses) && (
+            {this.props.loading ? (
+              <div className="center">
+                <CircularProgress color="secondary" />
+              </div>
+            ) : (
               <ReactTable
                 columns={columns}
                 data={courses}
@@ -116,6 +121,7 @@ class CourseView extends React.Component {
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
+  loading: state.CourseReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -130,8 +136,9 @@ const withForm = reduxForm(
 );
 
 CourseView.propTypes = {
-  courses: PropTypes.array,
   dispatch: PropTypes.func,
+  courses: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(CourseView);

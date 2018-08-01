@@ -7,6 +7,7 @@ import { reduxForm } from 'redux-form';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
+import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
@@ -81,8 +82,12 @@ class PolicyView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy List">
-          <div>
-            {Array.isArray(policies) && (
+          {this.props.policies_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <div>
               <ReactTable
                 columns={columns}
                 data={policies}
@@ -90,8 +95,8 @@ class PolicyView extends React.Component {
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
-            )}
-          </div>
+            </div>
+          )}
         </Card>
         <CustomModal
           obj={this.state && this.state.obj}
@@ -106,6 +111,7 @@ class PolicyView extends React.Component {
 
 const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
+  policies_loading: state.PolicyReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -120,8 +126,9 @@ const withForm = reduxForm(
 );
 
 PolicyView.propTypes = {
-  policies: PropTypes.array,
   dispatch: PropTypes.func,
+  policies: PropTypes.array,
+  policies_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(PolicyView);

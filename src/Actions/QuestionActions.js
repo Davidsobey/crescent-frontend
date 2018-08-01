@@ -70,6 +70,30 @@ function getAll() {
   };
 }
 
+function loadQuestionByTest(id) {
+  function request() {
+    return { type: QuestionConstants.LOADQUESTIONS_REQUEST };
+  }
+  function success(questions) {
+    return { type: QuestionConstants.LOADQUESTIONS_SUCCESS, questions };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.LOADQUESTIONS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    QuestionService.getQuestionsForTest(id).then(
+      questions => dispatch(success(questions)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 function getByID(id) {
   function request() {
     return { type: QuestionConstants.GETBYID_REQUEST };
@@ -225,6 +249,7 @@ function clearQuestion() {
 const QuestionActions = {
   create,
   getAll,
+  loadQuestionByTest,
   getByID,
   deleteQuestion,
   editQuestion,

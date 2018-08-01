@@ -12,34 +12,47 @@ function filterById(id, delId) {
 function PolicyReducer(state = {}, action) {
   switch (action.type) {
     case PolicyConstants.CREATE_REQUEST:
-      return {
-        policies: action.policyName,
-      };
+      return Object.assign({}, state, {
+        newPolicyId: undefined,
+        creating: true,
+      });
     case PolicyConstants.CREATE_SUCCESS:
-      return {
-        policies: action.policyName,
+      return Object.assign({}, state, {
         newPolicyId: action.newPolicyId,
-      };
+        creating: false,
+      });
     case PolicyConstants.CREATE_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        newPolicyId: undefined,
+        creating: false,
+      });
     case PolicyConstants.UPLOAD_MATERIAL_REQUEST:
-      return {};
+      return Object.assign({}, state, {
+        creating: true,
+      });
     case PolicyConstants.UPLOAD_MATERIAL_SUCCESS:
-      return {};
+      return Object.assign({}, state, {
+        creating: false,
+      });
     case PolicyConstants.UPLOAD_MATERIAL_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        creating: false,
+      });
     case PolicyConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
+        policies: [],
         loading: true,
       });
     case PolicyConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         policies: action.policies,
+        loading: false,
       });
     case PolicyConstants.GETALL_FAILURE:
-      return {
-        policies: {},
-      };
+      return Object.assign({}, state, {
+        policies: [],
+        loading: false,
+      });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_REQUEST:
       return {
         loading: true,
@@ -53,27 +66,33 @@ function PolicyReducer(state = {}, action) {
         policyAcknowledgements: {},
       };
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST:
-      return {
+      return Object.assign({}, state, {
+        policyAcknowledgements: [],
         loading: true,
-      };
+      });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_SUCCESS:
       return Object.assign({}, state, {
         policyAcknowledgements: action.policies,
+        loading: false,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_FAILURE:
-      return {
-        policyAcknowledgements: {},
-      };
+      return Object.assign({}, state, {
+        policyAcknowledgements: [],
+        loading: false,
+      });
     case PolicyConstants.ACKNOWLEDGE_REQUEST:
-      return {
-        loading: true,
-      };
+      return Object.assign({}, state, {
+        acknowledging: true,
+      });
     case PolicyConstants.ACKNOWLEDGE_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         policy: action.policyName,
-      };
+        acknowledging: false,
+      });
     case PolicyConstants.ACKNOWLEDGE_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        acknowledging: false,
+      });
     case PolicyConstants.CLEAR_POLICIES:
       return {
         policies: undefined,
@@ -111,16 +130,34 @@ function PolicyReducer(state = {}, action) {
       return Object.assign({}, state, { policyMaterial: [] });
     case PolicyConstants.GET_MATERIALS_REQUEST:
       return Object.assign({}, state, {
-        loadingMaterial: true,
+        policyMaterials: [], 
+        loading: true,
       });
     case PolicyConstants.GET_MATERIALS_SUCCESS:
       return Object.assign({}, state, {
-        loadingMaterial: false,
         policyMaterials: action.materials,
         policyId: action.policyId,
+        policyName: action.policyName,
+        policyDescription: action.policyDescription,
+        loading: false,
       });
     case PolicyConstants.GET_MATERIALS_FAILURE:
-      return Object.assign({}, state, { policyMaterials: [] });
+      return Object.assign({}, state, { 
+        policyMaterials: [], 
+        loading: false,
+      });
+    case PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST:
+      return Object.assign({}, state, {
+        creating: true,
+      });
+    case PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS:
+      return Object.assign({}, state, {
+        creating: false,
+      });
+    case PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE:
+      return Object.assign({}, state, {
+        creating: false,
+      });
     default:
       return state;
   }

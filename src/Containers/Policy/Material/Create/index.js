@@ -16,6 +16,8 @@ const validate = () => {
   const errors = {};
   return errors;
 };
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 class PolicyMaterialCreate extends React.Component {
   constructor(props) {
@@ -47,41 +49,47 @@ class PolicyMaterialCreate extends React.Component {
       <Card width="600px" title="Create New Policy Material">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
-          noValidate
           autoComplete="off"
           className="centerForm"
         >
           <div>
             <div>
-              {this.props.policies ? (
-                <Field name="PolicyId" label="Policy Name" component={Select}>
+              {this.props.policies_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Policies
+                </div>
+              ) : (
+                <Field name="PolicyId" label="Policy Name" component={Select} validate={[ required ]}>
                   {this.props.policies.map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
                       {policy.name}
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Policies
-                </div>
               )}
               <div>
                 <input type="file" onChange={this.fileSelectedHandler} />
               </div>
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create Material
-            </Button>
-          </div>
+          {this.props.material_creating ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating Material
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create Material
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
@@ -92,12 +100,16 @@ PolicyMaterialCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   policies: PropTypes.array,
+  policies_loading: PropTypes.bool,
   newPolicyId: PropTypes.number,
+  material_creating: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
+  policies_loading: state.PolicyReducer.loading,
   newPolicyId: state.PolicyReducer.newPolicyId,
+  material_creating: state.PolicyReducer.creating,
 });
 
 const withForm = reduxForm(

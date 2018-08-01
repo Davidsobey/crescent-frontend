@@ -4,18 +4,22 @@ import UserConstants from '../Constants/UserConstants';
 function TestReducer(state = {}, action) {
   switch (action.type) {
     case TestConstants.CREATE_REQUEST:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         test: action.testName,
-      };
+        newTestId: undefined,
+        creating: true,
+      });
     case TestConstants.CREATE_SUCCESS:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         test: action.testName,
-        newTestId: action.newTestId
-      };
+        newTestId: action.newTestId,
+        creating: false,
+      });
     case TestConstants.CREATE_FAILURE:
-      return { ...state };
+      return Object.assign({}, state, {
+        newTestId: undefined,
+        creating: false,
+      });
     case TestConstants.OPENREDIRECTMODAL_REQUEST:
       return Object.assign({}, state, {
         openRedirectModal: true,
@@ -26,17 +30,20 @@ function TestReducer(state = {}, action) {
       });
 
     case TestConstants.GETALL_REQUEST:
-      return {
-        ...state,
+      return Object.assign({}, state, {
+        tests: [],
         loading: true,
-      };
+      });
     case TestConstants.GETALL_SUCCESS:
-      return { ...state, tests: action.tests };
+      return Object.assign({}, state, {
+        tests: action.tests,
+        loading: false,
+      });
     case TestConstants.GETALL_FAILURE:
-      return {
-        ...state,
-        modules: undefined,
-      };
+      return Object.assign({}, state, {
+        tests: [],
+        loading: false,
+      });
     case TestConstants.LOAD_TEST_REQUEST:
       return {
         ...state,
@@ -114,11 +121,14 @@ function TestReducer(state = {}, action) {
         ...state,
       };
     case UserConstants.LOGOUT:
-      return {};
+      return {
+        tests: [],
+      };
     case TestConstants.EDIT_TEST_SUCCESS:
       return { test: undefined };
     case TestConstants.LOADTEST_REQUEST:
       return Object.assign({}, state, {
+        tests: [],
         loading: true,
       });
     case TestConstants.LOADTEST_SUCCESS:
@@ -127,11 +137,14 @@ function TestReducer(state = {}, action) {
         loading: false,
       });
     case TestConstants.LOADTEST_FAILURE:
-      return {
-        modules: undefined,
-      };
+      return Object.assign({}, state, {
+        tests: [],
+        loading: false,
+      });
     case TestConstants.CLEAR_TESTS:
-      return {};
+      return {
+        tests: [],
+      };
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import CommonConstants from '../Constants/CommonConstants';
 const Auth = new AuthMiddleware();
 
 function filteredList(response, id) {
-  const objects = response.filter(obj => obj.courseId === id);
+  const objects = response.filter(obj => obj.testId === id);
   return objects;
 }
 

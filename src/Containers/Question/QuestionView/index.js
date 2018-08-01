@@ -12,6 +12,7 @@ import { reduxForm } from 'redux-form';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
+import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
@@ -51,7 +52,7 @@ class QuestionView extends React.Component {
           id: Question.id,
           title: Question.title,
           allocatedMarks: Question.allocatedMarks,
-          test: TestMatch[0].name ? TestMatch[0].name : '',
+          test: TestMatch.length ? TestMatch[0].name : '',
         };
         formattedArray.push(newQuestion);
       });
@@ -143,17 +144,19 @@ class QuestionView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Question List">
-          <div>
-            {Array.isArray(data) && (
-              <ReactTable
-                columns={columns}
-                data={data}
-                filterable
-                defaultPageSize={10}
-                className="-striped -highlight"
-              />
-            )}
-          </div>
+          {this.props.tests_loading || this.props.questions_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <ReactTable
+              columns={columns}
+              data={data}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+          )}
         </Card>
         <CustomModal
           obj={this.state && this.state.obj}
@@ -168,7 +171,9 @@ class QuestionView extends React.Component {
 
 const mapStateToProps = state => ({
   tests: state.TestReducer.tests,
+  tests_loading: state.TestReducer.loading,
   questions: state.QuestionReducer.questions,
+  questions_loading: state.QuestionReducer.loading,
 });
 
 const withForm = reduxForm(
@@ -179,9 +184,11 @@ const withForm = reduxForm(
 );
 
 QuestionView.propTypes = {
-  tests: PropTypes.array,
   dispatch: PropTypes.func,
+  tests: PropTypes.array,
+  tests_loading: PropTypes.bool,
   questions: PropTypes.array,
+  questions_loading: PropTypes.bool,
 };
 
 export default compose(

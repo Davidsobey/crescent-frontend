@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
+import { CircularProgress } from 'material-ui/Progress';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
 import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
-import LinearProgress from '../../../Components/LinearProgress';
 import OptionsModal from '../../../Components/OptionsModal';
 import history from '../../../Helpers/History';
 
@@ -20,6 +21,10 @@ const validate = () => {
 
   return errors;
 };
+let modules = [];
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const module_exists = value => value && modules.filter(module => module.name==value).length ? 'Module already exists' : undefined;
 
 const options = [
   {label: 'Create another module'},
@@ -30,12 +35,19 @@ const options = [
 class ModuleCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(CourseActions.getAll());
   }
   
   componentWillMount () {
-    this.props.initialize({ course: this.props.newCourseId });
+    this.props.dispatch(CourseActions.getAll());
+    if (this.props.newCourseId) {
+      this.props.initialize({ course: this.props.newCourseId });
+      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
+    }
   }
+  
+  loadModules = (values) => {
+    this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
+  };
 
   submit = (values) => {
     this.props.dispatch(ModuleActions.create(
@@ -47,13 +59,16 @@ class ModuleCreate extends React.Component {
 
   onContinue = (index) => {
     this.props.dispatch(ModuleActions.closeRedirectModal());
-    if (index==0)
+    if (index==0) {
       this.props.initialize({ course: this.props.newCourseId, moduleName: '', moduleDescription: '' });
+      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
+    }
     else
       history.push(options[index].url);
   }
 
   render() {
+    modules = this.props.modules;
     return (
       <Card width="600px" title="Create New Module">
         {this.props.loading && <LinearProgress color="secondary" />}
@@ -65,48 +80,72 @@ class ModuleCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.courses ? (
-                <Field name="course" label="Course Name" component={Select} >
-                  {this.props.courses.map(course => (
-                    <MenuItem value={course.id} key={course.id}>
-                      {course.name}
-                    </MenuItem>
-                  ))}
-                </Field>
-              ) : (
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses
                 </div>
+              ) : (
+                <div>
+                  <Field 
+                    name="course" 
+                    onChange={this.loadModules}
+                    label="Course Name" 
+                    component={Select} 
+                    validate={[ required ]}
+                  >
+                    {this.props.courses.map(course => (
+                      <MenuItem value={course.id} key={course.id}>
+                        {course.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
               )}
-              <div>
-                <Field
-                  name="moduleName"
-                  label="Name"
-                  margin="normal"
-                  component={TextField}
-                />
-              </div>
+              {this.props.modules_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Modules
+                </div>
+              ) : (
+                <div>
+                  <Field
+                    name="moduleName"
+                    label="Name"
+                    margin="normal"
+                    component={TextField}
+                    validate={[ required, module_exists ]}
+                  />
+                </div>
+              )}
               <div>
                 <Field
                   name="moduleDescription"
                   label="Key Outcome"
                   margin="normal"
                   component={TextField}
+                  validate={[ required ]}
                 />
               </div>
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create Module
-            </Button>
-          </div>
+          {this.props.module_creating ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating Module
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create Module
+              </Button>
+            </div>
+          )}
         </form>
         <OptionsModal
           title="Module created successfully."
@@ -123,16 +162,22 @@ ModuleCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
+  courses_loading: PropTypes.bool,
   newCourseId: PropTypes.number,
+  modules: PropTypes.array,
+  modules_loading: PropTypes.bool,
+  module_creating: PropTypes.bool,
   openRedirectModal: PropTypes.bool,
-  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
+  courses_loading: state.CourseReducer.loading,
   newCourseId: state.CourseReducer.newCourseId,
+  modules: state.ModuleReducer.modules,
+  modules_loading: state.ModuleReducer.loading,
+  module_creating: state.ModuleReducer.creating,
   openRedirectModal: state.ModuleReducer.openRedirectModal,
-  loading: state.ModuleReducer.loading,
 });
 
 const withForm = reduxForm(

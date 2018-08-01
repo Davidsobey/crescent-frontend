@@ -5,8 +5,8 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
 
+import TextField from '../../../Components/TextField';
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
@@ -19,6 +19,8 @@ const validate = () => {
 
   return errors;
 };
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 class EnrolmentCreate extends React.Component {
   constructor(props) {
@@ -28,16 +30,11 @@ class EnrolmentCreate extends React.Component {
     this.state = {
       value: this.props.value,
       data: '',
-      selectedDate: '',
     };
   }
 
-  handleDateChange = (e) => {
-    this.setState({ selectedDate: e.target.value });
-  }
-
   submit = (values) => {
-    const enrolment = Object.assign({}, values, {deadline: this.state.selectedDate});
+    const enrolment = Object.assign({}, values);
     this.props.dispatch(UserActions.enrol(enrolment));
   };
 
@@ -55,19 +52,24 @@ class EnrolmentCreate extends React.Component {
       <Card width="600px" title="Enrol A User In A Course">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
-          noValidate
           autoComplete="off"
           className="centerForm"
         >
           <div>
             <div>
-              {this.props.users ? (
+              {this.props.users_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Users
+                </div>
+              ) : (
                 <div>
                   <Field
                     name="user"
                     onChange={this.loadCourses}
                     label="User Name"
                     component={Select}
+                    validate={[ required ]}
                   >
                     {this.props.users
                     .filter(user => (this.props.user.role.name=='Admin' ||this.props.user.clientId==user.clientId))
@@ -78,17 +80,18 @@ class EnrolmentCreate extends React.Component {
                     ))}
                   </Field>
                 </div>
-              ) : (
+              )}
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Users
+                  Loading Courses...
                 </div>
-              )}
-              {this.props.courses ? (
+              ) : this.props.courses.length ? (
                 <Field
                   name="course"
                   label="Course Name"
                   component={Select}
+                  validate={[ required ]}
                 >
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
@@ -103,36 +106,38 @@ class EnrolmentCreate extends React.Component {
                   </Typography>
                 </div>
               )}
-              {this.props.courseLoading && (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Courses...
-                </div>
-              )}
               <div>
-                <TextField
-                  onChange={this.handleDateChange}
-                  id="deadline"
+                <Field
+                  name="deadline"
                   label="Deadline"
+                  margin="normal"
                   type="date"
-                  value={selectedDate}
+                  component={TextField}
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  validate={[ required ]}
                 />
               </div>
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Enrol User
-            </Button>
-          </div>
+          {this.props.user_enrolling ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Enrolling User
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Enrol User
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
@@ -143,17 +148,21 @@ EnrolmentCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
-  courseLoading: PropTypes.bool,
+  courses_loading: PropTypes.bool,
   users: PropTypes.array,
+  users_loading: PropTypes.bool,
   user: PropTypes.object,
+  user_enrolling: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     courses: state.CourseReducer.courses,
-    courseLoading: state.CourseReducer.loading,
+    courses_loading: state.CourseReducer.loading,
     users: state.UserReducer.users,
+    users_loading: state.UserReducer.loading,
     user: state.LoginReducer.user,
+    user_enrolling: state.UserReducer.enrolling,
   };
 }
 

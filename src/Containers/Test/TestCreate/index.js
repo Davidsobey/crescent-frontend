@@ -5,7 +5,9 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
 import Select from '../../../Components/Select';
@@ -13,7 +15,6 @@ import Button from '../../../Components/Button';
 import TestActions from '../../../Actions/TestActions';
 import ModuleActions from '../../../Actions/ModuleActions';
 import CourseActions from '../../../Actions/CourseActions';
-import LinearProgress from '../../../Components/LinearProgress';
 import OptionsModal from '../../../Components/OptionsModal';
 import history from '../../../Helpers/History';
 
@@ -22,6 +23,10 @@ const validate = () => {
 
   return errors;
 };
+let tests = [];
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const test_exists = value => value && tests.filter(test => test.name==value).length ? 'Test already exists' : undefined;
 
 const options = [
   // {label: 'Create another assignment'},
@@ -32,23 +37,39 @@ const options = [
 class TestCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(CourseActions.getAll());
-    if (this.props.newCourseId)
-      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId))
-    else
-      this.props.dispatch(ModuleActions.clearModules());
   }
 
   componentWillMount () {
-    this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId });
+    this.props.dispatch(CourseActions.getAll());
+    if (this.props.newCourseId) {
+      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
+      this.props.initialize({ course: this.props.newCourseId });
+
+      if (this.props.newModuleId) {
+        this.props.dispatch(TestActions.loadTestByModule(this.props.newModuleId));
+        this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId });
+      }
+      else {
+        this.props.dispatch(TestActions.clearTests());
+      }
+    }
+    else {
+      this.props.dispatch(ModuleActions.clearModules());
+      this.props.dispatch(TestActions.clearTests());
+    }
   }
+  
+  loadModules = (values) => {
+    this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
+    this.props.dispatch(TestActions.clearTests());
+  };
+  
+  loadTests = (values) => {
+    this.props.dispatch(TestActions.loadTestByModule(values.target.value));
+  };
 
   submit = (values) => {
     this.props.dispatch(TestActions.create(values.module, values.testName, values.testMarks));
-  };
-
-  loadModules = (values) => {
-    this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
   };
 
   onContinue = (index) => {
@@ -60,42 +81,52 @@ class TestCreate extends React.Component {
   }
 
   render() {
+    tests = this.props.tests;
     return (
       <Card width="600px" title="Create New Assessment">
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
-          noValidate
           autoComplete="off"
           className="centerForm"
         >
           <div>
-            <div>
-              {this.props.courses ? (
-                <div>
-                  <Field
-                    name="course"
-                    onChange={this.loadModules}
-                    label="Course Name"
-                    component={Select}
-                  >
-                    {this.props.courses.map(course => (
-                      <MenuItem value={course.id} key={course.id}>
-                        {course.name}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </div>
-              ) : (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Courses
-                </div>
-              )}
-              {this.props.modules ? (
+            {this.props.courses_loading ? (
+              <div>
+                <LinearProgress color="secondary" />
+                Loading Courses
+              </div>
+            ) : (
+              <div>
+                <Field
+                  name="course"
+                  onChange={this.loadModules}
+                  label="Course Name"
+                  component={Select}
+                  validate={[ required ]}
+                >
+                  {this.props.courses
+                  .filter(course => course.modules.length)
+                  .map(course => (
+                    <MenuItem value={course.id} key={course.id}>
+                      {course.name}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </div>
+            )}
+            {this.props.modules_loading ? (
+              <div>
+                <LinearProgress color="secondary" />
+                Loading Modules...
+              </div>
+            ) : this.props.modules && this.props.modules.length ? (
+              <div>
                 <Field
                   name="module"
                   label="Module Name"
                   component={Select}
+                  onChange={this.loadTests}
+                  validate={[ required ]}
                 >
                   {this.props.modules.map(module => (
                     <MenuItem value={module.id} key={module.id}>
@@ -103,47 +134,57 @@ class TestCreate extends React.Component {
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    Choose a course to load related modules
-                  </Typography>
-                </div>
-              )}
-              {this.props.moduleLoading && (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Modules...
-                </div>
-              )}
+              </div>
+            ) : (
+              <div>
+                <Typography variant="caption" component="p">
+                  Choose a course to load related modules
+                </Typography>
+              </div>
+            )}
+            {this.props.tests_loading ? (
+              <div>
+                <LinearProgress color="secondary" />
+                Loading Assessments
+              </div>
+            ) : (
               <div>
                 <Field
                   name="testName"
                   label="Assessment Name"
                   margin="normal"
                   component={TextField}
+                  validate={[ required, test_exists ]}
                 />
               </div>
-              <div>
-                <Field
-                  name="testMarks"
-                  label="Total Marks"
-                  margin="normal"
-                  component={TextField}
-                />
-              </div>
+            )}
+            <div>
+              <Field
+                name="testMarks"
+                label="Total Marks"
+                margin="normal"
+                component={TextField}
+                validate={[ required, number ]}
+              />
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create Test
-            </Button>
-          </div>
+          {this.props.test_creating ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating Test
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create Test
+              </Button>
+            </div>
+          )}
         </form>
         <OptionsModal
           title="Test created successfully."
@@ -159,21 +200,29 @@ class TestCreate extends React.Component {
 TestCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  modules: PropTypes.array,
   courses: PropTypes.array,
-  moduleLoading: PropTypes.bool,
+  courses_loading: PropTypes.bool,
   newCourseId: PropTypes.number,
+  modules: PropTypes.array,
+  modules_loading: PropTypes.bool,
   newModuleId: PropTypes.number,
+  tests: PropTypes.array,
+  tests_loading: PropTypes.bool,
+  test_creating: PropTypes.bool,
   openRedirectModal: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
-    modules: state.ModuleReducer.modules,
-    moduleLoading: state.ModuleReducer.loading,
     courses: state.CourseReducer.courses,
+    courses_loading: state.CourseReducer.loading,
     newCourseId: state.CourseReducer.newCourseId,
+    modules: state.ModuleReducer.modules,
+    modules_loading: state.ModuleReducer.loading,
     newModuleId: state.ModuleReducer.newModuleId,
+    tests: state.TestReducer.tests,
+    tests_loading: state.TestReducer.loading,
+    test_creating: state.TestReducer.creating,
     openRedirectModal: state.TestReducer.openRedirectModal,
   };
 }

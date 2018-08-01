@@ -7,6 +7,7 @@ import { reduxForm } from 'redux-form';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
+import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../../../Helpers/History';
 import Card from '../../../../Components/Card';
@@ -29,9 +30,8 @@ class PolicyAcknowledgementView extends React.Component {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForClient(this.props.user.clientId));
   }
 
-  loadPolicy = (id) => {
-    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id));
-    history.push({pathname: '/policy/acknowledgement/detail', state: {policyId: id}});
+  loadPolicy = (id, name, description) => {
+    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description));
   };
 
   manipulateData = (policyAcknowledgements) => {
@@ -43,7 +43,9 @@ class PolicyAcknowledgementView extends React.Component {
       return '';
     };
     const data = [];
-    policyAcknowledgements.forEach((policyAcknowledgement) => {
+    policyAcknowledgements
+    .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
+    .forEach((policyAcknowledgement) => {
       const newPolicyAcknowledgement = {
         policyId: policyAcknowledgement.policyID,
         userId: policyAcknowledgement.userID,
@@ -86,7 +88,7 @@ class PolicyAcknowledgementView extends React.Component {
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId)}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description)}
             >
               View Policy Details
             </Button>
@@ -97,8 +99,12 @@ class PolicyAcknowledgementView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy Acknowledgements">
-          <div>
-            {Array.isArray(policyAcknowledgements) && (
+          {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <div>
               <ReactTable
                 columns={columns}
                 data={this.manipulateData(policyAcknowledgements)}
@@ -106,8 +112,8 @@ class PolicyAcknowledgementView extends React.Component {
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
-            )}
-          </div>
+            </div>
+          )}
         </Card>
       </div>
     );
@@ -116,8 +122,10 @@ class PolicyAcknowledgementView extends React.Component {
 
 const mapStateToProps = state => ({
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
+  policyAcknowledgements_loading: state.PolicyReducer.loading,
   user: state.LoginReducer.user,
   users: state.UserReducer.users,
+  users_loading: state.UserReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

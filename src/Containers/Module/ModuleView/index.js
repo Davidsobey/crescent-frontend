@@ -55,7 +55,7 @@ class ModuleView extends React.Component {
           id: module.id,
           description: module.description,
           name: module.name,
-          course: courseMatch[0].name,
+          course: courseMatch.length ? courseMatch[0].name : '',
         };
         formattedArray.push(newModule);
       });
@@ -109,7 +109,11 @@ class ModuleView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Module List">
-          {Array.isArray(modules) && Array.isArray(courses) ? (
+          {this.props.courses_loading || this.props.modules_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
             <ReactTable
               columns={columns}
               data={data}
@@ -117,10 +121,6 @@ class ModuleView extends React.Component {
               defaultPageSize={10}
               className="-striped -highlight"
             />
-          ) : (
-            <div className="center">
-              <CircularProgress color="secondary" />
-            </div>
           )}
         </Card>
         <CustomModal
@@ -136,7 +136,9 @@ class ModuleView extends React.Component {
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
+  courses_loading: state.CourseReducer.loading,
   modules: state.ModuleReducer.modules,
+  modules_loading: state.ModuleReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -151,9 +153,11 @@ const withForm = reduxForm(
 );
 
 ModuleView.propTypes = {
-  courses: PropTypes.array,
   dispatch: PropTypes.func,
+  courses: PropTypes.array,
+  courses_loading: PropTypes.bool,
   modules: PropTypes.array,
+  modules_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(ModuleView);

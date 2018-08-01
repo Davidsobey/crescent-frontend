@@ -5,16 +5,18 @@ function ModuleReducer(state = {}, action) {
   switch (action.type) {
     case ModuleConstants.CREATE_REQUEST:
       return Object.assign({}, state, {
-        loading: true,
+        newModuleId: undefined,
+        creating: true,
       });
     case ModuleConstants.CREATE_SUCCESS:
       return Object.assign({}, state, {
         newModuleId: action.newModuleId,
-        loading: false,
+        creating: false,
       });
     case ModuleConstants.CREATE_FAILURE:
       return Object.assign({}, state, {
-        loading: false,
+        newModuleId: undefined,
+        creating: false,
       });
     case ModuleConstants.OPENREDIRECTMODAL_REQUEST:
       return Object.assign({}, state, {
@@ -26,19 +28,23 @@ function ModuleReducer(state = {}, action) {
       });
 
     case ModuleConstants.GETALL_REQUEST:
-      return {
+      return Object.assign({}, state, {
+        modules: [],
         loading: true,
-      };
+      });
     case ModuleConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         modules: action.modules,
+        loading: false,
       });
     case ModuleConstants.GETALL_FAILURE:
-      return {
-        modules: undefined,
-      };
+      return Object.assign({}, state, {
+        modules: [],
+        loading: false,
+      });
     case ModuleConstants.LOADMODULE_REQUEST:
       return Object.assign({}, state, {
+        modules: [],
         loading: true,
       });
     case ModuleConstants.LOADMODULE_SUCCESS:
@@ -48,7 +54,8 @@ function ModuleReducer(state = {}, action) {
       });
     case ModuleConstants.LOADMODULE_FAILURE:
       return {
-        modules: undefined,
+        modules: [],
+        loading: false,
       };
     case ModuleConstants.CLEAR_MODULES:
       return {};
@@ -66,17 +73,23 @@ function ModuleReducer(state = {}, action) {
 
     case ModuleConstants.LOADTESTS_REQUEST:
       return Object.assign({}, state, {
+        moduleTests: [],
         loadingTests: true,
       });
     case ModuleConstants.LOADTESTS_SUCCESS:
       return Object.assign({}, state, {
-        loadingTests: false,
         moduleTests: action.moduleTests,
+        loadingTests: false,
       });
     case ModuleConstants.LOADTESTS_FAILURE:
-      return Object.assign({}, state, { moduleTests: [] });
+      return Object.assign({}, state, { 
+        moduleTests: [],
+        loadingTests: false,
+      });
     case UserConstants.LOGOUT:
-      return {};
+      return { 
+        modules: [],
+      };
     case ModuleConstants.LOAD_MODULE_REQUEST:
       return state;
     case ModuleConstants.LOAD_MODULE_SUCCESS:
