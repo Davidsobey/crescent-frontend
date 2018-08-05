@@ -349,8 +349,8 @@ function uploadMaterial(policyId, file) {
   return (dispatch) => {
     dispatch(request({ file }));
     PolicyService.uploadCreate(policyId).then(
-      (policyMaterialId) => {
-        MaterialService.uploadPolicyMaterial(policyMaterialId, file).then(
+      (PolicyMaterialId) => {
+        MaterialService.uploadPolicyMaterial(PolicyMaterialId, file).then(
           () => {
             history.push('/policy/list');
             dispatch(success());

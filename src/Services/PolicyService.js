@@ -182,11 +182,11 @@ function getPolicyMaterial(ids) {
   return materialDetails;
 }
 
-function uploadCreate(policyId) {
+function uploadCreate(PolicyId) {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify({
-      policyId,
+      PolicyId,
     }),
   };
   return Auth.fetch(

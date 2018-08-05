@@ -27,11 +27,11 @@ function getPolicyMaterialByID(id) {
 }
 
 // post new material with file upload
-function upload(ModuleMaterialID, file) {
+function upload(material, file) {
   const fd = new FormData();
-  fd.append('ModuleMaterialID', ModuleMaterialID);
+  fd.append('ModuleMaterialID', material.id);
   fd.append('FormFile', file);
-  fd.append('active', true);
+  fd.append('Active', true);
 
   const requestOptions = {
     method: 'POST',
@@ -41,11 +41,11 @@ function upload(ModuleMaterialID, file) {
   return Auth.fetchMaterial(`${api}/Materials/UploadFile`, requestOptions);
 }
 
-function uploadCreate(moduleId) {
+function uploadCreate(ModuleId) {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify({
-      moduleId,
+      ModuleId,
     }),
   };
   return Auth.fetch(
@@ -55,9 +55,9 @@ function uploadCreate(moduleId) {
 }
 
 // post new policy material with file upload
-function uploadPolicyMaterial(policyId, file) {
+function uploadPolicyMaterial(policy, file) {
   const fd = new FormData();
-  fd.append('PolicyMaterialID', policyId);
+  fd.append('PolicyMaterialID', policy.id);
   fd.append('FormFile', file);
   fd.append('Active', true);
   const requestOptions = {
