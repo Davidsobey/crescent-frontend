@@ -48,7 +48,7 @@ class AcknowledgementCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.users_loading ? (
+              {!this.props.users || this.props.users_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Users
@@ -66,7 +66,7 @@ class AcknowledgementCreate extends React.Component {
               )}
             </div>
             <div>
-              {this.props.policies_loading ? (
+              {!this.props.policies || this.props.policies_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Policies

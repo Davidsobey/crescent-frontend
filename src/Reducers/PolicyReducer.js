@@ -60,10 +60,12 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS:
       return Object.assign({}, state, {
         policyAcknowledgements: action.policies,
+        loading: false,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE:
       return {
         policyAcknowledgements: {},
+        loading: false,
       };
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST:
       return Object.assign({}, state, {

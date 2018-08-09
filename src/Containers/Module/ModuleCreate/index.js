@@ -80,7 +80,7 @@ class ModuleCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.courses_loading ? (
+              {!this.props.courses || this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses
@@ -102,7 +102,7 @@ class ModuleCreate extends React.Component {
                   </Field>
                 </div>
               )}
-              {this.props.modules_loading ? (
+              {!this.props.modules || this.props.modules_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Modules

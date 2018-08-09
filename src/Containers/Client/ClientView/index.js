@@ -12,6 +12,7 @@ import { reduxForm } from 'redux-form';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
+import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
@@ -83,15 +84,21 @@ class ClientView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Client List">
-          <div>
-            <ReactTable
-              columns={columns}
-              data={clients}
-              filterable
-              defaultPageSize={10}
-              className="-striped -highlight"
-            />
-          </div>
+          {!this.props.clients || this.props.clients_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <div>
+              <ReactTable
+                columns={columns}
+                data={clients}
+                filterable
+                defaultPageSize={10}
+                className="-striped -highlight"
+              />
+            </div>
+          )}
         </Card>
         <CustomModal
           obj={this.state && this.state.obj}
@@ -106,6 +113,7 @@ class ClientView extends React.Component {
 
 const mapStateToProps = state => ({
   clients: state.ClientReducer.clients,
+  clients_loading: state.ClientReducer.loading,
 });
 
 const withForm = reduxForm(
@@ -116,8 +124,9 @@ const withForm = reduxForm(
 );
 
 ClientView.propTypes = {
-  clients: PropTypes.array,
   dispatch: PropTypes.func,
+  clients: PropTypes.array,
+  clients_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps), withForm)(ClientView);

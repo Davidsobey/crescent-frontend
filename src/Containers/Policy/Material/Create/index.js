@@ -54,7 +54,7 @@ class PolicyMaterialCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.policies_loading ? (
+              {!this.props.policies || this.props.policies_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Policies

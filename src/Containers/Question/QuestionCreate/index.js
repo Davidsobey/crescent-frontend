@@ -89,7 +89,7 @@ class QuestionCreate extends React.Component {
           className="centerForm"
         >
           <div>
-            {this.props.courses_loading ? (
+            {!this.props.courses || this.props.courses_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Courses
@@ -113,7 +113,7 @@ class QuestionCreate extends React.Component {
                 </Field>
               </div>
             )}
-            {this.props.modules_loading ? (
+            {!this.props.modules || this.props.modules_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Modules...
@@ -141,7 +141,7 @@ class QuestionCreate extends React.Component {
                 </Typography>
               </div>
             )}
-            {this.props.tests_loading ? (
+            {!this.props.tests || this.props.tests_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Assessments...

@@ -90,7 +90,7 @@ class TestCreate extends React.Component {
           className="centerForm"
         >
           <div>
-            {this.props.courses_loading ? (
+            {!this.props.courses || this.props.courses_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Courses

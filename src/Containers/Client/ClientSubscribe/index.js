@@ -17,6 +17,8 @@ const validate = () => {
 
   return errors;
 };
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
 class SubscriptionCreate extends React.Component {
@@ -41,48 +43,55 @@ class SubscriptionCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.courses ? (
-                <Field name="courseID" label="Course Name" component={Select}>
+              {!this.props.courses || this.props.courses_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Courses
+                </div>
+              ) : (
+                <Field name="courseID" label="Course Name" component={Select} validate={[ required ]}>
                   {this.props.courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Courses
-                </div>
               )}
             </div>
             <div>
-              {this.props.clients ? (
-                <Field name="clientID" label="Client Name" component={Select}>
+              {!this.props.clients || this.props.clients_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Clients
+                </div>
+              ) : (
+                <Field name="clientID" label="Client Name" component={Select} validate={[ required ]}>
                   {this.props.clients.map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <LinearProgress color="secondary" />
-                  Loading Clients
-                </div>
               )}
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Subscribe
-            </Button>
-          </div>
+          {this.props.client_subscribing ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Subscribing Client To Course
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Subscribe
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
@@ -93,12 +102,18 @@ SubscriptionCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
+  courses_loading: PropTypes.bool,
   clients: PropTypes.array,
+  clients_loading: PropTypes.bool,
+  client_subscribing: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
+  courses_loading: state.CourseReducer.loading,
   clients: state.ClientReducer.clients,
+  clients_loading: state.ClientReducer.loading,
+  client_subscribing: state.ClientReducer.subscribing,
 });
 
 const withForm = reduxForm(

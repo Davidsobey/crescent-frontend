@@ -59,7 +59,7 @@ class UsersPolicyDetails extends React.Component {
         <div>
           Description : {this.props.policyDescription}
         </div>
-        {this.props.policyMaterials_loading ? (
+        {!this.props.policyMaterials || this.props.policyMaterials_loading ? (
           <div className="center">
             <CircularProgress color="secondary" />
           </div>

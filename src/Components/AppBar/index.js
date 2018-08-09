@@ -282,6 +282,19 @@ const ClientDetails = {
   ],
 };
 
+const ClientDetails1 = {
+  listName: 'Client',
+  listIcon: <ClientIcon />,
+  subItems: [
+    {
+      key: 0,
+      subItemName: 'Subscription List',
+      subItemIcon: <ListIcon />,
+      subItemExtension: 'subscription/list',
+    },
+  ],
+};
+
 const ClientCourseDetails = {
   listName: 'Courses',
   listIcon: <CourseIcon />,
@@ -381,7 +394,7 @@ class MiniDrawer extends React.Component {
         >
           <div className={classes.paperBackground}>
             <div className={classes.toolbar}>
-              <Link to="/home">
+              <Link to={role != "Regular" ? "/admin/home" : "/home"}>
                 <img
                   width="34px"
                   src={Logo}
@@ -406,7 +419,7 @@ class MiniDrawer extends React.Component {
                   Admin View
                 </Typography>
               )}
-              <Link to="/home">
+              <Link to="/admin/home">
                 <MUIMenuItem>
                   <ListItemIcon>
                     <HomeIcon className={classes.paperColor} />
@@ -447,6 +460,12 @@ class MiniDrawer extends React.Component {
                 <ExpandableMenu
                   color={theme.palette.accent[500]}
                   details={ClientDetails}
+                />
+              )}
+              {role === 'Client' && (
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ClientDetails1}
                 />
               )}
             </List>

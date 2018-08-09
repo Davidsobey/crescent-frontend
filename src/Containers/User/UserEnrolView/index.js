@@ -88,10 +88,11 @@ class UserEnrolView extends React.Component {
         accessor: 'status',
       },
     ];
+    console.log(this.props.userEnrolments);
     return (
       <div>
         <Card width="800px" title="Enrolment List">
-          {this.props.users_loading || this.props.courses_loading || this.props.userEnrolments_loading ? (
+          {!this.props.users || this.props.users_loading || !this.props.courses || this.props.courses_loading || !this.props.userEnrolments || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>

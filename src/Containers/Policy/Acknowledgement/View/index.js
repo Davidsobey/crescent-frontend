@@ -99,7 +99,7 @@ class PolicyAcknowledgementView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy Acknowledgements">
-          {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
+          {!this.props.policyAcknowledgements || this.props.policyAcknowledgements_loading || !this.props.users || this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -140,10 +140,12 @@ const withForm = reduxForm(
 );
 
 PolicyAcknowledgementView.propTypes = {
+  dispatch: PropTypes.func,
   policyAcknowledgements: PropTypes.array,
+  policyAcknowledgements_loading: PropTypes.bool,
   user: PropTypes.object,
   users: PropTypes.array,
-  dispatch: PropTypes.func,
+  users_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(PolicyAcknowledgementView);

@@ -82,7 +82,7 @@ class PolicyView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy List">
-          {this.props.policies_loading ? (
+          {!this.props.policies || this.props.policies_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>

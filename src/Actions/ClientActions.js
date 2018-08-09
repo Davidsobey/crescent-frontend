@@ -192,6 +192,30 @@ function getUserEnrolments(id) {
   };
 }
 
+function getSubscriptions() {
+  function request() {
+    return { type: ClientConstants.GETSUBSCRIPTIONS_REQUEST };
+  }
+  function success(subscriptions) {
+    return { type: ClientConstants.GETSUBSCRIPTIONS_SUCCESS, subscriptions };
+  }
+  function failure(error) {
+    return { type: ClientConstants.GETSUBSCRIPTIONS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    ClientService.getSubscriptions().then(
+      subscriptions => dispatch(success(subscriptions)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const clientActions = {
   create,
   getAll,
@@ -201,6 +225,7 @@ const clientActions = {
   loadClient,
   editClient,
   getUserEnrolments,
+  getSubscriptions,
 };
 
 export default clientActions;

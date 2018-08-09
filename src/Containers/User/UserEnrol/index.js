@@ -57,7 +57,7 @@ class EnrolmentCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.users_loading ? (
+              {!this.props.users || this.props.users_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Users
@@ -81,7 +81,7 @@ class EnrolmentCreate extends React.Component {
                   </Field>
                 </div>
               )}
-              {this.props.courses_loading ? (
+              {!this.props.courses || this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses...

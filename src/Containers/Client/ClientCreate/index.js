@@ -6,9 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
 import Button from '../../../Components/Button';
@@ -19,6 +21,8 @@ const validate = () => {
 
   return errors;
 };
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
 class ClientCreate extends React.Component {
@@ -43,6 +47,7 @@ class ClientCreate extends React.Component {
                 label="Name"
                 margin="normal"
                 component={TextField}
+                validate={[ required ]}
               />
             </div>
             <div>
@@ -51,24 +56,40 @@ class ClientCreate extends React.Component {
                 label="Client Code"
                 margin="normal"
                 component={TextField}
+                validate={[ required ]}
               />
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create Client
-            </Button>
-          </div>
+          {this.props.client_creating ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating Client
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create Client
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  client_creating: state.ClientReducer.creating,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
 
 ClientCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -83,4 +104,4 @@ const withForm = reduxForm(
   ClientCreate,
 );
 
-export default compose(withForm)(ClientCreate);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(ClientCreate);

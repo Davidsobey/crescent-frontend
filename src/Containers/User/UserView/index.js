@@ -114,7 +114,7 @@ class UserView extends React.Component {
     return (
       <div>
         <Card width="800px" title="User List">
-          {this.props.users_loading ? (
+          {!this.props.users || this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>

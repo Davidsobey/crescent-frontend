@@ -92,21 +92,21 @@ class CourseView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Course List">
+          {!this.props.courses || this.props.courses_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
           <div>
-            {this.props.loading ? (
-              <div className="center">
-                <CircularProgress color="secondary" />
-              </div>
-            ) : (
-              <ReactTable
-                columns={columns}
-                data={courses}
-                filterable
-                defaultPageSize={10}
-                className="-striped -highlight"
-              />
-            )}
+            <ReactTable
+              columns={columns}
+              data={courses}
+              filterable
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
           </div>
+          )}
         </Card>
         <CustomModal
           obj={this.state && this.state.obj}
@@ -121,7 +121,7 @@ class CourseView extends React.Component {
 
 const mapStateToProps = state => ({
   courses: state.CourseReducer.courses,
-  loading: state.CourseReducer.loading,
+  courses_loading: state.CourseReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -138,7 +138,7 @@ const withForm = reduxForm(
 CourseView.propTypes = {
   dispatch: PropTypes.func,
   courses: PropTypes.array,
-  loading: PropTypes.bool,
+  courses_loading: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withForm)(CourseView);

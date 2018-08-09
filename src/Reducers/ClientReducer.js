@@ -12,27 +12,34 @@ function filterById(id, delId) {
 function ClientReducer(state = {}, action) {
   switch (action.type) {
     case ClientConstants.CREATE_REQUEST:
-      return {
+      return Object.assign({}, state, {
         client: action.client,
-      };
+        creating: true,
+      });
     case ClientConstants.CREATE_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         client: action.client,
-      };
+        creating: false,
+      });
     case ClientConstants.CREATE_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        creating: false,
+      });
     case ClientConstants.GETALL_REQUEST:
-      return {
+      return Object.assign({}, state, {
+        clients: [],
         loading: true,
-      };
+      });
     case ClientConstants.GETALL_SUCCESS:
       return Object.assign({}, state, {
         clients: action.clients,
+        loading: false,
       });
     case ClientConstants.GETALL_FAILURE:
-      return {
-        clients: {},
-      };
+      return Object.assign({}, state, {
+        clients: [],
+        loading: false,
+      });
     case ClientConstants.GETBYID_REQUEST:
       return {
         loading: true,
@@ -46,15 +53,19 @@ function ClientReducer(state = {}, action) {
         client: {},
       };
     case ClientConstants.SUBSCRIBE_REQUEST:
-      return {
+      return Object.assign({}, state, {
         subcription: action.subscription,
-      };
+        subscribing: true,
+      });
     case ClientConstants.SUBSCRIBE_SUCCESS:
-      return {
+      return Object.assign({}, state, {
         subcription: action.subscription,
-      };
+        subscribing: false,
+      });
     case ClientConstants.SUBSCRIBE_FAILURE:
-      return {};
+      return Object.assign({}, state, {
+        subscribing: false,
+      });
     case ClientConstants.DELETE_REQUESTS:
       return {
         loading: true,
@@ -88,6 +99,21 @@ function ClientReducer(state = {}, action) {
       return Object.assign({}, state, {
         userEnrolments: [],
         loading: false,
+      });
+    case ClientConstants.GETSUBSCRIPTIONS_REQUEST:
+      return Object.assign({}, state, {
+        subscriptions: [],
+        subscriptions_loading: true,
+      });
+    case ClientConstants.GETSUBSCRIPTIONS_SUCCESS:
+      return Object.assign({}, state, {
+        subscriptions: action.subscriptions,
+        subscriptions_loading: false,
+      });
+    case ClientConstants.GETSUBSCRIPTIONS_FAILURE:
+      return Object.assign({}, state, {
+        subscriptions: [],
+        subscriptions_loading: false,
       });
     case UserConstants.LOGOUT:
       return {};

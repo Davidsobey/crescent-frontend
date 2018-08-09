@@ -89,6 +89,14 @@ function getUserEnrolments(id) {
   );
 }
 
+function getSubscriptions() {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  return Auth.fetch(`${api}/Clients/Subscriptions`, requestOptions);
+}
+
 const ClientService = {
   create,
   getAll,
@@ -98,5 +106,6 @@ const ClientService = {
   getClient,
   editClient,
   getUserEnrolments,
+  getSubscriptions,
 };
 export default ClientService;

@@ -109,7 +109,7 @@ class ModuleView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Module List">
-          {this.props.courses_loading || this.props.modules_loading ? (
+          {!this.props.courses || this.props.courses_loading || !this.props.modules || this.props.modules_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>

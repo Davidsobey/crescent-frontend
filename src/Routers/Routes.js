@@ -1,5 +1,5 @@
 const LOGIN = '/';
-const HOME = '/home';
+const HOME = '/admin/home';
 const CHANGEPASSWORD = '/change-password';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
@@ -25,6 +25,7 @@ const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const CLIENT_EDIT = '/client/edit';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
+const CLIENT_SUBSCRIPTION_VIEW = '/client/subscription/list';
 const POLICY_CREATE = '/policy/create';
 const POLICY_VIEW = '/policy/list';
 const POLICY_EDIT = '/policy/edit';
@@ -32,6 +33,7 @@ const POLICY_MATERIAL_CREATE = '/policy/material/create';
 const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
 const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/list';
 const POLICY_ACKNOWLEDGEMENT_DETAIL = '/policy/acknowledgement/detail';
+const USERS_HOME = '/home';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
 const USERS_VIEW_MODULES = '/modules/list';
@@ -68,6 +70,7 @@ export default {
   CLIENT_EDIT,
   CLIENT_VIEW,
   CLIENT_SUBSCRIBE,
+  CLIENT_SUBSCRIPTION_VIEW,
   POLICY_CREATE,
   POLICY_VIEW,
   POLICY_EDIT,
@@ -75,6 +78,7 @@ export default {
   POLICY_ACKNOWLEDGEMENT_CREATE,
   POLICY_ACKNOWLEDGEMENT_VIEW,
   POLICY_ACKNOWLEDGEMENT_DETAIL,
+  USERS_HOME,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,
   USERS_VIEW_MODULES,
