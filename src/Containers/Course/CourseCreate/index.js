@@ -25,7 +25,7 @@ const validate = () => {
 let courses = [];
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const course_exists = value => value && courses.filter(course => course.name==value).length ? 'Course already exists' : undefined;
+const course_exists = value => value && Array.isArray(courses) ? courses.filter(course => course.name==value).length ? 'Course already exists' : undefined : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
 class CourseCreate extends React.Component {
@@ -48,7 +48,7 @@ class CourseCreate extends React.Component {
           className="centerForm"
         >
           <div>
-            {!this.props.courses || this.props.courses_loading ? (
+            {this.props.courses_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Courses

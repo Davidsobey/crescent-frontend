@@ -82,11 +82,11 @@ class PolicyView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy List">
-          {!this.props.policies || this.props.policies_loading ? (
+          {this.props.policies_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (
+          ) : (Array.isArray(this.props.policies) ? this.props.policies.length : false) ? (
             <div>
               <ReactTable
                 columns={columns}
@@ -95,6 +95,10 @@ class PolicyView extends React.Component {
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
+            </div>
+          ) : (
+            <div>
+              There is no policy
             </div>
           )}
         </Card>

@@ -92,20 +92,24 @@ class CourseView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Course List">
-          {!this.props.courses || this.props.courses_loading ? (
+          {this.props.courses_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
+          ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
+            <div>
+              <ReactTable
+                columns={columns}
+                data={courses}
+                filterable
+                defaultPageSize={10}
+                className="-striped -highlight"
+              />
+            </div>
           ) : (
-          <div>
-            <ReactTable
-              columns={columns}
-              data={courses}
-              filterable
-              defaultPageSize={10}
-              className="-striped -highlight"
-            />
-          </div>
+            <div>
+              There is no course
+            </div>
           )}
         </Card>
         <CustomModal

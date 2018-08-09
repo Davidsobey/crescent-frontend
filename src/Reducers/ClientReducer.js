@@ -78,13 +78,19 @@ function ClientReducer(state = {}, action) {
     case ClientConstants.DELETE_FAILURES:
       return state;
     case ClientConstants.LOAD_CLIENT_REQUEST:
-      return state;
+      return {
+        client_loading: true,
+      };
     case ClientConstants.LOAD_CLIENT_SUCCESS:
       return Object.assign({}, state, {
         client: action.client,
+        client_loading: false,
       });
     case ClientConstants.LOAD_CLIENT_FAILURE:
-      return state;
+      return {
+        error: action.error,
+        client_loading: false,
+      };
     case ClientConstants.GETUSERENROLMENTS_REQUEST:
       return Object.assign({}, state, {
         userEnrolments: [],
@@ -115,6 +121,19 @@ function ClientReducer(state = {}, action) {
         subscriptions: [],
         subscriptions_loading: false,
       });
+    case ClientConstants.EDIT_REQUEST:
+      return {
+        client_editing: true,
+      };
+    case ClientConstants.EDIT_SUCCESS:
+      return {
+        client_editing: false,
+      };
+    case ClientConstants.EDIT_FAILURE:
+      return {
+        error: action.error,
+        client_editing: false,
+      };
     case UserConstants.LOGOUT:
       return {};
     default:

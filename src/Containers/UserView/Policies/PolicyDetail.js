@@ -37,17 +37,18 @@ class UsersPolicyDetails extends React.Component {
 
   manipulateData = (policyMaterials) => {
     const data = [];
-    policyMaterials.forEach((policyMaterial, index) => {
-      const newPolicyMaterial = {
-        name: 'Material '+(index+1).toString(),
-        button: {
-          message: 'View Material',
-          onClick: () => this.loadMaterial(policyMaterial),
-        },
-      };
-      data.push(newPolicyMaterial);
-    });
-    console.log(data);
+    if (Array.isArray(policyMaterials)) {
+      policyMaterials.forEach((policyMaterial, index) => {
+        const newPolicyMaterial = {
+          name: 'Material '+(index+1).toString(),
+          button: {
+            message: 'View Material',
+            onClick: () => this.loadMaterial(policyMaterial),
+          },
+        };
+        data.push(newPolicyMaterial);
+      });
+    }
     return data;
   };
 
@@ -56,26 +57,33 @@ class UsersPolicyDetails extends React.Component {
     console.log('policy', policyMaterials);
     return (
       <Card width="800px" title="My Policy List">
-        {Array.isArray(policyMaterials) ? (
+        {this.props.policyMaterials_loading ? (
+          <div className="center">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
           <div>
             <Table
               header={header}
               data={this.manipulateData(policyMaterials)}
             />
-            <div className="formAlignRight">
-              <Button
-                className="buttonFormat"
-                variant="raised"
-                color="primary"
-                onClick={() => this.acknowldegePolicy()}
-              >
-                Acknowldege
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
+            {this.props.policy_acknowledging ? (
+              <div>
+                <LinearProgress color="secondary" />
+                Acknowldeging Policy
+              </div>
+            ) : (
+              <div className="formAlignRight">
+                <Button
+                  className="buttonFormat"
+                  variant="raised"
+                  color="primary"
+                  onClick={() => this.acknowldegePolicy()}
+                >
+                  Acknowldege
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </Card>
@@ -86,7 +94,9 @@ class UsersPolicyDetails extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyMaterials: state.PolicyReducer.policyMaterials,
+  policyMaterials_loading: state.PolicyReducer.policyMaterials_loading,
   policyId: state.PolicyReducer.policyId,
+  policy_acknowledging: state.PolicyReducer.acknowledging,
 });
 
 const withForm = reduxForm(
@@ -97,10 +107,12 @@ const withForm = reduxForm(
 );
 
 UsersPolicyDetails.propTypes = {
+  dispatch: PropTypes.func,
   user: PropTypes.object,
   policyMaterials: PropTypes.array,
+  policyMaterials_loading: PropTypes.bool,
   policyId: PropTypes.object,
-  dispatch: PropTypes.func,
+  policy_acknowledging: PropTypes.bool,
 };
 
 export default compose(connect(mapStateToProps), withForm)(UsersPolicyDetails);

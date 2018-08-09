@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 import { CircularProgress } from 'material-ui/Progress';
+import Typography from 'material-ui/Typography';
 
 import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
@@ -24,7 +25,7 @@ const validate = () => {
 let modules = [];
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const module_exists = value => value && modules.filter(module => module.name==value).length ? 'Module already exists' : undefined;
+const module_exists = value => value && Array.isArray(modules) ? modules.filter(module => module.name==value).length ? 'Module already exists' : undefined : undefined;
 
 const options = [
   {label: 'Create another module'},
@@ -80,12 +81,12 @@ class ModuleCreate extends React.Component {
         >
           <div>
             <div>
-              {!this.props.courses || this.props.courses_loading ? (
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses
                 </div>
-              ) : (
+              ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
                 <div>
                   <Field 
                     name="course" 
@@ -101,8 +102,14 @@ class ModuleCreate extends React.Component {
                     ))}
                   </Field>
                 </div>
+              ) : (
+                <div>
+                  <Typography variant="caption" component="p">
+                    No available courses
+                  </Typography>
+                </div>
               )}
-              {!this.props.modules || this.props.modules_loading ? (
+              {this.props.modules_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Modules

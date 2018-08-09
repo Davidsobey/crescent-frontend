@@ -49,7 +49,7 @@ class UserView extends React.Component {
 
   manipulateData = (users) => {
     const data = [];
-    if (users) {
+    if (Array.isArray(users)) {
       users
       .filter(user => (user.role.name == 'Admin' && this.props.user.role.name == 'Client' ? false : true) )
       .forEach((user) => {
@@ -67,7 +67,7 @@ class UserView extends React.Component {
   };
 
   render() {
-    const data = this.manipulateData(this.props.users);
+    const users = this.manipulateData(this.props.users);
     const columns = [
       {
         Header: 'Name',
@@ -114,7 +114,7 @@ class UserView extends React.Component {
     return (
       <div>
         <Card width="800px" title="User List">
-          {!this.props.users || this.props.users_loading ? (
+          {this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -122,7 +122,7 @@ class UserView extends React.Component {
             <div>
               <ReactTable
                 columns={columns}
-                data={data}
+                data={users}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"

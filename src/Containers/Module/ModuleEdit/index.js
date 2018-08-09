@@ -11,12 +11,16 @@ import { connect } from 'react-redux';
 import { MenuItem } from 'material-ui/Menu';
 import { CircularProgress } from 'material-ui/Progress';
 
+import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
 import TextField from '../../../Components/TextField';
 import CourseActions from '../../../Actions/CourseActions';
 import Button from '../../../Components/Button';
 import ModuleActions from '../../../Actions/ModuleActions';
+
+const required = value => value ? undefined : 'Required';
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
 class ModuleEdit extends React.Component {
@@ -36,50 +40,76 @@ class ModuleEdit extends React.Component {
   render() {
     return (
       <Card width="600px" title="Edit Module">
-        <form
-          onSubmit={this.props.handleSubmit(this.submit)}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            {!this.props.loading ? (
+        {this.props.module_loading ? (
+          <div className="center">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
+          <form
+            onSubmit={this.props.handleSubmit(this.submit)}
+            autoComplete="off"
+            className="centerForm"
+          >
+            <div>
+              {!this.props.courses_loading ? (
+                <div>
+                  <Field 
+                    name="courseId" 
+                    label="Course Name" 
+                    component={Select}
+                    validate={[ required ]}
+                  >
+                    {this.props.courses.map(course => (
+                      <MenuItem value={course.id} key={course.id}>
+                        {course.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
+              ) : (
+                <div className="center">
+                  <CircularProgress color="secondary" />
+                  Loading Courses
+                </div>
+              )}
               <div>
-                <Field name="courseId" label="Course Name" component={Select}>
-                  {this.props.courses.map(course => (
-                    <MenuItem value={course.id} key={course.id}>
-                      {course.name}
-                    </MenuItem>
-                  ))}
-                </Field>
+                <Field
+                  name="name"
+                  label="Name"
+                  margin="normal"
+                  component={TextField}
+                  validate={[ required ]}
+                />
+              </div>
+              <div>
+                <Field
+                  name="description"
+                  label="Key Outcome"
+                  margin="normal"
+                  component={TextField}
+                  validate={[ required ]}
+                />
+              </div>
+            </div>
+            {this.props.module_editing ? (
+              <div style={{width: '400px'}}>
+                <LinearProgress color="secondary" />
+                Editing Module
               </div>
             ) : (
-              <div className="center">
-                <CircularProgress color="secondary" />
+              <div className="formAlignRight">
+                <Button
+                  className="buttonFormat"
+                  variant="raised"
+                  color="primary"
+                  type="submit"
+                >
+                  Edit Module
+                </Button>
               </div>
             )}
-            <div>
-              <Field
-                name="name"
-                label="Name"
-                margin="normal"
-                component={TextField}
-              />
-            </div>
-            <div>
-              <Field
-                name="description"
-                label="Key Outcome"
-                margin="normal"
-                component={TextField}
-              />
-            </div>
-          </div>
-          <div className="alignRight">
-            <Button variant="raised" color="primary" type="submit">
-              Edit Module
-            </Button>
-          </div>
-        </form>
+          </form>
+        )}
       </Card>
     );
   }
@@ -89,7 +119,9 @@ ModuleEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
   courses: PropTypes.array,
-  loading: PropTypes.bool,
+  courses_loading: PropTypes.bool,
+  module_loading: PropTypes.bool,
+  module_editing: PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -106,7 +138,9 @@ const FormState = connect(
   state => ({
     initialValues: state.ModuleReducer.module,
     courses: state.CourseReducer.courses,
-    loading: state.ModuleReducer.loading,
+    courses_loading: state.CourseReducer.loading,
+    module_loading: state.ModuleReducer.module_loading,
+    module_editing: state.ModuleReducer.module_editing,
   }),
   mapDispatchToProps,
 )(ModuleEdited);

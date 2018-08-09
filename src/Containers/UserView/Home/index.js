@@ -47,44 +47,49 @@ class HomeComponent extends React.Component {
 
   manipulateCourseData = (courses) => {
     const data = [];
-    courses.forEach((course) => {
-      const newCourse = {
-        id: course.id,
-        name: course.name,
-        description: course.description,
-        button: {
-          message: 'View Course Details',
-          onClick: () => this.loadCourse(course.id),
-        },
-      };
-      data.push(newCourse);
-    });
+    if (Array.isArray(courses)) {
+      courses.forEach((course) => {
+        const newCourse = {
+          id: course.id,
+          name: course.name,
+          description: course.description,
+          button: {
+            message: 'View Course Details',
+            onClick: () => this.loadCourse(course.id),
+          },
+        };
+        data.push(newCourse);
+      });
+    }
     return data;
   };
 
   manipulatePolicyData = (policyAcknowledgements) => {
     const data = [];
-    policyAcknowledgements.forEach((policyAcknowledgement) => {
-      const newPolicyAcknowledgement = {
-        name: policyAcknowledgement.policyName,
-        description: policyAcknowledgement.policyDescription,
-        button: {
-          message: 'View Policy Details',
-          onClick: () => this.loadPolicy(policyAcknowledgement.policyID),
-        },
-      };
-      data.push(newPolicyAcknowledgement);
-    });
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements.forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          name: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+          button: {
+            message: 'View Policy Details',
+            onClick: () => this.loadPolicy(policyAcknowledgement.policyID),
+          },
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
     console.log(data);
     return data;
   };
 
   render() {
-    const { user, policyAcknowledgements } = this.props;
+    const { user } = this.props;
+    const policyAcknowledgements = this.manipulatePolicyData(this.props.policyAcknowledgements);
     return (
       <Card width="800px" title="Overview">
         <p style={{fontSize:'20px', marginBottom: '15px'}}>My courses</p>
-        {user && Array.isArray(user.enrolledCourses) ? (
+        {user ? (
           <Table
             header={courseHeader}
             data={this.manipulateCourseData(user.enrolledCourses)}
@@ -96,15 +101,15 @@ class HomeComponent extends React.Component {
         )}
 
         <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>My policies</p>
-        {!this.props.policyAcknowledgements_loading && Array.isArray(policyAcknowledgements) ? (
-          <Table
-            header={policyHeader}
-            data={this.manipulatePolicyData(policyAcknowledgements)}
-          />
-        ) : (
+        {this.props.policyAcknowledgements_loading ? (
           <div className="center">
             <CircularProgress color="secondary" />
           </div>
+        ) : (
+          <Table
+            header={policyHeader}
+            data={policyAcknowledgements}
+          />
         )}
       </Card>
     );

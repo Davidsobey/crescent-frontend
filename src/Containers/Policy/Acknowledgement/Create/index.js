@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
+import Typography from 'material-ui/Typography';
 
 import Card from '../../../../Components/Card';
 import Select from '../../../../Components/Select';
@@ -37,6 +38,9 @@ class AcknowledgementCreate extends React.Component {
   };
 
   render() {
+    const isValidPolicy = (policy => Array.isArray(policy.materialIDs) ? policy.materialIDs.length : false);
+    const isValidUser = (user => ((user.clientId != userInfo.clientId || user.role.name == 'Admin') && userInfo.role.name == 'Client' ? false : true) );
+
     let {userInfo} = this.props;
     return (
       <Card width="600px" title="Assign A User A Policy To Acknowledge">
@@ -48,39 +52,51 @@ class AcknowledgementCreate extends React.Component {
         >
           <div>
             <div>
-              {!this.props.users || this.props.users_loading ? (
+              {this.props.users_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Users
                 </div>
-              ) : (
-                <Field name="userID" label="User Name" component={Select} validate={[ required ]}>
+              ) : (Array.isArray(this.props.users) ? this.props.users.filter(isValidUser).length : false) ? (
+                <Field name="userID" 
+                  label="User Name" 
+                  component={Select} 
+                  validate={[ required ]}
+                >
                   {this.props.users
-                  .filter(user => ((user.clientId != userInfo.clientId || user.role.name == 'Admin') && userInfo.role.name == 'Client' ? false : true) )
+                  .filter(isValidUser)
                   .map(user => (
                     <MenuItem value={user.id} key={user.id}>
                       {user.name}
                     </MenuItem>
                   ))}
                 </Field>
+              ) : (
+                <Typography variant="caption" component="p">
+                  No available user to choose
+                </Typography>
               )}
             </div>
             <div>
-              {!this.props.policies || this.props.policies_loading ? (
+              {this.props.policies_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Policies
                 </div>
-              ) : (
+              ) : (Array.isArray(this.props.policies) ? this.props.policies.filter(isValidPolicy).length : false) ? (
                 <Field name="policyID" label="Policy Name" component={Select} validate={[ required ]}>
                   {this.props.policies
-                  //.filter(policy => policy.materialIDs)
+                  .filter(isValidPolicy)
                   .map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
                       {policy.name}
                     </MenuItem>
                   ))}
                 </Field>
+              ) : (
+                <Typography variant="caption" component="p">
+                  No available policy to choose
+                </Typography>
               )}
             </div>
           </div>

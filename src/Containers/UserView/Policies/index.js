@@ -36,17 +36,19 @@ class UsersPolicyView extends React.Component {
 
   manipulateData = (policyAcknowledgements) => {
     const data = [];
-    policyAcknowledgements.forEach((policyAcknowledgement) => {
-      const newPolicyAcknowledgement = {
-        name: policyAcknowledgement.policyName,
-        description: policyAcknowledgement.policyDescription,
-        button: {
-          message: 'View Policy Details',
-          onClick: () => this.loadPolicy(policyAcknowledgement.policyID),
-        },
-      };
-      data.push(newPolicyAcknowledgement);
-    });
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements.forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          name: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+          button: {
+            message: 'View Policy Details',
+            onClick: () => this.loadPolicy(policyAcknowledgement.policyID),
+          },
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
     console.log(data);
     return data;
   };
@@ -55,15 +57,15 @@ class UsersPolicyView extends React.Component {
     const { user, policyAcknowledgements } = this.props;
     return (
       <Card width="800px" title="My Policy List">
-        {!this.props.policyAcknowledgements_loading && Array.isArray(policyAcknowledgements) ? (
+        {this.props.policyAcknowledgements_loading ? (
+          <div className="center">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
           <Table
             header={header}
             data={this.manipulateData(policyAcknowledgements)}
           />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
-          </div>
         )}
       </Card>
     );

@@ -57,12 +57,12 @@ class EnrolmentCreate extends React.Component {
         >
           <div>
             <div>
-              {!this.props.users || this.props.users_loading ? (
+              {this.props.users_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Users
                 </div>
-              ) : (
+              ) : (Array.isArray(this.props.users) ? this.props.users.length : false) ? (
                 <div>
                   <Field
                     name="user"
@@ -80,13 +80,19 @@ class EnrolmentCreate extends React.Component {
                     ))}
                   </Field>
                 </div>
+              ) : (
+                <div>
+                  <Typography variant="caption" component="p">
+                    No available users
+                  </Typography>
+                </div>
               )}
-              {!this.props.courses || this.props.courses_loading ? (
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses...
                 </div>
-              ) : this.props.courses.length ? (
+              ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
                 <Field
                   name="course"
                   label="Course Name"

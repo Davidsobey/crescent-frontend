@@ -72,20 +72,17 @@ class QuestionView extends React.Component {
   };
 
   handleEdit = (editObj) => {
-    this.props.dispatch(QuestionActions.getByID(editObj));
+    this.props.dispatch(QuestionActions.getByID(editObj.id));
     history.push('/question/edit');
   };
 
   handleOption = (editObj) => {
     this.props.dispatch(QuestionActions.getOptions(editObj));
+    history.push('/question/options');
   };
 
   render() {
     const { tests, questions } = this.props;
-    let data;
-    if (tests && questions) {
-      data = this.loadData(tests, questions);
-    }
     const columns = [
       {
         Header: 'Question Name',
@@ -148,14 +145,19 @@ class QuestionView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (
+          ) : (Array.isArray(this.props.tests) ? this.props.tests.length : false)
+          && (Array.isArray(this.props.questions) ? this.props.questions.length : false) ? (
             <ReactTable
               columns={columns}
-              data={data}
+              data={this.loadData(tests, questions)}
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
             />
+          ) : (
+            <div>
+              There is no question
+            </div>
           )}
         </Card>
         <CustomModal

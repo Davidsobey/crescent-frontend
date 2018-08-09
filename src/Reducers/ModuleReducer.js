@@ -91,14 +91,19 @@ function ModuleReducer(state = {}, action) {
         modules: [],
       };
     case ModuleConstants.LOAD_MODULE_REQUEST:
-      return state;
+      return {
+        module_loading: true,
+      };
     case ModuleConstants.LOAD_MODULE_SUCCESS:
       return Object.assign({}, state, {
         module: action.module,
-        loading: false,
+        module_loading: false,
       });
     case ModuleConstants.LOAD_MODULE_FAILURE:
-      return state;
+      return {
+        error: action.error,
+        module_loading: false,
+      };
     case ModuleConstants.DELETE_REQUEST:
       return state;
     case ModuleConstants.DELETE_SUCCESS:
@@ -111,10 +116,19 @@ function ModuleReducer(state = {}, action) {
         module: {},
         loading: false,
       });
+    case ModuleConstants.EDIT_MODULE_REQUEST:
+      return Object.assign({}, state, {
+        module_editing: true,
+      });
     case ModuleConstants.EDIT_MODULE_SUCCESS:
       return Object.assign({}, state, {
         module: undefined,
-        loading: false,
+        module_editing: false,
+      });
+    case ModuleConstants.EDIT_MODULE_FAILURE:
+      return Object.assign({}, state, {
+        error: action.error,
+        module_editing: false,
       });
     case ModuleConstants.UPLOAD_REQUEST:
       return Object.assign({}, state, {

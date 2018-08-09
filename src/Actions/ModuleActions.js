@@ -89,9 +89,9 @@ function uploadMaterial(moduleId, file) {
     dispatch(request());
     MaterialService.uploadCreate(moduleId).then(
       (id) => {
-        dispatch(success());
         MaterialService.upload(id, file).then(
           () => {
+            dispatch(success());
             history.push('/module/list');
             dispatch(AlertActions.success('Material created successfully.'));
           },
@@ -241,17 +241,25 @@ function loadModule(id) {
 }
 
 function editModule(values) {
+  function request() {
+    return { type: ModuleConstants.EDIT_MODULE_REQUEST };
+  }
   function success() {
     return { type: ModuleConstants.EDIT_MODULE_SUCCESS };
   }
+  function failure(error) {
+    return { type: ModuleConstants.EDIT_MODULE_FAILURE, error };
+  }
   return (dispatch) => {
+    dispatch(request());
     ModuleService.editModule(values).then(
       () => {
+        history.push('/module/list');
         dispatch(success());
-        history.push('/test/create');
         dispatch(AlertActions.success(`Module ${values.name} edited.`));
       },
       (error) => {
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );

@@ -57,20 +57,20 @@ function CourseReducer(state = {}, action) {
         loading: false,
       });
     case CourseConstants.LOADCOURSE_REQUEST:
-      return Object.assign({}, state, {
-        courses: [],
-        loading: true,
-      });
+      return {
+        course_loading: true,
+      };
     case CourseConstants.LOADCOURSE_SUCCESS:
       return Object.assign({}, state, {
         courses: action.courses,
-        loading: false,
+        course_loading: false,
       });
     case CourseConstants.LOADCOURSE_FAILURE:
-      return Object.assign({}, state, {
+      return {
         courses: [],
-        loading: false,
-      });
+        error: action.error,
+        course_loading: false,
+      };
     case CourseConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
         courses: state.courses.filter(obj => filterById(obj.id, action.id)),
@@ -84,6 +84,19 @@ function CourseReducer(state = {}, action) {
       return Object.assign({}, state, {
         loading: false,
       });
+    case CourseConstants.EDIT_REQUEST:
+      return {
+        course_editing: true,
+      };
+    case CourseConstants.EDIT_SUCCESS:
+      return {
+        course_editing: false,
+      };
+    case CourseConstants.EDIT_FAILURE:
+      return {
+        error: action.error,
+        course_editing: false,
+      };
     case CourseConstants.CLEAR_COURSES:
       return {
         courses: [],

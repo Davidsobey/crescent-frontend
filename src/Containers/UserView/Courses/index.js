@@ -34,18 +34,20 @@ class UserView extends React.Component {
 
   manipulateData = (courses) => {
     const data = [];
-    courses.forEach((course) => {
-      const newCourse = {
-        id: course.id,
-        name: course.name,
-        description: course.description,
-        button: {
-          message: 'View Course Details',
-          onClick: () => this.loadCourse(course.id),
-        },
-      };
-      data.push(newCourse);
-    });
+    if (Array.isArray(courses)) {
+      courses.forEach((course) => {
+        const newCourse = {
+          id: course.id,
+          name: course.name,
+          description: course.description,
+          button: {
+            message: 'View Course Details',
+            onClick: () => this.loadCourse(course.id),
+          },
+        };
+        data.push(newCourse);
+      });
+    }
     return data;
   };
 
@@ -53,7 +55,7 @@ class UserView extends React.Component {
     const { user } = this.props;
     return (
       <Card width="800px" title="My Course List">
-        {user && Array.isArray(user.enrolledCourses) ? (
+        {user ? (
           <Table
             header={header}
             data={this.manipulateData(user.enrolledCourses)}

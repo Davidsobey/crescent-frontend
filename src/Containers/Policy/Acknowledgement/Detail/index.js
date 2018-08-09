@@ -16,6 +16,7 @@ import Card from '../../../../Components/Card';
 import Table from '../../../../Components/Table';
 import Button from '../../../../Components/Button';
 import PolicyActions from '../../../../Actions/PolicyActions';
+import LinearProgress from '../../../../Components/LinearProgress';
 
 const header = ['Name', 'View Material'];
 
@@ -37,29 +38,31 @@ class UsersPolicyDetails extends React.Component {
 
   manipulateData = (policyMaterials) => {
     const data = [];
-    policyMaterials.forEach((policyMaterial, index) => {
-      const newPolicyMaterial = {
-        name: 'Material '+(index+1).toString(),
-        button: {
-          message: 'View Material',
-          onClick: () => this.loadMaterial(policyMaterial),
-        },
-      };
-      data.push(newPolicyMaterial);
-    });
-    console.log(data);
+    if (Array.isArray(policyMaterials)) {
+      policyMaterials.forEach((policyMaterial, index) => {
+        const newPolicyMaterial = {
+          name: 'Material '+(index+1).toString(),
+          button: {
+            message: 'View Material',
+            onClick: () => this.loadMaterial(policyMaterial),
+          },
+        };
+        data.push(newPolicyMaterial);
+      });
+    }
     return data;
   };
 
   render() {
-    const { user, policyMaterials } = this.props;
-    console.log('policy', policyMaterials);
+    const { user } = this.props;
+    const policyMaterials = this.manipulateData(this.props.policyMaterials);
+
     return (
       <Card width="800px" title={'Policy Acknowledgement - ' + this.props.policyName}>
         <div>
           Description : {this.props.policyDescription}
         </div>
-        {!this.props.policyMaterials || this.props.policyMaterials_loading ? (
+        {this.props.policyMaterials_loading ? (
           <div className="center">
             <CircularProgress color="secondary" />
           </div>
@@ -67,12 +70,12 @@ class UsersPolicyDetails extends React.Component {
           <div>
             <Table
               header={header}
-              data={this.manipulateData(policyMaterials)}
+              data={policyMaterials}
             />
             {this.props.policy_acknowledging ? (
-              <div style={{width: '400px'}}>
+              <div>
                 <LinearProgress color="secondary" />
-                Assigning Policy
+                Acknowldeging Policy
               </div>
             ) : (
               <div className="formAlignRight">

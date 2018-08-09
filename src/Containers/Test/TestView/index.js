@@ -47,7 +47,7 @@ class TestView extends React.Component {
 
   handleEdit = (obj) => {
     this.props.dispatch(TestActions.loadTest(obj.id));
-    history.push('/test/edit');
+    history.push('/assessment/edit');
   };
 
   loadData = (children, parent) => {
@@ -109,7 +109,6 @@ class TestView extends React.Component {
       },
     ];
     const { tests, modules } = this.props;
-    const data = this.loadData(tests, modules);
     return (
       <div>
         <Card width="800px" title="Assessment List">
@@ -117,14 +116,19 @@ class TestView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (
+          ) : (Array.isArray(this.props.tests) ? this.props.tests.length : false)
+          && (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
             <ReactTable
               columns={columns}
-              data={data}
+              data={this.loadData(tests, modules)}
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
             />
+          ) : (
+            <div>
+              There is no test
+            </div>
           )}
         </Card>
         <CustomModal

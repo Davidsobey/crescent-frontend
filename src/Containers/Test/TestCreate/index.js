@@ -26,7 +26,7 @@ const validate = () => {
 let tests = [];
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const test_exists = value => value && tests.filter(test => test.name==value).length ? 'Test already exists' : undefined;
+const test_exists = value => value && Array.isArray(tests) ? tests.filter(test => test.name==value).length ? 'Test already exists' : undefined : undefined;
 
 const options = [
   // {label: 'Create another assignment'},
@@ -81,6 +81,8 @@ class TestCreate extends React.Component {
   }
 
   render() {
+    const isValidModule = (module => Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false);
+    const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
     tests = this.props.tests;
     return (
       <Card width="600px" title="Create New Assessment">
@@ -90,12 +92,12 @@ class TestCreate extends React.Component {
           className="centerForm"
         >
           <div>
-            {!this.props.courses || this.props.courses_loading ? (
+            {this.props.courses_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Courses
               </div>
-            ) : (
+            ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
               <div>
                 <Field
                   name="course"
@@ -105,7 +107,7 @@ class TestCreate extends React.Component {
                   validate={[ required ]}
                 >
                   {this.props.courses
-                  .filter(course => course.modules.length)
+                  .filter(isValidCourse)
                   .map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -113,13 +115,19 @@ class TestCreate extends React.Component {
                   ))}
                 </Field>
               </div>
+            ) : (
+              <div>
+                <Typography variant="caption" component="p">
+                  No available courses
+                </Typography>
+              </div>
             )}
             {this.props.modules_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Modules...
               </div>
-            ) : this.props.modules && this.props.modules.length ? (
+            ) : (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
               <div>
                 <Field
                   name="module"
@@ -128,7 +136,9 @@ class TestCreate extends React.Component {
                   onChange={this.loadTests}
                   validate={[ required ]}
                 >
-                  {this.props.modules.map(module => (
+                  {this.props.modules
+                  .filter(isValidModule)
+                  .map(module => (
                     <MenuItem value={module.id} key={module.id}>
                       {module.name}
                     </MenuItem>

@@ -144,7 +144,7 @@ function loadClient(id) {
   }
 
   return (dispatch) => {
-    dispatch(request(id));
+    dispatch(request());
 
     ClientService.getClient(id).then(
       (client) => {
@@ -159,13 +159,27 @@ function loadClient(id) {
 }
 
 function editClient(values) {
+  function request() {
+    return { type: ClientConstants.EDIT_REQUEST };
+  }
+  function success() {
+    return { type: ClientConstants.EDIT_SUCCESS };
+  }
+  function failure(error) {
+    return { type: ClientConstants.EDIT_FAILURE, error };
+  }
+
   return (dispatch) => {
+    dispatch(request());
+
     ClientService.editClient(values).then(
       () => {
         history.push('/client/list');
+        dispatch(success());
         dispatch(AlertActions.success(`Client ${values.name} edited.`));
       },
       (error) => {
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );

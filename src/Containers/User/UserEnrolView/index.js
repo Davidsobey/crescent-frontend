@@ -37,14 +37,14 @@ class UserEnrolView extends React.Component {
 
   manipulateData = (userEnrolments) => {
     var getUserNameById = userId => {
-      if (this.props.users) {
+      if (Array.isArray(this.props.users)) {
         let user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
     };
     var getCourseNameById = courseId => {
-      if (this.props.courses) {
+      if (Array.isArray(this.props.courses)) {
         let course = this.props.courses.filter(course => course.id == courseId);
         return course.length > 0 ? course[0].name : '';
       }
@@ -52,7 +52,7 @@ class UserEnrolView extends React.Component {
     };
 
     const data = [];
-    if (userEnrolments) {
+    if (Array.isArray(userEnrolments)) {
       userEnrolments
       .filter( enrolInfo => getCourseNameById(enrolInfo.courseId))
       .forEach((enrolInfo) => {
@@ -69,7 +69,7 @@ class UserEnrolView extends React.Component {
   };
 
   render() {
-    const data = this.manipulateData(this.props.userEnrolments);
+    const userEnrolments = this.manipulateData(this.props.userEnrolments);
     const columns = [
       {
         Header: 'User Name',
@@ -88,11 +88,10 @@ class UserEnrolView extends React.Component {
         accessor: 'status',
       },
     ];
-    console.log(this.props.userEnrolments);
     return (
       <div>
         <Card width="800px" title="Enrolment List">
-          {!this.props.users || this.props.users_loading || !this.props.courses || this.props.courses_loading || !this.props.userEnrolments || this.props.userEnrolments_loading ? (
+          {this.props.users_loading || this.props.courses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -100,7 +99,7 @@ class UserEnrolView extends React.Component {
             <div>
               <ReactTable
                 columns={columns}
-                data={data}
+                data={userEnrolments}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"

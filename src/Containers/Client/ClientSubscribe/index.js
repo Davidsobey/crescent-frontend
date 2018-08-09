@@ -33,6 +33,13 @@ class SubscriptionCreate extends React.Component {
   };
 
   render() {
+    const isValidTest = (test => Array.isArray(test.questionIds) ? test.questionIds.length : false);
+    const isValidModule = (module => 
+      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false) && 
+      (Array.isArray(module.testIds) ? module.tests.filter(isValidTest).length : false)
+    );
+    const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
+
     return (
       <Card width="600px" title="Subscribe To Course">
         <form
@@ -43,14 +50,16 @@ class SubscriptionCreate extends React.Component {
         >
           <div>
             <div>
-              {!this.props.courses || this.props.courses_loading ? (
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses
                 </div>
               ) : (
                 <Field name="courseID" label="Course Name" component={Select} validate={[ required ]}>
-                  {this.props.courses.map(course => (
+                  {this.props.courses
+                  .filter(isValidCourse)
+                  .map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
@@ -59,7 +68,7 @@ class SubscriptionCreate extends React.Component {
               )}
             </div>
             <div>
-              {!this.props.clients || this.props.clients_loading ? (
+              {this.props.clients_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Clients

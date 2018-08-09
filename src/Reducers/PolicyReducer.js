@@ -101,12 +101,17 @@ function PolicyReducer(state = {}, action) {
       };
     case PolicyConstants.LOAD_POLICY_REQUEST:
       return {
-        loading: true,
+        policy_loading: true,
       };
     case PolicyConstants.LOAD_POLICY_SUCCESS:
       return Object.assign({}, state, {
         policy: action.policy,
-        loading: false,
+        policy_loading: false,
+      });
+    case PolicyConstants.LOAD_POLICY_FAILURE:
+      return Object.assign({}, state, {
+        error: action.error,
+        policy_loading: false,
       });
     case PolicyConstants.DELETEPOLICY_REQUEST:
       return Object.assign({}, state, {
@@ -119,6 +124,20 @@ function PolicyReducer(state = {}, action) {
       });
     case PolicyConstants.DELETEPOLICY_FAILURE:
       return state;
+    case PolicyConstants.EDITPOLICY_REQUEST:
+      return Object.assign({}, state, {
+        policy_editing: true,
+      });
+    case PolicyConstants.EDITPOLICY_SUCCESS:
+      return Object.assign({}, state, {
+        policy: undefined,
+        policy_editing: false,
+      });
+    case PolicyConstants.EDITPOLICY_FAILURE:
+      return Object.assign({}, state, {
+        erro: action.error,
+        policy_editing: false,
+      });
     case PolicyConstants.GET_MATERIAL_REQUEST:
       return Object.assign({}, state, {
         loadingMaterial: true,
@@ -133,7 +152,7 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.GET_MATERIALS_REQUEST:
       return Object.assign({}, state, {
         policyMaterials: [], 
-        loading: true,
+        policyMaterials_loading: true,
       });
     case PolicyConstants.GET_MATERIALS_SUCCESS:
       return Object.assign({}, state, {
@@ -141,12 +160,12 @@ function PolicyReducer(state = {}, action) {
         policyId: action.policyId,
         policyName: action.policyName,
         policyDescription: action.policyDescription,
-        loading: false,
+        policyMaterials_loading: false,
       });
     case PolicyConstants.GET_MATERIALS_FAILURE:
       return Object.assign({}, state, { 
         policyMaterials: [], 
-        loading: false,
+        policyMaterials_loading: false,
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST:
       return Object.assign({}, state, {

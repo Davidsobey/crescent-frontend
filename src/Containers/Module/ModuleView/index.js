@@ -105,22 +105,26 @@ class ModuleView extends React.Component {
       },
     ];
     const { courses, modules } = this.props;
-    const data = this.loadData(modules, courses);
     return (
       <div>
         <Card width="800px" title="Module List">
-          {!this.props.courses || this.props.courses_loading || !this.props.modules || this.props.modules_loading ? (
+          {this.props.courses_loading || this.props.modules_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (
+          ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false)
+          && (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
             <ReactTable
               columns={columns}
-              data={data}
+              data={this.loadData(modules, courses)}
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
             />
+          ) : (
+            <div>
+              There is no module
+            </div>
           )}
         </Card>
         <CustomModal

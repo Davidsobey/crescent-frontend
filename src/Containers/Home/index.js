@@ -45,14 +45,14 @@ class HomeComponent extends React.Component {
 
   manipulateEnrolData = (userEnrolments) => {
     var getUserNameById = userId => {
-      if (this.props.users) {
+      if (Array.isArray(this.props.users)) {
         let user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
     };
     var getCourseNameById = courseId => {
-      if (this.props.courses) {
+      if (Array.isArray(this.props.courses)) {
         let course = this.props.courses.filter(course => course.id == courseId);
         return course.length > 0 ? course[0].name : '';
       }
@@ -60,7 +60,7 @@ class HomeComponent extends React.Component {
     };
 
     const data = [];
-    if (userEnrolments) {
+    if (Array.isArray(userEnrolments)) {
       userEnrolments
       .filter( enrolInfo => getCourseNameById(enrolInfo.courseId))
       .forEach((enrolInfo) => {
@@ -78,56 +78,46 @@ class HomeComponent extends React.Component {
 
   manipulateAcknowledgementData = (policyAcknowledgements) => {
     var getUserNameById = userId => {
-      if (this.props.users) {
+      if (Array.isArray(this.props.users)) {
         let user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
     };
     const data = [];
-    policyAcknowledgements
-    .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
-    .forEach((policyAcknowledgement) => {
-      const newPolicyAcknowledgement = {
-        policyId: policyAcknowledgement.policyID,
-        userId: policyAcknowledgement.userID,
-        userName: getUserNameById(policyAcknowledgement.userID),
-        policyName: policyAcknowledgement.policyName,
-        description: policyAcknowledgement.policyDescription,
-        acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
-      };
-      data.push(newPolicyAcknowledgement);
-    });
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements
+      .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
+      .forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          policyId: policyAcknowledgement.policyID,
+          userId: policyAcknowledgement.userID,
+          userName: getUserNameById(policyAcknowledgement.userID),
+          policyName: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+          acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
     console.log(data);
     return data;
   };
 
   manipulateSubscriptionData = (subscriptions) => {
-    var getClientNameById = clientId => {
-      if (this.props.clients) {
-        let client = this.props.clients.filter(client => client.id == clientId);
-        return client.length > 0 ? client[0].name : '';
-      }
-      return '';
-    };
-    var getCourseNameById = courseId => {
-      if (this.props.courses) {
-        let course = this.props.courses.filter(course => course.id == courseId);
-        return course.length > 0 ? course[0].name : '';
-      }
-      return '';
-    };
     const data = [];
-    subscriptions
-    .forEach((subscription) => {
-      const newSubscription = {
-        clientName: getClientNameById(subscription.clientId),
-        courseName: getCourseNameById(subscription.courseId),
-        money: subscription.payableAmount,
-        status: subscription.paymentStatusId,
-      };
-      data.push(newSubscription);
-    });
+    if (Array.isArray(subscriptions)) {
+      subscriptions
+      .forEach((subscription) => {
+        const newSubscription = {
+          clientName: subscription.clientName,
+          courseName: subscription.courseName,
+          money: subscription.payableAmount,
+          status: subscription.paymentStatusId,
+        };
+        data.push(newSubscription);
+      });
+    }
     console.log(data);
     return data;
   };
@@ -208,7 +198,7 @@ class HomeComponent extends React.Component {
       <div>
         <Card width="800px" title="Overview">
           <p style={{fontSize:'20px', marginBottom: '15px'}}>Enrolment List</p>
-          {!this.props.users || this.props.users_loading || !this.props.courses || this.props.courses_loading || !this.props.userEnrolments || this.props.userEnrolments_loading ? (
+          {this.props.users_loading || this.props.courses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -224,7 +214,7 @@ class HomeComponent extends React.Component {
             </div>
           )}
           <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>Policy Acknowledgement List</p>
-          {!this.props.policyAcknowledgements || this.props.policyAcknowledgements_loading || !this.props.users || this.props.users_loading ? (
+          {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -242,7 +232,7 @@ class HomeComponent extends React.Component {
           {user.role.name=='Admin' ? 
             <div>
               <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>Client Subscriptions</p>
-              {!this.props.subscriptions || this.props.subscriptions_loading ? (
+              {this.props.subscriptions_loading ? (
                 <div className="center">
                   <CircularProgress color="secondary" />
                 </div>

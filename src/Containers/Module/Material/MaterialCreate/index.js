@@ -21,11 +21,12 @@ const validate = () => {
 class MaterialCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(ModuleActions.getAll());
   }
   
   componentWillMount () {
-    this.props.initialize({ ModuleId: this.props.newModuleId });
+    this.props.dispatch(ModuleActions.getAll());
+    if (this.props.newModuleId)
+      this.props.initialize({ ModuleId: this.props.newModuleId });
   }
 
   state = {
@@ -46,7 +47,6 @@ class MaterialCreate extends React.Component {
   render() {
     return (
       <Card width="600px" title="Create New Material">
-        {this.props.uploading && <LinearProgress color="secondary" />}
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -55,7 +55,12 @@ class MaterialCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.modules ? (
+              {this.props.modules_loading ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Modules...
+                </div>
+              ) : (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
                 <Field name="ModuleId" label="Module Name" component={Select}>
                   {this.props.modules.map(module => (
                     <MenuItem value={module.id} key={module.id}>
@@ -65,8 +70,9 @@ class MaterialCreate extends React.Component {
                 </Field>
               ) : (
                 <div>
-                  <LinearProgress color="secondary" />
-                  Loading Modules
+                  <Typography variant="caption" component="p">
+                    No available courses
+                  </Typography>
                 </div>
               )}
               <div>
@@ -74,16 +80,23 @@ class MaterialCreate extends React.Component {
               </div>
             </div>
           </div>
-          <div className="formAlignRight">
-            <Button
-              className="buttonFormat"
-              variant="raised"
-              color="primary"
-              type="submit"
-            >
-              Create Material
-            </Button>
-          </div>
+          {this.props.uploading ? (
+            <div style={{width: '400px'}}>
+              <LinearProgress color="secondary" />
+              Creating Material
+            </div>
+          ) : (
+            <div className="formAlignRight">
+              <Button
+                className="buttonFormat"
+                variant="raised"
+                color="primary"
+                type="submit"
+              >
+                Create Material
+              </Button>
+            </div>
+          )}
         </form>
       </Card>
     );
@@ -94,12 +107,14 @@ MaterialCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   modules: PropTypes.array,
+  modules_loading: PropTypes.bool,
   newModuleId: PropTypes.number,
   uploading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   modules: state.ModuleReducer.modules,
+  modules_loading: state.ModuleReducer.loading,
   newModuleId: state.ModuleReducer.newModuleId,
   uploading: state.ModuleReducer.uploading,
 });

@@ -151,14 +151,14 @@ function loadUser(id) {
   }
 
   return (dispatch) => {
-    dispatch(request(id));
+    dispatch(request());
 
     UserService.getById(id).then(
       (user) => {
         dispatch(success(user));
       },
       (error) => {
-        dispatch(failure(id, error));
+        dispatch(failure(error));
       },
     );
   };
@@ -191,14 +191,25 @@ function deleteUser(id) {
 }
 
 function editUser(values) {
+  function request() {
+    return { type: UserConstants.EDIT_USER_REQUEST };
+  }
+  function success() {
+    return { type: UserConstants.EDIT_USER_SUCCESS };
+  }
+  function failure(error) {
+    return { type: UserConstants.EDIT_USER_FAILURE, error };
+  }
   return (dispatch) => {
+    dispatch(request());
     UserService.editUser(values).then(
       () => {
-        history.push('/user/view');
+        history.push('/user/list');
+        dispatch(success());
         dispatch(AlertActions.success(`User ${values.name} edited.`));
       },
       (error) => {
-        history.push('/user/view');
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );

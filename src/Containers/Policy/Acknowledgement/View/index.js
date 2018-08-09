@@ -43,25 +43,27 @@ class PolicyAcknowledgementView extends React.Component {
       return '';
     };
     const data = [];
-    policyAcknowledgements
-    .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
-    .forEach((policyAcknowledgement) => {
-      const newPolicyAcknowledgement = {
-        policyId: policyAcknowledgement.policyID,
-        userId: policyAcknowledgement.userID,
-        userName: getUserNameById(policyAcknowledgement.userID),
-        policyName: policyAcknowledgement.policyName,
-        description: policyAcknowledgement.policyDescription,
-        acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
-      };
-      data.push(newPolicyAcknowledgement);
-    });
-    console.log(data);
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements
+      .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
+      .forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          policyId: policyAcknowledgement.policyID,
+          userId: policyAcknowledgement.userID,
+          userName: getUserNameById(policyAcknowledgement.userID),
+          policyName: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+          acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
     return data;
   };
 
   render() {
-    const { policyAcknowledgements, user } = this.props;
+    const { user } = this.props;
+    const policyAcknowledgements = this.manipulateData(this.props.policyAcknowledgements);
     const columns = [
       {
         Header: 'User Name',
@@ -99,19 +101,23 @@ class PolicyAcknowledgementView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Policy Acknowledgements">
-          {!this.props.policyAcknowledgements || this.props.policyAcknowledgements_loading || !this.props.users || this.props.users_loading ? (
+          {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (
+          ) : policyAcknowledgements.length ? (
             <div>
               <ReactTable
                 columns={columns}
-                data={this.manipulateData(policyAcknowledgements)}
+                data={policyAcknowledgements}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
+            </div>
+          ) : (
+            <div>
+              There is no policy acknowledgement
             </div>
           )}
         </Card>

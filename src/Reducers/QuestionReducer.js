@@ -73,17 +73,19 @@ function QuestionReducer(state = {}, action) {
         loading: false,
       });
     case QuestionConstants.GETBYID_REQUEST:
-      return Object.assign({}, state, {
-        loading: true,
-      });
+      return {
+        question_loading: true,
+      };
     case QuestionConstants.GETBYID_SUCCESS:
       return Object.assign({}, state, {
         question: action.question,
+        question_loading: false,
       });
     case QuestionConstants.GETBYID_FAILURE:
-      return Object.assign({}, state, {
-        question: {},
-      });
+      return {
+        error: action.error,
+        question_loading: false,
+      };
     case QuestionConstants.DELETE_REQUEST:
       return Object.assign({}, state, {
         loading: true,
@@ -98,20 +100,23 @@ function QuestionReducer(state = {}, action) {
     case QuestionConstants.OPTIONS_REQUEST:
       return Object.assign({}, state, {
         question: action.obj,
-        loading: true,
+        options_loading: true,
+        option_creating: false,
       });
     case QuestionConstants.OPTIONS_SUCCESS:
       return Object.assign({}, state, {
         options: action.questionOptions,
+        options_loading: false,
       });
     case QuestionConstants.OPTIONS_FAILURE:
       return Object.assign({}, state, {
         question: {},
         options: {},
+        options_loading: false,
       });
     case QuestionConstants.OPTIONS_ISANSWER_REQUEST:
       return Object.assign({}, state, {
-        loading: true,
+        options_loading: true,
       });
     case QuestionConstants.OPTIONS_ISANSWER_SUCCESS:
       return Object.assign({}, state, {
@@ -122,30 +127,54 @@ function QuestionReducer(state = {}, action) {
             isAnswer: !action.values.isAnswer,
           },
         },
+        options_loading: false,
       });
     case QuestionConstants.OPTIONS_ISANSWER_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        options_loading: false,
+      });
     case QuestionConstants.DELETE_QO_REQUEST:
       return Object.assign({}, state, {
-        loading: true,
+        options_loading: true,
       });
     case QuestionConstants.DELETE_QO_SUCCESS:
       return Object.assign({}, state, {
         options: state.options.filter(obj => filterById(obj.id, action.id)),
-        loading: false,
+        options_loading: false,
       });
     case QuestionConstants.DELETE_QO_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        options_loading: false,
+      });
     case OptionConstants.CREATE_REQUEST:
-      return state;
+      return Object.assign({}, state, {
+        option_creating: true,
+      });
     case OptionConstants.CREATE_SUCCESS:
       return Object.assign({}, state, {
         options: state.options
           ? state.options.concat(action.option)
           : [action.option],
+        option_creating: false,
       });
     case OptionConstants.CREATE_FAILURE:
-      return state;
+      return Object.assign({}, state, {
+        option_creating: false,
+      });
+    case QuestionConstants.EDIT_QUESTION_REQUEST:
+      return Object.assign({}, state, {
+        question_editing: true,
+      });
+    case QuestionConstants.EDIT_QUESTION_SUCCESS:
+      return Object.assign({}, state, {
+        question: undefined,
+        question_editing: false,
+      });
+    case QuestionConstants.EDIT_QUESTION_FAILURE:
+      return Object.assign({}, state, {
+        error: action.error,
+        question_editing: false,
+      });
     case UserConstants.LOGOUT:
       return {
         question: {},

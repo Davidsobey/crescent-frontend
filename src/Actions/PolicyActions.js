@@ -71,11 +71,11 @@ function acknowledge(userId, policyId, successUrl) {
   }
 
   return (dispatch) => {
-    dispatch(request({ userId }));
+    dispatch(request());
     PolicyService.acknowledgePolicy(userId, policyId).then(
       () => {
-        dispatch(success(userId));
         history.push(successUrl);
+        dispatch(success());
         dispatch(AlertActions.success('Policy has been acknowledged.'));
       },
       (error) => {
@@ -274,7 +274,7 @@ function deletePolicy(policyId) {
 
 function editPolicy(policy, policyId) {
   function request() {
-    return { type: PolicyConstants.EDITPOLICY_REQUEST, policy };
+    return { type: PolicyConstants.EDITPOLICY_REQUEST };
   }
   function success() {
     return { type: PolicyConstants.EDITPOLICY_SUCCESS };
@@ -284,12 +284,12 @@ function editPolicy(policy, policyId) {
   }
 
   return (dispatch) => {
-    dispatch(request({ policy }));
+    dispatch(request());
 
     PolicyService.editPolicy(policyId, policy).then(
       () => {
-        dispatch(success());
         history.push('/policy/list');
+        dispatch(success());
         dispatch(AlertActions.success('Acknowledgement edited successfully'));
       },
       (error) => {
@@ -321,7 +321,7 @@ function loadPolicy(id) {
   }
 
   return (dispatch) => {
-    dispatch(request(id));
+    dispatch(request());
 
     PolicyService.getPolicy(id).then(
       (policy) => {

@@ -228,17 +228,25 @@ function enrolmentTest(testId, courseId, userId) {
 }
 
 function editTest(values) {
+  function request() {
+    return { type: TestConstants.EDIT_TEST_REQUEST };
+  }
   function success() {
     return { type: TestConstants.EDIT_TEST_SUCCESS };
   }
+  function failure(error) {
+    return { type: TestConstants.EDIT_TEST_FAILURE, error };
+  }
   return (dispatch) => {
+    dispatch(request());
     TestService.editTest(values).then(
       () => {
+        history.push('/assessment/list');
         dispatch(success());
-        history.push('/test/list');
         dispatch(AlertActions.success(`Test: ${values.name} edited.`));
       },
       (error) => {
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );

@@ -101,8 +101,8 @@ function getByID(id) {
   function success(question) {
     return { type: QuestionConstants.GETBYID_SUCCESS, question };
   }
-  function failure(question) {
-    return { type: QuestionConstants.GETBYID_FAILURE, question };
+  function failure(error) {
+    return { type: QuestionConstants.GETBYID_FAILURE, error };
   }
 
   return (dispatch) => {
@@ -143,13 +143,25 @@ function deleteQuestion(id) {
 }
 
 function editQuestion(values) {
+  function request() {
+    return { type: QuestionConstants.EDIT_QUESTION_REQUEST };
+  }
+  function success() {
+    return { type: QuestionConstants.EDIT_QUESTION_SUCCESS };
+  }
+  function failure(error) {
+    return { type: QuestionConstants.EDIT_QUESTION_FAILURE, error };
+  }
   return (dispatch) => {
+    dispatch(request());
     QuestionService.editQuestion(values).then(
       () => {
         history.push('/question/list');
+        dispatch(success());
         dispatch(AlertActions.success(`Question ${values.title} edited.`));
       },
       (error) => {
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );
@@ -173,7 +185,6 @@ function getOptions(obj) {
     QuestionService.getOptions(obj.id).then(
       (questionOptions) => {
         dispatch(success(questionOptions));
-        history.push('/question/options');
       },
       (error) => {
         dispatch(failure(error));

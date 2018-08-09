@@ -143,13 +143,27 @@ function clearCourses() {
 }
 
 function editCourse(values) {
+  function request() {
+    return { type: CourseConstants.EDIT_REQUEST };
+  }
+  function success() {
+    return { type: CourseConstants.EDIT_SUCCESS };
+  }
+  function failure(error) {
+    return { type: CourseConstants.EDIT_FAILURE, error };
+  }
+
   return (dispatch) => {
+    dispatch(request());
+
     CourseService.editCourse(values).then(
       () => {
         history.push('/course/list');
+        dispatch(success());
         dispatch(AlertActions.success(`Course ${values.name} edited.`));
       },
       (error) => {
+        dispatch(failure(error));
         dispatch(AlertActions.error(error));
       },
     );
