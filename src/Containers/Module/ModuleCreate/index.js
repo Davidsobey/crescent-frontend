@@ -14,8 +14,6 @@ import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
 import CourseActions from '../../../Actions/CourseActions';
 import ModuleActions from '../../../Actions/ModuleActions';
-import OptionsModal from '../../../Components/OptionsModal';
-import history from '../../../Helpers/History';
 
 const validate = () => {
   const errors = {};
@@ -26,12 +24,6 @@ let modules = [];
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 const module_exists = value => value && Array.isArray(modules) ? modules.filter(module => module.name==value).length ? 'Module already exists' : undefined : undefined;
-
-const options = [
-  {label: 'Create another module'},
-  {label: 'Create an assignment for this module', url: '/assessment/create'},
-  {label: 'Upload module material for this module', url: '/module/material/create'},
-];
 
 class ModuleCreate extends React.Component {
   constructor(props) {
@@ -58,16 +50,6 @@ class ModuleCreate extends React.Component {
     ));
   };
 
-  onContinue = (index) => {
-    this.props.dispatch(ModuleActions.closeRedirectModal());
-    if (index==0) {
-      this.props.initialize({ course: this.props.newCourseId, moduleName: '', moduleDescription: '' });
-      this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
-    }
-    else
-      history.push(options[index].url);
-  }
-
   render() {
     modules = this.props.modules;
     return (
@@ -86,7 +68,7 @@ class ModuleCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Courses
                 </div>
-              ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
+              ) : (
                 <div>
                   <Field 
                     name="course" 
@@ -95,18 +77,13 @@ class ModuleCreate extends React.Component {
                     component={Select} 
                     validate={[ required ]}
                   >
-                    {this.props.courses.map(course => (
+                    {(Array.isArray(this.props.courses) ? this.props.courses : [])
+                    .map(course => (
                       <MenuItem value={course.id} key={course.id}>
                         {course.name}
                       </MenuItem>
                     ))}
                   </Field>
-                </div>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    No available courses
-                  </Typography>
                 </div>
               )}
               {this.props.modules_loading ? (
@@ -154,12 +131,6 @@ class ModuleCreate extends React.Component {
             </div>
           )}
         </form>
-        <OptionsModal
-          title="Module created successfully."
-          open={this.props.openRedirectModal?this.props.openRedirectModal:false}
-          onClick={this.onContinue.bind(this)}
-          options={options}
-        />
       </Card>
     );
   }
@@ -174,7 +145,6 @@ ModuleCreate.propTypes = {
   modules: PropTypes.array,
   modules_loading: PropTypes.bool,
   module_creating: PropTypes.bool,
-  openRedirectModal: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
@@ -184,7 +154,6 @@ const mapStateToProps = state => ({
   modules: state.ModuleReducer.modules,
   modules_loading: state.ModuleReducer.loading,
   module_creating: state.ModuleReducer.creating,
-  openRedirectModal: state.ModuleReducer.openRedirectModal,
 });
 
 const withForm = reduxForm(

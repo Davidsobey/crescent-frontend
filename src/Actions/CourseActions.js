@@ -172,13 +172,13 @@ function editCourse(values) {
 
 function loadCoursesByClientSubscriptions(clientId) {
   function request() {
-    return { type: CourseConstants.LOADCOURSE_REQUEST };
+    return { type: CourseConstants.LOADCOURSES_REQUEST };
   }
   function success(courses) {
-    return { type: CourseConstants.LOADCOURSE_SUCCESS, courses };
+    return { type: CourseConstants.LOADCOURSES_SUCCESS, courses };
   }
   function failure(error) {
-    return { type: CourseConstants.LOADCOURSE_FAILURE, error };
+    return { type: CourseConstants.LOADCOURSES_FAILURE, error };
   }
 
   return (dispatch) => {

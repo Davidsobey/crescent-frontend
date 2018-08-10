@@ -43,18 +43,18 @@ function CourseReducer(state = {}, action) {
       });
     case CourseConstants.GETUNSUBSCRIBED_REQUEST:
       return Object.assign({}, state, {
-        courses: [],
-        loading: true,
+        unsubscribed_courses: [],
+        unsubscribed_courses_loading: true,
       });
     case CourseConstants.GETUNSUBSCRIBED_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
-        loading: false,
+        unsubscribed_courses: action.courses,
+        unsubscribed_courses_loading: false,
       });
     case CourseConstants.GETUNSUBSCRIBED_FAILURE:
       return Object.assign({}, state, {
-        courses: [],
-        loading: false,
+        unsubscribed_courses: [],
+        unsubscribed_courses_loading: false,
       });
     case CourseConstants.LOADCOURSE_REQUEST:
       return {
@@ -62,12 +62,11 @@ function CourseReducer(state = {}, action) {
       };
     case CourseConstants.LOADCOURSE_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
+        course: action.course,
         course_loading: false,
       });
     case CourseConstants.LOADCOURSE_FAILURE:
       return {
-        courses: [],
         error: action.error,
         course_loading: false,
       };
@@ -100,6 +99,20 @@ function CourseReducer(state = {}, action) {
     case CourseConstants.CLEAR_COURSES:
       return {
         courses: [],
+      };
+    case CourseConstants.LOADCOURSES_REQUEST:
+      return {
+        loading: true,
+      };
+    case CourseConstants.LOADCOURSES_SUCCESS:
+      return Object.assign({}, state, {
+        courses: action.courses,
+        loading: false,
+      });
+    case CourseConstants.LOADCOURSES_FAILURE:
+      return {
+        error: action.error,
+        loading: false,
       };
     case UserConstants.LOGOUT:
       return {

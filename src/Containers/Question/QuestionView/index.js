@@ -45,7 +45,7 @@ class QuestionView extends React.Component {
 
   loadData = (Tests, Questions) => {
     const formattedArray = [];
-    if (Array.isArray(Questions)) {
+    if (Array.isArray(Questions) && Array.isArray(Tests)) {
       Questions.forEach((Question) => {
         const TestMatch = Tests.filter(Test => Test.id === Question.testId);
         const newQuestion = {
@@ -145,8 +145,7 @@ class QuestionView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (Array.isArray(this.props.tests) ? this.props.tests.length : false)
-          && (Array.isArray(this.props.questions) ? this.props.questions.length : false) ? (
+          ) : (
             <ReactTable
               columns={columns}
               data={this.loadData(tests, questions)}
@@ -154,10 +153,6 @@ class QuestionView extends React.Component {
               defaultPageSize={10}
               className="-striped -highlight"
             />
-          ) : (
-            <div>
-              There is no question
-            </div>
           )}
         </Card>
         <CustomModal

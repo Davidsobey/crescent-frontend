@@ -59,7 +59,8 @@ class ModuleEdit extends React.Component {
                     component={Select}
                     validate={[ required ]}
                   >
-                    {this.props.courses.map(course => (
+                    {(Array.isArray(this.props.courses) ? this.props.courses : [])
+                    .map(course => (
                       <MenuItem value={course.id} key={course.id}>
                         {course.name}
                       </MenuItem>
@@ -67,9 +68,9 @@ class ModuleEdit extends React.Component {
                   </Field>
                 </div>
               ) : (
-                <div className="center">
-                  <CircularProgress color="secondary" />
-                  Loading Courses
+                <div>
+                  <LinearProgress color="secondary" />
+                  Loading Modules
                 </div>
               )}
               <div>

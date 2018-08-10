@@ -27,6 +27,11 @@ class SubscriptionCreate extends React.Component {
     this.props.dispatch(CourseActions.getAll());
     this.props.dispatch(ClientActions.getAll());
   }
+  
+  loadUnsubscribedCourses = (values) => {
+    this.props.dispatch(CourseActions.getAllUnsubscribed(values.target.value));
+  };
+
   submit = (values) => {
     const subscription = Object.assign({}, values);
     this.props.dispatch(ClientActions.subscribe(subscription));
@@ -39,6 +44,10 @@ class SubscriptionCreate extends React.Component {
       (Array.isArray(module.testIds) ? module.tests.filter(isValidTest).length : false)
     );
     const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
+    const isUnsubscribedCourse = (course => Array.isArray(this.props.unsubscribed_courses) ? 
+      this.props.unsubscribed_courses.filter(unsubscribed_course => course.id == unsubscribed_course.id).length : false);
+
+    const clients = Array.isArray(this.props.clients) ? this.props.clients : [];
 
     return (
       <Card width="600px" title="Subscribe To Course">
@@ -50,34 +59,47 @@ class SubscriptionCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.courses_loading ? (
+              {this.props.clients_loading || this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Courses
+                  Loading Clients
                 </div>
               ) : (
-                <Field name="courseID" label="Course Name" component={Select} validate={[ required ]}>
-                  {this.props.courses
-                  .filter(isValidCourse)
-                  .map(course => (
-                    <MenuItem value={course.id} key={course.id}>
-                      {course.name}
+                <Field 
+                  name="clientID" 
+                  onChange={this.loadUnsubscribedCourses}
+                  label="Client Name" 
+                  component={Select} 
+                  validate={[ required ]}
+                >
+                  {clients
+                  .map(client => (
+                    <MenuItem value={client.id} key={client.id}>
+                      {client.name}
                     </MenuItem>
                   ))}
                 </Field>
               )}
             </div>
             <div>
-              {this.props.clients_loading ? (
+              {this.props.unsubscribed_courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Clients
+                  Loading Courses
                 </div>
               ) : (
-                <Field name="clientID" label="Client Name" component={Select} validate={[ required ]}>
-                  {this.props.clients.map(client => (
-                    <MenuItem value={client.id} key={client.id}>
-                      {client.name}
+                <Field 
+                  name="courseID" 
+                  label="Course Name" 
+                  component={Select} 
+                  validate={[ required ]}
+                >
+                  {this.props.courses
+                  .filter(isValidCourse)
+                  .filter(isUnsubscribedCourse)
+                  .map(course => (
+                    <MenuItem value={course.id} key={course.id}>
+                      {course.name}
                     </MenuItem>
                   ))}
                 </Field>
@@ -114,6 +136,8 @@ SubscriptionCreate.propTypes = {
   courses_loading: PropTypes.bool,
   clients: PropTypes.array,
   clients_loading: PropTypes.bool,
+  unsubscribed_courses: PropTypes.array,
+  unsubscribed_courses_loading: PropTypes.bool,
   client_subscribing: PropTypes.bool,
 };
 
@@ -122,6 +146,8 @@ const mapStateToProps = state => ({
   courses_loading: state.CourseReducer.loading,
   clients: state.ClientReducer.clients,
   clients_loading: state.ClientReducer.loading,
+  unsubscribed_courses: state.CourseReducer.unsubscribed_courses,
+  unsubscribed_courses_loading: state.CourseReducer.unsubscribed_courses_loading,
   client_subscribing: state.ClientReducer.subscribing,
 });
 

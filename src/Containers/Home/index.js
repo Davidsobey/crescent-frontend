@@ -21,6 +21,7 @@ import UserActions from '../../Actions/UserActions';
 import CourseActions from '../../Actions/CourseActions';
 import ClientActions from '../../Actions/ClientActions';
 import PolicyActions from '../../Actions/PolicyActions';
+import PaymentActions from '../../Actions/PaymentActions';
 import IconButton from '../../Styles/IconButton';
 import { StyledDelete } from '../../Styles/Delete';
 import { StyledEdit } from '../../Styles/Edit';
@@ -37,10 +38,12 @@ class HomeComponent extends React.Component {
     this.props.dispatch(ClientActions.getUserEnrolments(this.props.user.clientId));
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForClient(this.props.user.clientId));
     this.props.dispatch(ClientActions.getSubscriptions());
+    this.props.dispatch(PaymentActions.getPaymentStatuses());
   }
 
-  loadPolicy = (id, name, description) => {
-    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description));
+  loadPolicy = (id, name, description, canAcknowlege) => {
+    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description, canAcknowlege));
+    history.push('/policy/acknowledgement/detail');
   };
 
   manipulateEnrolData = (userEnrolments) => {
@@ -68,7 +71,7 @@ class HomeComponent extends React.Component {
           userName: getUserNameById(enrolInfo.userId),
           courseName: getCourseNameById(enrolInfo.courseId),
           deadline: enrolInfo.deadline.slice(0,10),
-          status: enrolInfo.enrolmentTests,
+          status: enrolInfo.completed ? 'Yes' : 'No',
         };
         data.push(row);
       });
@@ -76,10 +79,10 @@ class HomeComponent extends React.Component {
     return data;
   };
 
-  manipulateAcknowledgementData = (policyAcknowledgements) => {
+  manipulateAcknowledgementData = (policyAcknowledgements, users) => {
     var getUserNameById = userId => {
-      if (Array.isArray(this.props.users)) {
-        let user = this.props.users.filter(user => user.id == userId);
+      if (Array.isArray(users)) {
+        let user = users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
@@ -104,7 +107,15 @@ class HomeComponent extends React.Component {
     return data;
   };
 
-  manipulateSubscriptionData = (subscriptions) => {
+  manipulateSubscriptionData = (subscriptions, paymentStatuses) => {
+    console.log(paymentStatuses);
+    var getPaymentStatusById = paymentStatusId => {
+      if (Array.isArray(paymentStatuses)) {
+        let paymentStatus = paymentStatuses.filter(paymentStatus => paymentStatus.id == paymentStatusId);
+        return paymentStatus.length > 0 ? paymentStatus[0].name : '';
+      }
+      return '';
+    };
     const data = [];
     if (Array.isArray(subscriptions)) {
       subscriptions
@@ -113,7 +124,7 @@ class HomeComponent extends React.Component {
           clientName: subscription.clientName,
           courseName: subscription.courseName,
           money: subscription.payableAmount,
-          status: subscription.paymentStatusId,
+          status: getPaymentStatusById(subscription.paymentStatusID),
         };
         data.push(newSubscription);
       });
@@ -163,16 +174,16 @@ class HomeComponent extends React.Component {
         Header: 'View Policy Details',
         accessor: 'view/acknowledge',
         Filter: <div />,
-        Cell: row => (row.original.userId == user.id&&row.original.acknowledged=='No' ?
+        Cell: row => (
           <div>
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description)}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id&&row.original.acknowledged=='No')}
             >
               View Policy Details
             </Button>
-          </div> : <div></div>
+          </div>
         ),
       },
     ];
@@ -222,7 +233,7 @@ class HomeComponent extends React.Component {
             <div>
               <ReactTable
                 columns={acknowledgementColumns}
-                data={this.manipulateAcknowledgementData(this.props.policyAcknowledgements)}
+                data={this.manipulateAcknowledgementData(this.props.policyAcknowledgements, this.props.users)}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"
@@ -232,7 +243,7 @@ class HomeComponent extends React.Component {
           {user.role.name=='Admin' ? 
             <div>
               <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>Client Subscriptions</p>
-              {this.props.subscriptions_loading ? (
+              {this.props.subscriptions_loading || this.props.paymentStatuses_loading ? (
                 <div className="center">
                   <CircularProgress color="secondary" />
                 </div>
@@ -240,7 +251,7 @@ class HomeComponent extends React.Component {
                 <div>
                   <ReactTable
                     columns={subscriptionColumns}
-                    data={this.manipulateSubscriptionData(this.props.subscriptions)}
+                    data={this.manipulateSubscriptionData(this.props.subscriptions, this.props.paymentStatuses)}
                     filterable
                     defaultPageSize={10}
                     className="-striped -highlight"
@@ -267,6 +278,8 @@ const mapStateToProps = state => ({
   policyAcknowledgements_loading: state.PolicyReducer.loading,
   subscriptions: state.ClientReducer.subscriptions,
   subscriptions_loading: state.ClientReducer.subscriptions_loading,
+  paymentStatuses: state.PaymentReducer.paymentStatuses,
+  paymentStatuses_loading: state.PaymentReducer.loading,
 });
 
 const withForm = reduxForm(
@@ -289,6 +302,8 @@ HomeComponent.propTypes = {
   policyAcknowledgements_loading: PropTypes.bool,
   subscriptions: PropTypes.array,
   subscriptions_loading: PropTypes.bool,
+  paymentStatuses: PropTypes.array,
+  paymentStatuses_loading: PropTypes.bool,
 };
 
 export default compose(

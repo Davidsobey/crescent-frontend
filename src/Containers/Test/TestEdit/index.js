@@ -59,7 +59,8 @@ class TestEdit extends React.Component {
                     component={Select}
                     validate={[ required ]}
                   >
-                    {this.props.modules.map(module => (
+                    {(Array.isArray(this.props.modules) ? this.props.modules : [])
+                    .map(module => (
                       <MenuItem value={module.id} key={module.id}>
                         {module.name}
                       </MenuItem>

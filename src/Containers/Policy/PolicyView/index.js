@@ -43,7 +43,7 @@ class PolicyView extends React.Component {
   };
 
   render() {
-    const { policies } = this.props;
+    const policies = (Array.isArray(this.props.policies) ? this.props.policies : []);
     const columns = [
       {
         Header: 'Name',
@@ -86,7 +86,7 @@ class PolicyView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (Array.isArray(this.props.policies) ? this.props.policies.length : false) ? (
+          ) : (
             <div>
               <ReactTable
                 columns={columns}
@@ -95,10 +95,6 @@ class PolicyView extends React.Component {
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
-            </div>
-          ) : (
-            <div>
-              There is no policy
             </div>
           )}
         </Card>

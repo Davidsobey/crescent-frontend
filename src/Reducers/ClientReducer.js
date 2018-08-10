@@ -134,6 +134,8 @@ function ClientReducer(state = {}, action) {
         error: action.error,
         client_editing: false,
       };
+    case ClientConstants.CLEAR_CLIENTS:
+      return {};
     case UserConstants.LOGOUT:
       return {};
     default:

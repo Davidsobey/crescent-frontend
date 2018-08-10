@@ -45,7 +45,7 @@ class ClientView extends React.Component {
   };
 
   render() {
-    const { clients } = this.props;
+    const clients = Array.isArray(this.props.clients) ? this.props.clients : [];
     const columns = [
       {
         Header: 'Name',
@@ -84,7 +84,7 @@ class ClientView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Client List">
-          {!this.props.clients || this.props.clients_loading ? (
+          {this.props.clients_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>

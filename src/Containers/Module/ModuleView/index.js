@@ -112,8 +112,7 @@ class ModuleView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false)
-          && (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
+          ) : (
             <ReactTable
               columns={columns}
               data={this.loadData(modules, courses)}
@@ -121,10 +120,6 @@ class ModuleView extends React.Component {
               defaultPageSize={10}
               className="-striped -highlight"
             />
-          ) : (
-            <div>
-              There is no module
-            </div>
           )}
         </Card>
         <CustomModal

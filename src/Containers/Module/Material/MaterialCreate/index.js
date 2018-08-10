@@ -5,18 +5,27 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
+import Typography from 'material-ui/Typography';
 
 import Select from '../../../../Components/Select';
 import Card from '../../../../Components/Card';
 import Button from '../../../../Components/Button';
 import ModuleActions from '../../../../Actions/ModuleActions';
 import LinearProgress from '../../../../Components/LinearProgress';
+import OptionsModal from '../../../../Components/OptionsModal';
+import history from '../../../../Helpers/History';
 
 const validate = () => {
   const errors = {};
 
   return errors;
 };
+
+const options = [
+  {label: 'Create another module', url: '/module/create'},
+  {label: 'Create an assignment for this module', url: '/assessment/create'},
+  {label: 'Upload another material for this module'},
+];
 
 class MaterialCreate extends React.Component {
   constructor(props) {
@@ -43,6 +52,14 @@ class MaterialCreate extends React.Component {
     const file = this.state.selectedFile;
     this.props.dispatch(ModuleActions.uploadMaterial(values.ModuleId, file));
   };
+  
+  onContinue = (index) => {
+    this.props.dispatch(ModuleActions.closeRedirectModal());
+    if (index==2)
+      this.props.initialize({ ModuleId: this.props.newModuleId });
+    else
+      history.push(options[index].url);
+  }
 
   render() {
     return (
@@ -60,20 +77,15 @@ class MaterialCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Modules...
                 </div>
-              ) : (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
+              ) : (
                 <Field name="ModuleId" label="Module Name" component={Select}>
-                  {this.props.modules.map(module => (
+                  {(Array.isArray(this.props.modules) ? this.props.modules : [])
+                  .map(module => (
                     <MenuItem value={module.id} key={module.id}>
                       {module.name}
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    No available courses
-                  </Typography>
-                </div>
               )}
               <div>
                 <input type="file" onChange={this.fileSelectedHandler} />
@@ -98,6 +110,12 @@ class MaterialCreate extends React.Component {
             </div>
           )}
         </form>
+        <OptionsModal
+          title="Module created successfully."
+          open={this.props.openRedirectModal?this.props.openRedirectModal:false}
+          onClick={this.onContinue.bind(this)}
+          options={options}
+        />
       </Card>
     );
   }
@@ -110,6 +128,7 @@ MaterialCreate.propTypes = {
   modules_loading: PropTypes.bool,
   newModuleId: PropTypes.number,
   uploading: PropTypes.bool,
+  openRedirectModal: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
@@ -117,6 +136,7 @@ const mapStateToProps = state => ({
   modules_loading: state.ModuleReducer.loading,
   newModuleId: state.ModuleReducer.newModuleId,
   uploading: state.ModuleReducer.uploading,
+  openRedirectModal: state.ModuleReducer.openRedirectModal,
 });
 
 const withForm = reduxForm(

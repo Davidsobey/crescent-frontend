@@ -61,6 +61,7 @@ function QuestionReducer(state = {}, action) {
       return Object.assign({}, state, {
         questions: [],
         loading: true,
+        creating: false,
       });
     case QuestionConstants.LOADQUESTIONS_SUCCESS:
       return Object.assign({}, state, {
@@ -184,6 +185,7 @@ function QuestionReducer(state = {}, action) {
       return {
         question: {},
         questions: [],
+        creating: false,
       };
     default:
       return state;

@@ -370,12 +370,12 @@ function uploadMaterial(policyId, file) {
   };
 }
 
-function getMaterialsForPolicy(policyId, policyName, policyDescription) {
+function getMaterialsForPolicy(policyId, policyName, policyDescription, canAcknowlege) {
   function request() {
     return { type: PolicyConstants.GET_MATERIALS_REQUEST };
   }
   function success(materials) {
-    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials };
+    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials, canAcknowlege };
   }
   function failure(error) {
     return { type: PolicyConstants.GET_MATERIALS_FAILURE, error };
@@ -387,7 +387,6 @@ function getMaterialsForPolicy(policyId, policyName, policyDescription) {
     PolicyService.getMaterialsForPolicy(policyId).then(
       (materials) => {
         dispatch(success(materials));
-        history.push('/policy/acknowledgement/detail');
       },
       (error) => {
         dispatch(failure(error));

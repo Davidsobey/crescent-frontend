@@ -60,7 +60,7 @@ class UserEnrolView extends React.Component {
           userName: getUserNameById(enrolInfo.userId),
           courseName: getCourseNameById(enrolInfo.courseId),
           deadline: enrolInfo.deadline.slice(0,10),
-          status: enrolInfo.enrolmentTests,
+          status: enrolInfo.completed ? 'Yes' : 'No',
         };
         data.push(row);
       });

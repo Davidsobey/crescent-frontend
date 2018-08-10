@@ -288,6 +288,12 @@ const ClientDetails1 = {
   subItems: [
     {
       key: 0,
+      subItemName: 'Subscribe',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'subscription/create',
+    },
+    {
+      key: 1,
       subItemName: 'Subscription List',
       subItemIcon: <ListIcon />,
       subItemExtension: 'subscription/list',

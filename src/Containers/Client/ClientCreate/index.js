@@ -26,6 +26,11 @@ const number = value => value && isNaN(Number(value)) ? 'Must be a number' : und
 
 /* eslint-disable react/prefer-stateless-function */
 class ClientCreate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.dispatch(ClientActions.clearClients());
+  }
+
   submit = (values) => {
     const client = Object.assign({}, values);
     this.props.dispatch(ClientActions.create(client));

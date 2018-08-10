@@ -49,7 +49,6 @@ class CourseView extends React.Component {
   };
 
   render() {
-    const { courses } = this.props;
     const columns = [
       {
         Header: 'Name',
@@ -96,19 +95,15 @@ class CourseView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
+          ) : (
             <div>
               <ReactTable
                 columns={columns}
-                data={courses}
+                data={Array.isArray(this.props.courses) ? this.props.courses : []}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
-            </div>
-          ) : (
-            <div>
-              There is no course
             </div>
           )}
         </Card>

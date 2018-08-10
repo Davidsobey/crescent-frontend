@@ -21,6 +21,7 @@ const validate = () => {
 };
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const futureDay = value => value && (new Date(value)) < (new Date()) ? 'Must be a future day' : undefined;
 
 class EnrolmentCreate extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class EnrolmentCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Users
                 </div>
-              ) : (Array.isArray(this.props.users) ? this.props.users.length : false) ? (
+              ) : (
                 <div>
                   <Field
                     name="user"
@@ -71,7 +72,7 @@ class EnrolmentCreate extends React.Component {
                     component={Select}
                     validate={[ required ]}
                   >
-                    {this.props.users
+                    {(Array.isArray(this.props.users) ? this.props.users : [])
                     .filter(user => (this.props.user.role.name=='Admin' ||this.props.user.clientId==user.clientId))
                     .map(user => (
                       <MenuItem value={user.id} key={user.id}>
@@ -80,26 +81,21 @@ class EnrolmentCreate extends React.Component {
                     ))}
                   </Field>
                 </div>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    No available users
-                  </Typography>
-                </div>
               )}
               {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses...
                 </div>
-              ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
+              ) : this.props.courses ? (
                 <Field
                   name="course"
                   label="Course Name"
                   component={Select}
                   validate={[ required ]}
                 >
-                  {this.props.courses.map(course => (
+                  {(Array.isArray(this.props.courses) ? this.props.courses : [])
+                  .map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
@@ -122,7 +118,7 @@ class EnrolmentCreate extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  validate={[ required ]}
+                  validate={[ required, futureDay ]}
                 />
               </div>
             </div>

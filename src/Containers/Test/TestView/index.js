@@ -116,8 +116,7 @@ class TestView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : (Array.isArray(this.props.tests) ? this.props.tests.length : false)
-          && (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
+          ) : (
             <ReactTable
               columns={columns}
               data={this.loadData(tests, modules)}
@@ -125,10 +124,6 @@ class TestView extends React.Component {
               defaultPageSize={10}
               className="-striped -highlight"
             />
-          ) : (
-            <div>
-              There is no test
-            </div>
           )}
         </Card>
         <CustomModal

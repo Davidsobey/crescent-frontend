@@ -34,13 +34,12 @@ class SubscriptionView extends React.Component {
   }
 
   
-  manipulateData = () => {
-    let {courses, userEnrolments} = this.props;
+  manipulateData = (courses, userEnrolments) => {
     var getEnrolmentsCount = courseId =>
-      userEnrolments ? userEnrolments.filter(userEnrolment => userEnrolment.courseId == courseId).length : '';
+    Array.isArray(userEnrolments) ? userEnrolments.filter(userEnrolment => userEnrolment.courseId == courseId).length : '';
 
     const data = [];
-    if (courses) {
+    if (Array.isArray(courses)) {
       courses
       .forEach((course) => {
         const row = {
@@ -77,7 +76,7 @@ class SubscriptionView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Client List">
-          {!this.props.courses || this.props.courses_loading || this.props.userEnrolments_loading ? (
+          {this.props.courses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -85,7 +84,7 @@ class SubscriptionView extends React.Component {
             <div>
               <ReactTable
                 columns={columns}
-                data={this.manipulateData()}
+                data={this.manipulateData(this.props.courses, this.props.userEnrolments)}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"

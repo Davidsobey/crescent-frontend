@@ -97,7 +97,7 @@ class TestCreate extends React.Component {
                 <LinearProgress color="secondary" />
                 Loading Courses
               </div>
-            ) : (Array.isArray(this.props.courses) ? this.props.courses.length : false) ? (
+            ) : (
               <div>
                 <Field
                   name="course"
@@ -106,7 +106,7 @@ class TestCreate extends React.Component {
                   component={Select}
                   validate={[ required ]}
                 >
-                  {this.props.courses
+                  {(Array.isArray(this.props.courses) ? this.props.courses : [])
                   .filter(isValidCourse)
                   .map(course => (
                     <MenuItem value={course.id} key={course.id}>
@@ -115,19 +115,13 @@ class TestCreate extends React.Component {
                   ))}
                 </Field>
               </div>
-            ) : (
-              <div>
-                <Typography variant="caption" component="p">
-                  No available courses
-                </Typography>
-              </div>
             )}
             {this.props.modules_loading ? (
               <div>
                 <LinearProgress color="secondary" />
                 Loading Modules...
               </div>
-            ) : (Array.isArray(this.props.modules) ? this.props.modules.length : false) ? (
+            ) : this.props.modules ? (
               <div>
                 <Field
                   name="module"
@@ -136,7 +130,7 @@ class TestCreate extends React.Component {
                   onChange={this.loadTests}
                   validate={[ required ]}
                 >
-                  {this.props.modules
+                  {(Array.isArray(this.props.modules) ? this.props.modules : [])
                   .filter(isValidModule)
                   .map(module => (
                     <MenuItem value={module.id} key={module.id}>

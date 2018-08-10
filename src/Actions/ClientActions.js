@@ -46,7 +46,6 @@ function subscribe(subscription) {
     ClientService.subscribe(subscription).then(
       () => {
         dispatch(success(subscription));
-        history.push("/client/list");
         dispatch(AlertActions.success('Subscription created.'));
       },
       (error) => {
@@ -230,6 +229,15 @@ function getSubscriptions() {
   };
 }
 
+function clearClients() {
+  function clear() {
+    return { type: ClientConstants.CLEAR_CLIENTS };
+  }
+  return (dispatch) => {
+    dispatch(clear());
+  };
+}
+
 const clientActions = {
   create,
   getAll,
@@ -240,6 +248,7 @@ const clientActions = {
   editClient,
   getUserEnrolments,
   getSubscriptions,
+  clearClients,
 };
 
 export default clientActions;

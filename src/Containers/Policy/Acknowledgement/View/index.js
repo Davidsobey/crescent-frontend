@@ -30,13 +30,14 @@ class PolicyAcknowledgementView extends React.Component {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForClient(this.props.user.clientId));
   }
 
-  loadPolicy = (id, name, description) => {
-    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description));
+  loadPolicy = (id, name, description, canAcknowlege) => {
+    this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description, canAcknowlege));
+    history.push('/policy/acknowledgement/detail');
   };
 
   manipulateData = (policyAcknowledgements) => {
     var getUserNameById = userId => {
-      if (this.props.users) {
+      if (Array.isArray(this.props.users)) {
         let user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
@@ -85,16 +86,16 @@ class PolicyAcknowledgementView extends React.Component {
         Header: 'View Policy Details',
         accessor: 'view/acknowledge',
         Filter: <div />,
-        Cell: row => (row.original.userId == user.id&&row.original.acknowledged=='No' ?
+        Cell: row => (
           <div>
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description)}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id&&row.original.acknowledged=='No')}
             >
               View Policy Details
             </Button>
-          </div> : <div></div>
+          </div>
         ),
       },
     ];
@@ -105,7 +106,7 @@ class PolicyAcknowledgementView extends React.Component {
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
-          ) : policyAcknowledgements.length ? (
+          ) : (
             <div>
               <ReactTable
                 columns={columns}
@@ -114,10 +115,6 @@ class PolicyAcknowledgementView extends React.Component {
                 defaultPageSize={10}
                 className="-striped -highlight"
               />
-            </div>
-          ) : (
-            <div>
-              There is no policy acknowledgement
             </div>
           )}
         </Card>

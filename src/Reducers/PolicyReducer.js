@@ -160,6 +160,7 @@ function PolicyReducer(state = {}, action) {
         policyId: action.policyId,
         policyName: action.policyName,
         policyDescription: action.policyDescription,
+        canAcknowlege: action.canAcknowlege,
         policyMaterials_loading: false,
       });
     case PolicyConstants.GET_MATERIALS_FAILURE:

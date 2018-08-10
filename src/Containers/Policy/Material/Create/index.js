@@ -59,20 +59,15 @@ class PolicyMaterialCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Policies
                 </div>
-              ) : (Array.isArray(this.props.policies) ? this.props.policies.length : false) ? (
+              ) : (
                 <Field name="PolicyId" label="Policy Name" component={Select} validate={[ required ]}>
-                  {this.props.policies.map(policy => (
+                  {(Array.isArray(this.props.policies) ? this.props.policies : [])
+                  .map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
                       {policy.name}
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <div>
-                  <Typography variant="caption" component="p">
-                    No available policies
-                  </Typography>
-                </div>
               )}
               <div>
                 <input type="file" onChange={this.fileSelectedHandler} />

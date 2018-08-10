@@ -34,6 +34,8 @@ const ClientConstants = {
   EDIT_REQUEST: 'EDIT_CLIENT_REQUEST',
   EDIT_SUCCESS: 'EDIT_CLIENT_SUCCESS',
   EDIT_FAILURE: 'EDIT_CLIENT_FAILURE',
+  
+  CLEAR_CLIENTS: 'CLEAR_CLIENTS',
 };
 
 export default ClientConstants;

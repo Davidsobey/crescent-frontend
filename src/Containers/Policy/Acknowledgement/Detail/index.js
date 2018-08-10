@@ -72,7 +72,7 @@ class UsersPolicyDetails extends React.Component {
               header={header}
               data={policyMaterials}
             />
-            {this.props.policy_acknowledging ? (
+            {!this.props.canAcknowlege ? '' : this.props.policy_acknowledging ? (
               <div>
                 <LinearProgress color="secondary" />
                 Acknowldeging Policy
@@ -99,10 +99,11 @@ class UsersPolicyDetails extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyMaterials: state.PolicyReducer.policyMaterials,
-  policyMaterials_loading: state.PolicyReducer.loading,
+  policyMaterials_loading: state.PolicyReducer.policyMaterials_loading,
   policyId: state.PolicyReducer.policyId,
   policyName: state.PolicyReducer.policyName,
   policyDescription: state.PolicyReducer.policyDescription,
+  canAcknowlege: state.PolicyReducer.canAcknowlege,
   policy_acknowledging: state.PolicyReducer.acknowledging,
 });
 
@@ -121,6 +122,7 @@ UsersPolicyDetails.propTypes = {
   policyId: PropTypes.object,
   policyName: PropTypes.string,
   policyDescription: PropTypes.string,
+  canAcknowlege: PropTypes.bool,
   policy_acknowledging: PropTypes.bool,
 };
 

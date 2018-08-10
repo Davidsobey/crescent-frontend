@@ -57,13 +57,13 @@ class AcknowledgementCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Users
                 </div>
-              ) : (Array.isArray(this.props.users) ? this.props.users.filter(isValidUser).length : false) ? (
+              ) : (
                 <Field name="userID" 
                   label="User Name" 
                   component={Select} 
                   validate={[ required ]}
                 >
-                  {this.props.users
+                  {(Array.isArray(this.props.users) ? this.props.users : [])
                   .filter(isValidUser)
                   .map(user => (
                     <MenuItem value={user.id} key={user.id}>
@@ -71,10 +71,6 @@ class AcknowledgementCreate extends React.Component {
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <Typography variant="caption" component="p">
-                  No available user to choose
-                </Typography>
               )}
             </div>
             <div>
@@ -83,9 +79,9 @@ class AcknowledgementCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Loading Policies
                 </div>
-              ) : (Array.isArray(this.props.policies) ? this.props.policies.filter(isValidPolicy).length : false) ? (
+              ) : (
                 <Field name="policyID" label="Policy Name" component={Select} validate={[ required ]}>
-                  {this.props.policies
+                  {(Array.isArray(this.props.policies) ? this.props.policies : [])
                   .filter(isValidPolicy)
                   .map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
@@ -93,10 +89,6 @@ class AcknowledgementCreate extends React.Component {
                     </MenuItem>
                   ))}
                 </Field>
-              ) : (
-                <Typography variant="caption" component="p">
-                  No available policy to choose
-                </Typography>
               )}
             </div>
           </div>

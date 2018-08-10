@@ -36,7 +36,7 @@ function subscribe(subscription) {
   };
 
   return Auth.fetch(
-    `${api}/Clients/${subscription.clientID}/Subscription/$i{subscription.courseID}`,
+    `${api}/Clients/${subscription.clientID}/Subscription/${subscription.courseID}`,
     requestOptions,
   );
 }

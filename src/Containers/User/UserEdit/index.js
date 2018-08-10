@@ -61,7 +61,8 @@ class UserEdit extends React.Component {
                     component={Select}
                     validate={[ required ]}
                   >
-                    {this.props.clients.map(client => (
+                    {(Array.isArray(this.props.clients) ? this.props.clients : [])
+                    .map(client => (
                       <MenuItem value={client.id} key={client.id}>
                         {client.name}
                       </MenuItem>
@@ -82,7 +83,8 @@ class UserEdit extends React.Component {
                     component={Select}
                     validate={[ required ]}
                   >
-                    {this.props.roles.map(role => (
+                    {(Array.isArray(this.props.roles) ? this.props.roles : [])
+                    .map(role => (
                       <MenuItem value={role.id} key={role.id}>
                         {role.name}
                       </MenuItem>

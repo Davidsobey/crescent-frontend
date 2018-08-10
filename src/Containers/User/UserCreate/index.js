@@ -51,7 +51,8 @@ class UserCreate extends React.Component {
           <div>
             {this.props.clients ? (
               <Field name="clientId" label="Client Name" component={Select} validate={[ required ]}>
-                {this.props.clients.map(client => (
+                {(Array.isArray(this.props.clients) ? this.props.clients : [])
+                .map(client => (
                   <MenuItem value={client.id} key={client.id}>
                     {client.name}
                   </MenuItem>
@@ -66,7 +67,7 @@ class UserCreate extends React.Component {
             <div>
               {this.props.roles ? (
                 <Field name="roleId" label="Role" component={Select} validate={[ required ]}>
-                  {this.props.roles
+                  {(Array.isArray(this.props.roles) ? this.props.roles : [])
                   .filter(role => (role.name == 'Admin' && user.role.name == 'Client' ? false : true) )
                   .map(role => (
                     <MenuItem value={role.id} key={role.id}>
