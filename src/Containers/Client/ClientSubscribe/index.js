@@ -28,6 +28,10 @@ class SubscriptionCreate extends React.Component {
     this.props.dispatch(ClientActions.getAll());
   }
   
+  componentWillMount () {
+    this.props.initialize({ clientID: this.props.user.clientId });
+  }
+  
   loadUnsubscribedCourses = (values) => {
     this.props.dispatch(CourseActions.getAllUnsubscribed(values.target.value));
   };
@@ -73,6 +77,7 @@ class SubscriptionCreate extends React.Component {
                   validate={[ required ]}
                 >
                   {clients
+                  .filter(client => client.id == this.props.user.clientId)
                   .map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
@@ -139,6 +144,7 @@ SubscriptionCreate.propTypes = {
   unsubscribed_courses: PropTypes.array,
   unsubscribed_courses_loading: PropTypes.bool,
   client_subscribing: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -149,6 +155,7 @@ const mapStateToProps = state => ({
   unsubscribed_courses: state.CourseReducer.unsubscribed_courses,
   unsubscribed_courses_loading: state.CourseReducer.unsubscribed_courses_loading,
   client_subscribing: state.ClientReducer.subscribing,
+  user: state.LoginReducer.user,
 });
 
 const withForm = reduxForm(
