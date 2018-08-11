@@ -29,7 +29,10 @@ class SubscriptionCreate extends React.Component {
   }
   
   componentWillMount () {
-    this.props.initialize({ clientID: this.props.user.clientId });
+    if (this.props.user.role.name != 'Admin') {
+      this.props.initialize({ clientID: this.props.user.clientId });
+      this.props.dispatch(CourseActions.getAllUnsubscribed(this.props.user.clientId));
+    }
   }
   
   loadUnsubscribedCourses = (values) => {
@@ -50,8 +53,6 @@ class SubscriptionCreate extends React.Component {
     const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
     const isUnsubscribedCourse = (course => Array.isArray(this.props.unsubscribed_courses) ? 
       this.props.unsubscribed_courses.filter(unsubscribed_course => course.id == unsubscribed_course.id).length : false);
-
-    const clients = Array.isArray(this.props.clients) ? this.props.clients : [];
 
     return (
       <Card width="600px" title="Subscribe To Course">
@@ -76,8 +77,8 @@ class SubscriptionCreate extends React.Component {
                   component={Select} 
                   validate={[ required ]}
                 >
-                  {clients
-                  .filter(client => client.id == this.props.user.clientId)
+                  {(Array.isArray(this.props.clients) ? this.props.clients : [])
+                  .filter(client => this.props.user.role.name == 'Admin' || client.id == this.props.user.clientId)
                   .map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
@@ -99,7 +100,7 @@ class SubscriptionCreate extends React.Component {
                   component={Select} 
                   validate={[ required ]}
                 >
-                  {this.props.courses
+                  {(Array.isArray(this.props.courses) ? this.props.courses : [])
                   .filter(isValidCourse)
                   .filter(isUnsubscribedCourse)
                   .map(course => (

@@ -11,6 +11,7 @@ import Card from '../../../Components/Card';
 import Select from '../../../Components/Select';
 import Button from '../../../Components/Button';
 import CourseActions from '../../../Actions/CourseActions';
+import ClientActions from '../../../Actions/ClientActions';
 import UserActions from '../../../Actions/UserActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
@@ -41,13 +42,17 @@ class EnrolmentCreate extends React.Component {
 
   loadCourses = (values) => {
     const user = this.props.users.find(x => x.id === values.target.value);
-    this.props.dispatch(CourseActions
-      .loadCoursesByClientSubscriptions(user.clientId));
+    this.props.dispatch(CourseActions.loadCoursesByClientSubscriptions(user.clientId));
+    this.props.dispatch(ClientActions.getUserEnrolments(user.clientId));
   };
 
   render() {
     const { selectedDate } = this.state;
     const val = this.state.value || null;
+
+    const isUnenrolledCourse = (course => Array.isArray(this.props.userEnrolments) ? 
+      !this.props.userEnrolments.filter(userEnrolment => course.id == userEnrolment.courseId).length : false);
+
 
     return (
       <Card width="600px" title="Enrol A User In A Course">
@@ -82,7 +87,7 @@ class EnrolmentCreate extends React.Component {
                   </Field>
                 </div>
               )}
-              {this.props.courses_loading ? (
+              {this.props.courses_loading || this.props.userEnrolments_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses...
@@ -95,6 +100,7 @@ class EnrolmentCreate extends React.Component {
                   validate={[ required ]}
                 >
                   {(Array.isArray(this.props.courses) ? this.props.courses : [])
+                  .filter(isUnenrolledCourse)
                   .map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
@@ -151,6 +157,8 @@ EnrolmentCreate.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
   courses_loading: PropTypes.bool,
+  userEnrolments: PropTypes.array,
+  userEnrolments_loading: PropTypes.bool,
   users: PropTypes.array,
   users_loading: PropTypes.bool,
   user: PropTypes.object,
@@ -161,6 +169,8 @@ function mapStateToProps(state) {
   return {
     courses: state.CourseReducer.courses,
     courses_loading: state.CourseReducer.loading,
+    userEnrolments: state.ClientReducer.userEnrolments,
+    userEnrolments_loading: state.ClientReducer.loading,
     users: state.UserReducer.users,
     users_loading: state.UserReducer.loading,
     user: state.LoginReducer.user,

@@ -33,6 +33,12 @@ class UserCreate extends React.Component {
     this.props.dispatch(ClientActions.getAll());
     this.props.dispatch(UserActions.getAllRoles());
   }
+  
+  componentWillMount () {
+    if (this.props.user.role.name != 'Admin') {
+      this.props.initialize({ clientId: this.props.user.clientId });
+    }
+  }
 
   submit = (values) => {
     const user = Object.assign({}, values);
@@ -50,8 +56,14 @@ class UserCreate extends React.Component {
         >
           <div>
             {this.props.clients ? (
-              <Field name="clientId" label="Client Name" component={Select} validate={[ required ]}>
+              <Field 
+                name="clientId" 
+                label="Client Name" 
+                component={Select} 
+                validate={[ required ]}
+              >
                 {(Array.isArray(this.props.clients) ? this.props.clients : [])
+                .filter(client => this.props.user.role.name == 'Admin' || client.id == this.props.user.clientId)
                 .map(client => (
                   <MenuItem value={client.id} key={client.id}>
                     {client.name}
