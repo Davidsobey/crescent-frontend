@@ -177,16 +177,9 @@ function QuestionReducer(state = {}, action) {
         question_editing: false,
       });
     case UserConstants.LOGOUT:
-      return {
-        question: {},
-        questions: [],
-      };
+      return {};
     case QuestionConstants.CLEAR_QUESTION:
-      return {
-        question: {},
-        questions: [],
-        creating: false,
-      };
+      return {};
     default:
       return state;
   }

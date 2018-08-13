@@ -51,8 +51,15 @@ class SubscriptionCreate extends React.Component {
       (Array.isArray(module.testIds) ? module.tests.filter(isValidTest).length : false)
     );
     const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
-    const isUnsubscribedCourse = (course => Array.isArray(this.props.unsubscribed_courses) ? 
-      this.props.unsubscribed_courses.filter(unsubscribed_course => course.id == unsubscribed_course.id).length : false);
+    const isUnsubscribedCourse = (course => {
+      if (Array.isArray(this.props.unsubscribed_courses)) {
+        let length = this.props.unsubscribed_courses
+          .filter(unsubscribed_course => course.id == unsubscribed_course.id)
+          .length;
+        return length;
+      }
+      return false;
+    });
 
     return (
       <Card width="600px" title="Subscribe To Course">

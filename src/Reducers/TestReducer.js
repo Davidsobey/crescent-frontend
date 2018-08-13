@@ -119,9 +119,7 @@ function TestReducer(state = {}, action) {
         ...state,
       };
     case UserConstants.LOGOUT:
-      return {
-        tests: [],
-      };
+      return {};
     case TestConstants.EDIT_TEST_REQUEST:
       return Object.assign({}, state, {
         test_editing: true,
@@ -152,9 +150,7 @@ function TestReducer(state = {}, action) {
         loading: false,
       });
     case TestConstants.CLEAR_TESTS:
-      return {
-        tests: [],
-      };
+      return {};
     default:
       return state;
   }

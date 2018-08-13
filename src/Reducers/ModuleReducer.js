@@ -87,9 +87,7 @@ function ModuleReducer(state = {}, action) {
         loadingTests: false,
       });
     case UserConstants.LOGOUT:
-      return { 
-        modules: [],
-      };
+      return {};
     case ModuleConstants.LOAD_MODULE_REQUEST:
       return {
         module_loading: true,

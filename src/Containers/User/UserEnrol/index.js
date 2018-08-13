@@ -32,6 +32,7 @@ class EnrolmentCreate extends React.Component {
     this.state = {
       value: this.props.value,
       data: '',
+      userId: undefined,
     };
   }
 
@@ -41,6 +42,7 @@ class EnrolmentCreate extends React.Component {
   };
 
   loadCourses = (values) => {
+    this.setState({userId: values.target.value});
     const user = this.props.users.find(x => x.id === values.target.value);
     this.props.dispatch(CourseActions.loadCoursesByClientSubscriptions(user.clientId));
     this.props.dispatch(ClientActions.getUserEnrolments(user.clientId));
@@ -50,9 +52,16 @@ class EnrolmentCreate extends React.Component {
     const { selectedDate } = this.state;
     const val = this.state.value || null;
 
-    const isUnenrolledCourse = (course => Array.isArray(this.props.userEnrolments) ? 
-      !this.props.userEnrolments.filter(userEnrolment => course.id == userEnrolment.courseId).length : false);
-
+    const isUnenrolledCourse = (course => {
+      if (Array.isArray(this.props.userEnrolments)) {
+        let length = this.props.userEnrolments
+          .filter(userEnrolment => this.state.userId == userEnrolment.userId)
+          .filter(userEnrolment => course.id == userEnrolment.courseId)
+          .length;
+        return length == 0;
+      }
+      return false;
+    });
 
     return (
       <Card width="600px" title="Enrol A User In A Course">

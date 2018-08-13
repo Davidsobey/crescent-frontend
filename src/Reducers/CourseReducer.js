@@ -97,9 +97,7 @@ function CourseReducer(state = {}, action) {
         course_editing: false,
       };
     case CourseConstants.CLEAR_COURSES:
-      return {
-        courses: [],
-      };
+      return {};
     case CourseConstants.LOADCOURSES_REQUEST:
       return {
         loading: true,
@@ -115,9 +113,7 @@ function CourseReducer(state = {}, action) {
         loading: false,
       };
     case UserConstants.LOGOUT:
-      return {
-        courses: [],
-      };
+      return {};
     default:
       return state;
   }

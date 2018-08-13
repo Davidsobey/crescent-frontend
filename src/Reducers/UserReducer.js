@@ -108,6 +108,8 @@ function UserReducer(state = {}, action) {
         error: action.error,
         user_editing: false,
       });
+    case UserConstants.LOGOUT:
+      return {};
     default:
       return state;
   }

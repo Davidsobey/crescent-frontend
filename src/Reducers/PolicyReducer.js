@@ -96,9 +96,7 @@ function PolicyReducer(state = {}, action) {
         acknowledging: false,
       });
     case PolicyConstants.CLEAR_POLICIES:
-      return {
-        policies: undefined,
-      };
+      return {};
     case PolicyConstants.LOAD_POLICY_REQUEST:
       return {
         policy_loading: true,
