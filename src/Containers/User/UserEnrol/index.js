@@ -32,7 +32,7 @@ class EnrolmentCreate extends React.Component {
       this.props.initialize({ course: newCourseId });
     }
     this.props.dispatch(UserActions.getAll());
-    //this.props.dispatch(CourseActions.clearCourses());
+    this.props.dispatch(CourseActions.getAll());
     this.state = {
       value: this.props.value,
       data: '',
@@ -56,6 +56,16 @@ class EnrolmentCreate extends React.Component {
     const { selectedDate } = this.state;
     const val = this.state.value || null;
 
+    const isValidModule = (module => 
+      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false)
+    );
+    const isValidCourse = (course => {
+      let courseWithModules = (Array.isArray(this.props.courses) ? this.props.courses : [])
+        .find(c => c.id == course.id);
+      let modules = courseWithModules ? courseWithModules.modules : null;
+      return Array.isArray(modules) ? modules.filter(isValidModule).length : false;
+    });
+
     const isUnenrolledCourse = (course => {
       if (Array.isArray(this.props.userEnrolments)) {
         let length = this.props.userEnrolments
@@ -67,7 +77,9 @@ class EnrolmentCreate extends React.Component {
       return false;
     });
 
-    const courses = (Array.isArray(this.props.courses) ? this.props.courses : []).filter(isUnenrolledCourse);
+    const courses = (Array.isArray(this.props.subscribedCourses) ? this.props.subscribedCourses : [])
+      .filter(isValidCourse)
+      .filter(isUnenrolledCourse);
 
     return (
       <Card width="600px" title="Enrol A User In A Course">
@@ -102,12 +114,12 @@ class EnrolmentCreate extends React.Component {
                   </Field>
                 </div>
               )}
-              {this.props.courses_loading || this.props.userEnrolments_loading ? (
+              {this.props.subscribedCourses_loading || this.props.userEnrolments_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Courses...
                 </div>
-              ) : this.props.courses ? (
+              ) : this.props.subscribedCourses ? (
                 <Field
                   name="course"
                   label="Course Name"
@@ -175,6 +187,8 @@ EnrolmentCreate.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
   courses_loading: PropTypes.bool,
+  subscribedCourses: PropTypes.array,
+  subscribedCourses_loading: PropTypes.bool,
   newCourseId: PropTypes.number,
   userEnrolments: PropTypes.array,
   userEnrolments_loading: PropTypes.bool,
@@ -188,6 +202,8 @@ function mapStateToProps(state) {
   return {
     courses: state.CourseReducer.courses,
     courses_loading: state.CourseReducer.loading,
+    subscribedCourses: state.CourseReducer.subscribedCourses,
+    subscribedCourses_loading: state.CourseReducer.subscribedCourses_loading,
     newCourseId: state.CourseReducer.newCourseId,
     userEnrolments: state.ClientReducer.userEnrolments,
     userEnrolments_loading: state.ClientReducer.loading,

@@ -76,7 +76,7 @@ class SubscriptionView extends React.Component {
     return (
       <div>
         <Card width="800px" title="Client List">
-          {this.props.courses_loading || this.props.userEnrolments_loading ? (
+          {this.props.subscribedCourses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
             </div>
@@ -84,7 +84,7 @@ class SubscriptionView extends React.Component {
             <div>
               <ReactTable
                 columns={columns}
-                data={this.manipulateData(this.props.courses, this.props.userEnrolments)}
+                data={this.manipulateData(this.props.subscribedCourses, this.props.userEnrolments)}
                 filterable
                 defaultPageSize={10}
                 className="-striped -highlight"
@@ -98,8 +98,8 @@ class SubscriptionView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  courses: state.CourseReducer.courses,
-  courses_loading: state.CourseReducer.loading,
+  subscribedCourses: state.CourseReducer.subscribedCourses,
+  subscribedCourses_loading: state.CourseReducer.subscribedCourses_loading,
   userEnrolments: state.ClientReducer.userEnrolments,
   userEnrolments_loading: state.ClientReducer.loading,
   user: state.LoginReducer.user,
@@ -114,8 +114,8 @@ const withForm = reduxForm(
 
 SubscriptionView.propTypes = {
   dispatch: PropTypes.func,
-  courses: PropTypes.array,
-  courses_loading: PropTypes.bool,
+  subscribedCourses: PropTypes.array,
+  subscribedCourses_loading: PropTypes.bool,
   userEnrolments: PropTypes.array,
   userEnrolments_loading: PropTypes.bool,
   user: PropTypes.object,

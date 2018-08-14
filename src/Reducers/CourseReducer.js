@@ -101,18 +101,18 @@ function CourseReducer(state = {}, action) {
         newCourseId: state.newCourseId,
       };
     case CourseConstants.LOADCOURSES_REQUEST:
-      return {
-        loading: true,
-      };
+      return Object.assign({}, state, {
+        subscribedCourses_loading: true,
+      });
     case CourseConstants.LOADCOURSES_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
-        loading: false,
+        subscribedCourses: action.courses,
+        subscribedCourses_loading: false,
       });
     case CourseConstants.LOADCOURSES_FAILURE:
       return {
         error: action.error,
-        loading: false,
+        subscribedCourses_loading: false,
       };
     case UserConstants.LOGOUT:
       return {};
