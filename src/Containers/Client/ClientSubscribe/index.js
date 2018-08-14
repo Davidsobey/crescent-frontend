@@ -61,6 +61,10 @@ class SubscriptionCreate extends React.Component {
       return false;
     });
 
+    const courses = (Array.isArray(this.props.courses) ? this.props.courses : [])
+      .filter(isValidCourse)
+      .filter(isUnsubscribedCourse);
+
     return (
       <Card width="600px" title="Subscribe To Course">
         <form
@@ -107,14 +111,17 @@ class SubscriptionCreate extends React.Component {
                   component={Select} 
                   validate={[ required ]}
                 >
-                  {(Array.isArray(this.props.courses) ? this.props.courses : [])
-                  .filter(isValidCourse)
-                  .filter(isUnsubscribedCourse)
-                  .map(course => (
+                  {courses.length ?
+                  courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
-                  ))}
+                  )) : 
+                  (
+                    <MenuItem disabled={true}>
+                      No course
+                    </MenuItem>
+                  )}
                 </Field>
               )}
             </div>

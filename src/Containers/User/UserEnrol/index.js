@@ -63,6 +63,8 @@ class EnrolmentCreate extends React.Component {
       return false;
     });
 
+    const courses = (Array.isArray(this.props.courses) ? this.props.courses : []).filter(isUnenrolledCourse);
+
     return (
       <Card width="600px" title="Enrol A User In A Course">
         <form
@@ -108,13 +110,16 @@ class EnrolmentCreate extends React.Component {
                   component={Select}
                   validate={[ required ]}
                 >
-                  {(Array.isArray(this.props.courses) ? this.props.courses : [])
-                  .filter(isUnenrolledCourse)
-                  .map(course => (
+                  {courses.length ?
+                  courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
-                  ))}
+                  )) : (
+                    <MenuItem disabled={true}>
+                      No Course
+                    </MenuItem>
+                  )}
                 </Field>
               ) : (
                 <div>
