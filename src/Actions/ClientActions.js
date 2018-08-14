@@ -1,4 +1,5 @@
 import ClientConstants from '../Constants/ClientConstants';
+import CourseConstants from '../Constants/CourseConstants';
 import ClientService from '../Services/ClientService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
@@ -40,11 +41,16 @@ function subscribe(subscription) {
   function failure(error) {
     return { type: ClientConstants.SUBSCRIBE_FAILURE, error };
   }
+  function course_success(newCourseId) {
+    return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
+  }
 
   return (dispatch) => {
     dispatch(request({ subscription }));
     ClientService.subscribe(subscription).then(
       () => {
+        history.push('/user/enrol');
+        dispatch(course_success(subscription.courseID));
         dispatch(success(subscription));
         dispatch(AlertActions.success('Subscription created.'));
       },

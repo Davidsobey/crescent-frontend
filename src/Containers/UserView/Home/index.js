@@ -87,31 +87,34 @@ class HomeComponent extends React.Component {
     const { user } = this.props;
     const policyAcknowledgements = this.manipulatePolicyData(this.props.policyAcknowledgements);
     return (
-      <Card width="800px" title="Overview">
-        <p style={{fontSize:'20px', marginBottom: '15px'}}>My courses</p>
-        {user ? (
-          <Table
-            header={courseHeader}
-            data={this.manipulateCourseData(user.enrolledCourses)}
-          />
-        ) : (
-          <div className="center">
-            <CircularProgress color="secondary" />
-          </div>
-        )}
-
-        <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>My policies</p>
-        {this.props.policyAcknowledgements_loading ? (
-          <div className="center">
-            <CircularProgress color="secondary" />
-          </div>
-        ) : (
-          <Table
-            header={policyHeader}
-            data={policyAcknowledgements}
-          />
-        )}
-      </Card>
+      <div>
+        <Card width="800px" title="Overview">
+          <p style={{fontSize:'20px', marginBottom: '15px'}}>My courses</p>
+          {user ? (
+            <Table
+              header={courseHeader}
+              data={this.manipulateCourseData(user.enrolledCourses)}
+            />
+          ) : (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          )}
+        </Card>
+        <div style={{height:'30px'}}></div>
+        <Card width="800px" title="My policies">
+          {this.props.policyAcknowledgements_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <Table
+              header={policyHeader}
+              data={policyAcknowledgements}
+            />
+          )}
+        </Card>
+      </div>
     );
   }
 }

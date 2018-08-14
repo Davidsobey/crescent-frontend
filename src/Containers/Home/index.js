@@ -207,8 +207,7 @@ class HomeComponent extends React.Component {
     ];
     return (
       <div>
-        <Card width="800px" title="Overview">
-          <p style={{fontSize:'20px', marginBottom: '15px'}}>Enrolment List</p>
+        <Card width="800px" title="Enrolment List">
           {this.props.users_loading || this.props.courses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
@@ -224,7 +223,9 @@ class HomeComponent extends React.Component {
               />
             </div>
           )}
-          <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>Policy Acknowledgement List</p>
+        </Card>
+        <div style={{height:'30px'}}></div>
+        <Card width="800px" title="Policy Acknowledgement List">
           {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
@@ -240,27 +241,27 @@ class HomeComponent extends React.Component {
               />
             </div>
           )}
-          {user.role.name=='Admin' ? 
-            <div>
-              <p style={{fontSize:'20px', marginTop:'30px', marginBottom: '15px'}}>Client Subscriptions</p>
-              {this.props.subscriptions_loading || this.props.paymentStatuses_loading ? (
-                <div className="center">
-                  <CircularProgress color="secondary" />
-                </div>
-              ) : (
-                <div>
-                  <ReactTable
-                    columns={subscriptionColumns}
-                    data={this.manipulateSubscriptionData(this.props.subscriptions, this.props.paymentStatuses)}
-                    filterable
-                    defaultPageSize={10}
-                    className="-striped -highlight"
-                  />
-                </div>
-              )}
-            </div>
-          : '' }
         </Card>
+        <div style={{height:'30px'}}></div>
+        {user.role.name=='Admin' ? 
+        <Card width="800px" title="Client Subscriptions" style={{marginTop:'30px'}}>
+          {this.props.subscriptions_loading || this.props.paymentStatuses_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <div>
+              <ReactTable
+                columns={subscriptionColumns}
+                data={this.manipulateSubscriptionData(this.props.subscriptions, this.props.paymentStatuses)}
+                filterable
+                defaultPageSize={10}
+                className="-striped -highlight"
+              />
+            </div>
+          )}
+        </Card>
+        : '' }
       </div>
     );
   }

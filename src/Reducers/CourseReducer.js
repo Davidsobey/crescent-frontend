@@ -97,7 +97,9 @@ function CourseReducer(state = {}, action) {
         course_editing: false,
       };
     case CourseConstants.CLEAR_COURSES:
-      return {};
+      return {
+        newCourseId: state.newCourseId,
+      };
     case CourseConstants.LOADCOURSES_REQUEST:
       return {
         loading: true,

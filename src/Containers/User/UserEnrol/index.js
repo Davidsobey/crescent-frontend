@@ -27,8 +27,12 @@ const futureDay = value => value && (new Date(value)) < (new Date()) ? 'Must be 
 class EnrolmentCreate extends React.Component {
   constructor(props) {
     super(props);
+    if (this.props.newCourseId) {
+      const newCourseId = this.props.newCourseId;
+      this.props.initialize({ course: newCourseId });
+    }
     this.props.dispatch(UserActions.getAll());
-    this.props.dispatch(CourseActions.clearCourses());
+    //this.props.dispatch(CourseActions.clearCourses());
     this.state = {
       value: this.props.value,
       data: '',
@@ -171,6 +175,7 @@ EnrolmentCreate.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   courses: PropTypes.array,
   courses_loading: PropTypes.bool,
+  newCourseId: PropTypes.number,
   userEnrolments: PropTypes.array,
   userEnrolments_loading: PropTypes.bool,
   users: PropTypes.array,
@@ -183,6 +188,7 @@ function mapStateToProps(state) {
   return {
     courses: state.CourseReducer.courses,
     courses_loading: state.CourseReducer.loading,
+    newCourseId: state.CourseReducer.newCourseId,
     userEnrolments: state.ClientReducer.userEnrolments,
     userEnrolments_loading: state.ClientReducer.loading,
     users: state.UserReducer.users,
