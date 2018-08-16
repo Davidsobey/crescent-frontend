@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserReducer DELETE_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "users": Array [],
+}
+`;
+
+exports[`UserReducer EDIT_USER_SUCCESS 1`] = `
+Object {
+  "user": undefined,
+  "user_editing": false,
+}
+`;
+
+exports[`UserReducer ENROL_SUCCESS 1`] = `
+Object {
+  "enrolling": false,
+  "enrolment": "enrolment",
+}
+`;
+
+exports[`UserReducer GET_ALL_ROLES_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "roles": Array [],
+}
+`;
+
+exports[`UserReducer GETALL_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "users": Array [],
+}
+`;
+
+exports[`UserReducer GETUSER_SUCCESS 1`] = `
+Object {
+  "user": undefined,
+  "user_loading": false,
+}
+`;
+
+exports[`UserReducer REGISTER_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "users": "a",
+}
+`;

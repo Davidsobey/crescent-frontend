@@ -31,11 +31,11 @@ class ModuleCreate extends React.Component {
   }
   
   componentWillMount () {
-    this.props.dispatch(CourseActions.getAll());
     if (this.props.newCourseId) {
       this.props.initialize({ course: this.props.newCourseId });
       this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
     }
+    this.props.dispatch(CourseActions.getAll());
   }
   
   loadModules = (values) => {

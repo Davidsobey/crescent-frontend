@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExpandableMenu /> render() renders the component 1`] = `
+<div>
+  <WithStyles(ListItem)
+    button={true}
+    onClick={[Function]}
+  >
+    <WithStyles(ListItemIcon)
+      className="ExpandableMenu-accentColor-1"
+    >
+      <pure(ChromeReaderMode) />
+    </WithStyles(ListItemIcon)>
+    <WithStyles(ListItemText)
+      className="ExpandableMenu-accentColor-1"
+      disableTypography={true}
+      inset={true}
+      primary="Course"
+    />
+    <pure(ExpandMore)
+      className="ExpandableMenu-accentColor-1"
+    />
+  </WithStyles(ListItem)>
+  <WithStyles(Collapse)
+    component="li"
+    in={false}
+    timeout="auto"
+    unmountOnExit={true}
+  >
+    <WithStyles(MenuItem)
+      extention="create"
+      icon={<pure(Add) />}
+      key="0"
+      option="Create Course"
+      target="Course"
+    />
+    <WithStyles(MenuItem)
+      extention="list"
+      icon={<pure(ViewList) />}
+      key="1"
+      option="Course List"
+      target="Course"
+    />
+  </WithStyles(Collapse)>
+</div>
+`;

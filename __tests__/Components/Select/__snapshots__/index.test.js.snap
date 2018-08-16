@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Select /> render() renders the component 1`] = `
+<FormControl
+  classes={
+    Object {
+      "fullWidth": "MuiFormControl-fullWidth-4",
+      "marginDense": "MuiFormControl-marginDense-3",
+      "marginNormal": "MuiFormControl-marginNormal-2",
+      "root": "MuiFormControl-root-1",
+    }
+  }
+  component="div"
+  disabled={false}
+  error={false}
+  fullWidth={false}
+  margin="none"
+  required={false}
+>
+  <styled.div>
+    <WithStyles(InputLabel)
+      htmlFor="courseId"
+    >
+      Course Name
+    </WithStyles(InputLabel)>
+    <WithStyles(Select)
+      input={
+        <WithStyles(Input)
+          id="courseId"
+        />
+      }
+    />
+  </styled.div>
+</FormControl>
+`;

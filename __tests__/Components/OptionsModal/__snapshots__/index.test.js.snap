@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<OptionsModal /> render() renders the component 1`] = `
+<Modal
+  BackdropComponent={[Function]}
+  aria-describedby="simple-modal-description"
+  aria-labelledby="simple-modal-title"
+  classes={
+    Object {
+      "hidden": "MuiModal-hidden-2",
+      "root": "MuiModal-root-1",
+    }
+  }
+  disableAutoFocus={false}
+  disableBackdropClick={false}
+  disableEnforceFocus={false}
+  disableEscapeKeyDown={false}
+  disableRestoreFocus={false}
+  hideBackdrop={false}
+  keepMounted={false}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array [],
+    }
+  }
+  open={false}
+  style={
+    Object {
+      "alignItems": "center",
+      "justifyContent": "center",
+    }
+  }
+>
+  <styled.div>
+    <WithStyles(Typography)
+      id="modal-title"
+      variant="title"
+    />
+    <br />
+    <WithStyles(FormControl)
+      component="fieldset"
+    >
+      <WithStyles(FormLabel)
+        component="legend"
+      >
+        Select an option
+      </WithStyles(FormLabel)>
+      <RadioGroup
+        aria-label="select an option"
+        name="option"
+        onChange={[Function]}
+        value="0"
+      >
+        <WithStyles(FormControlLabel)
+          control={<WithStyles(Radio) />}
+          key="0"
+          label="Create another module"
+          value="0"
+        />
+        <WithStyles(FormControlLabel)
+          control={<WithStyles(Radio) />}
+          key="1"
+          label="Create questions for this assignment"
+          value="1"
+        />
+      </RadioGroup>
+    </WithStyles(FormControl)>
+    <br />
+    <div
+      className="justify-content flex-container"
+    >
+      <WithTheme(ButtonWithTheme)
+        color="primary"
+        onClick={[Function]}
+        variant="raised"
+      >
+        Continue
+      </WithTheme(ButtonWithTheme)>
+    </div>
+  </styled.div>
+</Modal>
+`;

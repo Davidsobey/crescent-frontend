@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Modal /> render() renders the component 1`] = `
+<Modal
+  BackdropComponent={[Function]}
+  aria-describedby="simple-modal-description"
+  aria-labelledby="simple-modal-title"
+  classes={
+    Object {
+      "hidden": "MuiModal-hidden-2",
+      "root": "MuiModal-root-1",
+    }
+  }
+  disableAutoFocus={false}
+  disableBackdropClick={false}
+  disableEnforceFocus={false}
+  disableEscapeKeyDown={false}
+  disableRestoreFocus={false}
+  hideBackdrop={false}
+  keepMounted={false}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array [],
+    }
+  }
+  onClose={[Function]}
+  open={false}
+  style={
+    Object {
+      "alignItems": "center",
+      "justifyContent": "center",
+    }
+  }
+>
+  <styled.div>
+    <WithStyles(Typography)
+      id="modal-title"
+      variant="title"
+    >
+      Are you sure you want to delete this:
+    </WithStyles(Typography)>
+    <br />
+    <br />
+    <div
+      className="justify-content flex-container"
+    >
+      <WithTheme(ButtonWithTheme)
+        color="primary"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithTheme(ButtonWithTheme)>
+      <WithTheme(ButtonWithTheme)
+        color="primary"
+        onClick={[Function]}
+        variant="raised"
+      >
+        Confirm
+      </WithTheme(ButtonWithTheme)>
+    </div>
+  </styled.div>
+</Modal>
+`;

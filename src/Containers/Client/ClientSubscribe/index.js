@@ -45,10 +45,8 @@ class SubscriptionCreate extends React.Component {
   };
 
   render() {
-    const isValidTest = (test => Array.isArray(test.questionIds) ? test.questionIds.length : false);
     const isValidModule = (module => 
-      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false) && 
-      (Array.isArray(module.testIds) ? module.tests.filter(isValidTest).length : false)
+      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false)
     );
     const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
     const isUnsubscribedCourse = (course => {

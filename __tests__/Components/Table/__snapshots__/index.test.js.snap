@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Table /> render() renders the component 1`] = `
+<WithStyles(Paper)>
+  <WithStyles(Table)>
+    <WithStyles(TableHead)>
+      <WithStyles(TableRow)>
+        <WithStyles(TableCell)
+          key="Name"
+        >
+          Name
+        </WithStyles(TableCell)>
+        <WithStyles(TableCell)
+          key="View Material"
+        >
+          View Material
+        </WithStyles(TableCell)>
+      </WithStyles(TableRow)>
+    </WithStyles(TableHead)>
+    <WithStyles(TableBody)>
+      <WithStyles(TableRow)>
+        <WithStyles(TableCell)
+          key="1"
+        >
+          aaa
+        </WithStyles(TableCell)>
+      </WithStyles(TableRow)>
+    </WithStyles(TableBody)>
+  </WithStyles(Table)>
+</WithStyles(Paper)>
+`;

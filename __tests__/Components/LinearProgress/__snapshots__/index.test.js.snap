@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LinearProgress /> render() renders the component 1`] = `
+<div
+  className="LinearDeterminate-root-1"
+>
+  <WithStyles(LinearProgress)
+    color="#000"
+    value={0}
+  />
+</div>
+`;

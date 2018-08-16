@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Card /> render() renders the component 1`] = `
+<WithStyles(Paper)
+  className="card"
+  color="secondary"
+  elevation={8}
+  style={
+    Object {
+      "width": undefined,
+    }
+  }
+>
+  <div>
+    <div>
+      <WithStyles(CardHeader) />
+      <WithStyles(Divider) />
+    </div>
+  </div>
+  <WithStyles(CardContent) />
+</WithStyles(Paper)>
+`;

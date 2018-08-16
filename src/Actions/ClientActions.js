@@ -62,6 +62,30 @@ function subscribe(subscription) {
   };
 }
 
+function subscribeSilent(subscription) {
+  function request() {
+    return { type: ClientConstants.SUBSCRIBE_REQUEST, subscription };
+  }
+  function success() {
+    return { type: ClientConstants.SUBSCRIBE_SUCCESS, subscription };
+  }
+  function failure(error) {
+    return { type: ClientConstants.SUBSCRIBE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ subscription }));
+    ClientService.subscribe(subscription).then(
+      () => {
+        dispatch(success(subscription));
+      },
+      (error) => {
+        dispatch(failure(error));
+      },
+    );
+  };
+}
+
 function getById(id) {
   function request() {
     return { type: ClientConstants.GETBYID_REQUEST };
@@ -249,6 +273,7 @@ const clientActions = {
   getAll,
   getById,
   subscribe,
+  subscribeSilent,
   deleteClient,
   loadClient,
   editClient,
