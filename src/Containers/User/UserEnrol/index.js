@@ -15,14 +15,13 @@ import ClientActions from '../../../Actions/ClientActions';
 import UserActions from '../../../Actions/UserActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
+var validated = false;
 const validate = () => {
   const errors = {};
-
   return errors;
 };
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const futureDay = value => value && (new Date(value)) < (new Date()) ? 'Must be a future day' : undefined;
 
 class EnrolmentCreate extends React.Component {
   constructor(props) {
@@ -41,15 +40,25 @@ class EnrolmentCreate extends React.Component {
   }
 
   submit = (values) => {
+    if (this.state.selectedDate ? (new Date(this.state.selectedDate)) < (new Date()) ? true : false : true)
+      return;
     const enrolment = Object.assign({}, values);
     this.props.dispatch(UserActions.enrol(enrolment));
   };
+
+  handleSubmitClicked = () => {
+    validated = true;
+  }
 
   loadCourses = (values) => {
     this.setState({userId: values.target.value});
     const user = this.props.users.find(x => x.id === values.target.value);
     this.props.dispatch(CourseActions.loadCoursesByClientSubscriptions(user.clientId));
     this.props.dispatch(ClientActions.getUserEnrolments(user.clientId));
+  };
+
+  handleDateChange = (values) => {
+    this.setState({selectedDate: values.target.value});
   };
 
   render() {
@@ -81,6 +90,8 @@ class EnrolmentCreate extends React.Component {
       .filter(isValidCourse)
       .filter(isUnenrolledCourse);
 
+    const courseSelect = (value) => value ? courses.find(course => course.id == value) ? undefined : 'required' : undefined;
+    
     return (
       <Card width="600px" title="Enrol A User In A Course">
         <form
@@ -124,7 +135,7 @@ class EnrolmentCreate extends React.Component {
                   name="course"
                   label="Course Name"
                   component={Select}
-                  validate={[ required ]}
+                  validate={[ required, courseSelect ]}
                 >
                   {courses.length ?
                   courses.map(course => (
@@ -145,17 +156,22 @@ class EnrolmentCreate extends React.Component {
                 </div>
               )}
               <div>
-                <Field
+                <TextField
                   name="deadline"
                   label="Deadline"
+                  onChange={this.handleDateChange}
                   margin="normal"
                   type="date"
-                  component={TextField}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  validate={[ required, futureDay ]}
+                  error={ validated && (selectedDate ? (new Date(selectedDate)) < (new Date()) ? true : false : true) }
                 />
+                {validated ? (
+                <Typography variant="caption" component="p" style={{color:'#f00'}}>
+                  { selectedDate ? (new Date(selectedDate)) < (new Date()) ? 'Must be a future day' : undefined : 'Required' }
+                </Typography>
+                ) : ''}
               </div>
             </div>
           </div>
@@ -167,6 +183,7 @@ class EnrolmentCreate extends React.Component {
           ) : (
             <div className="formAlignRight">
               <Button
+                onClick={this.handleSubmitClicked}
                 className="buttonFormat"
                 variant="raised"
                 color="primary"
