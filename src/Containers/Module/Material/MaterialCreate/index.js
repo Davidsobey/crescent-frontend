@@ -23,11 +23,17 @@ const validate = () => {
   return errors;
 };
 
-const options = [
+const options1 = [
   {label: 'Create another module', url: '/module/create'},
   {label: 'Create an assignment for this module', url: '/assessment/create'},
   {label: 'Upload another material for this module'},
   {label: 'Enrol a user in this course', url: '/user/enrol'},
+];
+
+const options2 = [
+  {label: 'Create another module', url: '/module/create'},
+  {label: 'Create an assignment for this module', url: '/assessment/create'},
+  {label: 'Upload another material for this module'},
 ];
 
 class MaterialCreate extends React.Component {
@@ -55,11 +61,13 @@ class MaterialCreate extends React.Component {
   };
 
   submit = (values) => {
-    let courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id == values.ModuleId).courseId;
-    let clientID = this.props.user.clientId;
-    if ((Array.isArray(this.props.unsubscribed_courses) ? this.props.unsubscribed_courses : []).find(course => course.id == courseID)) {
-      const subscription = Object.assign({}, {courseID, clientID});
-      this.props.dispatch(ClientActions.subscribeSilent(subscription));
+    if (this.props.user.role.name == 'Client') {
+      let courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id == values.ModuleId).courseId;
+      let clientID = this.props.user.clientId;
+      if ((Array.isArray(this.props.unsubscribed_courses) ? this.props.unsubscribed_courses : []).find(course => course.id == courseID)) {
+        const subscription = Object.assign({}, {courseID, clientID});
+        this.props.dispatch(ClientActions.subscribeSilent(subscription));
+      }
     }
 
     const file = this.state.selectedFile;
@@ -127,7 +135,7 @@ class MaterialCreate extends React.Component {
           title="Module created successfully."
           open={this.props.openRedirectModal && !this.props.client_subscribing ? this.props.openRedirectModal:false}
           onClick={this.onContinue.bind(this)}
-          options={options}
+          options={this.props.user.role.name == 'Client' ? options1 : options2}
         />
       </Card>
     );
