@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseReducer CREATE_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "newCourseId": 1,
+}
+`;
+
+exports[`CourseReducer DELETE_SUCCESS 1`] = `
+Object {
+  "loading": false,
+}
+`;
+
+exports[`CourseReducer EDIT_SUCCESS 1`] = `
+Object {
+  "course_editing": false,
+}
+`;
+
+exports[`CourseReducer GETALL_SUCCESS 1`] = `
+Object {
+  "courses": Array [],
+  "loading": false,
+}
+`;
+
+exports[`CourseReducer GETUNSUBSCRIBED_SUCCESS 1`] = `
+Object {
+  "unsubscribed_courses": Array [],
+  "unsubscribed_courses_loading": false,
+}
+`;
+
+exports[`CourseReducer LOADCOURSE_SUCCESS 1`] = `
+Object {
+  "course": Object {
+    "id": 1,
+    "name": "aaa",
+  },
+  "course_loading": false,
+}
+`;
+
+exports[`CourseReducer LOADCOURSES_SUCCESS 1`] = `
+Object {
+  "subscribedCourses": Array [],
+  "subscribedCourses_loading": false,
+}
+`;

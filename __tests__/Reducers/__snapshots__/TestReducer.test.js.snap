@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TestReducer CREATE_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "newTestId": 1,
+  "test": "111",
+}
+`;
+
+exports[`TestReducer EDIT_TEST_SUCCESS 1`] = `
+Object {
+  "test": undefined,
+  "test_editing": false,
+}
+`;
+
+exports[`TestReducer GETALL_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "tests": Array [],
+}
+`;
+
+exports[`TestReducer LOAD_TEST_QUESTIONS_SUCCESS 1`] = `
+Object {
+  "questions": Array [],
+}
+`;
+
+exports[`TestReducer LOAD_TEST_SUCCESS 1`] = `
+Object {
+  "test": Object {
+    "id": 1,
+    "name": "111",
+  },
+  "test_loading": false,
+}
+`;
+
+exports[`TestReducer LOADTEST_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "tests": Array [],
+}
+`;
+
+exports[`TestReducer MARK_TEST_QUESTION_SUCCESS 1`] = `
+Object {
+  "questions": Array [],
+  "response": "Question Marked",
+}
+`;
+
+exports[`TestReducer SUBMIT_TEST_SUCCESS 1`] = `Object {}`;

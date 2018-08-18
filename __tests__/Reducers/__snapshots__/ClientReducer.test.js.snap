@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientReducer CREATE_SUCCESS 1`] = `
+Object {
+  "client": Object {
+    "id": 1,
+    "name": "aaa",
+  },
+  "creating": false,
+}
+`;
+
+exports[`ClientReducer EDIT_SUCCESS 1`] = `
+Object {
+  "client_editing": false,
+}
+`;
+
+exports[`ClientReducer GETALL_SUCCESS 1`] = `
+Object {
+  "clients": Array [],
+  "loading": false,
+}
+`;
+
+exports[`ClientReducer GETBYID_SUCCESS 1`] = `
+Object {
+  "client": Object {
+    "id": 1,
+    "name": "aaa",
+  },
+}
+`;
+
+exports[`ClientReducer GETSUBSCRIPTIONS_SUCCESS 1`] = `
+Object {
+  "subscriptions": Array [],
+  "subscriptions_loading": false,
+}
+`;
+
+exports[`ClientReducer GETUSERENROLMENTS_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "userEnrolments": Array [],
+}
+`;
+
+exports[`ClientReducer LOAD_CLIENT_SUCCESS 1`] = `
+Object {
+  "client": Object {
+    "id": 1,
+    "name": "aaa",
+  },
+  "client_loading": false,
+}
+`;
+
+exports[`ClientReducer SUBSCRIBE_SUCCESS 1`] = `
+Object {
+  "subcription": 1,
+  "subscribing": false,
+}
+`;

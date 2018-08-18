@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModuleReducer CREATE_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "newModuleId": 1,
+}
+`;
+
+exports[`ModuleReducer EDIT_MODULE_SUCCESS 1`] = `
+Object {
+  "module": undefined,
+  "module_editing": false,
+}
+`;
+
+exports[`ModuleReducer GETALL_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "modules": Array [],
+}
+`;
+
+exports[`ModuleReducer LOAD_MODULE_SUCCESS 1`] = `
+Object {
+  "module": Object {
+    "id": 1,
+    "name": "111",
+  },
+  "module_loading": false,
+}
+`;
+
+exports[`ModuleReducer LOADMODULE_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "modules": Array [],
+}
+`;
+
+exports[`ModuleReducer LOADTESTS_SUCCESS 1`] = `
+Object {
+  "loadingTests": false,
+  "moduleTests": Array [],
+}
+`;
+
+exports[`ModuleReducer MODULE_MATERIAL_SUCCESS 1`] = `
+Object {
+  "loadingMaterial": false,
+  "moduleMaterial": Array [],
+}
+`;
+
+exports[`ModuleReducer UPLOAD_SUCCESS 1`] = `
+Object {
+  "uploading": false,
+}
+`;

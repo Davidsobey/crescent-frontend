@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QuestionReducer CREATE_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "question": Object {},
+}
+`;
+
+exports[`QuestionReducer DELETE_QO_SUCCESS 1`] = `
+Object {
+  "options": Array [],
+  "options_loading": false,
+}
+`;
+
+exports[`QuestionReducer DELETE_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "questions": Array [],
+}
+`;
+
+exports[`QuestionReducer EDIT_QUESTION_SUCCESS 1`] = `
+Object {
+  "question": undefined,
+  "question_editing": false,
+}
+`;
+
+exports[`QuestionReducer GETALL_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "questions": Array [],
+}
+`;
+
+exports[`QuestionReducer GETBYID_SUCCESS 1`] = `
+Object {
+  "question": Object {
+    "id": 1,
+    "name": "111",
+  },
+  "question_loading": false,
+}
+`;
+
+exports[`QuestionReducer LOADQUESTIONS_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "questions": Array [],
+}
+`;
+
+exports[`QuestionReducer OPTIONS_ISANSWER_SUCCESS 1`] = `
+Object {
+  "options": Object {
+    "0": Object {
+      "isAnswer": true,
+    },
+  },
+  "options_loading": false,
+}
+`;
+
+exports[`QuestionReducer OPTIONS_SUCCESS 1`] = `
+Object {
+  "options": Array [],
+  "options_loading": false,
+}
+`;

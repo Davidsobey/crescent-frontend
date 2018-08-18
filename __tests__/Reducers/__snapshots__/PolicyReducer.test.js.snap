@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PolicyReducer ACKNOWLEDGE_SUCCESS 1`] = `
+Object {
+  "acknowledging": false,
+  "policy": "ddd",
+}
+`;
+
+exports[`PolicyReducer CREATE_ACKNOWLEDGEMENT_SUCCESS 1`] = `
+Object {
+  "creating": false,
+}
+`;
+
+exports[`PolicyReducer CREATE_SUCCESS 1`] = `
+Object {
+  "creating": false,
+  "newPolicyId": 1,
+}
+`;
+
+exports[`PolicyReducer DELETEPOLICY_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "policy": Array [],
+}
+`;
+
+exports[`PolicyReducer EDITPOLICY_SUCCESS 1`] = `
+Object {
+  "policy": undefined,
+  "policy_editing": false,
+}
+`;
+
+exports[`PolicyReducer GET_MATERIAL_SUCCESS 1`] = `
+Object {
+  "loadingMaterial": false,
+  "policyMaterial": Object {},
+}
+`;
+
+exports[`PolicyReducer GET_MATERIALS_SUCCESS 1`] = `
+Object {
+  "canAcknowlege": false,
+  "policyDescription": "111",
+  "policyId": 1,
+  "policyMaterials": Array [],
+  "policyMaterials_loading": false,
+  "policyName": "111",
+}
+`;
+
+exports[`PolicyReducer GETALL_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "policies": Array [],
+}
+`;
+
+exports[`PolicyReducer GETOUTSTANDINGPOLICIESFORCLIENT_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "policyAcknowledgements": Array [],
+}
+`;
+
+exports[`PolicyReducer GETOUTSTANDINGPOLICIESFORUSER_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "policyAcknowledgements": Array [],
+}
+`;
+
+exports[`PolicyReducer LOAD_POLICY_SUCCESS 1`] = `
+Object {
+  "policy": Object {
+    "id": 1,
+    "name": "111",
+  },
+  "policy_loading": false,
+}
+`;
+
+exports[`PolicyReducer UPLOAD_MATERIAL_SUCCESS 1`] = `
+Object {
+  "creating": false,
+}
+`;

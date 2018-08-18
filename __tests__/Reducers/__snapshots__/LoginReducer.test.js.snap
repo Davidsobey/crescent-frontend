@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginReducer LOGIN_SUCCESS 1`] = `
+Object {
+  "loading": false,
+  "loggedIn": true,
+  "user": Object {
+    "id": 1,
+    "name": "aaa",
+  },
+}
+`;
