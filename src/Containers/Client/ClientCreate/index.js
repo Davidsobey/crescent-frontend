@@ -15,6 +15,7 @@ import Card from '../../../Components/Card';
 import TextField from '../../../Components/TextField';
 import Button from '../../../Components/Button';
 import ClientActions from '../../../Actions/ClientActions';
+import UserActions from '../../../Actions/UserActions';
 
 const validate = () => {
   const errors = {};
@@ -29,11 +30,13 @@ class ClientCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(ClientActions.clearClients());
+    this.props.dispatch(UserActions.getAllRoles());
   }
 
   submit = (values) => {
     const client = Object.assign({}, values);
-    this.props.dispatch(ClientActions.create(client));
+    const clientRoleId = this.props.roles.find(role => role.name == 'Client').id;
+    this.props.dispatch(ClientActions.create(client, clientRoleId));
   };
 
   render() {
@@ -90,6 +93,8 @@ class ClientCreate extends React.Component {
 
 const mapStateToProps = state => ({
   client_creating: state.ClientReducer.creating,
+  roles: state.UserReducer.roles,
+  roles_loading: state.UserReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,6 +104,9 @@ const mapDispatchToProps = dispatch => ({
 ClientCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  client_creating: PropTypes.bool,
+  roles: PropTypes.array,
+  roles_loading: PropTypes.bool,
 };
 
 const withForm = reduxForm(

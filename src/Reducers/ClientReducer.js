@@ -20,6 +20,7 @@ function ClientReducer(state = {}, action) {
       return Object.assign({}, state, {
         client: action.client,
         newClientId: action.client.id,
+        clientRoleId: action.clientRoleId,
         creating: false,
       });
     case ClientConstants.CREATE_FAILURE:

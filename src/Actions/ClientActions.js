@@ -4,12 +4,12 @@ import ClientService from '../Services/ClientService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
-function create(client) {
+function create(client, clientRoleId) {
   function request() {
     return { type: ClientConstants.CREATE_REQUEST, client };
   }
   function success(client) {
-    return { type: ClientConstants.CREATE_SUCCESS, client };
+    return { type: ClientConstants.CREATE_SUCCESS, client, clientRoleId };
   }
   function failure(error) {
     return { type: ClientConstants.CREATE_FAILURE, error };

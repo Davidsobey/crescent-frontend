@@ -37,7 +37,7 @@ class UserCreate extends React.Component {
   componentWillMount () {
     if (this.props.user.role.name == 'Admin') {
       if (this.props.newClientId)
-        this.props.initialize({ clientId: this.props.newClientId });
+        this.props.initialize({ clientId: this.props.newClientId, roleId: this.props.clientRoleId });
     } else {
       this.props.initialize({ clientId: this.props.user.clientId });
     }
@@ -49,11 +49,6 @@ class UserCreate extends React.Component {
   };
 
   render() {
-    if (this.props.user.role.name == 'Admin' && this.props.initialValues && !this.props.roles_loading ) {
-      if (this.props.newClientId && !this.props.initialValues.roleId)
-        this.props.initialize({ clientId: this.props.newClientId, roleId: this.props.roles.find(role => role.name == 'Client').id });
-    }
-
     let {user} = this.props;
     return (
       <Card width="600px" title="Create New User">
@@ -149,6 +144,7 @@ UserCreate.propTypes = {
   handleSubmit: PropTypes.func,
   user: PropTypes.object,
   newClientId: PropTypes.number,
+  clientRoleId: PropTypes.number,
   clients: PropTypes.array,
   clients_loading: PropTypes.bool,
   roles: PropTypes.array,
@@ -159,6 +155,7 @@ UserCreate.propTypes = {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   newClientId: state.ClientReducer.newClientId,
+  clientRoleId: state.ClientReducer.clientRoleId,
   clients: state.ClientReducer.clients,
   clients_loading: state.ClientReducer.loading,
   roles: state.UserReducer.roles,
