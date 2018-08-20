@@ -28,14 +28,14 @@ const module_exists = value => value && Array.isArray(modules) ? modules.filter(
 class ModuleCreate extends React.Component {
   constructor(props) {
     super(props);
-  }
-  
-  componentWillMount () {
     if (this.props.newCourseId) {
       this.props.initialize({ course: this.props.newCourseId });
       this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
     }
     this.props.dispatch(CourseActions.getAll());
+  }
+  
+  componentWillMount () {
   }
   
   loadModules = (values) => {

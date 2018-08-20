@@ -35,7 +35,10 @@ class UserCreate extends React.Component {
   }
   
   componentWillMount () {
-    if (this.props.user.role.name != 'Admin') {
+    if (this.props.user.role.name == 'Admin') {
+      if (this.props.newClientId)
+        this.props.initialize({ clientId: this.props.newClientId });
+    } else {
       this.props.initialize({ clientId: this.props.user.clientId });
     }
   }
@@ -46,6 +49,11 @@ class UserCreate extends React.Component {
   };
 
   render() {
+    if (this.props.user.role.name == 'Admin' && this.props.initialValues && !this.props.roles_loading ) {
+      if (this.props.newClientId && !this.props.initialValues.roleId)
+        this.props.initialize({ clientId: this.props.newClientId, roleId: this.props.roles.find(role => role.name == 'Client').id });
+    }
+
     let {user} = this.props;
     return (
       <Card width="600px" title="Create New User">
@@ -55,7 +63,7 @@ class UserCreate extends React.Component {
           className="centerForm"
         >
           <div>
-            {this.props.clients ? (
+            {!this.props.clients_loading ? (
               <Field 
                 name="clientId" 
                 label="Client Name" 
@@ -77,7 +85,7 @@ class UserCreate extends React.Component {
               </div>
             )}
             <div>
-              {this.props.roles ? (
+              {!this.props.roles_loading ? (
                 <Field name="roleId" label="Role" component={Select} validate={[ required ]}>
                   {(Array.isArray(this.props.roles) ? this.props.roles : [])
                   .filter(role => (role.name == 'Admin' && user.role.name == 'Client' ? false : true) )
@@ -140,15 +148,21 @@ UserCreate.propTypes = {
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
   user: PropTypes.object,
+  newClientId: PropTypes.number,
   clients: PropTypes.array,
+  clients_loading: PropTypes.bool,
   roles: PropTypes.array,
+  roles_loading: PropTypes.bool,
   user_creating: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
+  newClientId: state.ClientReducer.newClientId,
   clients: state.ClientReducer.clients,
+  clients_loading: state.ClientReducer.loading,
   roles: state.UserReducer.roles,
+  roles_loading: state.UserReducer.loading,
   user_creating: state.UserReducer.creating,
 });
 

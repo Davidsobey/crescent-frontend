@@ -8,7 +8,7 @@ function create(client) {
   function request() {
     return { type: ClientConstants.CREATE_REQUEST, client };
   }
-  function success() {
+  function success(client) {
     return { type: ClientConstants.CREATE_SUCCESS, client };
   }
   function failure(error) {
@@ -18,9 +18,9 @@ function create(client) {
   return (dispatch) => {
     dispatch(request({ client }));
     ClientService.create(client).then(
-      () => {
+      (client) => {
         dispatch(success(client));
-        history.push('/client/list');
+        history.push('/user/create');
         dispatch(AlertActions.success('Client created.'));
       },
       (error) => {

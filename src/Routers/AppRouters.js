@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Snackbar from 'material-ui/Snackbar';
 
 import withAuth from '../Middleware/withAuth';
 
 import history from '../Helpers/History';
 import AlertActions from '../Actions/AlertActions';
-import UserActions from '../Actions/UserActions';
 import Routes from './Routes';
 import AppBar from '../Components/AppBar';
+import Snackbar from '../Components/Snackbar'
 
 import Login from '../Containers/Login';
 import ChangePassword from '../Containers/ChangePassword';
@@ -65,29 +64,13 @@ class AppRouters extends React.Component {
       // clear alert on location change
       dispatch(AlertActions.clear());
     });
+    console.log(111);
   }
-
-  handleClose = () => {
-    this.props.dispatch(UserActions.close());
-  };
 
   render() {
     return (
       <div className="app">
-        <Snackbar
-          open={this.props.open}
-          onClose={this.handleClose}
-          direction="up"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={
-            <span id="message-id">
-              {typeof this.props.alert === 'string' && this.props.alert}
-            </span>
-          }
-        />
+        <Snackbar />
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Login} />
@@ -311,15 +294,11 @@ class AppRouters extends React.Component {
 
 AppRouters.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  open: PropTypes.bool,
-  alert: PropTypes.string,
   role: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
-    alert: state.AlertReducer.message,
-    open: state.AlertReducer.open,
     role:
       state.LoginReducer.user && state.LoginReducer.user.role
         ? state.LoginReducer.user.role.name
