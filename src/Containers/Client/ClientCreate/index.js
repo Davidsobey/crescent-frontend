@@ -23,6 +23,8 @@ const validate = () => {
   return errors;
 };
 const required = value => value ? undefined : 'Required';
+const maxLength = max => value => value && value.length > max ? `Must be ${max} characters or less` : undefined;
+const maxLength6 = maxLength(6);
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
@@ -55,7 +57,7 @@ class ClientCreate extends React.Component {
                 label="Name"
                 margin="normal"
                 component={TextField}
-                validate={[ required ]}
+                validate={[ required, maxLength6 ]}
               />
             </div>
             <div>
