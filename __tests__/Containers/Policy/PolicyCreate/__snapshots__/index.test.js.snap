@@ -1,19 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<PolicyCreate /> render() renders the component 1`] = `
+<Connect(Form(PolicyCreate))
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="policyCreate"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
   persistentSubmitErrors={false}
+  policy_creating={false}
   pure={true}
-  roles={Array []}
-  roles_loading={false}
   shouldAsyncValidate={[Function]}
   shouldError={[Function]}
   shouldValidate={[Function]}

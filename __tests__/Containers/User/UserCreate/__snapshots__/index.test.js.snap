@@ -1,15 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<UserCreate /> render() renders the component 1`] = `
+<Connect(Form(UserCreate))
+  clientRoleId={1}
+  clients={Array []}
+  clients_loading={false}
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="userCreate"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
+  newClientId={1}
   persistentSubmitErrors={false}
   pure={true}
   roles={Array []}
@@ -52,6 +55,8 @@ exports[`<ClientCreate /> render() renders the component 1`] = `
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}
+  user={Object {}}
+  user_creating={false}
   validate={[Function]}
 />
 `;

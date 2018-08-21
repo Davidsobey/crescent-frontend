@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CourseDetail /> render() renders the component 1`] = `
+<div
+  className="content"
+>
+  <Styled(WithTheme(ButtonWithTheme))
+    onClick={[Function]}
+  >
+    Return to Course List
+  </Styled(WithTheme(ButtonWithTheme))>
+</div>
+`;

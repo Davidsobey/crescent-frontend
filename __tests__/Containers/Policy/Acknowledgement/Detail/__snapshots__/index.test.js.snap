@@ -1,19 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<UsersPolicyDetails /> render() renders the component 1`] = `
+<Connect(Form(UsersPolicyDetails))
+  canAcknowlege={true}
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="userView"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
   persistentSubmitErrors={false}
+  policyDescription="description"
+  policyId={1}
+  policyMaterials={Array []}
+  policyMaterials_loading={false}
+  policyName="name"
+  policy_acknowledging={false}
   pure={true}
-  roles={Array []}
-  roles_loading={false}
   shouldAsyncValidate={[Function]}
   shouldError={[Function]}
   shouldValidate={[Function]}
@@ -52,6 +56,6 @@ exports[`<ClientCreate /> render() renders the component 1`] = `
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}
-  validate={[Function]}
+  user={Object {}}
 />
 `;

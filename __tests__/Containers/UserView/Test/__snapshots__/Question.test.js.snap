@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserTestQuestion /> render() renders the component 1`] = `
+<div
+  className="content"
+>
+  <Card
+    width="800px"
+  >
+    <WithStyles(Typography)
+      component="h2"
+      variant="headline"
+    >
+      Assignment Total - 
+    </WithStyles(Typography)>
+    <WithStyles(Typography)
+      component="p"
+    >
+      All answers must be your own
+    </WithStyles(Typography)>
+    <br />
+    <div
+      className="row alignRight"
+    >
+      <WithTheme(ButtonWithTheme)
+        color="secondary"
+        onClick={[Function]}
+      >
+        Begin Assignment
+      </WithTheme(ButtonWithTheme)>
+    </div>
+  </Card>
+</div>
+`;

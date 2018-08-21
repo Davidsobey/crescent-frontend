@@ -6,7 +6,9 @@ Object {
     "id": 1,
     "name": "aaa",
   },
+  "clientRoleId": undefined,
   "creating": false,
+  "newClientId": 1,
 }
 `;
 

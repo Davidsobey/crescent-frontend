@@ -1,19 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<ModuleCreate /> render() renders the component 1`] = `
+<Connect(Form(ModuleCreate))
+  courses={Array []}
+  courses_loading={false}
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="courseCreate"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
+  module_creating={false}
+  modules={Array []}
+  modules_loading={false}
+  newCourseId={1}
   persistentSubmitErrors={false}
   pure={true}
-  roles={Array []}
-  roles_loading={false}
   shouldAsyncValidate={[Function]}
   shouldError={[Function]}
   shouldValidate={[Function]}

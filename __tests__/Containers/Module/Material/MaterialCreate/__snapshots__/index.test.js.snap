@@ -1,19 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<ModuleMaterialCreate /> render() renders the component 1`] = `
+<Connect(Form(MaterialCreate))
+  client_subscribing={false}
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="materialCreate"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
+  modules={Array []}
+  modules_loading={false}
+  newModuleId={false}
+  openRedirectModal={false}
   persistentSubmitErrors={false}
   pure={true}
-  roles={Array []}
-  roles_loading={false}
   shouldAsyncValidate={[Function]}
   shouldError={[Function]}
   shouldValidate={[Function]}
@@ -51,7 +53,11 @@ exports[`<ClientCreate /> render() renders the component 1`] = `
   }
   touchOnBlur={true}
   touchOnChange={false}
+  unsubscribed_courses={Array []}
+  unsubscribed_courses_loading={false}
   updateUnregisteredFields={false}
+  uploading={false}
+  user={Object {}}
   validate={[Function]}
 />
 `;

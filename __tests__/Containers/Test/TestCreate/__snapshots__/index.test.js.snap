@@ -1,19 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClientCreate /> render() renders the component 1`] = `
-<Connect(Form(ClientCreate))
-  client_creating={false}
+exports[`<TestCreate /> render() renders the component 1`] = `
+<Connect(Form(TestCreate))
+  courses={Array []}
+  courses_loading={false}
   destroyOnUnmount={true}
   dispatch={[Function]}
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
-  form="clientCreate"
+  form="testCreate"
   getFormState={[Function]}
   keepDirtyOnReinitialize={false}
+  modules={Array []}
+  modules_loading={false}
+  newCourseId={1}
+  newModuleId={1}
+  openRedirectModal={false}
   persistentSubmitErrors={false}
   pure={true}
-  roles={Array []}
-  roles_loading={false}
   shouldAsyncValidate={[Function]}
   shouldError={[Function]}
   shouldValidate={[Function]}
@@ -49,6 +53,9 @@ exports[`<ClientCreate /> render() renders the component 1`] = `
       "unsubscribe": [Function],
     }
   }
+  test_creating={false}
+  tests={Array []}
+  tests_loading={false}
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}

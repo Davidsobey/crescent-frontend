@@ -4,25 +4,31 @@ import toJson from 'enzyme-to-json';
 import configureStore from 'redux-mock-store'; // Smart components
 
 // Component to be tested
-import ClientCreate from '../../../../src/Containers/Client/ClientCreate/index.js';
+import AcknowledgementCreate from '../../../../../src/Containers/Policy/Acknowledgement/Create/index.js';
 
 
 const mockStore = configureStore();
 const initialState = {
-  ClientReducer:{
+  PolicyReducer:{
+    policies: [],
+    loading: false,
+    newPolicyId: 1,
     creating: false,
   },
   UserReducer:{
-    roles: [],
+    users: [],
     loading: false,
-  }
+  },
+  LoginReducer:{
+    user: {},
+  },
 };
 const store = mockStore(initialState);
 
-describe('<ClientCreate />', () => {
+describe('<AcknowledgementCreate />', () => {
   describe('render()', () => {
     test('renders the component', () => {
-      const wrapper = shallow(<ClientCreate store={store} />);
+      const wrapper = shallow(<AcknowledgementCreate store={store} />);
       const component = wrapper.dive();
 
       expect(toJson(component)).toMatchSnapshot();
