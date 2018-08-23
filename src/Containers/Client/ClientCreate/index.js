@@ -22,10 +22,14 @@ const validate = () => {
 
   return errors;
 };
+// let clients = [];
 const required = value => (value ? undefined : 'Required');
 const maxLength = max => value => (value && value.length > max ? `Must be ${max} characters or less` : undefined);
 const maxLength6 = maxLength(6);
 const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+// check for previously existing client name and client code
+const clientExists = value => (value && Array.isArray(this.props.clients) ? this.props.clients.filter(client => client.name === value).length ? 'Client with that name already exists' : undefined : undefined);
+const codeExists = value => (value && Array.isArray(this.props.clients) ? this.props.clients.filter(client => client.clientCode === value).length ? 'Client with that code already exists' : undefined : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class ClientCreate extends React.Component {
@@ -39,6 +43,10 @@ class ClientCreate extends React.Component {
     const client = Object.assign({}, values);
     const clientRoleId = this.props.roles.find(role => role.name == 'Client').id;
     this.props.dispatch(ClientActions.create(client, clientRoleId));
+  };
+
+  loadClients = (values) => {
+    this.props.dispatch(ClientActions.loadClients(values.target.value));
   };
 
   render() {
@@ -57,7 +65,7 @@ class ClientCreate extends React.Component {
                 label="Business Name"
                 margin="normal"
                 component={TextField}
-                validate={[required]}
+                validate={[required, clientExists]}
               />
             </div>
             <div>
@@ -66,7 +74,7 @@ class ClientCreate extends React.Component {
                 label="Client Code"
                 margin="normal"
                 component={TextField}
-                validate={[required, maxLength6]}
+                validate={[required, maxLength6, codeExists]}
               />
             </div>
           </div>
@@ -97,6 +105,8 @@ const mapStateToProps = state => ({
   client_creating: state.ClientReducer.creating,
   roles: state.UserReducer.roles,
   roles_loading: state.UserReducer.loading,
+  clients: PropTypes.array,
+  clients_loading: PropTypes.bool,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -104,6 +114,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 ClientCreate.propTypes = {
+  clients: state.ClientReducer.clients,
+  clients_loading: state.ClientReducer.loading,
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   client_creating: PropTypes.bool,
