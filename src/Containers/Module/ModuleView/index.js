@@ -67,15 +67,15 @@ class ModuleView extends React.Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Module Name',
         accessor: 'name',
       },
       {
-        Header: 'Key Outcome',
+        Header: 'Module Key Outcome',
         accessor: 'description',
       },
       {
-        Header: 'Course',
+        Header: 'Course Name',
         accessor: 'course',
       },
       {

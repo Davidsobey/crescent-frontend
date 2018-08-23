@@ -11,7 +11,7 @@ const mockStore = configureStore();
 const initialState = {};
 const store = mockStore(initialState);
 
-const header = ['Name', 'View Material'];
+const header = ['Material Name', 'View Material'];
 const data = [{'name':'aaa', 'button':''}];
 
 

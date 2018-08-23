@@ -163,7 +163,7 @@ class HomeComponent extends React.Component {
         accessor: 'policyName',
       },
       {
-        Header: 'Description',
+        Header: 'Policy Description',
         accessor: 'description',
       },
       {
@@ -197,7 +197,7 @@ class HomeComponent extends React.Component {
         accessor: 'courseName',
       },
       {
-        Header: 'Money Amout',
+        Header: 'Payable Amout',
         accessor: 'money',
       },
       {

@@ -22,10 +22,10 @@ const validate = () => {
 
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const maxLength = max => value => value && value.length > max ? `Must be ${max} characters or less` : undefined;
+const required = value => (value ? undefined : 'Required');
+const maxLength = max => value => (value && value.length > max ? `Must be ${max} characters or less` : undefined);
 const maxLength6 = maxLength(6);
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class ClientCreate extends React.Component {
@@ -54,10 +54,10 @@ class ClientCreate extends React.Component {
             <div>
               <Field
                 name="name"
-                label="Name"
+                label="Business Name"
                 margin="normal"
                 component={TextField}
-                validate={[ required, maxLength6 ]}
+                validate={[required]}
               />
             </div>
             <div>
@@ -66,12 +66,12 @@ class ClientCreate extends React.Component {
                 label="Client Code"
                 margin="normal"
                 component={TextField}
-                validate={[ required ]}
+                validate={[required, maxLength6]}
               />
             </div>
           </div>
           {this.props.client_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Client
             </div>
