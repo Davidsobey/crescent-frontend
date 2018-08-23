@@ -22,7 +22,7 @@ import Button from '../../../../Components/Button/index';
 class PolicyAcknowledgementView extends React.Component {
   constructor(props) {
     super(props);
-   // this.state = { obj: {} };
+    // this.state = { obj: {} };
   }
 
   componentWillMount() {
@@ -36,9 +36,9 @@ class PolicyAcknowledgementView extends React.Component {
   };
 
   manipulateData = (policyAcknowledgements) => {
-    var getUserNameById = userId => {
+    let getUserNameById = (userId) => {
       if (Array.isArray(this.props.users)) {
-        let user = this.props.users.filter(user => user.id == userId);
+        const user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
@@ -46,18 +46,18 @@ class PolicyAcknowledgementView extends React.Component {
     const data = [];
     if (Array.isArray(policyAcknowledgements)) {
       policyAcknowledgements
-      .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
-      .forEach((policyAcknowledgement) => {
-        const newPolicyAcknowledgement = {
-          policyId: policyAcknowledgement.policyID,
-          userId: policyAcknowledgement.userID,
-          userName: getUserNameById(policyAcknowledgement.userID),
-          policyName: policyAcknowledgement.policyName,
-          description: policyAcknowledgement.policyDescription,
-          acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
-        };
-        data.push(newPolicyAcknowledgement);
-      });
+        .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
+        .forEach((policyAcknowledgement) => {
+          const newPolicyAcknowledgement = {
+            policyId: policyAcknowledgement.policyID,
+            userId: policyAcknowledgement.userID,
+            userName: getUserNameById(policyAcknowledgement.userID),
+            policyName: policyAcknowledgement.policyName,
+            description: policyAcknowledgement.policyDescription,
+            acknowledged: policyAcknowledgement.acknowledged ? 'Yes':'No',
+          };
+          data.push(newPolicyAcknowledgement);
+        });
     }
     return data;
   };
@@ -75,14 +75,14 @@ class PolicyAcknowledgementView extends React.Component {
         accessor: 'policyName',
       },
       {
-        Header: 'Description',
+        Header: 'Policy Description',
         accessor: 'description',
       },
       {
-        Header: 'Acknowledged',
+        Header: 'Acknowledgement Status',
         accessor: 'acknowledged',
       },
-      { 
+      {
         Header: 'View Policy Details',
         accessor: 'view/acknowledge',
         Filter: <div />,
@@ -91,7 +91,7 @@ class PolicyAcknowledgementView extends React.Component {
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id&&row.original.acknowledged=='No')}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id && row.original.acknowledged == 'No')}
             >
               View Policy Details
             </Button>

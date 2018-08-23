@@ -19,8 +19,8 @@ import Button from '../../../Components/Button';
 import ModuleActions from '../../../Actions/ModuleActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class TestEdit extends React.Component {
@@ -53,11 +53,11 @@ class TestEdit extends React.Component {
             <div>
               {!this.props.modules_loading ? (
                 <div>
-                  <Field 
-                    name="moduleID" 
-                    label="Module Name" 
+                  <Field
+                    name="moduleID"
+                    label="Module Name"
                     component={Select}
-                    validate={[ required ]}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.modules) ? this.props.modules : [])
                     .map(module => (
@@ -79,7 +79,7 @@ class TestEdit extends React.Component {
                   label="Assessment Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
               <div>
@@ -88,12 +88,12 @@ class TestEdit extends React.Component {
                   label="Total Marks"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, number ]}
+                  validate={[required, number]}
                 />
               </div>
             </div>
             {this.props.test_editing ? (
-              <div style={{width: '400px'}}>
+              <div style={{ width: '400px' }}>
                 <LinearProgress color="secondary" />
                 Editing Module
               </div>

@@ -24,20 +24,20 @@ const validate = () => {
 
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+const email = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined);
 
 class UserCreate extends React.Component {
   componentDidMount() {
     this.props.dispatch(ClientActions.getAll());
     this.props.dispatch(UserActions.getAllRoles());
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     if (this.props.user.role.name == 'Admin') {
       if (this.props.newClientId)
-        this.props.initialize({ clientId: this.props.newClientId, roleId: this.props.clientRoleId });
+        {this.props.initialize({ clientId: this.props.newClientId, roleId: this.props.clientRoleId });}
     } else {
       this.props.initialize({ clientId: this.props.user.clientId });
     }
@@ -49,7 +49,7 @@ class UserCreate extends React.Component {
   };
 
   render() {
-    let {user} = this.props;
+    const { user } = this.props;
     return (
       <Card width="600px" title="Create New User">
         <form
@@ -59,11 +59,11 @@ class UserCreate extends React.Component {
         >
           <div>
             {!this.props.clients_loading ? (
-              <Field 
-                name="clientId" 
-                label="Client Name" 
-                component={Select} 
-                validate={[ required ]}
+              <Field
+                name="clientId"
+                label="Client Name"
+                component={Select}
+                validate={[required]}
               >
                 {(Array.isArray(this.props.clients) ? this.props.clients : [])
                 .filter(client => this.props.user.role.name == 'Admin' || client.id == this.props.user.clientId)
@@ -81,9 +81,9 @@ class UserCreate extends React.Component {
             )}
             <div>
               {!this.props.roles_loading ? (
-                <Field name="roleId" label="Role" component={Select} validate={[ required ]}>
+                <Field name="roleId" label="Role" component={Select} validate={[required]}>
                   {(Array.isArray(this.props.roles) ? this.props.roles : [])
-                  .filter(role => (role.name == 'Admin' && user.role.name == 'Client' ? false : true) )
+                  .filter(role => (!(role.name == 'Admin' && user.role.name == 'Client')))
                   .map(role => (
                     <MenuItem value={role.id} key={role.id}>
                       {role.name}
@@ -103,21 +103,21 @@ class UserCreate extends React.Component {
                 label="Email"
                 margin="normal"
                 component={TextField}
-                validate={[ required, email ]}
+                validate={[required, email]}
               />
             </div>
             <div>
               <Field
                 name="name"
-                label="Name"
+                label="Full Name"
                 margin="normal"
                 component={TextField}
-                validate={[ required ]}
+                validate={[required]}
               />
             </div>
           </div>
           {this.props.user_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating User
             </div>

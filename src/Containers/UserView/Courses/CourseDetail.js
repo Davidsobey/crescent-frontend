@@ -125,11 +125,11 @@ class CourseDetail extends React.Component {
                           ) : this.props.loadingTests ? (
                             <div>
                               <LinearProgress color="secondary" />
-                              Loading Assignments
+                              Loading Assessments
                             </div>
                           ) : (
                             <div>
-                              <Typography>No Assignments</Typography>
+                              <Typography>No Assessments</Typography>
                             </div>
                           )}
                         </div>

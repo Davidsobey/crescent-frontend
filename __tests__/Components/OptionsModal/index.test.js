@@ -12,9 +12,9 @@ const initialState = {};
 const store = mockStore(initialState);
 
 const options = [
-  // {label: 'Create another assignment'},
+  // {label: 'Create another assessment'},
   {label: 'Create another module', url: '/module/create'},
-  {label: 'Create questions for this assignment', url: '/question/create'},
+  {label: 'Create questions for this assessment', url: '/question/create'},
 ];
 
 describe('<OptionsModal />', () => {

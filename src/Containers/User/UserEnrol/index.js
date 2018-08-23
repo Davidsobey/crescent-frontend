@@ -15,13 +15,13 @@ import ClientActions from '../../../Actions/ClientActions';
 import UserActions from '../../../Actions/UserActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
-var validated = false;
+let validated = false;
 const validate = () => {
   const errors = {};
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 class EnrolmentCreate extends React.Component {
   constructor(props) {
@@ -40,8 +40,7 @@ class EnrolmentCreate extends React.Component {
   }
 
   submit = (values) => {
-    if (this.state.selectedDate ? (new Date(this.state.selectedDate)) < (new Date()) ? true : false : true)
-      return;
+    if (this.state.selectedDate ? (new Date(this.state.selectedDate)) < (new Date()) : true) { return; }
     const enrolment = Object.assign({}, values);
     this.props.dispatch(UserActions.enrol(enrolment));
   };
@@ -51,33 +50,33 @@ class EnrolmentCreate extends React.Component {
   }
 
   loadCourses = (values) => {
-    this.setState({userId: values.target.value});
+    this.setState({ userId: values.target.value });
     const user = this.props.users.find(x => x.id === values.target.value);
     this.props.dispatch(CourseActions.loadCoursesByClientSubscriptions(user.clientId));
     this.props.dispatch(ClientActions.getUserEnrolments(user.clientId));
   };
 
   handleDateChange = (values) => {
-    this.setState({selectedDate: values.target.value});
+    this.setState({ selectedDate: values.target.value });
   };
 
   render() {
     const { selectedDate } = this.state;
     const val = this.state.value || null;
 
-    const isValidModule = (module => 
+    const isValidModule = (module =>
       (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false)
     );
-    const isValidCourse = (course => {
-      let courseWithModules = (Array.isArray(this.props.courses) ? this.props.courses : [])
+    const isValidCourse = ((course) => {
+      const courseWithModules = (Array.isArray(this.props.courses) ? this.props.courses : [])
         .find(c => c.id == course.id);
-      let modules = courseWithModules ? courseWithModules.modules : null;
+      const modules = courseWithModules ? courseWithModules.modules : null;
       return Array.isArray(modules) ? modules.filter(isValidModule).length : false;
     });
 
-    const isUnenrolledCourse = (course => {
+    const isUnenrolledCourse = ((course) => {
       if (Array.isArray(this.props.userEnrolments)) {
-        let length = this.props.userEnrolments
+        const length = this.props.userEnrolments
           .filter(userEnrolment => this.state.userId == userEnrolment.userId)
           .filter(userEnrolment => course.id == userEnrolment.courseId)
           .length;
@@ -90,8 +89,8 @@ class EnrolmentCreate extends React.Component {
       .filter(isValidCourse)
       .filter(isUnenrolledCourse);
 
-    const courseSelect = (value) => value ? courses.find(course => course.id == value) ? undefined : 'required' : undefined;
-    
+    const courseSelect = value => (value ? courses.find(course => course.id == value) ? undefined : 'required' : undefined);
+
     return (
       <Card width="600px" title="Enrol A User In A Course">
         <form
@@ -111,12 +110,12 @@ class EnrolmentCreate extends React.Component {
                   <Field
                     name="user"
                     onChange={this.loadCourses}
-                    label="User Name"
+                    label="User"
                     component={Select}
-                    validate={[ required ]}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.users) ? this.props.users : [])
-                    .filter(user => (this.props.user.role.name=='Admin' ||this.props.user.clientId==user.clientId))
+                    .filter(user => (this.props.user.role.name == 'Admin' || this.props.user.clientId == user.clientId))
                     .map(user => (
                       <MenuItem value={user.id} key={user.id}>
                         {user.name}
@@ -133,9 +132,9 @@ class EnrolmentCreate extends React.Component {
               ) : this.props.subscribedCourses ? (
                 <Field
                   name="course"
-                  label="Course Name"
+                  label="Course"
                   component={Select}
-                  validate={[ required, courseSelect ]}
+                  validate={[required, courseSelect]}
                 >
                   {courses.length ?
                   courses.map(course => (
@@ -143,7 +142,7 @@ class EnrolmentCreate extends React.Component {
                       {course.name}
                     </MenuItem>
                   )) : (
-                    <MenuItem disabled={true}>
+                    <MenuItem disabled>
                       No Course
                     </MenuItem>
                   )}
@@ -165,18 +164,18 @@ class EnrolmentCreate extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  error={ validated && (selectedDate ? (new Date(selectedDate)) < (new Date()) ? true : false : true) }
+                  error={validated && (selectedDate ? (new Date(selectedDate)) < (new Date()) : true)}
                 />
                 {validated ? (
-                <Typography variant="caption" component="p" style={{color:'#f00'}}>
-                  { selectedDate ? (new Date(selectedDate)) < (new Date()) ? 'Must be a future day' : undefined : 'Required' }
-                </Typography>
+                  <Typography variant="caption" component="p" style={{ color: '#f00' }}>
+                    { selectedDate ? (new Date(selectedDate)) < (new Date()) ? 'Must be a future day' : undefined : 'Required' }
+                  </Typography>
                 ) : ''}
               </div>
             </div>
           </div>
           {this.props.user_enrolling ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Enrolling User
             </div>

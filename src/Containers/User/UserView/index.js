@@ -70,7 +70,7 @@ class UserView extends React.Component {
     const users = this.manipulateData(this.props.users);
     const columns = [
       {
-        Header: 'Name',
+        Header: 'User',
         accessor: 'name',
       },
       {

@@ -46,11 +46,11 @@ class PolicyView extends React.Component {
     const policies = (Array.isArray(this.props.policies) ? this.props.policies : []);
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Policy Name',
         accessor: 'name',
       },
       {
-        Header: 'Description',
+        Header: 'Policy Description',
         accessor: 'description',
       },
       {

@@ -15,8 +15,8 @@ const validate = () => {
 
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 class PolicyCreate extends React.Component {
   submit = (values) => {
@@ -40,7 +40,7 @@ class PolicyCreate extends React.Component {
                   label="Policy Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
               <div>
@@ -49,13 +49,13 @@ class PolicyCreate extends React.Component {
                   label="Policy Description"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
             </div>
           </div>
           {this.props.policy_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Policy
             </div>

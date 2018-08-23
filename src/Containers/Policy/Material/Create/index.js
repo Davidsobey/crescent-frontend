@@ -16,16 +16,16 @@ const validate = () => {
   const errors = {};
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 class PolicyMaterialCreate extends React.Component {
   constructor(props) {
     super(props);
     this.props.dispatch(PolicyActions.getAll());
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     this.props.initialize({ PolicyId: this.props.newPolicyId });
   }
 
@@ -60,7 +60,7 @@ class PolicyMaterialCreate extends React.Component {
                   Loading Policies
                 </div>
               ) : (
-                <Field name="PolicyId" label="Policy Name" component={Select} validate={[ required ]}>
+                <Field name="PolicyId" label="Policy Name" component={Select} validate={[required]}>
                   {(Array.isArray(this.props.policies) ? this.props.policies : [])
                   .map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
@@ -75,7 +75,7 @@ class PolicyMaterialCreate extends React.Component {
             </div>
           </div>
           {this.props.material_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Material
             </div>

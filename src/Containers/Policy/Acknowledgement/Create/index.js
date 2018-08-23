@@ -17,8 +17,8 @@ const validate = () => {
   const errors = {};
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class AcknowledgementCreate extends React.Component {
@@ -27,8 +27,8 @@ class AcknowledgementCreate extends React.Component {
     this.props.dispatch(PolicyActions.getAll());
     this.props.dispatch(UserActions.getAll());
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     this.props.initialize({ policyID: this.props.newPolicyId });
   }
 
@@ -38,10 +38,10 @@ class AcknowledgementCreate extends React.Component {
   };
 
   render() {
-    const isValidPolicy = (policy => Array.isArray(policy.materialIDs) ? policy.materialIDs.length : false);
-    const isValidUser = (user => ((user.clientId != userInfo.clientId || user.role.name == 'Admin') && userInfo.role.name == 'Client' ? false : true) );
+    const isValidPolicy = (policy => (Array.isArray(policy.materialIDs) ? policy.materialIDs.length : false));
+    const isValidUser = (user => (!((user.clientId != userInfo.clientId || user.role.name == 'Admin') && userInfo.role.name == 'Client')));
 
-    let {userInfo} = this.props;
+    let { userInfo } = this.props;
     return (
       <Card width="600px" title="Assign A User A Policy To Acknowledge">
         <form
@@ -58,10 +58,11 @@ class AcknowledgementCreate extends React.Component {
                   Loading Users
                 </div>
               ) : (
-                <Field name="userID" 
-                  label="User Name" 
-                  component={Select} 
-                  validate={[ required ]}
+                <Field
+                  name="userID"
+                  label="User Name"
+                  component={Select}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.users) ? this.props.users : [])
                   .filter(isValidUser)
@@ -80,7 +81,7 @@ class AcknowledgementCreate extends React.Component {
                   Loading Policies
                 </div>
               ) : (
-                <Field name="policyID" label="Policy Name" component={Select} validate={[ required ]}>
+                <Field name="policyID" label="Policy Name" component={Select} validate={[required]}>
                   {(Array.isArray(this.props.policies) ? this.props.policies : [])
                   .filter(isValidPolicy)
                   .map(policy => (
@@ -93,7 +94,7 @@ class AcknowledgementCreate extends React.Component {
             </div>
           </div>
           {this.props.acknowledgement_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Assigning Policy
             </div>

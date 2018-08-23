@@ -19,8 +19,8 @@ import QuestionActions from '../../../Actions/QuestionActions';
 import TestActions from '../../../Actions/TestActions';
 import LinearProgress from '../../../Components/LinearProgress';
 
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class QuestionEdit extends React.Component {
@@ -53,11 +53,11 @@ class QuestionEdit extends React.Component {
             <div>
               {!this.props.tests_loading ? (
                 <div>
-                  <Field 
-                    name="testId" 
-                    label="Assessment Name" 
+                  <Field
+                    name="testId"
+                    label="Assessment Name"
                     component={Select}
-                    validate={[ required ]}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.tests) ? this.props.tests : [])
                     .map(test => (
@@ -76,10 +76,10 @@ class QuestionEdit extends React.Component {
               <div>
                 <Field
                   name="title"
-                  label="Question Name"
+                  label="Question"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
               <div>
@@ -88,12 +88,12 @@ class QuestionEdit extends React.Component {
                   label="Allocated Marks"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, number ]}
+                  validate={[required, number]}
                 />
               </div>
             </div>
             {this.props.question_editing ? (
-              <div style={{width: '400px'}}>
+              <div style={{ width: '400px' }}>
                 <LinearProgress color="secondary" />
                 Editing Question
               </div>

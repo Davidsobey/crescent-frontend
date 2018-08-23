@@ -71,7 +71,7 @@ class TestView extends React.Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Assessment Name',
         accessor: 'name',
       },
       {
@@ -79,7 +79,7 @@ class TestView extends React.Component {
         accessor: 'totalMarks',
       },
       {
-        Header: 'Module',
+        Header: 'Module Name',
         accessor: 'moduleID',
       },
       {
