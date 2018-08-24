@@ -22,14 +22,14 @@ const validate = () => {
 
   return errors;
 };
-// let clients = [];
+let clients = [];
 const required = value => (value ? undefined : 'Required');
 const maxLength = max => value => (value && value.length > max ? `Must be ${max} characters or less` : undefined);
 const maxLength6 = maxLength(6);
 const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 // check for previously existing client name and client code
-const clientExists = value => (value && Array.isArray(this.props.clients) ? this.props.clients.filter(client => client.name === value).length ? 'Client with that name already exists' : undefined : undefined);
-const codeExists = value => (value && Array.isArray(this.props.clients) ? this.props.clients.filter(client => client.clientCode === value).length ? 'Client with that code already exists' : undefined : undefined);
+const clientExists = value => (value && Array.isArray(clients) ? clients.filter(client => client.name === value).length ? 'Client with that name already exists' : undefined : undefined);
+const codeExists = value => (value && Array.isArray(clients) ? clients.filter(client => client.clientCode === value).length ? 'Client with that code already exists' : undefined : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class ClientCreate extends React.Component {
@@ -37,12 +37,16 @@ class ClientCreate extends React.Component {
     super(props);
     this.props.dispatch(ClientActions.clearClients());
     this.props.dispatch(UserActions.getAllRoles());
+    this.props.dispatch(ClientActions.getAll());
   }
 
   submit = (values) => {
+    // clientExists(values.name);
+    // codeExists(values.clientCode);
     const client = Object.assign({}, values);
     const clientRoleId = this.props.roles.find(role => role.name === 'Client').id;
     this.props.dispatch(ClientActions.create(client, clientRoleId));
+    this.props.dispatch(ClientActions.getAll());
   };
 
   loadClients = (values) => {
@@ -50,6 +54,8 @@ class ClientCreate extends React.Component {
   };
 
   render() {
+    clients = this.props.clients;
+    // console.log(clients);
     return (
       <Card width="600px" title="Create New Client">
         <form

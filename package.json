@@ -46,6 +46,7 @@
     "form-data": "^2.3.2",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
+    "itsa-react-docviewer": "^16.0.7",
     "jwt-decode": "^2.2.0",
     "lint": "^1.1.2",
     "material-ui": "^1.0.0-beta.35",
