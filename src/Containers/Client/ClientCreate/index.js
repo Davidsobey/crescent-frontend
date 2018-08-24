@@ -41,7 +41,7 @@ class ClientCreate extends React.Component {
 
   submit = (values) => {
     const client = Object.assign({}, values);
-    const clientRoleId = this.props.roles.find(role => role.name == 'Client').id;
+    const clientRoleId = this.props.roles.find(role => role.name === 'Client').id;
     this.props.dispatch(ClientActions.create(client, clientRoleId));
   };
 
@@ -105,8 +105,8 @@ const mapStateToProps = state => ({
   client_creating: state.ClientReducer.creating,
   roles: state.UserReducer.roles,
   roles_loading: state.UserReducer.loading,
-  clients: PropTypes.array,
-  clients_loading: PropTypes.bool,
+  clients: state.ClientReducer.clients,
+  clients_loading: state.ClientReducer.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -114,8 +114,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 ClientCreate.propTypes = {
-  clients: state.ClientReducer.clients,
-  clients_loading: state.ClientReducer.loading,
+  clients: PropTypes.array,
+  clients_loading: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   client_creating: PropTypes.bool,
