@@ -24,16 +24,14 @@ const validate = () => {
 
   return errors;
 };
+let users = [];
 const required = value => (value ? undefined : 'Required');
 const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 const email = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined);
+const userExists = value => (value && Array.isArray(users) ? users.filter(user => user.email === value).length ? 'User with that email already exists' : undefined : undefined);
+
 
 class UserCreate extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(ClientActions.getAll());
-    this.props.dispatch(UserActions.getAllRoles());
-  }
-
   componentWillMount() {
     if (this.props.user.role.name == 'Admin') {
       if (this.props.newClientId)
@@ -43,12 +41,19 @@ class UserCreate extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.dispatch(ClientActions.getAll());
+    this.props.dispatch(UserActions.getAllRoles());
+    this.props.dispatch(UserActions.getAll());
+  }
+
   submit = (values) => {
     const user = Object.assign({}, values);
     this.props.dispatch(UserActions.register(user));
   };
 
   render() {
+    users = this.props.users;
     const { user } = this.props;
     return (
       <Card width="600px" title="Create New User">
@@ -103,7 +108,7 @@ class UserCreate extends React.Component {
                 label="Email"
                 margin="normal"
                 component={TextField}
-                validate={[required, email]}
+                validate={[required, email, userExists]}
               />
             </div>
             <div>
@@ -143,6 +148,8 @@ UserCreate.propTypes = {
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
   user: PropTypes.object,
+  users: PropTypes.array,
+  users_loading: PropTypes.bool,
   newClientId: PropTypes.number,
   clientRoleId: PropTypes.number,
   clients: PropTypes.array,
@@ -154,6 +161,8 @@ UserCreate.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
+  users: state.UserReducer.users,
+  users_loading: state.UserReducer.loading,
   newClientId: state.ClientReducer.newClientId,
   clientRoleId: state.ClientReducer.clientRoleId,
   clients: state.ClientReducer.clients,
