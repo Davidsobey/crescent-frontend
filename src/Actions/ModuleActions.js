@@ -265,6 +265,33 @@ function editModule(values) {
   };
 }
 
+function getMaterialsForModule(moduleId, moduleName, moduleDescription) {
+  function request() {
+    return { type: ModuleConstants.GET_MATERIALS_REQUEST };
+  }
+  function success(materials) {
+    return { type: ModuleConstants.GET_MATERIALS_SUCCESS, moduleId, moduleName, moduleDescription, materials };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.GET_MATERIALS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(moduleId));
+
+    ModuleService.getMaterialsForModule(moduleId).then(
+      (materials) => {
+        console.log(materials);
+        dispatch(success(materials));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const ModuleActions = {
   create,
   closeRedirectModal,
@@ -277,6 +304,7 @@ const ModuleActions = {
   deleteModule,
   loadModule,
   editModule,
+  getMaterialsForModule,
 };
 
 export default ModuleActions;

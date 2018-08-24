@@ -27,7 +27,7 @@ class UsersPolicyDetails extends React.Component {
     this.manipulateData = this.manipulateData.bind(this);
     this.acknowldegePolicy = this.acknowldegePolicy.bind(this);
   }
-  
+
   acknowldegePolicy() {
     this.props.dispatch(PolicyActions.acknowledge(this.props.user.id, this.props.policyId, '/policy/acknowledgement/list'));
   }
@@ -41,7 +41,7 @@ class UsersPolicyDetails extends React.Component {
     if (Array.isArray(policyMaterials)) {
       policyMaterials.forEach((policyMaterial, index) => {
         const newPolicyMaterial = {
-          name: 'Material '+(index+1).toString(),
+          name: `Material ${(index + 1).toString()}`,
           button: {
             message: 'View Material',
             onClick: () => this.loadMaterial(policyMaterial),
@@ -58,7 +58,7 @@ class UsersPolicyDetails extends React.Component {
     const policyMaterials = this.manipulateData(this.props.policyMaterials);
 
     return (
-      <Card width="800px" title={'Policy Acknowledgement - ' + this.props.policyName}>
+      <Card width="800px" title={`Policy Acknowledgement - ${  this.props.policyName}`}>
         <div>
           Description : {this.props.policyDescription}
         </div>

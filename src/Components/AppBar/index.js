@@ -400,7 +400,7 @@ class MiniDrawer extends React.Component {
         >
           <div className={classes.paperBackground}>
             <div className={classes.toolbar}>
-              <Link to={role != "Regular" ? "/admin/home" : "/home"}>
+              <Link to={role != 'Regular' ? '/admin/home' : '/home'}>
                 <img
                   width="34px"
                   src={Logo}
@@ -418,7 +418,7 @@ class MiniDrawer extends React.Component {
             </div>
           </div>
           <Divider />
-          {role !== 'Regular' && (
+          {role === 'Admin' && (
             <List>
               {this.state.open && (
                 <Typography className="user-type" type="subheading">
@@ -456,7 +456,61 @@ class MiniDrawer extends React.Component {
               />
               <ExpandableMenu
                 color={theme.palette.accent[500]}
+                details={PolicyDetails}
+              />
+              {role === 'Admin' && (
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ClientDetails}
+                />
+              )}
+              {role === 'Client' && (
+                <ExpandableMenu
+                  color={theme.palette.accent[500]}
+                  details={ClientDetails1}
+                />
+              )}
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
                 details={UserDetails}
+              />
+            </List>
+          )}
+          {role === 'Client' && (
+            <List>
+              {this.state.open && (
+                <Typography className="user-type" type="subheading">
+                  Client View
+                </Typography>
+              )}
+              <Link to="/admin/home">
+                <MUIMenuItem>
+                  <ListItemIcon>
+                    <HomeIcon className={classes.paperColor} />
+                  </ListItemIcon>
+                  <ListItemText
+                    inset
+                    className={classes.paperColor}
+                    disableTypography
+                    primary="Home"
+                  />
+                </MUIMenuItem>
+              </Link>
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={CourseDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={ModuleDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={TestDetails}
+              />
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={QuestionDetails}
               />
               <ExpandableMenu
                 color={theme.palette.accent[500]}
@@ -474,6 +528,10 @@ class MiniDrawer extends React.Component {
                   details={ClientDetails1}
                 />
               )}
+              <ExpandableMenu
+                color={theme.palette.accent[500]}
+                details={UserDetails}
+              />
             </List>
           )}
           {role === 'Regular' && (

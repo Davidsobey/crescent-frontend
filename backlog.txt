@@ -11,9 +11,9 @@ Front End
 	// Create test to create assessment
 	// Question title to change to question
 
-	>> No duplicate client name
-	Question list should fall under assessment
-	User section after client section
+	// No duplicate client name
+	[][] Question list should fall under assessment
+	// User section after client section
 
 	DEV
 	View module material for each module
@@ -33,4 +33,4 @@ Back End
 	CONFIG and TESTING
 	Test Start EnrolmentTest, Answer Question, Complete Enrolment Test
 	Enable Email
-	>> No duplicate client name (unique)
+	// No duplicate client name (unique)

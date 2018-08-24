@@ -69,8 +69,27 @@ function ModuleReducer(state = {}, action) {
         moduleMaterial: action.moduleMaterials,
       });
     case ModuleConstants.MODULE_MATERIAL_FAILURE:
-      return Object.assign({}, state, { moduleMaterial: [] });
-
+      return Object.assign({}, state, {
+        moduleMaterial: [],
+      });
+    case ModuleConstants.GET_MATERIALS_REQUEST:
+      return Object.assign({}, state, {
+        moduleMaterials: [],
+        moduleMaterials_loading: true,
+      });
+    case ModuleConstants.GET_MATERIALS_SUCCESS:
+      return Object.assign({}, state, {
+        moduleMaterials: action.materials,
+        moduleId: action.moduleId,
+        moduleName: action.moduleName,
+        moduleDescription: action.moduleDescription,
+        moduleMaterials_loading: false,
+      });
+    case ModuleConstants.GET_MATERIALS_FAILURE:
+      return Object.assign({}, state, {
+        moduleMaterials: [],
+        moduleMaterials_loading: false,
+      });
     case ModuleConstants.LOADTESTS_REQUEST:
       return Object.assign({}, state, {
         moduleTests: [],
@@ -82,7 +101,7 @@ function ModuleReducer(state = {}, action) {
         loadingTests: false,
       });
     case ModuleConstants.LOADTESTS_FAILURE:
-      return Object.assign({}, state, { 
+      return Object.assign({}, state, {
         moduleTests: [],
         loadingTests: false,
       });
