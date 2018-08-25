@@ -1,0 +1,36 @@
+Queries
+	If a user is adding course & enrollers there should be no additional cost
+	
+Front End
+	LAYOUT
+	// all name fields to be entity name
+	// assessment not assignment
+	// upload another material for this module should be upload additional material for this module
+	// create an assignment for this module should be create an assessment for this module
+	// Option to finish creating module after creating material
+	// Create test to create assessment
+	// Question title to change to question
+	// No duplicate client name
+	// User section after client section
+
+	[][] Question list should fall under assessment
+
+	DEV
+	>> View module material for each module
+	>> Don't allow download of module material (view inside application with document viewer)
+	Export list views to excel xlsx
+	CPD Hours to be transformed from int e.g. 3 to string e.g. 3 hours
+
+	TEST
+	Start Test, Answer Question, Complete Test
+	Test all edits and deletes
+
+Back End
+	DEV
+	Certificate Generation on Complete Enrolment Test
+	Export list views to excel xlsx
+
+	CONFIG and TESTING
+	Test Start EnrolmentTest, Answer Question, Complete Enrolment Test
+	Enable Email
+	// No duplicate client name (unique)
