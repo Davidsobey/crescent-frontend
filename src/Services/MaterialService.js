@@ -8,11 +8,11 @@ const api = CommonConstants.API_ENDPOINT;
 
 // get material by ID
 function getByID(id) {
+  console.log(id)
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-
   return Auth.fetch(`${api}/Materials/${id}`, requestOptions);
 }
 

@@ -22,6 +22,7 @@ import ModuleList from '../Containers/Module/ModuleView/index';
 import ModuleEdit from '../Containers/Module/ModuleEdit/index';
 import MaterialCreate from '../Containers/Module/Material/MaterialCreate/index';
 import ModuleMaterialDetails from '../Containers/Module/Material/MaterialDetails/index';
+import ModuleMaterialView from '../Containers/Module/Material/MaterialView/index';
 import TestCreate from '../Containers/Test/TestCreate/index';
 import TestList from '../Containers/Test/TestView/index';
 import QuestionList from '../Containers/Question/QuestionView/index';
@@ -122,6 +123,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.MATERIAL_DETAILS}
                   component={withAuth(ModuleMaterialDetails, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.MATERIAL_VIEW}
+                  component={withAuth(ModuleMaterialView, ['Admin', 'Client'])}
                   exact
                 />
                 <Route

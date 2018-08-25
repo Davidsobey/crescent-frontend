@@ -57,6 +57,19 @@ function ModuleReducer(state = {}, action) {
         modules: [],
         loading: false,
       };
+    case ModuleConstants.LOAD_MATERIAL_REQUEST:
+      return Object.assign({}, state, {
+        material: null,
+      });
+    case ModuleConstants.LOAD_MATERIAL_SUCCESS:
+      return Object.assign({}, state, {
+        material: action.material,
+      });
+    case ModuleConstants.LOAD_MATERIAL_FAILURE:
+      return {
+        material: null,
+      };
+
     case ModuleConstants.CLEAR_MODULES:
       return {};
     case ModuleConstants.MODULE_MATERIAL_REQUEST:

@@ -29,12 +29,12 @@ class ModuleMaterialDetails extends React.Component {
     // this.acknowldegePolicy = this.acknowldegePolicy.bind(this);
   }
 
-  // acknowldegePolicy() {
-  //  this.props.dispatch(PolicyActions.acknowledge(this.props.user.id, this.props.policyId, '/policy/acknowledgement/list'));
-  // }
-
-  loadMaterial(url) {
-    window.open(url);
+  loadMaterial(material) {
+    // const props = this.getProps(material);
+    console.log(`Redirecting for this material: ${material}`);
+    this.props.dispatch(ModuleActions.loadMaterial(material));
+    history.push('/module/material/view');
+    // window.open(url);
     // need to open google document viewer here instead of just opening a window to the azure url
   }
 
@@ -58,9 +58,8 @@ class ModuleMaterialDetails extends React.Component {
   render() {
     const { user } = this.props;
     const moduleMaterials = this.manipulateData(this.props.moduleMaterials);
-
     return (
-      <Card width="800px" title={`Module - ${  this.props.moduleName}`}>
+      <Card width="800px" title={`Module - ${this.props.moduleName}`}>
         <div>
           Description : {this.props.moduleDescription}
         </div>
@@ -85,7 +84,6 @@ const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   moduleMaterials: state.ModuleReducer.moduleMaterials,
   moduleMaterials_loading: state.ModuleReducer.moduleMaterials_loading,
-  moduleId: state.ModuleReducer.moduleId,
   moduleName: state.ModuleReducer.moduleName,
   moduleDescription: state.ModuleReducer.moduleDescription,
 });
@@ -102,7 +100,6 @@ ModuleMaterialDetails.propTypes = {
   user: PropTypes.object,
   moduleMaterials: PropTypes.array,
   moduleMaterials_loading: PropTypes.bool,
-  moduleId: PropTypes.object,
   moduleName: PropTypes.string,
   moduleDescription: PropTypes.string,
 };

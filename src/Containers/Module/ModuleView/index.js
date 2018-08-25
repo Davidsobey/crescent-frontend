@@ -48,6 +48,7 @@ class ModuleView extends React.Component {
   };
 
   loadModule = (id, name, description) => {
+    console.log(id, name, description);
     this.props.dispatch(ModuleActions.getMaterialsForModule(id, name, description));
     history.push('/module/material/detail');
   };
@@ -56,7 +57,7 @@ class ModuleView extends React.Component {
     const data = [];
     if (Array.isArray(modules) && Array.isArray(courses)) {
       modules
-        .filter(module => module.moduleMaterialLink)
+        // .filter(module => module.moduleMaterialLink)
         .forEach((module) => {
           const courseMatch = courses.filter(course => course.id === module.courseId);
           const newModule = {
@@ -79,7 +80,7 @@ class ModuleView extends React.Component {
         accessor: 'name',
       },
       {
-        Header: 'Module Key Outcome',
+        Header: 'Key Outcome',
         accessor: 'description',
       },
       {
@@ -88,14 +89,14 @@ class ModuleView extends React.Component {
       },
       {
         Header: 'Module Material',
-        accessor: 'view/material',
+        accessor: 'material/details',
         Filter: <div />,
         Cell: row => (
           <div>
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadModule(row.original.moduleId, row.original.name, row.original.description)}
+              onClick={() => this.loadModule(row.original.id, row.original.name, row.original.description)}
             >
               View Material
             </Button>

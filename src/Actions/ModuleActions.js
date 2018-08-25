@@ -213,6 +213,26 @@ function clearModules() {
   };
 }
 
+function loadMaterial(mm) {
+  /* function request(id) {
+    return { type: ModuleConstants.LOAD_MATERIAL_REQUEST };
+  } */
+  function success(material) {
+    return { type: ModuleConstants.LOAD_MATERIAL_SUCCESS, material };
+  }
+  function failure() {
+    return { type: ModuleConstants.LOAD_MODULE_FAILURE };
+  }
+  return (dispatch) => {
+    console.log(`Dispatching material: ${mm}`);
+    if (mm) {
+      dispatch(success(mm));
+    } else {
+      dispatch(failure());
+    }
+  };
+}
+
 function loadModule(id) {
   function request() {
     return { type: ModuleConstants.LOAD_MODULE_REQUEST };
@@ -270,7 +290,9 @@ function getMaterialsForModule(moduleId, moduleName, moduleDescription) {
     return { type: ModuleConstants.GET_MATERIALS_REQUEST };
   }
   function success(materials) {
-    return { type: ModuleConstants.GET_MATERIALS_SUCCESS, moduleId, moduleName, moduleDescription, materials };
+    return {
+      type: ModuleConstants.GET_MATERIALS_SUCCESS, moduleId, moduleName, moduleDescription, materials,
+    };
   }
   function failure(error) {
     return { type: ModuleConstants.GET_MATERIALS_FAILURE, error };
@@ -300,6 +322,7 @@ const ModuleActions = {
   loadModuleByCourse,
   clearModules,
   moduleMaterial,
+  loadMaterial,
   loadModuleTests,
   deleteModule,
   loadModule,
