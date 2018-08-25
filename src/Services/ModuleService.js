@@ -87,7 +87,7 @@ function getModule(id) {
   );
 }
 
-function getModuleMaterial(moduleId) {
+function getMaterialsForModule(moduleId) {
   const requestOptions = {
     method: 'GET',
   };
@@ -130,7 +130,7 @@ const ModuleServices = {
   create,
   getAll,
   getModules,
-  getModuleMaterial,
+  getMaterialsForModule,
   loadTests,
   getModule,
   editModule,

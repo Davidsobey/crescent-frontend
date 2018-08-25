@@ -8,7 +8,8 @@ const MODULE_CREATE = '/module/create';
 const MODULE_VIEW = '/module/list';
 const MODULE_EDIT = '/module/edit';
 const MATERIAL_CREATE = '/module/material/create';
-const MATERIAL_VIEW = 'module/material/view';
+const MATERIAL_VIEW = '/module/material/view';
+const MATERIAL_DETAILS = '/module/material/detail';
 const TEST_CREATE = '/assessment/create';
 const TEST_VIEW = '/assessment/list';
 const TEST_EDIT = '/assessment/edit';
@@ -54,6 +55,7 @@ export default {
   MODULE_EDIT,
   MATERIAL_CREATE,
   MATERIAL_VIEW,
+  MATERIAL_DETAILS,
   TEST_CREATE,
   TEST_VIEW,
   TEST_EDIT,

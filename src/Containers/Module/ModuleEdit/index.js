@@ -76,7 +76,7 @@ class ModuleEdit extends React.Component {
               <div>
                 <Field
                   name="name"
-                  label="Name"
+                  label="Module Name"
                   margin="normal"
                   component={TextField}
                   validate={[ required ]}

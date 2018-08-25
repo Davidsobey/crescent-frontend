@@ -16,8 +16,8 @@ Front End
 	[][] Question list should fall under assessment
 
 	DEV
-	>> View module material for each module
-	>> Don't allow download of module material (view inside application with document viewer)
+	// View module material for each module
+	>> Don't allow download of module material (view inside application with document viewer). Need to pick appropriate method
 	Export list views to excel xlsx
 	CPD Hours to be transformed from int e.g. 3 to string e.g. 3 hours
 

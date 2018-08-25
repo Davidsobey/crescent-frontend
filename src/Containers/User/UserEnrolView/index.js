@@ -36,16 +36,16 @@ class UserEnrolView extends React.Component {
   }
 
   manipulateData = (userEnrolments) => {
-    var getUserNameById = userId => {
+    let getUserNameById = (userId) => {
       if (Array.isArray(this.props.users)) {
-        let user = this.props.users.filter(user => user.id == userId);
+        const user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
     };
-    var getCourseNameById = courseId => {
+    let getCourseNameById = (courseId) => {
       if (Array.isArray(this.props.courses)) {
-        let course = this.props.courses.filter(course => course.id == courseId);
+        const course = this.props.courses.filter(course => course.id == courseId);
         return course.length > 0 ? course[0].name : '';
       }
       return '';
@@ -54,16 +54,16 @@ class UserEnrolView extends React.Component {
     const data = [];
     if (Array.isArray(userEnrolments)) {
       userEnrolments
-      .filter( enrolInfo => getCourseNameById(enrolInfo.courseId))
-      .forEach((enrolInfo) => {
-        const row = {
-          userName: getUserNameById(enrolInfo.userId),
-          courseName: getCourseNameById(enrolInfo.courseId),
-          deadline: enrolInfo.deadline.slice(0,10),
-          status: enrolInfo.completed ? 'Yes' : 'No',
-        };
-        data.push(row);
-      });
+        .filter(enrolInfo => getCourseNameById(enrolInfo.courseId))
+        .forEach((enrolInfo) => {
+          const row = {
+            userName: getUserNameById(enrolInfo.userId),
+            courseName: getCourseNameById(enrolInfo.courseId),
+            deadline: enrolInfo.deadline.slice(0, 10),
+            status: enrolInfo.completed ? 'Yes' : 'No',
+          };
+          data.push(row);
+        });
     }
     return data;
   };

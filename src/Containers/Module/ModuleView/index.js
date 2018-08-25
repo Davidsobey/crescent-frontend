@@ -13,6 +13,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
+import Button from '../../../Components/Button/index';
 
 import Card from '../../../Components/Card';
 import CourseActions from '../../../Actions/CourseActions';
@@ -46,28 +47,36 @@ class ModuleView extends React.Component {
     history.push('/module/edit');
   };
 
+  loadModule = (id, name, description) => {
+    console.log(id, name, description);
+    this.props.dispatch(ModuleActions.getMaterialsForModule(id, name, description));
+    history.push('/module/material/detail');
+  };
+
   loadData = (modules, courses) => {
-    const formattedArray = [];
+    const data = [];
     if (Array.isArray(modules) && Array.isArray(courses)) {
-      modules.forEach((module) => {
-        const courseMatch = courses.filter(course => course.id === module.courseId);
-        const newModule = {
-          id: module.id,
-          description: module.description,
-          name: module.name,
-          course: courseMatch.length ? courseMatch[0].name : '',
-        };
-        formattedArray.push(newModule);
-      });
-      formattedArray.sort((a, b) => a.id - b.id);
+      modules
+        // .filter(module => module.moduleMaterialLink)
+        .forEach((module) => {
+          const courseMatch = courses.filter(course => course.id === module.courseId);
+          const newModule = {
+            id: module.id,
+            name: module.name,
+            description: module.description,
+            course: courseMatch.length ? courseMatch[0].name : '',
+          };
+          data.push(newModule);
+        });
+      data.sort((a, b) => a.id - b.id);
     }
-    return formattedArray;
+    return data;
   };
 
   render() {
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Module Name',
         accessor: 'name',
       },
       {
@@ -75,8 +84,24 @@ class ModuleView extends React.Component {
         accessor: 'description',
       },
       {
-        Header: 'Course',
+        Header: 'Course Name',
         accessor: 'course',
+      },
+      {
+        Header: 'Module Material',
+        accessor: 'material/details',
+        Filter: <div />,
+        Cell: row => (
+          <div>
+            <Button
+              className="small-font"
+              color="primary"
+              onClick={() => this.loadModule(row.original.id, row.original.name, row.original.description)}
+            >
+              View Material
+            </Button>
+          </div>
+        ),
       },
       {
         Header: 'Edit/Delete',

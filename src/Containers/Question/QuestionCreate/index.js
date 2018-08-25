@@ -24,14 +24,14 @@ const validate = () => {
   return errors;
 };
 let questions = [];
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const question_exists = value => value && Array.isArray(questions) ? questions.filter(question => question.title==value).length ? 'Question already exists' : undefined : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+const question_exists = value => (value && Array.isArray(questions) ? questions.filter(question => question.title==value).length ? 'Question already exists' : undefined : undefined);
 
 class QuestionCreate extends React.Component {
   componentDidMount() {
     this.props.dispatch(CourseActions.getAll());
-    if (this.props.newCourseId){
+    if (this.props.newCourseId) {
       this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
       this.props.initialize({ course: this.props.newCourseId });
 
@@ -55,8 +55,8 @@ class QuestionCreate extends React.Component {
       this.props.dispatch(ModuleActions.clearModules());
     }
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId, test: this.props.newTestId });
   }
 
@@ -80,11 +80,11 @@ class QuestionCreate extends React.Component {
   };
 
   render() {
-    const isValidModule = (module => 
-      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false) && 
+    const isValidModule = (module =>
+      (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false) &&
       (Array.isArray(module.testIds) ? module.testIds.length : false)
     );
-    const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
+    const isValidCourse = (course => (Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false));
     questions = this.props.questions;
     return (
       <Card width="600px" title="Create New Question">
@@ -106,7 +106,7 @@ class QuestionCreate extends React.Component {
                   onChange={this.loadModules}
                   label="Course Name"
                   component={Select}
-                  validate={[ required ]}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.courses) ? this.props.courses : [])
                   .filter(isValidCourse)
@@ -130,7 +130,7 @@ class QuestionCreate extends React.Component {
                   label="Module Name"
                   component={Select}
                   onChange={this.loadTests}
-                  validate={[ required ]}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.modules) ? this.props.modules : [])
                   .filter(isValidModule)
@@ -155,12 +155,12 @@ class QuestionCreate extends React.Component {
               </div>
             ) : this.props.tests ? (
               <div>
-                <Field 
-                  name="test" 
-                  label="Assessment Name" 
-                  component={Select} 
-                  onChange={this.loadQuestions}  
-                  validate={[ required ]}                  
+                <Field
+                  name="test"
+                  label="Assessment Name"
+                  component={Select}
+                  onChange={this.loadQuestions}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.tests) ? this.props.tests : [])
                   .map(test => (
@@ -186,10 +186,10 @@ class QuestionCreate extends React.Component {
               <div>
                 <Field
                   name="questionTitle"
-                  label="Question Title"
+                  label="Question"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, question_exists ]}
+                  validate={[required, question_exists]}
                 />
               </div>
             )}
@@ -199,12 +199,12 @@ class QuestionCreate extends React.Component {
                 label="Allocated Marks"
                 margin="normal"
                 component={TextField}
-                validate={[ required, number ]}
+                validate={[required, number]}
               />
             </div>
           </div>
           {this.props.question_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Question
             </div>

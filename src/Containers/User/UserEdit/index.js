@@ -19,9 +19,9 @@ import UserActions from '../../../Actions/UserActions';
 import LinearProgress from '../../../Components/LinearProgress';
 import ClientActions from '../../../Actions/ClientActions';
 
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+const email = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class UserEdit extends React.Component {
@@ -55,11 +55,11 @@ class UserEdit extends React.Component {
             <div>
               {!this.props.clients_loading ? (
                 <div>
-                  <Field 
-                    name="clientId" 
-                    label="Client Name" 
+                  <Field
+                    name="clientId"
+                    label="Client Name"
                     component={Select}
-                    validate={[ required ]}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.clients) ? this.props.clients : [])
                     .map(client => (
@@ -77,11 +77,11 @@ class UserEdit extends React.Component {
               )}
               {!this.props.roles_loading ? (
                 <div>
-                  <Field 
-                    name="roleId" 
-                    label="Role Name" 
+                  <Field
+                    name="roleId"
+                    label="Role Name"
                     component={Select}
-                    validate={[ required ]}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.roles) ? this.props.roles : [])
                     .map(role => (
@@ -103,21 +103,21 @@ class UserEdit extends React.Component {
                   label="Email"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, email ]}
+                  validate={[required, email]}
                 />
               </div>
               <div>
                 <Field
                   name="name"
-                  label="Name"
+                  label="Full Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
             </div>
             {this.props.user_editing ? (
-              <div style={{width: '400px'}}>
+              <div style={{ width: '400px' }}>
                 <LinearProgress color="secondary" />
                 Editing User
               </div>

@@ -51,15 +51,15 @@ class CourseView extends React.Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Course Name',
         accessor: 'name',
       },
       {
-        Header: 'Description',
+        Header: 'Course Description',
         accessor: 'description',
       },
       {
-        Header: 'CPD Hours',
+        Header: 'Course CPD Hours',
         accessor: 'cpdHours',
       },
       {

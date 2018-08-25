@@ -24,14 +24,14 @@ const validate = () => {
   return errors;
 };
 let tests = [];
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const test_exists = value => value && Array.isArray(tests) ? tests.filter(test => test.name==value).length ? 'Test already exists' : undefined : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+const test_exists = value => (value && Array.isArray(tests) ? tests.filter(test => test.name==value).length ? 'Assessment already exists' : undefined : undefined);
 
 const options = [
-  // {label: 'Create another assignment'},
-  {label: 'Create another module', url: '/module/create'},
-  {label: 'Create questions for this assignment', url: '/question/create'},
+  // {label: 'Create another assessment'},
+  { label: 'Create another module', url: '/module/create' },
+  { label: 'Create questions for this assessment', url: '/question/create' },
 ];
 
 class TestCreate extends React.Component {
@@ -39,7 +39,7 @@ class TestCreate extends React.Component {
     super(props);
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.props.dispatch(CourseActions.getAll());
     if (this.props.newCourseId) {
       this.props.dispatch(ModuleActions.loadModuleByCourse(this.props.newCourseId));
@@ -48,22 +48,20 @@ class TestCreate extends React.Component {
       if (this.props.newModuleId) {
         this.props.dispatch(TestActions.loadTestByModule(this.props.newModuleId));
         this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId });
-      }
-      else {
+      } else {
         this.props.dispatch(TestActions.clearTests());
       }
-    }
-    else {
+    } else {
       this.props.dispatch(ModuleActions.clearModules());
       this.props.dispatch(TestActions.clearTests());
     }
   }
-  
+
   loadModules = (values) => {
     this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
     this.props.dispatch(TestActions.clearTests());
   };
-  
+
   loadTests = (values) => {
     this.props.dispatch(TestActions.loadTestByModule(values.target.value));
   };
@@ -77,12 +75,12 @@ class TestCreate extends React.Component {
     // if (index==0)
     //   this.props.initialize({ course: this.props.newCourseId, module: this.props.newModuleId, testName: '', testMarks: '' });
     // else
-      history.push(options[index].url);
+    history.push(options[index].url);
   }
 
   render() {
-    const isValidModule = (module => Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false);
-    const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
+    const isValidModule = (module => (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false));
+    const isValidCourse = (course => (Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false));
     tests = this.props.tests;
     return (
       <Card width="600px" title="Create New Assessment">
@@ -104,7 +102,7 @@ class TestCreate extends React.Component {
                   onChange={this.loadModules}
                   label="Course Name"
                   component={Select}
-                  validate={[ required ]}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.courses) ? this.props.courses : [])
                   .filter(isValidCourse)
@@ -128,7 +126,7 @@ class TestCreate extends React.Component {
                   label="Module Name"
                   component={Select}
                   onChange={this.loadTests}
-                  validate={[ required ]}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.modules) ? this.props.modules : [])
                   .filter(isValidModule)
@@ -158,7 +156,7 @@ class TestCreate extends React.Component {
                   label="Assessment Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, test_exists ]}
+                  validate={[required, test_exists]}
                 />
               </div>
             )}
@@ -168,12 +166,12 @@ class TestCreate extends React.Component {
                 label="Total Marks"
                 margin="normal"
                 component={TextField}
-                validate={[ required, number ]}
+                validate={[required, number]}
               />
             </div>
           </div>
           {this.props.test_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Test
             </div>
@@ -185,14 +183,14 @@ class TestCreate extends React.Component {
                 color="primary"
                 type="submit"
               >
-                Create Test
+                Create Assessment
               </Button>
             </div>
           )}
         </form>
         <OptionsModal
           title="Test created successfully."
-          open={this.props.openRedirectModal?this.props.openRedirectModal:false}
+          open={this.props.openRedirectModal ? this.props.openRedirectModal:false}
           onClick={this.onContinue.bind(this)}
           options={options}
         />

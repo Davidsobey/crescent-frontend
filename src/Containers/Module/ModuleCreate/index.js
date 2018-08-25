@@ -95,7 +95,7 @@ class ModuleCreate extends React.Component {
                 <div>
                   <Field
                     name="moduleName"
-                    label="Name"
+                    label="Module Name"
                     margin="normal"
                     component={TextField}
                     validate={[ required, module_exists ]}

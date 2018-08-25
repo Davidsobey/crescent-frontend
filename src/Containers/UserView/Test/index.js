@@ -22,7 +22,7 @@ class UserTest extends React.Component {
         {test && (
           <Card width="800px" title={test.name}>
             <Typography variant="headline" component="h2">
-              Assignment Total - {test.totalMarks}
+              Assessment Total - {test.totalMarks}
             </Typography>
             <Typography component="p">All answers must be your own</Typography>
             <br />
@@ -31,7 +31,7 @@ class UserTest extends React.Component {
                 color="secondary"
                 onClick={() => this.beginTest(user.id, test.id, course.id)}
               >
-                Begin Assignment
+                Begin Assessment
               </Button>
             </div>
           </Card>

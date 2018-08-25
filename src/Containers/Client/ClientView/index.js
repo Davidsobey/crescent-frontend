@@ -48,11 +48,11 @@ class ClientView extends React.Component {
     const clients = Array.isArray(this.props.clients) ? this.props.clients : [];
     const columns = [
       {
-        Header: 'Name',
+        Header: 'Client Name',
         accessor: 'name',
       },
       {
-        Header: 'Code',
+        Header: 'Client Code',
         accessor: 'clientCode',
       },
       {

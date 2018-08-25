@@ -213,6 +213,26 @@ function clearModules() {
   };
 }
 
+function loadMaterial(mm) {
+  /* function request(id) {
+    return { type: ModuleConstants.LOAD_MATERIAL_REQUEST };
+  } */
+  function success(material) {
+    return { type: ModuleConstants.LOAD_MATERIAL_SUCCESS, material };
+  }
+  function failure() {
+    return { type: ModuleConstants.LOAD_MODULE_FAILURE };
+  }
+  return (dispatch) => {
+    console.log(`Dispatching material: ${mm}`);
+    if (mm) {
+      dispatch(success(mm));
+    } else {
+      dispatch(failure());
+    }
+  };
+}
+
 function loadModule(id) {
   function request() {
     return { type: ModuleConstants.LOAD_MODULE_REQUEST };
@@ -265,6 +285,35 @@ function editModule(values) {
   };
 }
 
+function getMaterialsForModule(moduleId, moduleName, moduleDescription) {
+  function request() {
+    return { type: ModuleConstants.GET_MATERIALS_REQUEST };
+  }
+  function success(materials) {
+    return {
+      type: ModuleConstants.GET_MATERIALS_SUCCESS, moduleId, moduleName, moduleDescription, materials,
+    };
+  }
+  function failure(error) {
+    return { type: ModuleConstants.GET_MATERIALS_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request(moduleId));
+
+    ModuleService.getMaterialsForModule(moduleId).then(
+      (materials) => {
+        console.log(materials);
+        dispatch(success(materials));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const ModuleActions = {
   create,
   closeRedirectModal,
@@ -273,10 +322,12 @@ const ModuleActions = {
   loadModuleByCourse,
   clearModules,
   moduleMaterial,
+  loadMaterial,
   loadModuleTests,
   deleteModule,
   loadModule,
   editModule,
+  getMaterialsForModule,
 };
 
 export default ModuleActions;

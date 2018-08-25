@@ -33,23 +33,23 @@ class SubscriptionView extends React.Component {
     this.manipulateData = this.manipulateData.bind(this);
   }
 
-  
+
   manipulateData = (courses, userEnrolments) => {
-    var getEnrolmentsCount = courseId =>
-    Array.isArray(userEnrolments) ? userEnrolments.filter(userEnrolment => userEnrolment.courseId == courseId).length : '';
+    let getEnrolmentsCount = courseId =>
+      (Array.isArray(userEnrolments) ? userEnrolments.filter(userEnrolment => userEnrolment.courseId == courseId).length : '');
 
     const data = [];
     if (Array.isArray(courses)) {
       courses
-      .forEach((course) => {
-        const row = {
-          courseName: course.name,
-          courseDescription: course.description,
-          enrolmentsCount: getEnrolmentsCount(course.id),
-          price: course.price,
-        };
-        data.push(row);
-      });
+        .forEach((course) => {
+          const row = {
+            courseName: course.name,
+            courseDescription: course.description,
+            enrolmentsCount: getEnrolmentsCount(course.id),
+            price: course.price,
+          };
+          data.push(row);
+        });
     }
     return data;
   };
@@ -65,11 +65,11 @@ class SubscriptionView extends React.Component {
         accessor: 'courseDescription',
       },
       {
-        Header: 'Enrolments Count',
+        Header: 'Number of Enrolments',
         accessor: 'enrolmentsCount',
       },
       {
-        Header: 'Price',
+        Header: 'Billable Amount',
         accessor: 'price',
       },
     ];

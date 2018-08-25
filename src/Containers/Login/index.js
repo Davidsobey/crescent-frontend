@@ -71,7 +71,7 @@ class Login extends React.Component {
                 component={Link}
                 to="/change-password"
               >
-                Forgot Password
+                Change Password
               </Button>
             </div>
           </div>

@@ -81,7 +81,7 @@ class UserTest extends React.Component {
                     )
                   }
                 >
-                  Complete Assignment
+                  Complete Assessment
                 </Button>
               </div>
             </Card>

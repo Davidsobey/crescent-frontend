@@ -24,18 +24,19 @@ const validate = () => {
 };
 
 const options = [
-  {label: 'Create another module', url: '/module/create'},
-  {label: 'Create an assignment for this module', url: '/assessment/create'},
-  {label: 'Upload another material for this module'},
-  {label: 'Enrol a user in this course', url: '/user/enrol'},
+  { label: 'Create another module', url: '/module/create' },
+  { label: 'Create an assessment for this module', url: '/assessment/create' },
+  { label: 'Upload additional material for this module' },
+  { label: 'Enrol a user in this course', url: '/user/enrol' },
+  { label: 'Finish this module without creating an assessment', url: '/module/list' },
 ];
 
 class MaterialCreate extends React.Component {
   constructor(props) {
     super(props);
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     if (this.props.newModuleId) {
       const newModuleId = this.props.newModuleId;
       this.props.initialize({ ModuleId: newModuleId });
@@ -55,23 +56,23 @@ class MaterialCreate extends React.Component {
   };
 
   submit = (values) => {
-    let courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id == values.ModuleId).courseId;
-    let clientID = this.props.user.clientId;
+    const courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id == values.ModuleId).courseId;
+    const clientID = this.props.user.clientId;
     if ((Array.isArray(this.props.unsubscribed_courses) ? this.props.unsubscribed_courses : []).find(course => course.id == courseID)) {
-      const subscription = Object.assign({}, {courseID, clientID});
+      const subscription = Object.assign({}, { courseID, clientID });
       this.props.dispatch(ClientActions.subscribeSilent(subscription));
     }
 
     const file = this.state.selectedFile;
     this.props.dispatch(ModuleActions.uploadMaterial(values.ModuleId, file));
   };
-  
+
   onContinue = (index) => {
     this.props.dispatch(ModuleActions.closeRedirectModal());
-    if (index==2)
-      this.props.initialize({ ModuleId: this.props.newModuleId });
+    if (index == 2)
+      {this.props.initialize({ ModuleId: this.props.newModuleId });}
     else
-      history.push(options[index].url);
+      {history.push(options[index].url);}
   }
 
   render() {
@@ -106,7 +107,7 @@ class MaterialCreate extends React.Component {
             </div>
           </div>
           {this.props.uploading || this.props.client_subscribing ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Material
             </div>
@@ -125,7 +126,7 @@ class MaterialCreate extends React.Component {
         </form>
         <OptionsModal
           title="Module created successfully."
-          open={this.props.openRedirectModal && !this.props.client_subscribing ? this.props.openRedirectModal:false}
+          open={this.props.openRedirectModal && !this.props.client_subscribing ? this.props.openRedirectModal : false}
           onClick={this.onContinue.bind(this)}
           options={options}
         />

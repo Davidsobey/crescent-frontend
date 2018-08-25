@@ -85,7 +85,7 @@ class QuestionView extends React.Component {
     const { tests, questions } = this.props;
     const columns = [
       {
-        Header: 'Question Name',
+        Header: 'Question',
         accessor: 'title',
       },
       {
