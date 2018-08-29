@@ -81,19 +81,19 @@ class CourseDetail extends React.Component {
                           </Typography>
                           {moduleMaterial && moduleMaterial.length > 0 ? (
                             moduleMaterial.map((material, index) => {
-                              const abc = material + index;
+                              const abc = material.filePath + index;
                               return (
                                 <Button
                                   key={abc}
                                   color="primary"
                                   variant="raised"
                                   onClick={() =>
-                                    window.open(`${material}`, '_blank')
+                                    window.open(`${material.filePath}`, '_blank')
                                   }
                                 >
                                   {
-                                    material.split('/')[
-                                      material.split('/').length - 1
+                                    material.filePath.split('/')[
+                                      material.filePath.split('/').length - 1
                                     ]
                                   }
                                 </Button>

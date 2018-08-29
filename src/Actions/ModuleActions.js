@@ -140,13 +140,13 @@ function moduleMaterial(moduleId) {
     return { type: ModuleConstants.MODULE_MATERIAL_SUCCESS, moduleMaterials };
   }
   function failure(error) {
-    return { type: ModuleConstants.MODULE_MATERIAL_REQUEST, error };
+    return { type: ModuleConstants.MODULE_MATERIAL_FAILURE, error };
   }
 
   return (dispatch) => {
     dispatch(request());
 
-    ModuleService.getModuleMaterial(moduleId).then(
+    ModuleService.getMaterialsForModule(moduleId).then(
       moduleMaterials => dispatch(success(moduleMaterials)),
       (error) => {
         dispatch(failure(error));

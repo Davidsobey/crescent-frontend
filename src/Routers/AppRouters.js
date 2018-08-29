@@ -66,7 +66,6 @@ class AppRouters extends React.Component {
       // clear alert on location change
       dispatch(AlertActions.clear());
     });
-    console.log(111);
   }
 
   render() {
