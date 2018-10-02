@@ -83,6 +83,42 @@ class ClientCreate extends React.Component {
                 validate={[required, maxLength6, codeExists]}
               />
             </div>
+            <div>
+              <Field
+                name="accountNumber"
+                label="Bank Account Number"
+                margin="normal"
+                component={TextField}
+                validate={[required]}
+              />
+            </div>
+            <div>
+              <Field
+                name="bank"
+                label="Bank Name"
+                margin="normal"
+                component={TextField}
+                validate={[required]}
+              />
+            </div>
+            <div>
+              <Field
+                name="branchName"
+                label="Branch Name"
+                margin="normal"
+                component={TextField}
+                validate={[required]}
+              />
+            </div>
+            <div>
+              <Field
+                name="branchCode"
+                label="Branch Code"
+                margin="normal"
+                component={TextField}
+                validate={[required]}
+              />
+            </div>
           </div>
           {this.props.client_creating ? (
             <div style={{ width: '400px' }}>

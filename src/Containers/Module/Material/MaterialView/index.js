@@ -1,29 +1,47 @@
 // get the requested file and display it
-/**
- *
- * UsersPolicyDetails
- *
- */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import GoogleDocsViewer from 'react-google-docs-viewer';
+// import { Document, Page } from 'react-pdf/dist/entry.webpack';
+import { Document, Page } from 'react-pdf/dist/entry.noworker';
+import Card from '../../../../Components/Card';
 
 /* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 
-class ModuleMaterialView extends React.Component {
+class ModuleMaterialView extends Component {
+  state = {
+    numPages: null,
+    pageNumber: 1,
+  }
+
+  onMaterialLoad = ({ numPages }) => {
+    this.setState({ numPages });
+  };
+
   render() {
     const { user } = this.props;
-    console.log(`Material to be viewed ${this.props.material}`);
+    const { pageNumber, numPages } = this.state;
+    console.log(this.props.material);
+
     return (
-      <GoogleDocsViewer
-        width="600px"
-        height="780px"      
-        fileUrl={this.props.material.filePath}
-      />
+      <div>
+        <Card width="800px" title="View Material">
+          <Document
+            file={this.props.material.filePath}
+            noData="No PDF file specified"
+            onLoadSuccess={this.onMaterialLoad}
+          >
+            <Page pageNumber={pageNumber} />
+            <p>Page {pageNumber} of {numPages}</p>
+          </Document>
+        </Card>
+      </div>
+
     );
   }
 }

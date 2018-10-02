@@ -56,6 +56,22 @@ class ClientView extends React.Component {
         accessor: 'clientCode',
       },
       {
+        Header: 'Bank Account Number',
+        accessor: 'accountNumber',
+      },
+      {
+        Header: 'Bank Name',
+        accessor: 'bank',
+      },
+      {
+        Header: 'Branch Name',
+        accessor: 'branchName',
+      },
+      {
+        Header: 'Branch Code',
+        accessor: 'branchCode',
+      },
+      {
         Header: 'Edit/Delete',
         accessor: 'edit/delete',
         Filter: <div />,

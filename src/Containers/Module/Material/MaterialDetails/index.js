@@ -15,9 +15,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import history from '../../../../Helpers/History';
 import Card from '../../../../Components/Card';
 import Table from '../../../../Components/Table';
-import Button from '../../../../Components/Button';
 import ModuleActions from '../../../../Actions/ModuleActions';
-import LinearProgress from '../../../../Components/LinearProgress';
 
 const header = ['Material Name', 'View Material'];
 
@@ -31,7 +29,6 @@ class ModuleMaterialDetails extends React.Component {
 
   loadMaterial(material) {
     // const props = this.getProps(material);
-    console.log(`Redirecting for this material: ${material}`);
     this.props.dispatch(ModuleActions.loadMaterial(material));
     history.push('/module/material/view');
     // window.open(url);

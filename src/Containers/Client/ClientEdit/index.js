@@ -16,19 +16,19 @@ import TextField from '../../../Components/TextField';
 import Button from '../../../Components/Button';
 import ClientActions from '../../../Actions/ClientActions';
 
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 class ClientEdit extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
   }
-  
+
   submit = (values) => {
     this.props.dispatch(ClientActions.editClient(values));
   };
-  
+
   render() {
     return (
       <Card width="600px" title="Edit Client">
@@ -37,9 +37,9 @@ class ClientEdit extends React.Component {
             <CircularProgress color="secondary" />
           </div>
         ) : (
-          <form 
-            onSubmit={this.props.handleSubmit(this.submit)} 
-            autoComplete="off" 
+          <form
+            onSubmit={this.props.handleSubmit(this.submit)}
+            autoComplete="off"
             className="centerForm"
           >
             <div>
@@ -49,7 +49,7 @@ class ClientEdit extends React.Component {
                   label="Client Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
               <div>
@@ -58,12 +58,48 @@ class ClientEdit extends React.Component {
                   label="Client Code"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
+                />
+              </div>
+              <div>
+                <Field
+                  name="accountNumber"
+                  label="Bank Account Number"
+                  margin="normal"
+                  component={TextField}
+                  validate={[required]}
+                />
+              </div>
+              <div>
+                <Field
+                  name="bank"
+                  label="Bank Name"
+                  margin="normal"
+                  component={TextField}
+                  validate={[required]}
+                />
+              </div>
+              <div>
+                <Field
+                  name="branchName"
+                  label="Branch Name"
+                  margin="normal"
+                  component={TextField}
+                  validate={[required]}
+                />
+              </div>
+              <div>
+                <Field
+                  name="branchCode"
+                  label="Branch Code"
+                  margin="normal"
+                  component={TextField}
+                  validate={[required]}
                 />
               </div>
             </div>
             {this.props.client_editing ? (
-              <div style={{width: '400px'}}>
+              <div style={{ width: '400px' }}>
                 <LinearProgress color="secondary" />
                 Editing Client
               </div>
@@ -83,7 +119,7 @@ class ClientEdit extends React.Component {
         )}
       </Card>
     );
-  };
+  }
 }
 
 ClientEdit.propTypes = {

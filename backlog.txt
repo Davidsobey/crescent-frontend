@@ -12,23 +12,35 @@ Front End
 	// Question title to change to question
 	// No duplicate client name
 	// User section after client section
+	Rename Client User to Compliance Officer
 
 	[][] Question list should fall under assessment
 
 	DEV
 	// View module material for each module
-	>> Don't allow download of module material (view inside application with document viewer). Need to pick appropriate method
+	>> PDF viewer for module material (restrict module material to PDFs only) - get confirmation from Kash
 	Export list views to excel xlsx
 	CPD Hours to be transformed from int e.g. 3 to string e.g. 3 hours
+	Client and User deletion
 
 	TEST
-	Start Test, Answer Question, Complete Test
-	Test all edits and deletes
+	Start Test
+	Answer Question
+	Complete Test
+	Course Edit, Delete
+	Module Edit, Delete
+	Assignment Edit, Delete
+	Question Edit, Delete
+	Option Edit, Delete
+	Client Edit, Delete
+	User Edit, Delete
 
 Back End
 	DEV
 	Certificate Generation on Complete Enrolment Test
 	Export list views to excel xlsx
+	Send Email For Past Due Enrolment to User's Compliance Officer
+	Rename Client User To Compliance Officer
 
 	CONFIG and TESTING
 	Test Start EnrolmentTest, Answer Question, Complete Enrolment Test

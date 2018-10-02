@@ -150,6 +150,7 @@ function deleteClient(id) {
 
     ClientService.deleteClient(id).then(
       () => {
+        history.push('/client/list');
         dispatch(success(id));
         dispatch(AlertActions.success('Client deleted.'));
       },

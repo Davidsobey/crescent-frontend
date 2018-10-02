@@ -21,9 +21,9 @@ const validate = () => {
   return errors;
 };
 let modules = [];
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const module_exists = value => value && Array.isArray(modules) ? modules.filter(module => module.name==value).length ? 'Module already exists' : undefined : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
+const module_exists = value => (value && Array.isArray(modules) ? modules.filter(module => module.name == value).length ? 'Module already exists' : undefined : undefined);
 
 class ModuleCreate extends React.Component {
   constructor(props) {
@@ -34,10 +34,10 @@ class ModuleCreate extends React.Component {
     }
     this.props.dispatch(CourseActions.getAll());
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
   }
-  
+
   loadModules = (values) => {
     this.props.dispatch(ModuleActions.loadModuleByCourse(values.target.value));
   };
@@ -63,19 +63,19 @@ class ModuleCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.courses_loading ? (
+              {this.props.carsLoading ? (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Courses
+                  Loading Cars
                 </div>
               ) : (
                 <div>
-                  <Field 
-                    name="course" 
+                  <Field
+                    name="course"
                     onChange={this.loadModules}
-                    label="Course Name" 
-                    component={Select} 
-                    validate={[ required ]}
+                    label="Course Name"
+                    component={Select}
+                    validate={[required]}
                   >
                     {(Array.isArray(this.props.courses) ? this.props.courses : [])
                     .map(course => (
@@ -98,7 +98,7 @@ class ModuleCreate extends React.Component {
                     label="Module Name"
                     margin="normal"
                     component={TextField}
-                    validate={[ required, module_exists ]}
+                    validate={[required, module_exists]}
                   />
                 </div>
               )}
@@ -108,13 +108,13 @@ class ModuleCreate extends React.Component {
                   label="Key Outcome"
                   margin="normal"
                   component={TextField}
-                  validate={[ required ]}
+                  validate={[required]}
                 />
               </div>
             </div>
           </div>
           {this.props.module_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Module
             </div>

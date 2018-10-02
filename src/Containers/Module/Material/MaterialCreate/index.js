@@ -69,10 +69,7 @@ class MaterialCreate extends React.Component {
 
   onContinue = (index) => {
     this.props.dispatch(ModuleActions.closeRedirectModal());
-    if (index == 2)
-      {this.props.initialize({ ModuleId: this.props.newModuleId });}
-    else
-      {history.push(options[index].url);}
+    if (index == 2) { this.props.initialize({ ModuleId: this.props.newModuleId }); } else { history.push(options[index].url); }
   }
 
   render() {
@@ -102,7 +99,11 @@ class MaterialCreate extends React.Component {
                 </Field>
               )}
               <div>
-                <input type="file" onChange={this.fileSelectedHandler} />
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={this.fileSelectedHandler}
+                />
               </div>
             </div>
           </div>

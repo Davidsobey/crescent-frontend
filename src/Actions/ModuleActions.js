@@ -224,7 +224,6 @@ function loadMaterial(mm) {
     return { type: ModuleConstants.LOAD_MODULE_FAILURE };
   }
   return (dispatch) => {
-    console.log(`Dispatching material: ${mm}`);
     if (mm) {
       dispatch(success(mm));
     } else {
