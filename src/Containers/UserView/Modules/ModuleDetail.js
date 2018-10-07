@@ -12,8 +12,13 @@ import { Divider } from 'material-ui';
 import Card from '../../../Components/Card';
 import history from '../../../Helpers/History';
 import Button from '../../../Components/Button';
+import ModuleActions from '../../../Actions/ModuleActions';
 
 class CourseDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.loadMaterial = this.loadMaterial.bind(this);
+  }
   state = {
     expanded: null,
   };
@@ -23,6 +28,14 @@ class CourseDetail extends React.Component {
       expanded: expanded ? panel : false,
     });
   };
+
+  loadMaterial(material) {
+    // const props = this.getProps(material);
+    this.props.dispatch(ModuleActions.loadMaterial(material));
+    history.push('/courses/coursedetail/material/view');
+    // window.open(url);
+    // need to open google document viewer here instead of just opening a window to the azure url
+  }
 
   render() {
     const { course, modules, material } = this.props;
@@ -60,13 +73,11 @@ class CourseDetail extends React.Component {
                       <Button
                         color="secondary"
                         onClick={() => {
-                          window.open(
-                            `https://crescenttesting.azurewebsites.net/ModuleMaterial/${material.fileName}`,
-                            '_blank',
-                          );
+                          console.log(material)
+                          this.loadMaterial(material);
                         }}
                       >
-                        Download Course Content
+                        View Module Material
                       </Button>
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
@@ -92,12 +103,15 @@ CourseDetail.propTypes = {
   course: PropTypes.object,
   modules: PropTypes.object,
   material: PropTypes.object,
+  moduleMaterials: PropTypes.array,
+  dispatch: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   course: state.CourseReducer.course,
   modules: state.ModuleReducer.modules,
   material: state.ModuleReducer.modulematerial,
+  moduleMaterials: state.ModuleReducer.moduleMaterials,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -178,6 +178,14 @@ function PolicyReducer(state = {}, action) {
       return Object.assign({}, state, {
         creating: false,
       });
+    case PolicyConstants.LOAD_MATERIAL_SUCESS:
+      return Object.assign({}, state, {
+        material: action.material,
+      });
+    case PolicyConstants.LOAD_MATERIAL_FAILURE:
+      return {
+        material: null,
+      };
     default:
       return state;
   }

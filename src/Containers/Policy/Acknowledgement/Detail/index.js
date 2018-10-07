@@ -32,8 +32,10 @@ class UsersPolicyDetails extends React.Component {
     this.props.dispatch(PolicyActions.acknowledge(this.props.user.id, this.props.policyId, '/policy/acknowledgement/list'));
   }
 
-  loadMaterial(url) {
-    window.open(url);
+  loadMaterial(material) {
+    this.props.dispatch(PolicyActions.loadMaterial(material));
+    history.push('/policy/material/view');
+    // window.open(url);
   }
 
   manipulateData = (policyMaterials) => {
@@ -58,7 +60,7 @@ class UsersPolicyDetails extends React.Component {
     const policyMaterials = this.manipulateData(this.props.policyMaterials);
 
     return (
-      <Card width="800px" title={`Policy Acknowledgement - ${  this.props.policyName}`}>
+      <Card width="800px" title={`Policy Acknowledgement - ${this.props.policyName}`}>
         <div>
           Description : {this.props.policyDescription}
         </div>
@@ -75,7 +77,7 @@ class UsersPolicyDetails extends React.Component {
             {!this.props.canAcknowlege ? '' : this.props.policy_acknowledging ? (
               <div>
                 <LinearProgress color="secondary" />
-                Acknowldeging Policy
+                Acknowledging Policy
               </div>
             ) : (
               <div className="formAlignRight">

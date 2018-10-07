@@ -70,7 +70,11 @@ class PolicyMaterialCreate extends React.Component {
                 </Field>
               )}
               <div>
-                <input type="file" onChange={this.fileSelectedHandler} />
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={this.fileSelectedHandler}
+                />
               </div>
             </div>
           </div>

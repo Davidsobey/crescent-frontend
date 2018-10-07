@@ -396,6 +396,25 @@ function getMaterialsForPolicy(policyId, policyName, policyDescription, canAckno
   };
 }
 
+function loadMaterial(policyMaterial) {
+  /* function request(id) {
+    return { type: ModuleConstants.LOAD_MATERIAL_REQUEST };
+  } */
+  function success(material) {
+    return { type: PolicyConstants.LOAD_MATERIAL_SUCCESS, material };
+  }
+  function failure() {
+    return { type: PolicyConstants.LOAD_MODULE_FAILURE };
+  }
+  return (dispatch) => {
+    if (policyMaterial) {
+      dispatch(success(policyMaterial));
+    } else {
+      dispatch(failure());
+    }
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -412,6 +431,7 @@ const PolicyActions = {
   uploadMaterial,
   getMaterial,
   getMaterialsForPolicy,
+  loadMaterial,
 };
 
 export default PolicyActions;
