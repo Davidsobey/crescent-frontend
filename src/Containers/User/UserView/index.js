@@ -35,6 +35,7 @@ class UserView extends React.Component {
   handleDelete = (obj) => {
     this.setState({ obj });
     this.child.handleOpen();
+    history.push('/loading');
   };
 
   confirmDelete = obj => () => {
@@ -51,17 +52,17 @@ class UserView extends React.Component {
     const data = [];
     if (Array.isArray(users)) {
       users
-      .filter(user => (user.role.name == 'Admin' && this.props.user.role.name == 'Client' ? false : true) )
-      .forEach((user) => {
-        const newUser = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          client: user.client.name,
-          role: user.role.name,
-        };
-        data.push(newUser);
-      });
+        .filter(user => (!(user.role.name === 'Admin' && this.props.user.role.name === 'Client')))
+        .forEach((user) => {
+          const newUser = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            client: user.client.name,
+            role: user.role.name,
+          };
+          data.push(newUser);
+        });
     }
     return data;
   };

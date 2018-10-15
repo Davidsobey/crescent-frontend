@@ -9,11 +9,12 @@ import history from '../Helpers/History';
 import AlertActions from '../Actions/AlertActions';
 import Routes from './Routes';
 import AppBar from '../Components/AppBar';
-import Snackbar from '../Components/Snackbar'
+import Snackbar from '../Components/Snackbar';
 
 import Login from '../Containers/Login';
 import ChangePassword from '../Containers/ChangePassword';
 import Home from '../Containers/Home';
+import LoadingPage from '../Containers/Home/LoadingPage';
 import CourseCreate from '../Containers/Course/CourseCreate/index';
 import CourseList from '../Containers/Course/CourseView/index';
 import CourseEdit from '../Containers/Course/CourseEdit/index';
@@ -83,6 +84,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.HOME}
                   component={withAuth(Home, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.LOADING_PAGE}
+                  component={withAuth(LoadingPage, ['Admin', 'Client', 'Regular'])}
                   exact
                 />
                 <Route
@@ -291,12 +297,12 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.USERS_VIEW_POLICIES}
-                  component={withAuth(UsersPolicyView,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UsersPolicyView, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_POLICY}
-                  component={withAuth(UserPolicyDetail,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UserPolicyDetail, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
               </Switch>

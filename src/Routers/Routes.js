@@ -1,5 +1,6 @@
 const LOGIN = '/';
 const HOME = '/admin/home';
+const LOADING_PAGE = '/loading';
 const CHANGEPASSWORD = '/change-password';
 const COURSE_CREATE = '/course/create';
 const COURSE_VIEW = '/course/list';
@@ -48,6 +49,7 @@ const USERS_VIEW_POLICIES = '/policies/list';
 export default {
   LOGIN,
   HOME,
+  LOADING_PAGE,
   COURSE_CREATE,
   COURSE_VIEW,
   COURSE_EDIT,

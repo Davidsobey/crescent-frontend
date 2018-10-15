@@ -14,7 +14,6 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Tooltip from 'material-ui/Tooltip';
 
-import LinearProgress from '../../../Components/LinearProgress';
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
 import CourseActions from '../../../Actions/CourseActions';
@@ -41,6 +40,7 @@ class CourseView extends React.Component {
   confirmDelete = obj => () => {
     this.props.dispatch(CourseActions.deleteCourse(obj.id));
     this.child.handleClose();
+    history.push('/loading');
   };
 
   handleEdit = (editObj) => {

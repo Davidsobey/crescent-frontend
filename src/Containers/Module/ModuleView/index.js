@@ -35,6 +35,7 @@ class ModuleView extends React.Component {
   handleDelete = (obj) => {
     this.setState({ obj });
     this.child.handleOpen();
+    history.push('/loading');
   };
 
   confirmDelete = obj => () => {
@@ -48,7 +49,6 @@ class ModuleView extends React.Component {
   };
 
   loadModule = (id, name, description) => {
-    console.log(id, name, description);
     this.props.dispatch(ModuleActions.getMaterialsForModule(id, name, description));
     history.push('/module/material/detail');
   };

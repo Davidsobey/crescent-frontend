@@ -36,6 +36,7 @@ class QuestionView extends React.Component {
   handleDelete = (obj) => {
     this.setState({ obj });
     this.child.handleOpen();
+    history.push('/loading');
   };
 
   confirmDelete = obj => () => {
