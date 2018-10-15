@@ -31,8 +31,6 @@ class ModuleMaterialDetails extends React.Component {
     // const props = this.getProps(material);
     this.props.dispatch(ModuleActions.loadMaterial(material));
     history.push('/module/material/view');
-    // window.open(url);
-    // need to open google document viewer here instead of just opening a window to the azure url
   }
 
   manipulateData = (moduleMaterials) => {

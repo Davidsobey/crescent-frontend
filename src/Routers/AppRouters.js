@@ -42,6 +42,7 @@ import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
 import AcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
 import AcknowledgementView from '../Containers/Policy/Acknowledgement/View/index';
 import AcknowledgementDetail from '../Containers/Policy/Acknowledgement/Detail/index';
+import AcknowledgementMaterial from '../Containers/Policy/Acknowledgement/Material/index';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
 import SubscriptionView from '../Containers/Client/ClientSubscribeView/index';
@@ -225,6 +226,10 @@ class AppRouters extends React.Component {
                   component={withAuth(AcknowledgementDetail, ['Admin', 'Regular', 'Client'])}
                 />
                 <Route
+                  path={Routes.POLICY_ACKNOWLEDGEMENT_MATERIAL}
+                  component={withAuth(AcknowledgementMaterial, ['Admin', 'Regular', 'Client'])}
+                />
+                <Route
                   path={Routes.CLIENT_EDIT}
                   component={withAuth(ClientEdit, ['Admin'])}
                   exact
@@ -241,27 +246,27 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.USERS_HOME}
-                  component={withAuth(UsersHome,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UsersHome, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_COURSES}
-                  component={withAuth(UsersCourseView,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UsersCourseView, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_COURSE}
-                  component={withAuth(UserCourseDetail,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UserCourseDetail, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_MODULES}
-                  component={withAuth(UsersModuleView,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UsersModuleView, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route
                   path={Routes.USERS_VIEW_MODULE}
-                  component={withAuth(UserModuleDetail,  ['Admin', 'Regular', 'Client'])}
+                  component={withAuth(UserModuleDetail, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
                 <Route

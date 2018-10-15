@@ -149,7 +149,7 @@ function PolicyReducer(state = {}, action) {
       return Object.assign({}, state, { policyMaterial: [] });
     case PolicyConstants.GET_MATERIALS_REQUEST:
       return Object.assign({}, state, {
-        policyMaterials: [], 
+        policyMaterials: [],
         policyMaterials_loading: true,
       });
     case PolicyConstants.GET_MATERIALS_SUCCESS:
@@ -162,8 +162,8 @@ function PolicyReducer(state = {}, action) {
         policyMaterials_loading: false,
       });
     case PolicyConstants.GET_MATERIALS_FAILURE:
-      return Object.assign({}, state, { 
-        policyMaterials: [], 
+      return Object.assign({}, state, {
+        policyMaterials: [],
         policyMaterials_loading: false,
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST:
@@ -178,7 +178,7 @@ function PolicyReducer(state = {}, action) {
       return Object.assign({}, state, {
         creating: false,
       });
-    case PolicyConstants.LOAD_MATERIAL_SUCESS:
+    case PolicyConstants.LOAD_MATERIAL_SUCCESS:
       return Object.assign({}, state, {
         material: action.material,
       });

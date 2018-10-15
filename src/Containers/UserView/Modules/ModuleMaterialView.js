@@ -38,8 +38,17 @@ class CourseDetailMaterialView extends Component {
             noData="No PDF file specified"
             onLoadSuccess={this.onMaterialLoad}
           >
-            <Page pageNumber={pageNumber} />
-            <p>Page {pageNumber} of {numPages}</p>
+            {
+              Array.from(
+                new Array(numPages),
+                (el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                  />
+                ),
+              )
+            }
           </Document>
         </Card>
       </div>

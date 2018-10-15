@@ -34,6 +34,7 @@ const POLICY_MATERIAL_CREATE = '/policy/material/create';
 const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
 const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/list';
 const POLICY_ACKNOWLEDGEMENT_DETAIL = '/policy/acknowledgement/detail';
+const POLICY_ACKNOWLEDGEMENT_MATERIAL = '/policy/acknowledgement/material';
 const USERS_HOME = '/home';
 const USERS_VIEW_COURSES = '/courses/list';
 const USERS_VIEW_COURSE = '/courses/coursedetail';
@@ -80,6 +81,7 @@ export default {
   POLICY_ACKNOWLEDGEMENT_CREATE,
   POLICY_ACKNOWLEDGEMENT_VIEW,
   POLICY_ACKNOWLEDGEMENT_DETAIL,
+  POLICY_ACKNOWLEDGEMENT_MATERIAL,
   USERS_HOME,
   USERS_VIEW_COURSES,
   USERS_VIEW_COURSE,

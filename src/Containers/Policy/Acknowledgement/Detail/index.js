@@ -34,8 +34,7 @@ class UsersPolicyDetails extends React.Component {
 
   loadMaterial(material) {
     this.props.dispatch(PolicyActions.loadMaterial(material));
-    history.push('/policy/material/view');
-    // window.open(url);
+    history.push('/policy/acknowledgement/material');
   }
 
   manipulateData = (policyMaterials) => {
@@ -121,7 +120,7 @@ UsersPolicyDetails.propTypes = {
   user: PropTypes.object,
   policyMaterials: PropTypes.array,
   policyMaterials_loading: PropTypes.bool,
-  policyId: PropTypes.object,
+  policyId: PropTypes.number,
   policyName: PropTypes.string,
   policyDescription: PropTypes.string,
   canAcknowlege: PropTypes.bool,

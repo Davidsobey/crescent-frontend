@@ -37,6 +37,7 @@ class ClientView extends React.Component {
   confirmDelete = obj => () => {
     this.props.dispatch(ClientActions.deleteClient(obj.id));
     this.child.handleClose();
+    history.push('admin/home');
   };
 
   handleEdit = (editObj) => {

@@ -13,7 +13,7 @@ import Card from '../../../../Components/Card';
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
-class ModuleMaterialView extends Component {
+class AcknowledgementMaterialView extends Component {
   state = {
     numPages: null,
     pageNumber: 1,
@@ -32,7 +32,7 @@ class ModuleMaterialView extends Component {
       <div>
         <Card width="800px" title="View Material">
           <Document
-            file={this.props.material.filePath}
+            file={this.props.material}
             noData="No PDF file specified"
             onLoadSuccess={this.onMaterialLoad}
           >
@@ -57,19 +57,19 @@ class ModuleMaterialView extends Component {
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
-  material: state.ModuleReducer.material,
+  material: state.PolicyReducer.material,
 });
 
 const withForm = reduxForm(
   {
-    form: 'moduleMaterialView',
+    form: 'acknowledgementMaterialView',
   },
-  ModuleMaterialView,
+  AcknowledgementMaterialView,
 );
 
-ModuleMaterialView.propTypes = {
+AcknowledgementMaterialView.propTypes = {
   user: PropTypes.object,
   material: PropTypes.object,
 };
 
-export default compose(connect(mapStateToProps), withForm)(ModuleMaterialView);
+export default compose(connect(mapStateToProps), withForm)(AcknowledgementMaterialView);

@@ -48,7 +48,7 @@ function createAcknowledgement(acknowledgement) {
     PolicyService.createAcknowledgement(acknowledgement).then(
       () => {
         dispatch(success(acknowledgement));
-        //history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
+        // history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
         dispatch(AlertActions.success('Acknowledgement created'));
       },
       (error) => {
@@ -375,7 +375,9 @@ function getMaterialsForPolicy(policyId, policyName, policyDescription, canAckno
     return { type: PolicyConstants.GET_MATERIALS_REQUEST };
   }
   function success(materials) {
-    return { type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials, canAcknowlege };
+    return {
+ type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials, canAcknowlege 
+};
   }
   function failure(error) {
     return { type: PolicyConstants.GET_MATERIALS_FAILURE, error };
@@ -400,11 +402,14 @@ function loadMaterial(policyMaterial) {
   /* function request(id) {
     return { type: ModuleConstants.LOAD_MATERIAL_REQUEST };
   } */
+  console.log('Loading material');
   function success(material) {
+    console.log(`Success: ${material}`);
     return { type: PolicyConstants.LOAD_MATERIAL_SUCCESS, material };
   }
   function failure() {
-    return { type: PolicyConstants.LOAD_MODULE_FAILURE };
+    console.log('Failure');
+    return { type: PolicyConstants.LOAD_MATERIAL_FAILURE };
   }
   return (dispatch) => {
     if (policyMaterial) {
