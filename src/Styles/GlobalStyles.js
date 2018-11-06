@@ -19,6 +19,11 @@ injectGlobal`
     display: flex;
     background: #0033aa; /* Old browsers */
     background: linear-gradient(135deg,#16ff7e 0%,#00ff95c4 21%,#00ff89 51%,#00ffbe 79%,#00ffc4 79%,#1cf97f 100%)
+    background: #f5f6f6;
+    background: -moz-linear-gradient(top, #f5f6f6 0%, #dbdce2 21%, #b8bac6 49%, #dddfe3 80%, #f5f6f6 100%);
+    background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+    background: linear-gradient(135deg, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=0 );
   }
 
   a{

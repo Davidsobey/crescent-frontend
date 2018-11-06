@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
-import Typography from 'material-ui/Typography';
 
 import Select from '../../../../Components/Select';
 import Card from '../../../../Components/Card';
@@ -36,6 +35,10 @@ class MaterialCreate extends React.Component {
     super(props);
   }
 
+  state = {
+    selectedFile: null,
+  };
+
   componentWillMount() {
     if (this.props.newModuleId) {
       const newModuleId = this.props.newModuleId;
@@ -45,20 +48,15 @@ class MaterialCreate extends React.Component {
     this.props.dispatch(CourseActions.getAllUnsubscribed(this.props.user.clientId));
   }
 
-  state = {
-    selectedFile: null,
-  };
-
-  fileSelectedHandler = (event) => {
-    this.setState({
-      selectedFile: event.target.files[0],
-    });
-  };
+  onContinue = (index) => {
+    this.props.dispatch(ModuleActions.closeRedirectModal());
+    if (index === 2) { this.props.initialize({ ModuleId: this.props.newModuleId }); } else { history.push(options[index].url); }
+  }
 
   submit = (values) => {
-    const courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id == values.ModuleId).courseId;
+    const courseID = (Array.isArray(this.props.modules) ? this.props.modules : []).find(module => module.id === values.ModuleId).courseId;
     const clientID = this.props.user.clientId;
-    if ((Array.isArray(this.props.unsubscribed_courses) ? this.props.unsubscribed_courses : []).find(course => course.id == courseID)) {
+    if ((Array.isArray(this.props.unsubscribed_courses) ? this.props.unsubscribed_courses : []).find(course => course.id === courseID)) {
       const subscription = Object.assign({}, { courseID, clientID });
       this.props.dispatch(ClientActions.subscribeSilent(subscription));
     }
@@ -67,10 +65,11 @@ class MaterialCreate extends React.Component {
     this.props.dispatch(ModuleActions.uploadMaterial(values.ModuleId, file));
   };
 
-  onContinue = (index) => {
-    this.props.dispatch(ModuleActions.closeRedirectModal());
-    if (index == 2) { this.props.initialize({ ModuleId: this.props.newModuleId }); } else { history.push(options[index].url); }
-  }
+  fileSelectedHandler = (event) => {
+    this.setState({
+      selectedFile: event.target.files[0],
+    });
+  };
 
   render() {
     return (

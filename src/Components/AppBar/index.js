@@ -53,7 +53,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: theme.palette.secondary[500],
+    backgroundColor: theme.palette.secondary[1000],
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -400,7 +400,7 @@ class MiniDrawer extends React.Component {
         >
           <div className={classes.paperBackground}>
             <div className={classes.toolbar}>
-              <Link to={role != 'Regular' ? '/admin/home' : '/home'}>
+              <Link to={role !== 'Regular' ? '/admin/home' : '/home'}>
                 <img
                   width="34px"
                   src={Logo}
