@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
-import { CircularProgress } from 'material-ui/Progress';
 
 import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
@@ -26,10 +25,10 @@ const validate = () => {
 let tests = [];
 const required = value => (value ? undefined : 'Required');
 const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
-const test_exists = value => (value && Array.isArray(tests) ? tests.filter(test => test.name==value).length ? 'Assessment already exists' : undefined : undefined);
+const testExists = value => (value && Array.isArray(tests) ? tests.filter(test => test.name === value).length ? 'Assessment already exists' : undefined : undefined);
 
 const options = [
-  // {label: 'Create another assessment'},
+  { label: 'Create another assessment for this module' },
   { label: 'Create another module', url: '/module/create' },
   { label: 'Create questions for this assessment', url: '/question/create' },
 ];
@@ -156,7 +155,7 @@ class TestCreate extends React.Component {
                   label="Assessment Name"
                   margin="normal"
                   component={TextField}
-                  validate={[required, test_exists]}
+                  validate={[required, testExists]}
                 />
               </div>
             )}
@@ -173,7 +172,7 @@ class TestCreate extends React.Component {
           {this.props.test_creating ? (
             <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
-              Creating Test
+              Creating Assessment
             </div>
           ) : (
             <div className="formAlignRight">

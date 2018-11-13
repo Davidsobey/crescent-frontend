@@ -286,6 +286,30 @@ function clearTests() {
   };
 }
 
+function deleteTest(id) {
+  function request() {
+    return { type: TestConstants.DELETE_TEST_REQUEST };
+  }
+  function success() {
+    return { type: TestConstants.DELETE_TEST_SUCCESS };
+  }
+  function failure(error) {
+    return { type: TestConstants.DELETE_TEST_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+    TestService.deleteTest(id).then(
+      () => dispatch(success()),
+      dispatch(AlertActions.success('Module deleted successfully.')),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error || error));
+      },
+    );
+  };
+}
+
 const TestActions = {
   create,
   closeRedirectModal,
@@ -301,6 +325,7 @@ const TestActions = {
   clearTests,
   loadTestByModule,
   enrolmentTest,
+  deleteTest,
 };
 
 export default TestActions;

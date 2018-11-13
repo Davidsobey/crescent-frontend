@@ -131,7 +131,7 @@ function getTests(id) {
   return objectList;
 }
 
-const ModuleServices = {
+const TestServices = {
   create,
   getAll,
   loadTest,
@@ -143,4 +143,4 @@ const ModuleServices = {
   getTests,
   enrolmentTest,
 };
-export default ModuleServices;
+export default TestServices;

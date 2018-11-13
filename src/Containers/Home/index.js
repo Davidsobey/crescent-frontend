@@ -207,7 +207,7 @@ class HomeComponent extends React.Component {
     ];
     return (
       <div>
-        <Card width="800px" title="Enrolment List">
+        <Card width="800px" title="Enrolments">
           {this.props.users_loading || this.props.courses_loading || this.props.userEnrolments_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />

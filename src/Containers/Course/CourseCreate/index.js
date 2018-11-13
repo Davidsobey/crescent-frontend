@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
-import { CircularProgress } from 'material-ui/Progress';
 
 import LinearProgress from '../../../Components/LinearProgress';
 import Card from '../../../Components/Card';
@@ -25,7 +24,7 @@ const validate = () => {
 let courses = [];
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const course_exists = value => value && Array.isArray(courses) ? courses.filter(course => course.name==value).length ? 'Course already exists' : undefined : undefined;
+const courseExists = value => value && Array.isArray(courses) ? courses.filter(course => course.name === value).length ? 'Course already exists' : undefined : undefined;
 
 /* eslint-disable react/prefer-stateless-function */
 class CourseCreate extends React.Component {
@@ -60,7 +59,7 @@ class CourseCreate extends React.Component {
                   label="Course Name"
                   margin="normal"
                   component={TextField}
-                  validate={[ required, course_exists ]}
+                  validate={[required, courseExists]}
                 />
               </div>
             )}
@@ -70,7 +69,7 @@ class CourseCreate extends React.Component {
                 label="Course Description"
                 margin="normal"
                 component={TextField}
-                validate={[ required ]}
+                validate={[required]}
               />
             </div>
             <div>
@@ -79,12 +78,12 @@ class CourseCreate extends React.Component {
                 label="Course CPD Hours"
                 margin="normal"
                 component={TextField}
-                validate={[ required, number ]}
+                validate={[number]}
               />
             </div>
           </div>
           {this.props.course_creating ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Creating Course
             </div>

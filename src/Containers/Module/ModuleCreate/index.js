@@ -108,7 +108,6 @@ class ModuleCreate extends React.Component {
                   label="Key Outcome"
                   margin="normal"
                   component={TextField}
-                  validate={[required]}
                 />
               </div>
             </div>

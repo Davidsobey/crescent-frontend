@@ -134,6 +134,18 @@ function TestReducer(state = {}, action) {
         error: action.error,
         test_editing: false,
       });
+    case TestConstants.DELETE_TEST_REQUEST:
+      return state;
+    case TestConstants.DELETE_TEST_SUCCESS:
+      return Object.assign({}, state, {
+        test: {},
+        loading: false,
+      });
+    case TestConstants.DELETE_TEST_FAILURE:
+      return Object.assign({}, state, {
+        test: {},
+        loading: false,
+      });
     case TestConstants.LOADTEST_REQUEST:
       return Object.assign({}, state, {
         tests: [],
