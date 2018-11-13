@@ -38,12 +38,12 @@ class TestView extends React.Component {
   handleDelete = (obj) => {
     this.setState({ obj });
     this.child.handleOpen();
-    history.push('/loading');
   };
 
   confirmDelete = obj => () => {
     this.props.dispatch(TestActions.deleteTest(obj.id));
     this.child.handleClose();
+    history.push('/loading');
   };
 
   handleEdit = (obj) => {

@@ -98,6 +98,7 @@ function deleteCourse(id) {
       () => {
         dispatch(success(id));
         dispatch(AlertActions.success('Course deleted.'));
+        history.push('/course/list');
       },
       (error) => {
         dispatch(failure(error));

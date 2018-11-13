@@ -16,13 +16,13 @@ function create(question) {
   function failure(error) {
     return { type: QuestionConstants.CREATE_FAILURE, error };
   }
-  function course_success(newCourseId) {
+  function courseSuccess(newCourseId) {
     return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
-  function module_success(newModuleId) {
+  function moduleSuccess(newModuleId) {
     return { type: ModuleConstants.CREATE_SUCCESS, newModuleId };
   }
-  function test_success(newTestId) {
+  function testSuccess(newTestId) {
     return { type: TestConstants.CREATE_SUCCESS, newTestId };
   }
 
@@ -32,9 +32,9 @@ function create(question) {
       (questionResponse) => {
         console.log('questionResponse', questionResponse);
         dispatch(success(questionResponse));
-        dispatch(course_success(questionResponse.test.module.courseId));
-        dispatch(module_success(questionResponse.test.moduleId));
-        dispatch(test_success(questionResponse.testId));
+        dispatch(courseSuccess(questionResponse.test.module.courseId));
+        dispatch(moduleSuccess(questionResponse.test.moduleId));
+        dispatch(testSuccess(questionResponse.testId));
         history.push('/question/options');
         dispatch(AlertActions.success('Question created.'));
       },
@@ -133,6 +133,7 @@ function deleteQuestion(id) {
       () => {
         dispatch(success(id));
         dispatch(AlertActions.success('Question deleted.'));
+        history.push('/question/list');
       },
       (error) => {
         dispatch(failure(error));

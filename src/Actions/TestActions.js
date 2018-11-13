@@ -15,13 +15,13 @@ function create(moduleID, testName, totalMarks) {
   function failure(error) {
     return { type: TestConstants.CREATE_FAILURE, error };
   }
-  function openmodal_request() {
+  function openModalRequest() {
     return { type: TestConstants.OPENREDIRECTMODAL_REQUEST };
   }
-  function course_success(newCourseId) {
+  function courseSuccess(newCourseId) {
     return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
-  function module_success(newModuleId) {
+  function moduleSuccess(newModuleId) {
     return { type: ModuleConstants.CREATE_SUCCESS, newModuleId };
   }
 
@@ -29,11 +29,10 @@ function create(moduleID, testName, totalMarks) {
     dispatch(request({ testName }));
     TestService.create(moduleID, testName, totalMarks).then(
       (test) => {
-        console.log('test', test);
         dispatch(success(test.id));
-        dispatch(course_success(test.module.courseId));
-        dispatch(module_success(test.moduleId));
-        dispatch(openmodal_request());
+        dispatch(courseSuccess(test.module.courseId));
+        dispatch(moduleSuccess(test.moduleId));
+        dispatch(openModalRequest());
         // dispatch(AlertActions.success(`Test ${testName} created.`));
       },
       (error) => {
@@ -300,8 +299,11 @@ function deleteTest(id) {
   return (dispatch) => {
     dispatch(request());
     TestService.deleteTest(id).then(
-      () => dispatch(success()),
-      dispatch(AlertActions.success('Module deleted successfully.')),
+      () => {
+        dispatch(success());
+        dispatch(AlertActions.success('Module deleted successfully.'));
+        history.push('/assessment/list');
+      },
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error || error));

@@ -15,7 +15,7 @@ function create(courseID, moduleName, moduleDescription) {
   function failure(error) {
     return { type: ModuleConstants.CREATE_FAILURE, error };
   }
-  function course_success(newCourseId) {
+  function courseSuccess(newCourseId) {
     return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
 
@@ -25,7 +25,7 @@ function create(courseID, moduleName, moduleDescription) {
       (module) => {
         history.push('/module/material/create');
         dispatch(success(module.id));
-        dispatch(course_success(module.courseId));
+        dispatch(courseSuccess(module.courseId));
         dispatch(AlertActions.success(`Module ${moduleName} created.`));
       },
       (error) => {
@@ -80,7 +80,7 @@ function uploadMaterial(moduleId, file) {
   function failure(error) {
     return { type: ModuleConstants.UPLOAD_FAILURE, error };
   }
-  function openmodal_request() {
+  function openModalRequest() {
     return { type: ModuleConstants.OPENREDIRECTMODAL_REQUEST };
   }
 
@@ -91,7 +91,7 @@ function uploadMaterial(moduleId, file) {
         MaterialService.upload(id, file).then(
           () => {
             dispatch(success());
-            dispatch(openmodal_request());
+            dispatch(openModalRequest());
             // dispatch(AlertActions.success('Material created successfully.'));
           },
           (error) => {
@@ -172,6 +172,7 @@ function deleteModule(id) {
     ModuleService.deleteModule(id).then(
       () => dispatch(success()),
       dispatch(AlertActions.success('Module deleted successfully.')),
+      history.push('/module/list'),
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error || error));
