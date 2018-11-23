@@ -26,13 +26,14 @@ class UsersPolicyDetails extends React.Component {
     this.manipulateData = this.manipulateData.bind(this);
     this.acknowldegePolicy = this.acknowldegePolicy.bind(this);
   }
-  
+
   acknowldegePolicy() {
     this.props.dispatch(PolicyActions.acknowledge(this.props.user.id, this.props.policyId, '/policies/list'));
   }
 
-  loadMaterial(url) {
-    window.open(url);
+  loadMaterial(material) {
+    this.props.dispatch(PolicyActions.loadMaterial(material));
+    // window.open(material);
   }
 
   manipulateData = (policyMaterials) => {
@@ -40,7 +41,7 @@ class UsersPolicyDetails extends React.Component {
     if (Array.isArray(policyMaterials)) {
       policyMaterials.forEach((policyMaterial, index) => {
         const newPolicyMaterial = {
-          name: 'Material '+(index+1).toString(),
+          name: `Material ${(index + 1).toString()}`,
           button: {
             message: 'View Material',
             onClick: () => this.loadMaterial(policyMaterial),

@@ -11,6 +11,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../../Helpers/History';
 import Card from '../../../Components/Card';
+import Button from '../../../Components/Button';
 import PolicyActions from '../../../Actions/PolicyActions';
 import { StyledDelete } from '../../../Styles/Delete';
 import { StyledEdit } from '../../../Styles/Edit';
@@ -43,6 +44,12 @@ class PolicyView extends React.Component {
     history.push('/policy/edit');
   };
 
+  loadMaterial = (row) => {
+    console.log(row);
+    this.props.dispatch(PolicyActions.loadMaterial(row.material));
+    history.push('/policy/material/view');
+  }
+
   render() {
     const policies = (Array.isArray(this.props.policies) ? this.props.policies : []);
     const columns = [
@@ -53,6 +60,19 @@ class PolicyView extends React.Component {
       {
         Header: 'Policy Description',
         accessor: 'description',
+      },
+      {
+        Header: 'Policy Material',
+        accessor: 'material',
+        Cell: row => (
+          <div>
+            <Button
+              onClick={() => this.loadMaterial(row)}
+            >
+            View Material
+            </Button>
+          </div>
+        ),
       },
       {
         Header: 'Edit/Delete',

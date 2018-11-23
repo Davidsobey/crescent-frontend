@@ -4,6 +4,10 @@ import CommonConstants from '../Constants/CommonConstants';
 const Auth = new AuthMiddleware();
 
 function create(courseName, courseDescription, cpdHours) {
+  if (courseDescription === null || courseDescription === undefined) {
+    // eslint-disable-next-line no-param-reassign
+    courseDescription = `This course covers ${courseName}`;
+  }
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify({

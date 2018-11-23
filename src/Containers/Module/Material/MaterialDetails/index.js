@@ -51,6 +51,7 @@ class ModuleMaterialDetails extends React.Component {
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { user } = this.props;
     const moduleMaterials = this.manipulateData(this.props.moduleMaterials);
     return (

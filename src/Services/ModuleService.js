@@ -9,21 +9,24 @@ function filteredList(response, id) {
 }
 
 function create(courseID, moduleName, moduleDescription) {
+  if (moduleDescription === null || moduleDescription === undefined) {
+    // eslint-disable-next-line no-param-reassign
+    moduleDescription = `This module covers ${moduleName}`;
+  }
   const requestOptions = {
     method: 'POST',
-    // body: JSON.stringify({
-    //   name: courseName,
-    //   description: courseDescription,
-    //   category: 1,
-    //   grade: 0,
-    //   enrolledUserIds: null
-    // })
+    body: JSON.stringify({
+      name: moduleName,
+      description: moduleDescription,
+      courseId: courseID,
+      active: true,
+    }),
   };
 
   return Auth.fetch(
     `${
       CommonConstants.API_ENDPOINT
-    }/Modules?Name=${moduleName}&Description=${moduleDescription}&CourseId=${courseID}`,
+    }/Modules`,
     requestOptions,
   );
 }

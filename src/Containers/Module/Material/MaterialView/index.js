@@ -30,11 +30,12 @@ class ModuleMaterialView extends Component {
 
     return (
       <div>
-        <Card width="800px" title="View Material">
+        <Card width="1200px" title="View Material">
           <Document
             file={this.props.material.filePath}
             noData="No PDF file specified"
             onLoadSuccess={this.onMaterialLoad}
+            width="100%"
           >
             {
               Array.from(

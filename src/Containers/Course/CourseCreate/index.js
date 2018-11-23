@@ -69,7 +69,6 @@ class CourseCreate extends React.Component {
                 label="Course Description"
                 margin="normal"
                 component={TextField}
-                validate={[required]}
               />
             </div>
             <div>

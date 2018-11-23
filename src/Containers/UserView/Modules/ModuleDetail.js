@@ -73,7 +73,6 @@ class CourseDetail extends React.Component {
                       <Button
                         color="secondary"
                         onClick={() => {
-                          console.log(material)
                           this.loadMaterial(material);
                         }}
                       >

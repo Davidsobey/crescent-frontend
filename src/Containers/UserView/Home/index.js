@@ -29,7 +29,7 @@ class HomeComponent extends React.Component {
     this.loadPolicy = this.loadPolicy.bind(this);
     this.manipulatePolicyData = this.manipulatePolicyData.bind(this);
   }
-  
+
   componentWillMount() {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser(this.props.user.id));
   }
@@ -42,7 +42,7 @@ class HomeComponent extends React.Component {
 
   loadPolicy(id) {
     this.props.dispatch(PolicyActions.getMaterialsForPolicy(id));
-    history.push({pathname: '/policies/policydetail', state: {policyId: id}});
+    history.push({ pathname: '/policies/policydetail', state: { policyId: id } });
   }
 
   manipulateCourseData = (courses) => {
@@ -89,7 +89,7 @@ class HomeComponent extends React.Component {
     return (
       <div>
         <Card width="800px" title="Overview">
-          <p style={{fontSize:'20px', marginBottom: '15px'}}>My courses</p>
+          <p style={{ fontSize: '20px', marginBottom: '15px' }}>My courses</p>
           {user ? (
             <Table
               header={courseHeader}
@@ -101,7 +101,7 @@ class HomeComponent extends React.Component {
             </div>
           )}
         </Card>
-        <div style={{height:'30px'}}></div>
+        <div style={{ height: '30px' }} />
         <Card width="800px" title="My policies">
           {this.props.policyAcknowledgements_loading ? (
             <div className="center">

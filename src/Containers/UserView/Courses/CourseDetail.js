@@ -35,6 +35,13 @@ class CourseDetail extends React.Component {
     history.push('/modules/starttest');
   }
 
+  loadMaterial(material) {
+    // const props = this.getProps(material);
+    console.log(material);
+    this.props.dispatch(ModuleActions.loadMaterial(material));
+    history.push('/courses/coursedetail/material/view');
+  }
+
   render() {
     const {
       course, modules, moduleMaterial, moduleTests,
@@ -87,8 +94,8 @@ class CourseDetail extends React.Component {
                                   key={abc}
                                   color="primary"
                                   variant="raised"
-                                  onClick={() =>
-                                    window.open(`${material.filePath}`, '_blank')
+                                  onClick={() => this.loadMaterial(material.filePath)
+                                    // window.open(`${material.filePath}`, '_blank')
                                   }
                                 >
                                   {

@@ -402,13 +402,10 @@ function loadMaterial(policyMaterial) {
   /* function request(id) {
     return { type: ModuleConstants.LOAD_MATERIAL_REQUEST };
   } */
-  console.log('Loading material');
   function success(material) {
-    console.log(`Success: ${material}`);
     return { type: PolicyConstants.LOAD_MATERIAL_SUCCESS, material };
   }
   function failure() {
-    console.log('Failure');
     return { type: PolicyConstants.LOAD_MATERIAL_FAILURE };
   }
   return (dispatch) => {

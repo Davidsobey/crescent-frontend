@@ -47,6 +47,7 @@ class UserTest extends React.Component {
         {test &&
           questions && (
             <Card width="95%" title={`${test.name} Overview`}>
+              <h4>Click the questions below to view and answer them. </h4>
               <div className="test-table">
                 {questions.map((question) => {
                   count += 1;
@@ -61,7 +62,7 @@ class UserTest extends React.Component {
                       }
                       onClick={() => this.loadQuestion(question)}
                     >
-                      {count}
+                      Question {count}
                     </Button>
                   );
                 })}

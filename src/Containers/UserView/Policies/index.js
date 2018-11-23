@@ -24,14 +24,14 @@ class UsersPolicyView extends React.Component {
     this.loadPolicy = this.loadPolicy.bind(this);
     this.manipulateData = this.manipulateData.bind(this);
   }
-  
+
   componentWillMount() {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser(this.props.user.id));
   }
 
   loadPolicy(id) {
     this.props.dispatch(PolicyActions.getMaterialsForPolicy(id));
-    history.push({pathname: '/policies/policydetail', state: {policyId: id}});
+    history.push({ pathname: '/policies/policydetail', state: { policyId: id } });
   }
 
   manipulateData = (policyAcknowledgements) => {
@@ -54,6 +54,7 @@ class UsersPolicyView extends React.Component {
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { user, policyAcknowledgements } = this.props;
     return (
       <Card width="800px" title="My Policy List">
