@@ -24,15 +24,16 @@ class PolicyMaterialView extends Component {
   };
 
   render() {
+    console.log('Loading the pdf material');
     const { user } = this.props;
     const { pageNumber, numPages } = this.state;
     console.log(this.props.material);
 
     return (
       <div>
-        <Card width="1200px" title="View Material">
+        <Card width="1000px" title="View Material">
           <Document
-            file={this.props.material.filePath}
+            file={this.props.material}
             noData="No PDF file specified"
             onLoadSuccess={this.onMaterialLoad}
             width="100%"
@@ -49,7 +50,7 @@ class PolicyMaterialView extends Component {
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
-  material: state.PolicyReducer.material,
+  material: state.ModuleReducer.material,
 });
 
 const withForm = reduxForm(

@@ -44,10 +44,9 @@ class PolicyView extends React.Component {
     history.push('/policy/edit');
   };
 
-  loadMaterial = (row) => {
-    console.log(row);
-    this.props.dispatch(PolicyActions.loadMaterial(row.material));
-    history.push('/policy/material/view');
+  loadPolicy = (policy) => {
+    this.props.dispatch(PolicyActions.getMaterialsForPolicy(policy.id, policy.name, policy.description));
+    history.push('/policy/material/detail');
   }
 
   render() {
@@ -67,7 +66,7 @@ class PolicyView extends React.Component {
         Cell: row => (
           <div>
             <Button
-              onClick={() => this.loadMaterial(row)}
+              onClick={() => this.loadPolicy(row.original)}
             >
             View Material
             </Button>

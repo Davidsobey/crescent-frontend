@@ -5,7 +5,7 @@ import MaterialService from '../Services/MaterialService';
 import AlertActions from './AlertActions';
 import history from '../Helpers/History';
 
-function create(courseID, moduleName, moduleDescription) {
+function create(courseId, moduleName, moduleDescription) {
   function request() {
     return { type: ModuleConstants.CREATE_REQUEST, moduleName };
   }
@@ -21,11 +21,11 @@ function create(courseID, moduleName, moduleDescription) {
 
   return (dispatch) => {
     dispatch(request({ moduleName }));
-    ModuleService.create(courseID, moduleName, moduleDescription).then(
+    ModuleService.create(courseId, moduleName, moduleDescription).then(
       (module) => {
-        history.push('/module/material/create');
         dispatch(success(module.id));
         dispatch(courseSuccess(module.courseId));
+        history.push('/module/material/create');
         dispatch(AlertActions.success(`Module ${moduleName} created.`));
       },
       (error) => {
@@ -303,7 +303,6 @@ function getMaterialsForModule(moduleId, moduleName, moduleDescription) {
 
     ModuleService.getMaterialsForModule(moduleId).then(
       (materials) => {
-        console.log(materials);
         dispatch(success(materials));
       },
       (error) => {

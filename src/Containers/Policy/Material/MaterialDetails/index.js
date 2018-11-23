@@ -13,7 +13,7 @@ import ModuleActions from '../../../../Actions/ModuleActions';
 
 const header = ['Material Name', 'View Material'];
 
-class ModuleMaterialDetails extends React.Component {
+class PolicyMaterialDetails extends React.Component {
   constructor(props) {
     super(props);
     this.loadMaterial = this.loadMaterial.bind(this);
@@ -24,21 +24,21 @@ class ModuleMaterialDetails extends React.Component {
   loadMaterial(material) {
     // const props = this.getProps(material);
     this.props.dispatch(ModuleActions.loadMaterial(material));
-    history.push('/module/material/view');
+    history.push('/policy/material/view');
   }
 
-  manipulateData = (moduleMaterials) => {
+  manipulateData = (materials) => {
     const data = [];
-    if (Array.isArray(moduleMaterials)) {
-      moduleMaterials.forEach((moduleMaterial, index) => {
-        const newModuleMaterial = {
+    if (Array.isArray(materials)) {
+      materials.forEach((policyMaterial, index) => {
+        const newPolicyMaterial = {
           name: `Material ${(index + 1).toString()}`,
           button: {
             message: 'View Material',
-            onClick: () => this.loadMaterial(moduleMaterial),
+            onClick: () => this.loadMaterial(policyMaterial),
           },
         };
-        data.push(newModuleMaterial);
+        data.push(newPolicyMaterial);
       });
     }
     return data;
@@ -47,13 +47,13 @@ class ModuleMaterialDetails extends React.Component {
   render() {
     // eslint-disable-next-line no-unused-vars
     const { user } = this.props;
-    const moduleMaterials = this.manipulateData(this.props.moduleMaterials);
+    const policyMaterials = this.manipulateData(this.props.materials);
     return (
-      <Card width="800px" title={`Module - ${this.props.moduleName}`}>
+      <Card width="800px" title={`Policy - ${this.props.policyName}`}>
         <div>
-          Description : {this.props.moduleDescription}
+          Description : {this.props.policyDescription}
         </div>
-        {this.props.moduleMaterials_loading ? (
+        {this.props.policyMaterials_loading ? (
           <div className="center">
             <CircularProgress color="secondary" />
           </div>
@@ -61,7 +61,7 @@ class ModuleMaterialDetails extends React.Component {
           <div>
             <Table
               header={header}
-              data={moduleMaterials}
+              data={policyMaterials}
             />
           </div>
         )}
@@ -72,26 +72,26 @@ class ModuleMaterialDetails extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
-  moduleMaterials: state.ModuleReducer.moduleMaterials,
-  moduleMaterials_loading: state.ModuleReducer.moduleMaterials_loading,
-  moduleName: state.ModuleReducer.moduleName,
-  moduleDescription: state.ModuleReducer.moduleDescription,
+  materials: state.ModuleReducer.moduleMaterials,
+  policyMaterials_loading: state.ModuleReducer.moduleMaterials_loading,
+  policyName: state.ModuleReducer.material.name,
+  policyDescription: state.ModuleReducer.material.description,
 });
 
 const withForm = reduxForm(
   {
     form: 'userView',
   },
-  ModuleMaterialDetails,
+  PolicyMaterialDetails,
 );
 
-ModuleMaterialDetails.propTypes = {
+PolicyMaterialDetails.propTypes = {
   dispatch: PropTypes.func,
   user: PropTypes.object,
-  moduleMaterials: PropTypes.array,
-  moduleMaterials_loading: PropTypes.bool,
-  moduleName: PropTypes.string,
-  moduleDescription: PropTypes.string,
+  materials: PropTypes.array,
+  policyMaterials_loading: PropTypes.bool,
+  policyName: PropTypes.string,
+  policyDescription: PropTypes.string,
 };
 
-export default compose(connect(mapStateToProps), withForm)(ModuleMaterialDetails);
+export default compose(connect(mapStateToProps), withForm)(PolicyMaterialDetails);

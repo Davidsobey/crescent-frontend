@@ -54,7 +54,6 @@ class ModuleCreate extends React.Component {
     modules = this.props.modules;
     return (
       <Card width="600px" title="Create New Module">
-        {this.props.loading && <LinearProgress color="secondary" />}
         <form
           onSubmit={this.props.handleSubmit(this.submit)}
           noValidate
@@ -63,10 +62,10 @@ class ModuleCreate extends React.Component {
         >
           <div>
             <div>
-              {this.props.carsLoading ? (
+              {this.props.courses_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
-                  Loading Cars
+                  Loading Courses
                 </div>
               ) : (
                 <div>

@@ -18,9 +18,8 @@ function create(policy) {
   return (dispatch) => {
     dispatch(request({}));
     PolicyService.create(policy).then(
-      (policy) => {
-        console.log('policy', policy);
-        dispatch(success(policy.id));
+      (p) => {
+        dispatch(success(p.id));
         history.push('/policy/material/create');
         dispatch(AlertActions.success('Policy created.'));
       },
@@ -376,8 +375,8 @@ function getMaterialsForPolicy(policyId, policyName, policyDescription, canAckno
   }
   function success(materials) {
     return {
- type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials, canAcknowlege 
-};
+      type: PolicyConstants.GET_MATERIALS_SUCCESS, policyId, policyName, policyDescription, materials, canAcknowlege,
+    };
   }
   function failure(error) {
     return { type: PolicyConstants.GET_MATERIALS_FAILURE, error };
@@ -417,6 +416,24 @@ function loadMaterial(policyMaterial) {
   };
 }
 
+function loadMaterialPdf(pdfLink) {
+  console.log('Load Material PDF');
+  console.log(pdfLink);
+  function success(link) {
+    return { type: PolicyConstants.LOAD_MATERIAL_PDF_SUCCESS, link };
+  }
+  function failure() {
+    return { type: PolicyConstants.LOAD_MATERIAL_PDF_FAILURE };
+  }
+  return (dispatch) => {
+    if (pdfLink) {
+      dispatch(success(pdfLink));
+    } else {
+      dispatch(failure());
+    }
+  };
+}
+
 const PolicyActions = {
   create,
   getAll,
@@ -434,6 +451,7 @@ const PolicyActions = {
   getMaterial,
   getMaterialsForPolicy,
   loadMaterial,
+  loadMaterialPdf,
 };
 
 export default PolicyActions;

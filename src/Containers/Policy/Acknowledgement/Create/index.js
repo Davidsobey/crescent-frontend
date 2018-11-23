@@ -135,7 +135,7 @@ const mapStateToProps = state => ({
   users_loading: state.UserReducer.loading,
   userInfo: state.LoginReducer.user,
   newPolicyId: state.PolicyReducer.newPolicyId,
-  acknowledgement_creating: state.PolicyReducer.creating,
+  acknowledgement_creating: state.PolicyReducer.creatingAcknowledgement,
 });
 
 const withForm = reduxForm(

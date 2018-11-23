@@ -39,7 +39,9 @@ import ClientCreate from '../Containers/Client/ClientCreate/index';
 import PolicyView from '../Containers/Policy/PolicyView/index';
 import PolicyCreate from '../Containers/Policy/PolicyCreate/index';
 import PolicyEdit from '../Containers/Policy/PolicyEdit/index';
-import PolicyMaterialCreate from '../Containers/Policy/Material/Create';
+import PolicyMaterialCreate from '../Containers/Policy/Material/MaterialCreate/index';
+import PolicyMaterialDetail from '../Containers/Policy/Material/MaterialDetails/index';
+import PolicyMaterialView from '../Containers/Policy/Material/MaterialView/index';
 import AcknowledgementCreate from '../Containers/Policy/Acknowledgement/Create';
 import AcknowledgementView from '../Containers/Policy/Acknowledgement/View/index';
 import AcknowledgementDetail from '../Containers/Policy/Acknowledgement/Detail/index';
@@ -218,6 +220,14 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.POLICY_MATERIAL_CREATE}
                   component={withAuth(PolicyMaterialCreate, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_MATERIAL_DETAILS}
+                  component={withAuth(PolicyMaterialDetail, ['Admin', 'Client'])}
+                />
+                <Route
+                  path={Routes.POLICY_MATERIAL_VIEW}
+                  component={withAuth(PolicyMaterialView, ['Admin', 'Client'])}
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}

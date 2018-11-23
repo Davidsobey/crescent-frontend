@@ -114,7 +114,7 @@ const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
   policies_loading: state.PolicyReducer.loading,
   newPolicyId: state.PolicyReducer.newPolicyId,
-  material_creating: state.PolicyReducer.creating,
+  material_creating: state.PolicyReducer.creatingMaterial,
 });
 
 const withForm = reduxForm(

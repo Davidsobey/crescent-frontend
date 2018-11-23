@@ -32,6 +32,8 @@ const POLICY_CREATE = '/policy/create';
 const POLICY_VIEW = '/policy/list';
 const POLICY_EDIT = '/policy/edit';
 const POLICY_MATERIAL_CREATE = '/policy/material/create';
+const POLICY_MATERIAL_DETAIL = '/policy/material/detail';
+const POLICY_MATERIAL_VIEW = '/policy/material/view';
 const POLICY_ACKNOWLEDGEMENT_CREATE = '/policy/acknowledgement/create';
 const POLICY_ACKNOWLEDGEMENT_VIEW = '/policy/acknowledgement/list';
 const POLICY_ACKNOWLEDGEMENT_DETAIL = '/policy/acknowledgement/detail';
@@ -80,6 +82,8 @@ export default {
   POLICY_VIEW,
   POLICY_EDIT,
   POLICY_MATERIAL_CREATE,
+  POLICY_MATERIAL_DETAIL,
+  POLICY_MATERIAL_VIEW,
   POLICY_ACKNOWLEDGEMENT_CREATE,
   POLICY_ACKNOWLEDGEMENT_VIEW,
   POLICY_ACKNOWLEDGEMENT_DETAIL,

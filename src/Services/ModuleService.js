@@ -8,7 +8,7 @@ function filteredList(response, id) {
   return objects;
 }
 
-function create(courseID, moduleName, moduleDescription) {
+function create(CourseId, moduleName, moduleDescription) {
   if (moduleDescription === null || moduleDescription === undefined) {
     // eslint-disable-next-line no-param-reassign
     moduleDescription = `This module covers ${moduleName}`;
@@ -18,8 +18,7 @@ function create(courseID, moduleName, moduleDescription) {
     body: JSON.stringify({
       name: moduleName,
       description: moduleDescription,
-      courseId: courseID,
-      active: true,
+      CourseId,
     }),
   };
 

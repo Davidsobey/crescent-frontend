@@ -66,7 +66,11 @@ class TestCreate extends React.Component {
   };
 
   submit = (values) => {
-    this.props.dispatch(TestActions.create(values.module, values.testName, values.testMarks));
+    this.props.dispatch(TestActions.create(
+      values.module,
+      values.testName,
+      values.testMarks,
+    ));
   };
 
   onContinue = (index) => {

@@ -21,7 +21,7 @@ function login(username, password) {
     UserService.login(username, password).then(
       (user) => {
         dispatch(success(user.userVM));
-        history.push(user.userVM.role.name != 'Regular' ? ROUTES.HOME : ROUTES.USERS_HOME);
+        history.push(user.userVM.role.name !== 'Regular' ? ROUTES.HOME : ROUTES.USERS_HOME);
       },
       (error) => {
         dispatch(failure());

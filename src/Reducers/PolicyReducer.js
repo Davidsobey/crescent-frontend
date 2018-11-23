@@ -1,6 +1,6 @@
 import { isNumber } from 'util';
-
 import PolicyConstants from '../Constants/PolicyConstants';
+import UserConstants from '../Constants/UserConstants';
 
 function filterById(id, delId) {
   if (isNumber(id) && id !== 0 && id !== delId) {
@@ -28,15 +28,15 @@ function PolicyReducer(state = {}, action) {
       });
     case PolicyConstants.UPLOAD_MATERIAL_REQUEST:
       return Object.assign({}, state, {
-        creating: true,
+        creatingMaterial: true,
       });
     case PolicyConstants.UPLOAD_MATERIAL_SUCCESS:
       return Object.assign({}, state, {
-        creating: false,
+        creatingMaterial: false,
       });
     case PolicyConstants.UPLOAD_MATERIAL_FAILURE:
       return Object.assign({}, state, {
-        creating: false,
+        creatingMaterial: false,
       });
     case PolicyConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
@@ -168,15 +168,15 @@ function PolicyReducer(state = {}, action) {
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_REQUEST:
       return Object.assign({}, state, {
-        creating: true,
+        creatingAcknowledgement: true,
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS:
       return Object.assign({}, state, {
-        creating: false,
+        creatingAcknowledgement: false,
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE:
       return Object.assign({}, state, {
-        creating: false,
+        creatingAcknowledgement: false,
       });
     case PolicyConstants.LOAD_MATERIAL_SUCCESS:
       return Object.assign({}, state, {
@@ -186,6 +186,16 @@ function PolicyReducer(state = {}, action) {
       return {
         material: null,
       };
+    case PolicyConstants.LOAD_MATERIAL_PDF_SUCCESS:
+      return Object.assign({}, state, {
+        pdf: action.link,
+      });
+    case PolicyConstants.LOAD_MATERIAL_PDF_FAILURE:
+      return {
+        pdf: null,
+      };
+    case UserConstants.LOGOUT:
+      return {};
     default:
       return state;
   }
