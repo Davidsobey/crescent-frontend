@@ -95,7 +95,7 @@ class TestEdit extends React.Component {
             {this.props.test_editing ? (
               <div style={{ width: '400px' }}>
                 <LinearProgress color="secondary" />
-                Editing Module
+                Editing Assessment
               </div>
             ) : (
               <div className="formAlignRight">
@@ -105,7 +105,7 @@ class TestEdit extends React.Component {
                   color="primary"
                   type="submit"
                 >
-                  Edit Test
+                  Edit Assessment
                 </Button>
               </div>
             )}

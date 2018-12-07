@@ -22,6 +22,8 @@ const validate = () => {
   return errors;
 };
 
+const fileSizeCheck = value => (value > 5000000 ? 'File must be smaller than 5MB' : undefined);
+
 const options = [
   { label: 'Create another module', url: '/module/create' },
   { label: 'Create an assessment for this module', url: '/assessment/create' },
@@ -66,9 +68,11 @@ class MaterialCreate extends React.Component {
   };
 
   fileSelectedHandler = (event) => {
-    this.setState({
-      selectedFile: event.target.files[0],
-    });
+    if (event.target.files[0].size < 5000000) {
+      this.setState({
+        selectedFile: event.target.files[0],
+      });
+    }
   };
 
   render() {
@@ -79,7 +83,7 @@ class MaterialCreate extends React.Component {
           noValidate
           autoComplete="off"
           className="centerForm"
-        >
+        > 
           <div>
             <div>
               {this.props.modules_loading || this.props.unsubscribed_courses_loading ? (
@@ -98,6 +102,7 @@ class MaterialCreate extends React.Component {
                 </Field>
               )}
               <div>
+                <h4>Upload a PDF file less than 5MB</h4>
                 <input
                   type="file"
                   accept="application/pdf"
