@@ -120,7 +120,9 @@ class CourseDetail extends React.Component {
                         <div>
                           <Typography variant="title">Module Tests</Typography>
                           {moduleTests && moduleTests.length > 0 ? (
-                            moduleTests.map(test => (
+                            moduleTests
+                            .filter(test => test.active)
+                            .map(test => (
                               <Button
                                 key={test.id}
                                 color="secondary"
