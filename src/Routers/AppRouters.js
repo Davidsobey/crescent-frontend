@@ -78,7 +78,7 @@ class AppRouters extends React.Component {
         <Snackbar />
         <Router history={history}>
           <Switch>
-            <Route exact path="/" component={Login} />
+            <Route path="/" component={Login} exact />
             <Route path={Routes.CHANGEPASSWORD} component={ChangePassword} exact />
             <AppBar role={this.props.role}>
               <Switch>
@@ -216,34 +216,42 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.POLICY_EDIT}
                   component={withAuth(PolicyEdit, ['Admin', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_MATERIAL_CREATE}
                   component={withAuth(PolicyMaterialCreate, ['Admin', 'Client'])}
+                  exact
                 />
                 <Route
-                  path={Routes.POLICY_MATERIAL_DETAILS}
+                  path={Routes.POLICY_MATERIAL_DETAIL}
                   component={withAuth(PolicyMaterialDetail, ['Admin', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_MATERIAL_VIEW}
                   component={withAuth(PolicyMaterialView, ['Admin', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_CREATE}
                   component={withAuth(AcknowledgementCreate, ['Admin', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_VIEW}
                   component={withAuth(AcknowledgementView, ['Admin', 'Regular', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_DETAIL}
                   component={withAuth(AcknowledgementDetail, ['Admin', 'Regular', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.POLICY_ACKNOWLEDGEMENT_MATERIAL}
                   component={withAuth(AcknowledgementMaterial, ['Admin', 'Regular', 'Client'])}
+                  exact
                 />
                 <Route
                   path={Routes.CLIENT_EDIT}
