@@ -4,7 +4,7 @@ import { Modal, Typography } from 'material-ui';
 import ModalPaper from './styles';
 import Button from '../Button';
 
-class CustomModal extends React.Component {
+class AcknowledgementModal extends React.Component {
   constructor(props) {
     super(props);
     this.handleOpen = this.handleOpen.bind(this);
@@ -50,13 +50,13 @@ class CustomModal extends React.Component {
       <Modal
         aria-="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={thilabelledbys.state.open}
+        open={this.labelledbys.state.open}
         onClose={this.handleClose}
         style={style}
       >
         <ModalPaper>
           <Typography variant="title" id="modal-title">
-            {'Are you sure you want to delete this:'}
+            {'Policy Acknowledgement'}
           </Typography>
           <br />
           {this.loadRows(obj, []).map(returnObj => (
@@ -65,7 +65,7 @@ class CustomModal extends React.Component {
               variant="subheading"
               id="simple-modal-description"
             >
-              {returnObj}
+              {'I acknowledge that I have read and understand the contents of this policy'}
             </Typography>
           ))}
           <br />
@@ -87,10 +87,10 @@ class CustomModal extends React.Component {
   }
 }
 
-CustomModal.propTypes = {
+AcknowledgementModal.propTypes = {
   obj: PropTypes.object,
   onRef: PropTypes.func,
   onClick: PropTypes.func,
 };
 
-export default CustomModal;
+export default AcknowledgementModal;

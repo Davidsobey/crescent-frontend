@@ -16,6 +16,7 @@ import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import Button from '../../../Components/Button';
 import PolicyActions from '../../../Actions/PolicyActions';
+import AcknowledgementModal from '../../../Components/Modal/index';
 
 const header = ['Name', 'View Material'];
 
@@ -27,8 +28,19 @@ class UsersPolicyDetails extends React.Component {
     this.acknowldegePolicy = this.acknowldegePolicy.bind(this);
   }
 
-  acknowldegePolicy() {
-    this.props.dispatch(PolicyActions.acknowledge(this.props.user.id, this.props.policyId, '/policies/list'));
+  handleAcknowledgement() {
+    const policyAcknowledgement = {
+      user: this.props.user.id,
+      policy: this.props.policy.id,
+      route: '/policies/list',
+    };
+    this.setState((policyAcknowledgement));
+    this.child.handleOpen();
+  }
+
+  acknowldegePolicy = (obj) => () => {
+    this.props.dispatch(PolicyActions.acknowledge(obj));
+    this.child.handleClose();
   }
 
   loadMaterial(material) {
@@ -71,7 +83,7 @@ class UsersPolicyDetails extends React.Component {
             {this.props.policy_acknowledging ? (
               <div>
                 <LinearProgress color="secondary" />
-                Acknowldeging Policy
+                Acknowledging Policy
               </div>
             ) : (
               <div className="formAlignRight">
@@ -80,6 +92,7 @@ class UsersPolicyDetails extends React.Component {
                   variant="raised"
                   color="primary"
                   onClick={() => this.acknowldegePolicy()}
+                  onClick={() => this.handleAcknowledgement()}
                 >
                   Acknowldege
                 </Button>
@@ -88,6 +101,12 @@ class UsersPolicyDetails extends React.Component {
           </div>
         )}
       </Card>
+      <AcknowledgementModal
+        obj={this.state && this.state.obj}
+        /* eslint-disable no-return-assign */
+        onRef={ref => (this.child = ref)}
+        onClick={this.acknowldegePolicy(this.state.obj)}
+      >
     );
   }
 }
