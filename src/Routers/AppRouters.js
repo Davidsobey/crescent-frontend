@@ -181,7 +181,7 @@ class AppRouters extends React.Component {
                 />
                 <Route
                   path={Routes.USER_EDIT}
-                  component={withAuth(UserEdit, ['Admin'])}
+                  component={withAuth(UserEdit, ['Admin', 'Client'])}
                   exact
                 />
                 <Route
