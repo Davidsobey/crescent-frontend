@@ -69,44 +69,46 @@ class UsersPolicyDetails extends React.Component {
     const { user, policyMaterials } = this.props;
     console.log('policy', policyMaterials);
     return (
-      <Card width="800px" title="My Policy List">
-        {this.props.policyMaterials_loading ? (
-          <div className="center">
-            <CircularProgress color="secondary" />
-          </div>
-        ) : (
-          <div>
-            <Table
-              header={header}
-              data={this.manipulateData(policyMaterials)}
-            />
-            {this.props.policy_acknowledging ? (
-              <div>
-                <LinearProgress color="secondary" />
-                Acknowledging Policy
-              </div>
-            ) : (
-              <div className="formAlignRight">
-                <Button
-                  className="buttonFormat"
-                  variant="raised"
-                  color="primary"
-                  onClick={() => this.acknowldegePolicy()}
-                  onClick={() => this.handleAcknowledgement()}
-                >
-                  Acknowldege
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
-      </Card>
-      <AcknowledgementModal
-        obj={this.state && this.state.obj}
-        /* eslint-disable no-return-assign */
-        onRef={ref => (this.child = ref)}
-        onClick={this.acknowldegePolicy(this.state.obj)}
-      >
+      <div>
+        <Card width="800px" title="My Policy List">
+          {this.props.policyMaterials_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <div>
+              <Table
+                header={header}
+                data={this.manipulateData(policyMaterials)}
+              />
+              {this.props.policy_acknowledging ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Acknowledging Policy
+                </div>
+              ) : (
+                <div className="formAlignRight">
+                  <Button
+                    className="buttonFormat"
+                    variant="raised"
+                    color="primary"
+                    onClick={() => this.acknowldegePolicy()}
+                    onClick={() => this.handleAcknowledgement()}
+                  >
+                    Acknowldege
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+        </Card>
+        <AcknowledgementModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.acknowldegePolicy(this.state.obj)}
+        />
+      </div>
     );
   }
 }
