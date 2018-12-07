@@ -104,10 +104,10 @@ class UsersPolicyDetails extends React.Component {
           )}
         </Card>
         <AcknowledgementModal
-          obj={this.state && this.state.obj}
+          obj={this.state && this.state.policyAcknowledgement}
           /* eslint-disable no-return-assign */
           onRef={ref => (this.child = ref)}
-          onClick={this.acknowldegePolicy(this.state.obj)}
+          onClick={this.acknowledgePolicy(this.state.policyAcknowledgement)}
         />
       </div>
     );
