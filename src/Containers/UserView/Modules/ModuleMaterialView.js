@@ -34,7 +34,7 @@ class CourseDetailMaterialView extends Component {
       <div>
         <Card width="1200px" title="View Material">
           <Document
-            file={this.props.material.filePath}
+            file={this.props.material}
             noData="No PDF file specified"
             onLoadSuccess={this.onMaterialLoad}
             width="100%"

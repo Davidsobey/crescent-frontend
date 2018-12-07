@@ -52,6 +52,7 @@ import SubscriptionView from '../Containers/Client/ClientSubscribeView/index';
 import UsersHome from '../Containers/UserView/Home';
 import UsersCourseView from '../Containers/UserView/Courses/index';
 import UserCourseDetail from '../Containers/UserView/Courses/CourseDetail';
+import CourseDetailMaterialView from '../Containers/UserView/Modules/ModuleMaterialView';
 import UsersModuleView from '../Containers/UserView/Modules/index';
 import UserModuleDetail from '../Containers/UserView/Modules/ModuleDetail';
 import UserTest from '../Containers/UserView/Test/index';
@@ -293,6 +294,12 @@ class AppRouters extends React.Component {
                   component={withAuth(UserModuleDetail, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
+                <Route
+                  path={Routes.USERS_VIEW_MATERIAL}
+                  component={withAuth(CourseDetailMaterialView, ['Admin', 'Regular', 'Client'])}
+                  exact
+                />
+                CourseDetailMaterialView
                 <Route
                   path={Routes.USERS_VIEW_TEST}
                   component={withAuth(UserTest, ['Admin', 'Regular', 'Client'])}

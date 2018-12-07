@@ -47,6 +47,7 @@ const USERS_VIEW_TEST = '/modules/starttest';
 const USERS_START_TEST = '/modules/test';
 const USERS_QUESTION = '/modules/test/question';
 const USERS_VIEW_POLICIES = '/policies/list';
+const USERS_VIEW_MATERIAL = '/courses/coursedetail/material/view';
 
 export default {
   LOGIN,
@@ -98,4 +99,5 @@ export default {
   USERS_QUESTION,
   USERS_VIEW_POLICIES,
   CHANGEPASSWORD,
+  USERS_VIEW_MATERIAL,
 };
