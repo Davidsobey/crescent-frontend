@@ -29,16 +29,18 @@ class UsersPolicyDetails extends React.Component {
   }
 
   handleAcknowledgement() {
+    console.log('Policy Acknowledgement');
     const policyAcknowledgement = {
       user: this.props.user.id,
-      policy: this.props.policy.id,
+      policy: this.props.policyId,
       route: '/policies/list',
     };
+    console.log(policyAcknowledgement);
     this.setState((policyAcknowledgement));
     this.child.handleOpen();
   }
 
-  acknowldegePolicy = (obj) => () => {
+  acknowledgePolicy = obj => () => {
     this.props.dispatch(PolicyActions.acknowledge(obj));
     this.child.handleClose();
   }
@@ -92,7 +94,6 @@ class UsersPolicyDetails extends React.Component {
                     className="buttonFormat"
                     variant="raised"
                     color="primary"
-                    onClick={() => this.acknowldegePolicy()}
                     onClick={() => this.handleAcknowledgement()}
                   >
                     Acknowldege
