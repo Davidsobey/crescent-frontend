@@ -22,6 +22,7 @@ import OptionActions from '../../../Actions/OptionActions';
 import { StyledDelete } from '../../../Styles/Delete';
 import IconButton from '../../../Styles/IconButton';
 import LinearProgress from '../../../Components/LinearProgress';
+import history from '../../../Helpers/History';
 
 const required = value => value ? undefined : 'Required';
 
@@ -35,8 +36,12 @@ const styles = {
     marginTop: 24,
     marginLeft: 100,
   },
-  button: {
-    marginLeft: 115,
+  create_button: {
+    marginLeft: 20,
+    marginTop: 30,
+  },
+  finish_button: {
+    marginLeft: 20,
     marginTop: 30,
   },
 };
@@ -66,6 +71,10 @@ class OptionCreate extends React.Component {
       values.questionTitle,
       this.state.ticked,
     ));
+  };
+
+  handleFinish = () => {
+    history.push('/question/create');
   };
 
   render() {
@@ -186,12 +195,20 @@ class OptionCreate extends React.Component {
                     className={classes.tickbox}
                   />
                   <Button
-                    className={classes.button}
+                    className={classes.create_button}
                     variant="raised"
                     color="primary"
                     type="submit"
                   >
                     Create
+                  </Button>
+                  <Button
+                    className={classes.finish_button}
+                    variant="raised"
+                    color="primary"
+                    onClick={() => this.handleFinish()}
+                  >
+                    Finish
                   </Button>
                 </div>
               )}
