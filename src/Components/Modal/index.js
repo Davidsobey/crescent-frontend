@@ -50,7 +50,7 @@ class CustomModal extends React.Component {
       <Modal
         aria-="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={this.labelledbys.state.open}
+        open={this.state.open}
         onClose={this.handleClose}
         style={style}
       >
