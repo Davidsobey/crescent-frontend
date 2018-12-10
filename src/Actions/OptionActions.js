@@ -27,8 +27,36 @@ function create(questionId, title, isAnswer) {
     );
   };
 }
+
+function update(option) {
+  function request() {
+    return { type: OptionConstants.UPDATE_REQUEST };
+  }
+  function success() {
+    return { type: OptionConstants.UPDATE_SUCCESS, option };
+  }
+  function failure(error) {
+    return { type: OptionConstants.UPDATE_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+    OptionServices.update(option).then(
+      (option) => {
+        dispatch(success());
+        dispatch(AlertActions.success('Option updated.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 const OptionActions = {
   create,
+  update,
 };
 
 export default OptionActions;

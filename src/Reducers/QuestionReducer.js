@@ -162,6 +162,27 @@ function QuestionReducer(state = {}, action) {
       return Object.assign({}, state, {
         option_creating: false,
       });
+    case OptionConstants.UPDATE_REQUEST:
+      return Object.assign({}, state, {
+        option_updating: true,
+      });
+    case OptionConstants.UPDATE_SUCCESS:
+      let options_array = Array.isArray(state.options) ? state.options : [state.options];
+      let options_updated = [];
+      options_array.forEach(option => {
+        options_updated.push((option.id == action.option.id) ? Object.assign({}, option, {
+          title: action.option.title,
+          isAnswer: action.option.isAnswer,
+        }) : option);
+      });
+      return Object.assign({}, state, {
+        options: options_updated,
+        option_updating: false,
+      });
+    case OptionConstants.UPDATE_FAILURE:
+      return Object.assign({}, state, {
+        option_updating: false,
+      });
     case QuestionConstants.EDIT_QUESTION_REQUEST:
       return Object.assign({}, state, {
         question_editing: true,
@@ -175,6 +196,10 @@ function QuestionReducer(state = {}, action) {
       return Object.assign({}, state, {
         error: action.error,
         question_editing: false,
+      });
+    case QuestionConstants.SET_OPTION_EDITING:
+      return Object.assign({}, state, {
+        option_editing: action.option_editing,
       });
     case UserConstants.LOGOUT:
       return {};

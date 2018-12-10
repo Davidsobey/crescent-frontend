@@ -19,6 +19,7 @@ import TextField from '../../../Components/TextField';
 import Button from '../../../Components/Button';
 import QuestionActions from '../../../Actions/QuestionActions';
 import OptionActions from '../../../Actions/OptionActions';
+import { StyledEdit } from '../../../Styles/Edit';
 import { StyledDelete } from '../../../Styles/Delete';
 import IconButton from '../../../Styles/IconButton';
 import LinearProgress from '../../../Components/LinearProgress';
@@ -26,7 +27,7 @@ import history from '../../../Helpers/History';
 
 const required = value => value ? undefined : 'Required';
 
-const header = ['Question Title', 'Correct Answer', 'Remove Answer'];
+const header = ['Question Title', 'Correct Answer', 'Edit/Delete'];
 const styles = {
   createNew: {
     marginLeft: 20,
@@ -35,6 +36,9 @@ const styles = {
   tickbox: {
     marginTop: 24,
     marginLeft: 100,
+  },
+  edit_button: {
+    marginLeft: -25,
   },
   create_button: {
     marginLeft: 20,
@@ -48,12 +52,20 @@ const styles = {
 class OptionCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ticked: false };
+    this.state = { 
+      ticked: false,
+      option_editing: false,
+    };
     this.submit = this.submit.bind(this);
   }
 
   handleCheckChange = (values) => {
     this.props.dispatch(QuestionActions.editOptionIsAnswer(values));
+  };
+
+  handleEdit = (values) => {
+    this.setState({option_editing: values, ticked: values.isAnswer});
+    this.props.change('optionTitle', values.title);
   };
 
   handleDelete = (values) => {
@@ -66,11 +78,18 @@ class OptionCreate extends React.Component {
   }
 
   submit = (values) => {
-    this.props.dispatch(OptionActions.create(
-      this.props.question.id,
-      values.questionTitle,
-      this.state.ticked,
-    ));
+    if (this.state.option_editing) {
+      let new_option = Object.assign({}, this.state.option_editing, {title: values.optionTitle, isAnswer: this.state.ticked});
+      this.props.dispatch(OptionActions.update(new_option));
+    } else {
+      this.props.dispatch(OptionActions.create(
+        this.props.question.id,
+        values.optionTitle,
+        this.state.ticked,
+      ));
+    }
+    this.props.change('optionTitle', '');
+    this.setState({option_editing : false, ticked: false});
   };
 
   handleFinish = () => {
@@ -123,6 +142,15 @@ class OptionCreate extends React.Component {
                           />
                         </TableCell>
                         <TableCell>
+                          <Tooltip id="tooltip-delete" title="Edit">
+                            <IconButton
+                              className={classes.edit_button}
+                              aria-label="Edit"
+                              onClick={() => this.handleEdit(option)}
+                            >
+                              <StyledEdit />
+                            </IconButton>
+                          </Tooltip>
                           <Tooltip id="tooltip-delete" title="Delete">
                             <IconButton
                               aria-label="Delete"
@@ -155,6 +183,15 @@ class OptionCreate extends React.Component {
                         />
                       </TableCell>
                       <TableCell>
+                        <Tooltip id="tooltip-delete" title="Edit">
+                          <IconButton
+                            className={classes.edit_button}
+                            aria-label="Edit"
+                            onClick={() => this.handleEdit(this.props.options)}
+                          >
+                            <StyledEdit />
+                          </IconButton>
+                        </Tooltip>
                         <Tooltip id="tooltip-delete" title="Delete">
                           <IconButton
                             aria-label="Delete"
@@ -180,10 +217,15 @@ class OptionCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Creating Option
                 </div>
+              ) :  this.props.option_updating ? (
+                <div>
+                  <LinearProgress color="secondary" />
+                  Updating Option
+                </div>
               ) : (
                 <div className={classes.createNew}>
                   <Field
-                    name="questionTitle"
+                    name="optionTitle"
                     label="Option Title"
                     margin="normal"
                     component={TextField}
@@ -194,22 +236,37 @@ class OptionCreate extends React.Component {
                     onClick={() => this.changeState()}
                     className={classes.tickbox}
                   />
-                  <Button
-                    className={classes.create_button}
-                    variant="raised"
-                    color="primary"
-                    type="submit"
-                  >
-                    Create
-                  </Button>
-                  <Button
-                    className={classes.finish_button}
-                    variant="raised"
-                    color="primary"
-                    onClick={() => this.handleFinish()}
-                  >
-                    Finish
-                  </Button>
+                  <div>
+                    {!this.state.option_editing ? (
+                      <Button
+                        className={classes.create_button}
+                        variant="raised"
+                        color="primary"
+                        type="submit"
+                      >
+                        Create
+                      </Button>
+                    ) : (
+                      <Button
+                        className={classes.create_button}
+                        variant="raised"
+                        color="primary"
+                        type="submit"
+                      >
+                        Change
+                      </Button>
+                    ) }
+                  </div>
+                  <div>
+                    <Button
+                      className={classes.finish_button}
+                      variant="raised"
+                      color="primary"
+                      onClick={() => this.handleFinish()}
+                    >
+                      Finish
+                    </Button>
+                  </div>
                 </div>
               )}
             </form>
@@ -227,6 +284,7 @@ OptionCreate.propTypes = {
   options: PropTypes.array,
   options_loading: PropTypes.bool,
   option_creating: PropTypes.bool,
+  option_editing: PropTypes.bool,
   classes: PropTypes.object.isRequired,
 };
 
@@ -238,6 +296,7 @@ const mapStateToProps = state => ({
       Object.values(state.QuestionReducer.options),
   options_loading: state.QuestionReducer.options_loading,
   option_creating: state.QuestionReducer.option_creating,
+  option_updating: state.QuestionReducer.option_updating,
 });
 
 const withForm = reduxForm(
