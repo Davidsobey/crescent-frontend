@@ -10,9 +10,9 @@ import TestActions from '../../../Actions/TestActions';
 import history from '../../../Helpers/History';
 
 class UserTest extends React.Component {
-  componentDidMount() {
+  /* componentDidMount() {
     this.props.dispatch(TestActions.loadTestQuestions(this.props.user.id, this.props.test.id));
-  }
+  } */
   componentWillUnmount() {
     if (this.props.history.action === 'POP') {
       history.push('/modules/test');
