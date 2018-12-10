@@ -16,7 +16,7 @@ import Card from '../../../Components/Card';
 import Table from '../../../Components/Table';
 import Button from '../../../Components/Button';
 import PolicyActions from '../../../Actions/PolicyActions';
-import AcknowledgementModal from '../../../Components/Modal/index';
+import AcknowledgementModal from '../../../Components/AcknowledgementModal/index';
 
 const header = ['Name', 'View Material'];
 
@@ -25,24 +25,26 @@ class UsersPolicyDetails extends React.Component {
     super(props);
     this.loadMaterial = this.loadMaterial.bind(this);
     this.manipulateData = this.manipulateData.bind(this);
-    this.acknowldegePolicy = this.acknowldegePolicy.bind(this);
+    this.acknowledgePolicy = this.acknowledgePolicy.bind(this);
+    this.state = { obj: {} };
   }
 
-  handleAcknowledgement() {
+  handleAcknowledgement = (obj) => {
     console.log('Policy Acknowledgement');
-    const policyAcknowledgement = {
-      user: this.props.user.id,
-      policy: this.props.policyId,
-      route: '/policies/list',
+    // eslint-disable-next-line no-param-reassign
+    obj = {
+      userId: this.props.user.id,
+      policyId: this.props.policyId,
     };
-    console.log(policyAcknowledgement);
-    this.setState((policyAcknowledgement));
+    console.log(obj);
+    this.setState({ obj });
     this.child.handleOpen();
   }
 
   acknowledgePolicy = obj => () => {
-    this.props.dispatch(PolicyActions.acknowledge(obj));
+    this.props.dispatch(PolicyActions.acknowledge(obj.userId, obj.policyId, '/home'));
     this.child.handleClose();
+    history.push('/loading');
   }
 
   loadMaterial(material) {
@@ -104,10 +106,10 @@ class UsersPolicyDetails extends React.Component {
           )}
         </Card>
         <AcknowledgementModal
-          obj={this.state && this.state.policyAcknowledgement}
+          obj={this.state && this.state.obj}
           /* eslint-disable no-return-assign */
           onRef={ref => (this.child = ref)}
-          onClick={this.acknowledgePolicy(this.state.policyAcknowledgement)}
+          onClick={this.acknowledgePolicy(this.state.obj)}
         />
       </div>
     );
@@ -134,7 +136,7 @@ UsersPolicyDetails.propTypes = {
   user: PropTypes.object,
   policyMaterials: PropTypes.array,
   policyMaterials_loading: PropTypes.bool,
-  policyId: PropTypes.object,
+  policyId: PropTypes.number,
   policy_acknowledging: PropTypes.bool,
 };
 
