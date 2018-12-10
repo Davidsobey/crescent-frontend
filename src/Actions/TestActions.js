@@ -101,7 +101,7 @@ function loadTest(id) {
   };
 }
 
-function loadTestQuestions(userId, id) {
+function loadTestQuestions(userId, testId) {
   function request() {
     return { type: TestConstants.LOAD_TEST_QUESTIONS_REQUEST };
   }
@@ -115,7 +115,7 @@ function loadTestQuestions(userId, id) {
   return (dispatch) => {
     dispatch(request());
 
-    TestService.loadTestQuestions(userId, id).then(
+    TestService.loadTestQuestions(userId, testId).then(
       questions => dispatch(success(questions)),
       (error) => {
         dispatch(failure(error));
@@ -212,12 +212,30 @@ function enrolmentTest(testId, courseId, userId) {
   function failure(error) {
     return { type: TestConstants.BEGIN_TEST_FAILURE, error };
   }
+  function questionsRequest() {
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_REQUEST };
+  }
+  function questionsSuccess(questions) {
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_SUCCESS, questions };
+  }
+  function questionsFailure(error) {
+    return { type: TestConstants.LOAD_TEST_QUESTIONS_FAILURE, error };
+  }
 
   return (dispatch) => {
     dispatch(request());
 
     TestService.enrolmentTest(testId, courseId, userId).then(
       dispatch(success()),
+      dispatch(questionsRequest()),
+      console.log('Loading ETQs'),
+      TestService.loadTestQuestions(userId, testId).then(
+        questions => dispatch(questionsSuccess(questions)),
+        (error) => {
+          dispatch(questionsFailure(error));
+          dispatch(AlertActions.error(error));
+        },
+      ),
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error));

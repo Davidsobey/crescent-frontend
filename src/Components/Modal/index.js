@@ -48,6 +48,7 @@ class CustomModal extends React.Component {
     const { obj } = this.props;
     return (
       <Modal
+        // eslint-disable-next-line jsx-a11y/aria-props
         aria-="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={this.state.open}

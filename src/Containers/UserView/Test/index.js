@@ -10,6 +10,7 @@ import TestActions from '../../../Actions/TestActions';
 
 class UserTest extends React.Component {
   beginTest(userId, testId, courseId) {
+    console.log('Creating Enrolment Test');
     this.props.dispatch(TestActions.enrolmentTest(testId, courseId, userId));
     history.push('/modules/test');
   }

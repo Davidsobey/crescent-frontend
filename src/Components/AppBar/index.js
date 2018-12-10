@@ -53,7 +53,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: theme.palette.secondary[1000],
+    backgroundColor: theme.palette.accent[500],
   },
   appBarShift: {
     marginLeft: drawerWidth,

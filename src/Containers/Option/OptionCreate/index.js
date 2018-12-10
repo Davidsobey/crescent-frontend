@@ -27,7 +27,7 @@ import history from '../../../Helpers/History';
 
 const required = value => value ? undefined : 'Required';
 
-const header = ['Question Title', 'Correct Answer', 'Edit/Delete'];
+const header = ['Option', 'Correct Answer', 'Remove Answer'];
 const styles = {
   createNew: {
     marginLeft: 20,

@@ -48,6 +48,7 @@ class AcknowledgementModal extends React.Component {
     const { obj } = this.props;
     return (
       <Modal
+        // eslint-disable-next-line jsx-a11y/aria-props
         aria-="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={this.state.open}
@@ -59,15 +60,9 @@ class AcknowledgementModal extends React.Component {
             {'Policy Acknowledgement'}
           </Typography>
           <br />
-          {this.loadRows(obj, []).map(returnObj => (
-            <Typography
-              key={returnObj}
-              variant="subheading"
-              id="simple-modal-description"
-            >
-              {'I acknowledge that I have read and understand the contents of this policy'}
-            </Typography>
-          ))}
+          <Typography variant="subheading" id="simple-modal-description">
+            {'I acknowledge that I have read and understand the contents of this policy'}
+          </Typography>
           <br />
           <div className="justify-content flex-container">
             <Button color="primary" onClick={this.handleClose}>
