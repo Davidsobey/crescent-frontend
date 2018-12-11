@@ -72,10 +72,10 @@ class PolicyMaterialDetails extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
-  materials: state.ModuleReducer.moduleMaterials,
-  policyMaterials_loading: state.ModuleReducer.moduleMaterials_loading,
-  policyName: state.ModuleReducer.material.name,
-  policyDescription: state.ModuleReducer.material.description,
+  materials: state.PolicyReducer.policyMaterials,
+  policyMaterials_loading: state.PolicyReducer.moduleMaterials_loading,
+  policyName: state.PolicyReducer.policyName,
+  policyDescription: state.PolicyReducer.policyDescription,
 });
 
 const withForm = reduxForm(
