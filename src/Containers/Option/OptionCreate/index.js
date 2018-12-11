@@ -27,7 +27,7 @@ import history from '../../../Helpers/History';
 
 const required = value => value ? undefined : 'Required';
 
-const header = ['Option', 'Correct Answer', 'Remove Answer'];
+const header = ['Option', 'Correct Answer', 'Edit/Remove'];
 const styles = {
   createNew: {
     marginLeft: 20,
@@ -94,6 +94,7 @@ class OptionCreate extends React.Component {
 
   handleFinish = () => {
     history.push('/question/create');
+    console.log(this.props.question);
   };
 
   render() {
