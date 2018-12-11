@@ -13,11 +13,11 @@ function create(values) {
   function failure(error) {
     return { type: CourseConstants.CREATE_FAILURE, error };
   }
-  const { courseName, courseDescription, courseCPD } = values;
+  const { courseName, courseDescription /* , courseCPD */ } = values;
 
   return (dispatch) => {
     dispatch(request({ courseName }));
-    CourseService.create(courseName, courseDescription, courseCPD).then(
+    CourseService.create(courseName, courseDescription /* , courseCPD */).then(
       (course) => {
         dispatch(success(course.id));
         history.push('/module/create');

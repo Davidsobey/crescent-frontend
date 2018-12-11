@@ -1,14 +1,18 @@
 Hide Course CPD hours for now
-Question Title >> "Option" in question/options/create
 Question format. Options must ascend the alphabet not Roman numerals
 View Policy Material >> still failing
-Email on policy assignment >> check
 Export into excel to track enrolments, subscriptions.
-Missed deadline as red? Or Emailing? 
-Colours
-Client must be able to edit their users
-Subscription Payment Status Change
+Double Click Create Option On First Time
+Question Option textbox must clear on creation
+Question Create from Questino Option >> Populate Course, Module and Assessment
 
-PRIO Assessment not appearing in userview >> FIX
-PRIO Policy Details User View Not Appearing >> FIX
-PRIO Question options are done >> must have options to complete/add another question
+In Progress: Missed deadline as red? Or Emailing? 
+In Progress: Subscription Payment Status Change
+
+Testing: Client must be able to edit their users
+Testing: Email on policy assignment
+
+Done: Assessment not appearing in userview
+Done: Policy Details User View Not Appearing
+Done: Question options are done, must have options to complete/add another question
+Done: Question Title >> "Option" in question/options/create

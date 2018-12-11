@@ -53,7 +53,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: theme.palette.accent[500],
+    backgroundColor: theme.palette.accent[1000],
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -379,7 +379,7 @@ class MiniDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>
-              Lunar Testing System
+              <i>“Unless you try to do something beyond what you have already mastered, you will never grow.”</i> ― <b>Ronald E. Osborn</b>
             </Typography>
             <MenuItem onClick={this.handleLogout}>
               <ListItemIcon>
@@ -420,11 +420,6 @@ class MiniDrawer extends React.Component {
           <Divider />
           {role === 'Admin' && (
             <List>
-              {this.state.open && (
-                <Typography className="user-type" type="subheading">
-                  Admin View
-                </Typography>
-              )}
               <Link to="/admin/home">
                 <MUIMenuItem>
                   <ListItemIcon>

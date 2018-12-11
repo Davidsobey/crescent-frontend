@@ -184,10 +184,10 @@ class OptionCreate extends React.Component {
                 <div className={classes.createNew}>
                   <Field
                     name="questionTitle"
-                    label="Option Title"
+                    label="Option"
                     margin="normal"
                     component={TextField}
-                    validate={[ required ]}
+                    validate={[required]}
                   />
                   <Checkbox
                     checked={this.state.ticked}
