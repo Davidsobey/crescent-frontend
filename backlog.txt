@@ -4,7 +4,9 @@ View Policy Material >> still failing
 Export into excel to track enrolments, subscriptions.
 Double Click Create Option On First Time
 Question Option textbox must clear on creation
-Question Create from Questino Option >> Populate Course, Module and Assessment
+Question Create from Question Option >> Populate Course, Module and Assessment
+Assessment Certificate
+Test Marks Calculation
 
 In Progress: Missed deadline as red? Or Emailing? 
 In Progress: Subscription Payment Status Change
