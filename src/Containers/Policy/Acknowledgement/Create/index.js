@@ -26,11 +26,18 @@ class AcknowledgementCreate extends React.Component {
     super(props);
     this.props.dispatch(PolicyActions.getAll());
     this.props.dispatch(UserActions.getAll());
+
+    this.state = { userId: null };
   }
 
   componentWillMount() {
     this.props.initialize({ policyID: this.props.newPolicyId });
   }
+
+  loadAcknowledgedPolicies = (values) => {
+    this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser(values.target.value));
+    this.setState({ userId: values.target.value});
+  };
 
   submit = (values) => {
     const acknowledgement = Object.assign({}, values);
@@ -40,7 +47,11 @@ class AcknowledgementCreate extends React.Component {
   render() {
     const isValidPolicy = (policy => (Array.isArray(policy.materialIDs) ? policy.materialIDs.length : false));
     const isValidUser = (user => (!((user.clientId != userInfo.clientId || user.role.name == 'Admin') && userInfo.role.name == 'Client')));
-
+    const notAcknowldegedPolicy = (policy => {
+      if (!this.state.userId)
+        return false;
+      return this.props.policyAcknowledgements.filter(policyAcknowledged => (policyAcknowledged.policyID == policy.id )).length == 0;
+    });
     let { userInfo } = this.props;
     return (
       <Card width="600px" title="Assign A User A Policy To Acknowledge">
@@ -60,6 +71,7 @@ class AcknowledgementCreate extends React.Component {
               ) : (
                 <Field
                   name="userID"
+                  onChange={this.loadAcknowledgedPolicies}
                   label="User Name"
                   component={Select}
                   validate={[required]}
@@ -75,7 +87,7 @@ class AcknowledgementCreate extends React.Component {
               )}
             </div>
             <div>
-              {this.props.policies_loading ? (
+              {this.props.policies_loading || this.props.policyAcknowledgements_loading ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Loading Policies
@@ -84,6 +96,7 @@ class AcknowledgementCreate extends React.Component {
                 <Field name="policyID" label="Policy Name" component={Select} validate={[required]}>
                   {(Array.isArray(this.props.policies) ? this.props.policies : [])
                   .filter(isValidPolicy)
+                  .filter(notAcknowldegedPolicy)
                   .map(policy => (
                     <MenuItem value={policy.id} key={policy.id}>
                       {policy.name}
@@ -121,6 +134,9 @@ AcknowledgementCreate.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   policies: PropTypes.array,
   policies_loading: PropTypes.bool,
+  policyAcknowledgements: PropTypes.array,
+  policyAcknowledgements_loading: PropTypes.bool,
+  user: PropTypes.object,
   users: PropTypes.array,
   users_loading: PropTypes.bool,
   userInfo: PropTypes.object,
@@ -131,6 +147,9 @@ AcknowledgementCreate.propTypes = {
 const mapStateToProps = state => ({
   policies: state.PolicyReducer.policies,
   policies_loading: state.PolicyReducer.loading,
+  policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
+  policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
+  user: state.LoginReducer.user,
   users: state.UserReducer.users,
   users_loading: state.UserReducer.loading,
   userInfo: state.LoginReducer.user,

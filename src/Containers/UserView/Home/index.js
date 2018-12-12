@@ -122,7 +122,7 @@ class HomeComponent extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
-  policyAcknowledgements_loading: state.PolicyReducer.loading,
+  policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
 });
 
 const withForm = reduxForm(
