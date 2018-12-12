@@ -93,8 +93,10 @@ class OptionCreate extends React.Component {
   };
 
   handleFinish = () => {
-    history.push('/question/create');
-    console.log(this.props.question);
+    if (this.props.questionCreated)
+      history.push('/question/create');
+    else
+      history.push('/question/list');
   };
 
   render() {
@@ -282,6 +284,7 @@ OptionCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   question: PropTypes.object,
+  questionCreated: PropTypes.bool,
   options: PropTypes.array,
   options_loading: PropTypes.bool,
   option_creating: PropTypes.bool,
@@ -291,6 +294,7 @@ OptionCreate.propTypes = {
 
 const mapStateToProps = state => ({
   question: state.QuestionReducer.question,
+  questionCreated: state.QuestionReducer.questionCreated,
   options: Array.isArray(state.QuestionReducer.options)
     ? state.QuestionReducer.options
     : state.QuestionReducer.options &&

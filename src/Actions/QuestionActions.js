@@ -32,9 +32,9 @@ function create(question) {
       (questionResponse) => {
         console.log('questionResponse', questionResponse);
         dispatch(success(questionResponse));
-        dispatch(courseSuccess(questionResponse.test.module.courseId));
-        dispatch(moduleSuccess(questionResponse.test.moduleId));
-        dispatch(testSuccess(questionResponse.testId));
+        dispatch(courseSuccess(question.course));
+        dispatch(moduleSuccess(question.module));
+        dispatch(testSuccess(question.test));
         history.push('/question/options');
         dispatch(AlertActions.success('Question created.'));
       },
