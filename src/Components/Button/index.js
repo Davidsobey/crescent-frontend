@@ -21,7 +21,7 @@ function ButtonWithTheme(props) {
       ${() =>
     props.color === 'secondary' &&
         !props.variant === 'raised' &&
-        `color: ${theme.palette.accent[500]}; `};
+        `color: ${theme.palette.accent[1000]}; `};
     }
     &&:hover {
       ${() =>

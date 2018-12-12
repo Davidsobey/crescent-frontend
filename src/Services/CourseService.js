@@ -3,7 +3,7 @@ import CommonConstants from '../Constants/CommonConstants';
 
 const Auth = new AuthMiddleware();
 
-function create(courseName, courseDescription, cpdHours) {
+function create(courseName, courseDescription /* , cpdHours */) {
   if (courseDescription === null || courseDescription === undefined) {
     // eslint-disable-next-line no-param-reassign
     courseDescription = `This course covers ${courseName}`;
@@ -13,7 +13,7 @@ function create(courseName, courseDescription, cpdHours) {
     body: JSON.stringify({
       Name: courseName,
       Description: courseDescription,
-      cpdHours: parseInt(cpdHours, 10),
+      cpdHours: 10,
       active: true,
     }),
   };
@@ -59,7 +59,7 @@ function editCourse(values) {
       id: parseInt(values.id, 10),
       name: values.name,
       description: values.description,
-      cpdHours: parseInt(values.cpdHours, 10),
+      cpdHours: 10,
     }),
   };
 

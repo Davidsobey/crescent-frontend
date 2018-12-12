@@ -25,7 +25,7 @@ import IconButton from '../../../Styles/IconButton';
 import LinearProgress from '../../../Components/LinearProgress';
 import history from '../../../Helpers/History';
 
-const required = value => value ? undefined : 'Required';
+const required = value => (value ? undefined : 'Required');
 
 const header = ['Option', 'Correct Answer', 'Edit/Remove'];
 const styles = {
@@ -52,7 +52,7 @@ const styles = {
 class OptionCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       ticked: false,
       option_editing: false,
     };
@@ -64,7 +64,7 @@ class OptionCreate extends React.Component {
   };
 
   handleEdit = (values) => {
-    this.setState({option_editing: values, ticked: values.isAnswer});
+    this.setState({ option_editing: values, ticked: values.isAnswer });
     this.props.change('optionTitle', values.title);
   };
 
@@ -79,7 +79,7 @@ class OptionCreate extends React.Component {
 
   submit = (values) => {
     if (this.state.option_editing) {
-      let new_option = Object.assign({}, this.state.option_editing, {title: values.optionTitle, isAnswer: this.state.ticked});
+      const new_option = Object.assign({}, this.state.option_editing, { title: values.optionTitle, isAnswer: this.state.ticked });
       this.props.dispatch(OptionActions.update(new_option));
     } else {
       this.props.dispatch(OptionActions.create(
@@ -89,7 +89,7 @@ class OptionCreate extends React.Component {
       ));
     }
     this.props.change('optionTitle', '');
-    this.setState({option_editing : false, ticked: false});
+    this.setState({ option_editing: false, ticked: false });
   };
 
   handleFinish = () => {
@@ -218,7 +218,7 @@ class OptionCreate extends React.Component {
                   <LinearProgress color="secondary" />
                   Creating Option
                 </div>
-              ) :  this.props.option_updating ? (
+              ) : this.props.option_updating ? (
                 <div>
                   <LinearProgress color="secondary" />
                   Updating Option
@@ -227,10 +227,10 @@ class OptionCreate extends React.Component {
                 <div className={classes.createNew}>
                   <Field
                     name="optionTitle"
-                    label="Option Title"
+                    label="Option"
                     margin="normal"
                     component={TextField}
-                    validate={[ required ]}
+                    validate={[required]}
                   />
                   <Checkbox
                     checked={this.state.ticked}

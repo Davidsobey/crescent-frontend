@@ -61,15 +61,6 @@ class CourseEdit extends React.Component {
                   validate={[ required ]}
                 />
               </div>
-              <div>
-                <Field
-                  name="cpdHours"
-                  label="Course CPD Hours"
-                  margin="normal"
-                  component={TextField}
-                  validate={[ required, number ]}
-                />
-              </div>
             </div>
             {this.props.course_editing ? (
               <div style={{width: '400px'}}>

@@ -29,6 +29,7 @@ const accent = {
   700: '#fcd570',
   800: '#fcd166',
   900: '#fcc853',
+  1000: '#4b7cae',
   A100: '#ffffff',
   A200: '#ffffff',
   A400: '#fffcf5',

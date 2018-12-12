@@ -36,7 +36,7 @@ class PolicyAcknowledgementView extends React.Component {
   };
 
   manipulateData = (policyAcknowledgements) => {
-    let getUserNameById = (userId) => {
+    const getUserNameById = (userId) => {
       if (Array.isArray(this.props.users)) {
         const user = this.props.users.filter(user => user.id == userId);
         return user.length > 0 ? user[0].name : '';
@@ -54,7 +54,7 @@ class PolicyAcknowledgementView extends React.Component {
             userName: getUserNameById(policyAcknowledgement.userID),
             policyName: policyAcknowledgement.policyName,
             description: policyAcknowledgement.policyDescription,
-            acknowledged: policyAcknowledgement.acknowledged ? 'Yes':'No',
+            acknowledged: policyAcknowledgement.acknowledged ? 'Yes' : 'No',
           };
           data.push(newPolicyAcknowledgement);
         });
@@ -79,7 +79,7 @@ class PolicyAcknowledgementView extends React.Component {
         accessor: 'description',
       },
       {
-        Header: 'Acknowledgement Status',
+        Header: 'Acknowledged',
         accessor: 'acknowledged',
       },
       {
