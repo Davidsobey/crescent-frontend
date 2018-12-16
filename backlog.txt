@@ -4,7 +4,6 @@ View Policy Material >> still failing
 Export into excel to track enrolments, subscriptions.
 Double Click Create Option On First Time
 Question Option textbox must clear on creation
-Question Create from Question Option >> Populate Course, Module and Assessment
 Assessment Certificate
 Test Marks Calculation
 
@@ -13,8 +12,10 @@ In Progress: Subscription Payment Status Change
 
 Testing: Client must be able to edit their users
 Testing: Email on policy assignment
+Testing: Duplicate Policy Acknowledgement Filtering
 
 Done: Assessment not appearing in userview
 Done: Policy Details User View Not Appearing
 Done: Question options are done, must have options to complete/add another question
 Done: Question Title >> "Option" in question/options/create
+Done: Question Create from Question Option >> Populate Course, Module and Assessment

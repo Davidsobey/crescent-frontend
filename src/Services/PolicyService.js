@@ -69,8 +69,8 @@ function getOutstandingPoliciesForUser(id) {
       CommonConstants.API_ENDPOINT
     }/Policies/Acknowledgements/${id}/Outstanding`,
     requestOptions,
-  )
-  //.then(data => filteredList(data, id));
+  );
+  // .then(data => filteredList(data, id));
 
   return objectList;
 }
@@ -85,15 +85,15 @@ function getOutstandingPoliciesForClient(id) {
       CommonConstants.API_ENDPOINT
     }/Policies/Acknowledgements/Client/${id}`,
     requestOptions,
-  )
-  //.then(data => filteredList(data, id));
+  );
+  // .then(data => filteredList(data, id));
 
   return objectList;
 }
 
 function acknowledgePolicy(userId, policyId) {
   const requestOptions = {
-    method: 'PUT'
+    method: 'PUT',
   };
 
   return Auth.fetch(
