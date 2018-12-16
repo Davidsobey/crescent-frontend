@@ -21,25 +21,8 @@ import CourseActions from '../../Actions/CourseActions';
 import ClientActions from '../../Actions/ClientActions';
 import PolicyActions from '../../Actions/PolicyActions';
 import PaymentActions from '../../Actions/PaymentActions';
-import CustomModal from '../../Components/Modal/index';
 
 class HomeComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { obj: {} };
-  }
-
-  changePaymentStatus = (obj) => {
-    this.setState({ obj });
-    this.child.handleOpen();
-    history.push('/loading');
-  };
-
-  confirmPaymentStatusChange = obj => () => {
-    this.props.dispatch(PaymentActions.changePaymentStatus(obj.clientId, obj.courseId));
-    this.child.handleClose();
-  };
-
   componentDidMount() {
     this.props.dispatch(UserActions.getAll());
     this.props.dispatch(CourseActions.getAll());
@@ -48,6 +31,12 @@ class HomeComponent extends React.Component {
     this.props.dispatch(ClientActions.getSubscriptions());
     this.props.dispatch(PaymentActions.getPaymentStatuses());
   }
+
+  changePaymentStatus = (clientId, courseId) => {
+    console.log(clientId);
+    this.props.dispatch(PaymentActions.changePaymentStatus(clientId, courseId));
+    history.push('/loading');
+  };
 
   loadPolicy = (id, name, description, canAcknowlege) => {
     this.props.dispatch(PolicyActions.getMaterialsForPolicy(id, name, description, canAcknowlege));
@@ -79,7 +68,7 @@ class HomeComponent extends React.Component {
             userName: getUserNameById(enrolInfo.userId),
             courseName: getCourseNameById(enrolInfo.courseId),
             deadline: enrolInfo.deadline.slice(0, 10),
-            status: enrolInfo.completed ? 'Yes' : 'No',
+            status: enrolInfo.completed ? 'Complete' : 'Incomplete',
           };
           data.push(row);
         });
@@ -116,7 +105,6 @@ class HomeComponent extends React.Component {
   };
 
   manipulateSubscriptionData = (subscriptions, paymentStatuses) => {
-    console.log(paymentStatuses);
     const getPaymentStatusById = (paymentStatusId) => {
       if (Array.isArray(paymentStatuses)) {
         const paymentStatus = paymentStatuses.filter(paymentStatus => paymentStatus.id === paymentStatusId);
@@ -130,13 +118,11 @@ class HomeComponent extends React.Component {
         .forEach((subscription) => {
           const newSubscription = {
             clientName: subscription.clientName,
+            clientId: subscription.clientID,
             courseName: subscription.courseName,
+            courseId: subscription.courseID,
             money: `$${subscription.payableAmount}`,
             status: getPaymentStatusById(subscription.paymentStatusID),
-            button: {
-              message: 'Change Payment Status',
-              onClick: () => this.changePaymentStatus(subscription),
-            },
           };
           data.push(newSubscription);
         });
@@ -191,7 +177,7 @@ class HomeComponent extends React.Component {
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id && row.original.acknowledged == 'No')}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId === user.id && row.original.acknowledged === 'No')}
             >
               View Policy Details
             </Button>
@@ -199,6 +185,7 @@ class HomeComponent extends React.Component {
         ),
       },
     ];
+
     const subscriptionColumns = [
       {
         Header: 'Client Name',
@@ -209,12 +196,28 @@ class HomeComponent extends React.Component {
         accessor: 'courseName',
       },
       {
-        Header: 'Payable Amout',
+        Header: 'Payable Amount',
         accessor: 'money',
       },
       {
         Header: 'Payment Status',
         accessor: 'status',
+      },
+      {
+        Header: 'Actions',
+        accessor: 'changeStatus',
+        Filter: <div />,
+        Cell: row => (
+          <div>
+            <Button
+              className="small-font"
+              color="primary"
+              onClick={() => this.changePaymentStatus(row.original.clientId, row.original.courseId)}
+            >
+              Update Payment
+            </Button>
+          </div>
+        ),
       },
     ];
     return (
@@ -274,12 +277,6 @@ class HomeComponent extends React.Component {
           )}
           </Card>
         : '' }
-        <CustomModal
-          obj={this.state && this.state.obj}
-          /* eslint-disable no-return-assign */
-          onRef={ref => (this.child = ref)}
-          onClick={this.confirmDelete(this.state.obj)}
-        />
       </div>
     );
   }

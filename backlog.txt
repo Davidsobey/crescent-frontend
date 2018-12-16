@@ -1,18 +1,11 @@
 Export into excel to track enrolments, subscriptions.
 Double Click Create Option On First Time
-Question Create from Question Option >> Populate Course, Module and Assessment
 Assessment Certificate
 Test Marks Calculation
-Complete Enrolment
 
+In Progress: Complete Enrolment and EnrolmentTests
 In Progress: Missed deadline as red? Or Emailing? 
-In Progress: Currency on Subscription View
-In Progress: User Acknowledged Policies View
 In Progress: User Completed Courses View
-
-Testing: Client must be able to edit their users
-Testing: Email on policy assignment
-Testing: Subscription Payment Status Change
 
 Done: Assessment not appearing in userview
 Done: Policy Details User View Not Appearing
@@ -21,3 +14,9 @@ Done: Question Title >> "Option" in question/options/create
 Done: Hide Course CPD hours for now
 Done: Question Option textbox must clear on creation
 Done: View Policy Material
+Done: User Acknowledged Policies View
+Done: Currency on Subscription View
+Done: Client must be able to edit their users
+Done: Email on policy assignment
+Done: Subscription Payment Status Change
+Done: Question Create from Question Option >> Populate Course, Module and Assessment

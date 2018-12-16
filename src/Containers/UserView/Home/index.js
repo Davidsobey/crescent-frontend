@@ -20,6 +20,7 @@ import PolicyActions from '../../../Actions/PolicyActions';
 
 const courseHeader = ['ID', 'Name', 'Description', 'View Course Details'];
 const policyHeader = ['Name', 'Description', 'View Policy Details'];
+const acknowledgedPolicyHeader = ['Name', 'Description'];
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -84,14 +85,29 @@ class HomeComponent extends React.Component {
     return data;
   };
 
+  manipulateAcknowledgedPolicyData = (policyAcknowledgements) => {
+    const data = [];
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements.forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          name: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
+    console.log(data);
+    return data;
+  };
+
   render() {
     const { user } = this.props;
     const policyAcknowledgements = this.manipulatePolicyData(this.props.policyAcknowledgements);
-    const acknowledgedPolicies = this.manipulatePolicyData(this.props.acknowledgedPolicies);
+    const acknowledgedPolicies = this.manipulateAcknowledgedPolicyData(this.props.acknowledgedPolicies);
     return (
       <div>
-        <Card width="800px" title="Overview">
-          <p style={{ fontSize: '20px', marginBottom: '15px' }}>My courses</p>
+        <Card width="800px" title="My Courses">
+          <p style={{ fontSize: '20px', marginBottom: '15px' }}>Course Overview</p>
           {user ? (
             <Table
               header={courseHeader}
@@ -104,7 +120,7 @@ class HomeComponent extends React.Component {
           )}
         </Card>
         <div style={{ height: '30px' }} />
-        <Card width="800px" title="My policies">
+        <Card width="800px" title="Policies To Be Acknowledged">
           {this.props.policyAcknowledgements_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
@@ -124,7 +140,7 @@ class HomeComponent extends React.Component {
             </div>
           ) : (
             <Table
-              header={policyHeader}
+              header={acknowledgedPolicyHeader}
               data={acknowledgedPolicies}
             />
           )}
