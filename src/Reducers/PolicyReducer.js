@@ -54,18 +54,19 @@ function PolicyReducer(state = {}, action) {
         loading: false,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_REQUEST:
-      return {
-        loading: true,
-      };
+      return Object.assign({}, state, {
+        policyAcknowledgements: [],
+        policyAcknowledgements_loading: true,
+      });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_SUCCESS:
       return Object.assign({}, state, {
         policyAcknowledgements: action.policies,
-        loading: false,
+        policyAcknowledgements_loading: false,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORUSER_FAILURE:
       return {
-        policyAcknowledgements: {},
-        loading: false,
+        policyAcknowledgements: [],
+        policyAcknowledgements_loading: false,
       };
     case PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_REQUEST:
       return {
@@ -84,17 +85,17 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST:
       return Object.assign({}, state, {
         policyAcknowledgements: [],
-        loading: true,
+        policyAcknowledgements_loading: true,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_SUCCESS:
       return Object.assign({}, state, {
         policyAcknowledgements: action.policies,
-        loading: false,
+        policyAcknowledgements_loading: false,
       });
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_FAILURE:
       return Object.assign({}, state, {
         policyAcknowledgements: [],
-        loading: false,
+        policyAcknowledgements_loading: false,
       });
     case PolicyConstants.ACKNOWLEDGE_REQUEST:
       return Object.assign({}, state, {
@@ -187,6 +188,7 @@ function PolicyReducer(state = {}, action) {
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_SUCCESS:
       return Object.assign({}, state, {
         creatingAcknowledgement: false,
+        policyAcknowledgements: [...state.policyAcknowledgements, action.acknowledgement],
       });
     case PolicyConstants.CREATE_ACKNOWLEDGEMENT_FAILURE:
       return Object.assign({}, state, {

@@ -62,6 +62,7 @@ import TestEdit from '../Containers/Test/TestEdit/index';
 import Options from '../Containers/Option/OptionCreate/index';
 import UsersPolicyView from '../Containers/UserView/Policies/index';
 import UserPolicyDetail from '../Containers/UserView/Policies/PolicyDetail';
+import UserPolicyMaterialView from '../Containers/UserView/Policies/PolicyMaterialView';
 
 class AppRouters extends React.Component {
   constructor(props) {
@@ -328,6 +329,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.USERS_VIEW_POLICY}
                   component={withAuth(UserPolicyDetail, ['Admin', 'Regular', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.USERS_VIEW_POLICY_MATERIAL}
+                  component={withAuth(UserPolicyMaterialView, ['Admin', 'Regular', 'Client'])}
                   exact
                 />
               </Switch>

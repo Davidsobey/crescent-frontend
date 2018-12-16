@@ -49,6 +49,7 @@ class UsersPolicyDetails extends React.Component {
 
   loadMaterial(material) {
     this.props.dispatch(PolicyActions.loadMaterial(material));
+    history.push('/policies/material/view');
     // window.open(material);
   }
 

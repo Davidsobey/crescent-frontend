@@ -294,7 +294,7 @@ const mapStateToProps = state => ({
   userEnrolments: state.ClientReducer.userEnrolments,
   userEnrolments_loading: state.ClientReducer.loading,
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
-  policyAcknowledgements_loading: state.PolicyReducer.loading,
+  policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
   subscriptions: state.ClientReducer.subscriptions,
   subscriptions_loading: state.ClientReducer.subscriptions_loading,
   paymentStatuses: state.PaymentReducer.paymentStatuses,

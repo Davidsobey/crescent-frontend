@@ -139,7 +139,7 @@ const mapStateToProps = state => ({
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
   acknowledgedPolicies: state.PolicyReducer.acknowledgedPolicies,
   acknowledgedPolicies_loading: state.PolicyReducer.acknowledgedPolicies_loading,
-  policyAcknowledgements_loading: state.PolicyReducer.loading,
+  policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
 });
 
 const withForm = reduxForm(

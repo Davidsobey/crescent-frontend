@@ -24,6 +24,7 @@ import { StyledDelete } from '../../../Styles/Delete';
 import IconButton from '../../../Styles/IconButton';
 import LinearProgress from '../../../Components/LinearProgress';
 import history from '../../../Helpers/History';
+import OptionsModal from '../../../Components/OptionsModal';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -49,12 +50,19 @@ const styles = {
     marginTop: 30,
   },
 };
+
+const selection = [
+  { label: 'Create another question', url: '/question/create' },
+  { label: 'View questions list', url: '/question/list' },
+];
+
 class OptionCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       ticked: false,
       option_editing: false,
+      openRedirectModal: false,
     };
     this.submit = this.submit.bind(this);
   }
@@ -93,9 +101,12 @@ class OptionCreate extends React.Component {
   };
 
   handleFinish = () => {
-    history.push('/question/create');
-    console.log(this.props.question);
+    this.setState({openRedirectModal : true});
   };
+
+  onContinue = (index) => {
+    history.push(selection[index].url);
+  }
 
   render() {
     const { classes } = this.props;
@@ -270,6 +281,12 @@ class OptionCreate extends React.Component {
                   </div>
                 </div>
               )}
+              <OptionsModal
+                title="Finish creating options."
+                open={this.state.openRedirectModal ? this.state.openRedirectModal:false}
+                onClick={this.onContinue.bind(this)}
+                options={selection}
+              />
             </form>
           </div>
         )}
@@ -282,6 +299,7 @@ OptionCreate.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   question: PropTypes.object,
+  questionCreated: PropTypes.bool,
   options: PropTypes.array,
   options_loading: PropTypes.bool,
   option_creating: PropTypes.bool,
@@ -291,6 +309,7 @@ OptionCreate.propTypes = {
 
 const mapStateToProps = state => ({
   question: state.QuestionReducer.question,
+  questionCreated: state.QuestionReducer.questionCreated,
   options: Array.isArray(state.QuestionReducer.options)
     ? state.QuestionReducer.options
     : state.QuestionReducer.options &&

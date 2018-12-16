@@ -46,7 +46,7 @@ function createAcknowledgement(acknowledgement) {
     dispatch(request({ acknowledgement }));
     PolicyService.createAcknowledgement(acknowledgement).then(
       () => {
-        dispatch(success(acknowledgement));
+        dispatch(success());
         // history.push(`/policy/${acknowledgement.policyID}/acknowledgement/list`);
         dispatch(AlertActions.success('Acknowledgement created'));
       },

@@ -125,7 +125,7 @@ class PolicyAcknowledgementView extends React.Component {
 
 const mapStateToProps = state => ({
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
-  policyAcknowledgements_loading: state.PolicyReducer.loading,
+  policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
   user: state.LoginReducer.user,
   users: state.UserReducer.users,
   users_loading: state.UserReducer.loading,
