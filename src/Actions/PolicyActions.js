@@ -118,6 +118,39 @@ function getOutstandingPoliciesForUser(userId) {
   };
 }
 
+function getAcknowledgedPoliciesForUser(userId) {
+  function request() {
+    return {
+      type: PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_REQUEST,
+      userId,
+    };
+  }
+  function success(policies) {
+    return {
+      type: PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_SUCCESS,
+      policies,
+    };
+  }
+  function failure(error) {
+    return {
+      type: PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_FAILURE,
+      error,
+    };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ userId }));
+
+    PolicyService.getAcknowledgedPoliciesForUser(userId).then(
+      policies => dispatch(success(policies)),
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 function getOutstandingPoliciesForClient(clientId) {
   function request() {
     return {
@@ -446,6 +479,7 @@ const PolicyActions = {
   deletePolicy,
   getOutstandingPoliciesForUser,
   getOutstandingPoliciesForClient,
+  getAcknowledgedPoliciesForUser,
   loadPolicy,
   uploadMaterial,
   getMaterial,

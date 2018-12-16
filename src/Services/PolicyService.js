@@ -69,8 +69,24 @@ function getOutstandingPoliciesForUser(id) {
       CommonConstants.API_ENDPOINT
     }/Policies/Acknowledgements/${id}/Outstanding`,
     requestOptions,
-  )
-  //.then(data => filteredList(data, id));
+  );
+  // .then(data => filteredList(data, id));
+
+  return objectList;
+}
+
+function getAcknowledgedPoliciesForUser(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+
+  const objectList = Auth.fetch(
+    `${
+      CommonConstants.API_ENDPOINT
+    }/Policies/Acknowledgements/${id}/Acknowledged`,
+    requestOptions,
+  );
+  // .then(data => filteredList(data, id));
 
   return objectList;
 }
@@ -215,6 +231,7 @@ const PolicyServices = {
   getAcknowledgementsForPolicy,
   getClientPolicies,
   getOutstandingPoliciesForUser,
+  getAcknowledgedPoliciesForUser,
   getOutstandingPoliciesForClient,
   acknowledgePolicy,
   createAcknowledgement,

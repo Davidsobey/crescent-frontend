@@ -67,6 +67,20 @@ function PolicyReducer(state = {}, action) {
         policyAcknowledgements: {},
         loading: false,
       };
+    case PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_REQUEST:
+      return {
+        acknowledgedPolicies_loading: true,
+      };
+    case PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_SUCCESS:
+      return Object.assign({}, state, {
+        acknowledgedPolicies: action.policies,
+        acknowledgedPolicies_loading: false,
+      });
+    case PolicyConstants.GETACKNOWLEDGEDPOLICIESFORUSER_FAILURE:
+      return {
+        acknowledgedPolicies: {},
+        acknowledgedPolicies_loading: false,
+      };
     case PolicyConstants.GETOUTSTANDINGPOLICIESFORCLIENT_REQUEST:
       return Object.assign({}, state, {
         policyAcknowledgements: [],

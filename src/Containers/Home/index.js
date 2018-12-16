@@ -11,7 +11,6 @@ import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import Tooltip from 'material-ui/Tooltip';
 import { CircularProgress } from 'material-ui/Progress';
 
 import history from '../../Helpers/History';
@@ -22,15 +21,24 @@ import CourseActions from '../../Actions/CourseActions';
 import ClientActions from '../../Actions/ClientActions';
 import PolicyActions from '../../Actions/PolicyActions';
 import PaymentActions from '../../Actions/PaymentActions';
-import IconButton from '../../Styles/IconButton';
-import { StyledDelete } from '../../Styles/Delete';
-import { StyledEdit } from '../../Styles/Edit';
+import CustomModal from '../../Components/Modal/index';
 
 class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { obj: {} };
   }
+
+  changePaymentStatus = (obj) => {
+    this.setState({ obj });
+    this.child.handleOpen();
+    history.push('/loading');
+  };
+
+  confirmPaymentStatusChange = obj => () => {
+    this.props.dispatch(PaymentActions.changePaymentStatus(obj.clientId, obj.courseId));
+    this.child.handleClose();
+  };
 
   componentDidMount() {
     this.props.dispatch(UserActions.getAll());
@@ -47,16 +55,16 @@ class HomeComponent extends React.Component {
   };
 
   manipulateEnrolData = (userEnrolments) => {
-    var getUserNameById = userId => {
+    const getUserNameById = (userId) => {
       if (Array.isArray(this.props.users)) {
-        let user = this.props.users.filter(user => user.id == userId);
+        const user = this.props.users.filter(user => user.id === userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
     };
-    var getCourseNameById = courseId => {
+    const getCourseNameById = (courseId) => {
       if (Array.isArray(this.props.courses)) {
-        let course = this.props.courses.filter(course => course.id == courseId);
+        const course = this.props.courses.filter(course => course.id === courseId);
         return course.length > 0 ? course[0].name : '';
       }
       return '';
@@ -65,24 +73,24 @@ class HomeComponent extends React.Component {
     const data = [];
     if (Array.isArray(userEnrolments)) {
       userEnrolments
-      .filter( enrolInfo => getCourseNameById(enrolInfo.courseId))
-      .forEach((enrolInfo) => {
-        const row = {
-          userName: getUserNameById(enrolInfo.userId),
-          courseName: getCourseNameById(enrolInfo.courseId),
-          deadline: enrolInfo.deadline.slice(0,10),
-          status: enrolInfo.completed ? 'Yes' : 'No',
-        };
-        data.push(row);
-      });
+        .filter(enrolInfo => getCourseNameById(enrolInfo.courseId))
+        .forEach((enrolInfo) => {
+          const row = {
+            userName: getUserNameById(enrolInfo.userId),
+            courseName: getCourseNameById(enrolInfo.courseId),
+            deadline: enrolInfo.deadline.slice(0, 10),
+            status: enrolInfo.completed ? 'Yes' : 'No',
+          };
+          data.push(row);
+        });
     }
     return data;
   };
 
   manipulateAcknowledgementData = (policyAcknowledgements, users) => {
-    var getUserNameById = userId => {
+    const getUserNameById = (userId) => {
       if (Array.isArray(users)) {
-        let user = users.filter(user => user.id == userId);
+        const user = users.filter(user => user.id === userId);
         return user.length > 0 ? user[0].name : '';
       }
       return '';
@@ -90,18 +98,18 @@ class HomeComponent extends React.Component {
     const data = [];
     if (Array.isArray(policyAcknowledgements)) {
       policyAcknowledgements
-      .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
-      .forEach((policyAcknowledgement) => {
-        const newPolicyAcknowledgement = {
-          policyId: policyAcknowledgement.policyID,
-          userId: policyAcknowledgement.userID,
-          userName: getUserNameById(policyAcknowledgement.userID),
-          policyName: policyAcknowledgement.policyName,
-          description: policyAcknowledgement.policyDescription,
-          acknowledged: policyAcknowledgement.acknowledged?'Yes':'No',
-        };
-        data.push(newPolicyAcknowledgement);
-      });
+        .filter(policyAcknowledgement => policyAcknowledgement.policyMaterialLink)
+        .forEach((policyAcknowledgement) => {
+          const newPolicyAcknowledgement = {
+            policyId: policyAcknowledgement.policyID,
+            userId: policyAcknowledgement.userID,
+            userName: getUserNameById(policyAcknowledgement.userID),
+            policyName: policyAcknowledgement.policyName,
+            description: policyAcknowledgement.policyDescription,
+            acknowledged: policyAcknowledgement.acknowledged ? 'Yes' : 'No',
+          };
+          data.push(newPolicyAcknowledgement);
+        });
     }
     console.log(data);
     return data;
@@ -109,9 +117,9 @@ class HomeComponent extends React.Component {
 
   manipulateSubscriptionData = (subscriptions, paymentStatuses) => {
     console.log(paymentStatuses);
-    var getPaymentStatusById = paymentStatusId => {
+    const getPaymentStatusById = (paymentStatusId) => {
       if (Array.isArray(paymentStatuses)) {
-        let paymentStatus = paymentStatuses.filter(paymentStatus => paymentStatus.id == paymentStatusId);
+        const paymentStatus = paymentStatuses.filter(paymentStatus => paymentStatus.id === paymentStatusId);
         return paymentStatus.length > 0 ? paymentStatus[0].name : '';
       }
       return '';
@@ -119,15 +127,19 @@ class HomeComponent extends React.Component {
     const data = [];
     if (Array.isArray(subscriptions)) {
       subscriptions
-      .forEach((subscription) => {
-        const newSubscription = {
-          clientName: subscription.clientName,
-          courseName: subscription.courseName,
-          money: subscription.payableAmount,
-          status: getPaymentStatusById(subscription.paymentStatusID),
-        };
-        data.push(newSubscription);
-      });
+        .forEach((subscription) => {
+          const newSubscription = {
+            clientName: subscription.clientName,
+            courseName: subscription.courseName,
+            money: `$${subscription.payableAmount}`,
+            status: getPaymentStatusById(subscription.paymentStatusID),
+            button: {
+              message: 'Change Payment Status',
+              onClick: () => this.changePaymentStatus(subscription),
+            },
+          };
+          data.push(newSubscription);
+        });
     }
     console.log(data);
     return data;
@@ -170,7 +182,7 @@ class HomeComponent extends React.Component {
         Header: 'Acknowledged',
         accessor: 'acknowledged',
       },
-      { 
+      {
         Header: 'View Policy Details',
         accessor: 'view/acknowledge',
         Filter: <div />,
@@ -179,7 +191,7 @@ class HomeComponent extends React.Component {
             <Button
               className="small-font"
               color="primary"
-              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id&&row.original.acknowledged=='No')}
+              onClick={() => this.loadPolicy(row.original.policyId, row.original.policyName, row.original.description, row.original.userId == user.id && row.original.acknowledged == 'No')}
             >
               View Policy Details
             </Button>
@@ -224,7 +236,7 @@ class HomeComponent extends React.Component {
             </div>
           )}
         </Card>
-        <div style={{height:'30px'}}></div>
+        <div style={{ height: '30px' }} />
         <Card width="800px" title="Policy Acknowledgement List">
           {this.props.policyAcknowledgements_loading || this.props.users_loading ? (
             <div className="center">
@@ -242,13 +254,13 @@ class HomeComponent extends React.Component {
             </div>
           )}
         </Card>
-        <div style={{height:'30px'}}></div>
-        {user.role.name=='Admin' ? 
-        <Card width="800px" title="Client Subscriptions" style={{marginTop:'30px'}}>
-          {this.props.subscriptions_loading || this.props.paymentStatuses_loading ? (
-            <div className="center">
-              <CircularProgress color="secondary" />
-            </div>
+        <div style={{ height: '30px' }} />
+        {user.role.name === 'Admin' ?
+          <Card width="800px" title="Subscriptions" style={{ marginTop: '30px' }}>
+            {this.props.subscriptions_loading || this.props.paymentStatuses_loading ? (
+              <div className="center">
+                <CircularProgress color="secondary" />
+              </div>
           ) : (
             <div>
               <ReactTable
@@ -260,8 +272,14 @@ class HomeComponent extends React.Component {
               />
             </div>
           )}
-        </Card>
+          </Card>
         : '' }
+        <CustomModal
+          obj={this.state && this.state.obj}
+          /* eslint-disable no-return-assign */
+          onRef={ref => (this.child = ref)}
+          onClick={this.confirmDelete(this.state.obj)}
+        />
       </div>
     );
   }

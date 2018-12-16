@@ -32,6 +32,7 @@ class HomeComponent extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser(this.props.user.id));
+    this.props.dispatch(PolicyActions.getAcknowledgedPoliciesForUser(this.props.user.id));
   }
 
   loadCourse(id) {
@@ -86,6 +87,7 @@ class HomeComponent extends React.Component {
   render() {
     const { user } = this.props;
     const policyAcknowledgements = this.manipulatePolicyData(this.props.policyAcknowledgements);
+    const acknowledgedPolicies = this.manipulatePolicyData(this.props.acknowledgedPolicies);
     return (
       <div>
         <Card width="800px" title="Overview">
@@ -114,6 +116,19 @@ class HomeComponent extends React.Component {
             />
           )}
         </Card>
+        <div style={{ height: '30px' }} />
+        <Card width="800px" title="Acknowledged Policies">
+          {this.props.acknowledgedPolicies_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <Table
+              header={policyHeader}
+              data={acknowledgedPolicies}
+            />
+          )}
+        </Card>
       </div>
     );
   }
@@ -122,6 +137,8 @@ class HomeComponent extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
+  acknowledgedPolicies: state.PolicyReducer.acknowledgedPolicies,
+  acknowledgedPolicies_loading: state.PolicyReducer.acknowledgedPolicies_loading,
   policyAcknowledgements_loading: state.PolicyReducer.loading,
 });
 
@@ -137,6 +154,8 @@ HomeComponent.propTypes = {
   user: PropTypes.object,
   policyAcknowledgements: PropTypes.array,
   policyAcknowledgements_loading: PropTypes.bool,
+  acknowledgedPolicies_loading: PropTypes.bool,
+  acknowledgedPolicies: PropTypes.array,
 };
 
 export default compose(connect(mapStateToProps), withForm)(HomeComponent);
