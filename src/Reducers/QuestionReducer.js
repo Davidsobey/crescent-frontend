@@ -37,6 +37,9 @@ function QuestionReducer(state = {}, action) {
         question: action.questionResponse,
         questionCreated: true,
         creating: false,
+        options: [],
+        questionCreated: false,
+        options_loading: false,
       });
     case QuestionConstants.CREATE_FAILURE:
       return Object.assign({}, state, {
