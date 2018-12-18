@@ -57,7 +57,7 @@ class UsersPolicyView extends React.Component {
     // eslint-disable-next-line no-unused-vars
     const { user, policyAcknowledgements } = this.props;
     return (
-      <Card width="800px" title="My Policy List">
+      <Card width="800px" title="Policies Assigned To Me">
         {this.props.policyAcknowledgements_loading ? (
           <div className="center">
             <CircularProgress color="secondary" />

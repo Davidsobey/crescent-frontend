@@ -45,7 +45,6 @@ class AcknowledgementModal extends React.Component {
       justifyContent: 'center',
       alignItems: 'center',
     };
-    const { obj } = this.props;
     return (
       <Modal
         // eslint-disable-next-line jsx-a11y/aria-props
@@ -83,7 +82,6 @@ class AcknowledgementModal extends React.Component {
 }
 
 AcknowledgementModal.propTypes = {
-  obj: PropTypes.object,
   onRef: PropTypes.func,
   onClick: PropTypes.func,
 };

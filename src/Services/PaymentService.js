@@ -25,9 +25,17 @@ function getById(id) {
   );
 }
 
+function changePaymentStatus(clientId, courseId) {
+  const requestOptions = {
+    method: 'PUT',
+  };
+  return Auth.fetch(`${CommonConstants.API_ENDPOINT}/PaymentStatuses/${clientId}/${courseId}`, requestOptions);
+}
+
 const PaymentServices = {
   getAll,
   getById,
+  changePaymentStatus,
 };
 
 export default PaymentServices;

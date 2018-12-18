@@ -20,6 +20,7 @@ import PolicyActions from '../../../Actions/PolicyActions';
 
 const courseHeader = ['ID', 'Name', 'Description', 'View Course Details'];
 const policyHeader = ['Name', 'Description', 'View Policy Details'];
+const acknowledgedPolicyHeader = ['Name', 'Description'];
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class HomeComponent extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(PolicyActions.getOutstandingPoliciesForUser(this.props.user.id));
+    this.props.dispatch(PolicyActions.getAcknowledgedPoliciesForUser(this.props.user.id));
   }
 
   loadCourse(id) {
@@ -83,13 +85,29 @@ class HomeComponent extends React.Component {
     return data;
   };
 
+  manipulateAcknowledgedPolicyData = (policyAcknowledgements) => {
+    const data = [];
+    if (Array.isArray(policyAcknowledgements)) {
+      policyAcknowledgements.forEach((policyAcknowledgement) => {
+        const newPolicyAcknowledgement = {
+          name: policyAcknowledgement.policyName,
+          description: policyAcknowledgement.policyDescription,
+        };
+        data.push(newPolicyAcknowledgement);
+      });
+    }
+    console.log(data);
+    return data;
+  };
+
   render() {
     const { user } = this.props;
     const policyAcknowledgements = this.manipulatePolicyData(this.props.policyAcknowledgements);
+    const acknowledgedPolicies = this.manipulateAcknowledgedPolicyData(this.props.acknowledgedPolicies);
     return (
       <div>
-        <Card width="800px" title="Overview">
-          <p style={{ fontSize: '20px', marginBottom: '15px' }}>My courses</p>
+        <Card width="800px" title="My Courses">
+          <p style={{ fontSize: '20px', marginBottom: '15px' }}>Course Overview</p>
           {user ? (
             <Table
               header={courseHeader}
@@ -102,7 +120,7 @@ class HomeComponent extends React.Component {
           )}
         </Card>
         <div style={{ height: '30px' }} />
-        <Card width="800px" title="My policies">
+        <Card width="800px" title="Policies To Be Acknowledged">
           {this.props.policyAcknowledgements_loading ? (
             <div className="center">
               <CircularProgress color="secondary" />
@@ -114,6 +132,19 @@ class HomeComponent extends React.Component {
             />
           )}
         </Card>
+        <div style={{ height: '30px' }} />
+        <Card width="800px" title="Acknowledged Policies">
+          {this.props.acknowledgedPolicies_loading ? (
+            <div className="center">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <Table
+              header={acknowledgedPolicyHeader}
+              data={acknowledgedPolicies}
+            />
+          )}
+        </Card>
       </div>
     );
   }
@@ -122,6 +153,8 @@ class HomeComponent extends React.Component {
 const mapStateToProps = state => ({
   user: state.LoginReducer.user,
   policyAcknowledgements: state.PolicyReducer.policyAcknowledgements,
+  acknowledgedPolicies: state.PolicyReducer.acknowledgedPolicies,
+  acknowledgedPolicies_loading: state.PolicyReducer.acknowledgedPolicies_loading,
   policyAcknowledgements_loading: state.PolicyReducer.policyAcknowledgements_loading,
 });
 
@@ -137,6 +170,8 @@ HomeComponent.propTypes = {
   user: PropTypes.object,
   policyAcknowledgements: PropTypes.array,
   policyAcknowledgements_loading: PropTypes.bool,
+  acknowledgedPolicies_loading: PropTypes.bool,
+  acknowledgedPolicies: PropTypes.array,
 };
 
 export default compose(connect(mapStateToProps), withForm)(HomeComponent);
