@@ -65,7 +65,9 @@ function TestReducer(state = {}, action) {
         loading: true,
       };
     case TestConstants.LOAD_TEST_QUESTIONS_SUCCESS: {
-      const ques = action.questions.sort((a, b) => a.id - b.id);
+      const ques = action.questions
+        .filter(q => q.question.questionOptions.length > 0)
+        .sort((a, b) => a.id - b.id);
       return { ...state, questions: ques };
     }
     case TestConstants.LOAD_TEST_QUESTIONS_FAILURE:
@@ -80,12 +82,14 @@ function TestReducer(state = {}, action) {
         loading: true,
       };
     case TestConstants.MARK_TEST_QUESTION_SUCCESS: {
-      const newData = state.questions.map((ques) => {
-        if (ques.questionId === action.payload.id) {
-          return { ...ques, answerGivenId: action.payload.answerId };
-        }
-        return ques;
-      });
+      const newData = state.questions
+        .filter(q => q.question.questionOptions.length > 0)
+        .map((ques) => {
+          if (ques.id === action.payload.id) {
+            return { ...ques, answerGivenId: action.payload.answerId };
+          }
+          return ques;
+        });
       return { ...state, response: 'Question Marked', questions: newData };
     }
     case TestConstants.MARK_TEST_QUESTION_FAILURE:

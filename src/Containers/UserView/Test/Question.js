@@ -138,7 +138,10 @@ class UserTestQuestion extends React.Component {
                 <Button
                   size="small"
                   onClick={() => {
-                    this.handleNext(question, question.answerGivenId);
+                    if (this.findIndex(question.questionId) !== questions.length - 1)
+                      this.handleNext(question, question.answerGivenId);
+                    else
+                      this.handleRedirect(question, question.answerGivenId);
                   }}
                 >
                   {questions &&
