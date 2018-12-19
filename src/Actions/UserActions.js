@@ -139,6 +139,31 @@ function enrol(enrolment) {
   };
 }
 
+function enrolAll(userId) {
+  function request() {
+    return { type: UserConstants.ENROL_ALL_REQUEST };
+  }
+  function success(user) {
+    return { type: UserConstants.ENROL_ALL_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: UserConstants.ENROL_ALL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    UserService.enrolAll(userId).then(
+      (user) => {
+        dispatch(success(user));
+      },
+      (error) => {
+        dispatch(failure(error));
+      },
+    );
+  };
+}
+
 function loadUser(id) {
   function request() {
     return { type: UserConstants.GETUSER_REQUEST, id };
@@ -239,6 +264,7 @@ const UserActions = {
   deleteUser,
   loadUser,
   enrol,
+  enrolAll,
   getAllRoles,
   editUser,
   changePassword,

@@ -62,6 +62,34 @@ function subscribe(subscription) {
   };
 }
 
+function subscribeAll(clientId) {
+  function request() {
+    return { type: ClientConstants.SUBSCRIBE_ALL_REQUEST };
+  }
+  function success(client) {
+    return { type: ClientConstants.SUBSCRIBE_ALL_SUCCESS, client };
+  }
+  function failure(error) {
+    return { type: ClientConstants.SUBSCRIBE_ALL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ clientId }));
+    ClientService.subscribeAll(clientId).then(
+      (client) => {
+        history.push('/user/enrol');
+        dispatch(success(client));
+        dispatch(AlertActions.success('Subscribed to all courses.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
+
 function subscribeSilent(subscription) {
   function request() {
     return { type: ClientConstants.SUBSCRIBE_REQUEST, subscription };

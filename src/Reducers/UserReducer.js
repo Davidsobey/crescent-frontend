@@ -69,6 +69,21 @@ function UserReducer(state = {}, action) {
         enrolment: undefined,
         enrolling: false,
       });
+    case UserConstants.ENROL_ALL_REQUEST:
+      return Object.assign({}, state, {
+        userId: action.userId,
+        enrolling: true,
+      });
+    case UserConstants.ENROL_ALL_SUCCESS:
+      return Object.assign({}, state, {
+        user: action.user,
+        enrolling: false,
+      });
+    case UserConstants.ENROL_ALL_FAILURE:
+      return Object.assign({}, state, {
+        user: undefined,
+        enrolling: false,
+      });
     case UserConstants.GETUSER_REQUEST:
       return {
         user_loading: true,

@@ -84,6 +84,16 @@ function deleteUser(id) {
   );
 }
 
+function enrolAll(userId) {
+  const requestOptions = {
+    method: 'POST',
+  };
+  return Auth.fetch(
+    `${CommonConstants.API_ENDPOINT}/Users/${userId}/Enrolment/All`,
+    requestOptions,
+  );
+}
+
 function editUser(values) {
   const requestOptions = {
     method: 'PUT',
@@ -127,6 +137,7 @@ const UserService = {
   update,
   deleteUser,
   enrol,
+  enrolAll,
   logout,
   getAllRoles,
   editUser,

@@ -41,6 +41,14 @@ function subscribe(subscription) {
   );
 }
 
+function subscribeAll(clientId) {
+  const requestOptions = {
+    method: 'POST',
+  };
+
+  return Auth.fetch(`${api}/Clients/${clientId}/Subscription/All`, requestOptions);
+}
+
 function deleteClient(id) {
   const requestOptions = {
     method: 'PUT',
@@ -102,6 +110,7 @@ const ClientService = {
   getAll,
   getById,
   subscribe,
+  subscribeAll,
   deleteClient,
   getClient,
   editClient,
