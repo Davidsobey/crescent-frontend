@@ -84,12 +84,15 @@ function deleteUser(id) {
   );
 }
 
-function enrolAll(userId) {
+function enrolAll(userDate) {
   const requestOptions = {
     method: 'POST',
+    body: JSON.stringify({
+      deadline: userDate.deadline,
+    }),
   };
   return Auth.fetch(
-    `${CommonConstants.API_ENDPOINT}/Users/${userId}/Enrolment/All`,
+    `${CommonConstants.API_ENDPOINT}/Users/${userDate.userId}/Enrolment/All`,
     requestOptions,
   );
 }

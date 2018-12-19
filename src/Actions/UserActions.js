@@ -139,7 +139,7 @@ function enrol(enrolment) {
   };
 }
 
-function enrolAll(userId) {
+function enrolAll(userDate) {
   function request() {
     return { type: UserConstants.ENROL_ALL_REQUEST };
   }
@@ -153,7 +153,7 @@ function enrolAll(userId) {
   return (dispatch) => {
     dispatch(request());
 
-    UserService.enrolAll(userId).then(
+    UserService.enrolAll(userDate).then(
       (user) => {
         dispatch(success(user));
       },

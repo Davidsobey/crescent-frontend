@@ -303,6 +303,7 @@ const clientActions = {
   getById,
   subscribe,
   subscribeSilent,
+  subscribeAll,
   deleteClient,
   loadClient,
   editClient,

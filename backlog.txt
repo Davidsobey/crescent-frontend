@@ -1,8 +1,9 @@
-Export into excel to track enrolments, subscriptions.
+Export into excel to track completed/incomplete enrolments, subscriptions.
 Double Click Create Option On First Time
 Assessment Certificate
 Test Marks Calculation
 Blue Colour on Card Headings
+Previous/Next Buttons in User View to be green
 
 In Progress: Complete Enrolment and EnrolmentTests
 In Progress: Missed deadline as red? Or Emailing? 

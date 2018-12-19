@@ -22,11 +22,13 @@ const USER_CREATE = '/user/create';
 const USER_VIEW = '/user/list';
 const USER_EDIT = '/user/edit';
 const USER_ENROL = '/user/enrol';
+const USER_ENROL_ALL = '/user/enrol/all';
 const USER_ENROL_VIEW = '/user/enrol/list';
 const CLIENT_CREATE = '/client/create';
 const CLIENT_VIEW = '/client/list';
 const CLIENT_EDIT = '/client/edit';
 const CLIENT_SUBSCRIBE = '/client/subscription/create';
+const CLIENT_SUBSCRIBE_ALL = '/client/subscription/create/all';
 const CLIENT_SUBSCRIPTION_VIEW = '/client/subscription/list';
 const POLICY_CREATE = '/policy/create';
 const POLICY_VIEW = '/policy/list';
@@ -75,11 +77,13 @@ export default {
   USER_VIEW,
   USER_EDIT,
   USER_ENROL,
+  USER_ENROL_ALL,
   USER_ENROL_VIEW,
   CLIENT_CREATE,
   CLIENT_EDIT,
   CLIENT_VIEW,
   CLIENT_SUBSCRIBE,
+  CLIENT_SUBSCRIBE_ALL,
   CLIENT_SUBSCRIPTION_VIEW,
   POLICY_CREATE,
   POLICY_VIEW,
