@@ -10,6 +10,13 @@ import TestActions from '../../../Actions/TestActions';
 import history from '../../../Helpers/History';
 
 class UserTest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showError : false,
+    };
+  }
+
   /* componentDidMount() {
     this.props.dispatch(TestActions.loadTestQuestions(this.props.user.id, this.props.test.id));
   } */
@@ -33,8 +40,13 @@ class UserTest extends React.Component {
   }
 
   submitTest(testId, courseId, userId) {
-    this.props.dispatch(TestActions.submitTest(testId, courseId, userId));
-    history.push('/home');
+    let notAnswered = this.props.questions.filter(q => !q.answerGivenId).length;
+    if (notAnswered)
+      this.setState({showError: true});
+    else {
+      this.props.dispatch(TestActions.submitTest(testId, courseId, userId));
+      history.push('/home');
+    }
   }
 
   render() {
@@ -70,6 +82,9 @@ class UserTest extends React.Component {
               <br />
               <Divider />
               <br />
+              <div style={{ color: '#f00' }}>
+                {this.state.showError ? "In order to complete test, you have to answer all questions" : ""}
+              </div>
               <div className="alignRight">
                 <Button
                   color="secondary"
