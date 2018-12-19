@@ -8,8 +8,8 @@ function create(client, clientRoleId) {
   function request() {
     return { type: ClientConstants.CREATE_REQUEST, client };
   }
-  function success(client) {
-    return { type: ClientConstants.CREATE_SUCCESS, client, clientRoleId };
+  function success(c) {
+    return { type: ClientConstants.CREATE_SUCCESS, c, clientRoleId };
   }
   function failure(error) {
     return { type: ClientConstants.CREATE_FAILURE, error };
@@ -18,8 +18,8 @@ function create(client, clientRoleId) {
   return (dispatch) => {
     dispatch(request({ client }));
     ClientService.create(client).then(
-      (client) => {
-        dispatch(success(client));
+      (c) => {
+        dispatch(success(c));
         history.push('/user/create');
         dispatch(AlertActions.success('Client created.'));
       },
@@ -41,7 +41,7 @@ function subscribe(subscription) {
   function failure(error) {
     return { type: ClientConstants.SUBSCRIBE_FAILURE, error };
   }
-  function course_success(newCourseId) {
+  function courseSuccess(newCourseId) {
     return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
 
@@ -77,9 +77,9 @@ function subscribeAll(clientId) {
     dispatch(request({ clientId }));
     ClientService.subscribeAll(clientId).then(
       (client) => {
-        history.push('/user/enrol');
         dispatch(success(client));
         dispatch(AlertActions.success('Subscribed to all courses.'));
+        history.push('/user/enrol');
       },
       (error) => {
         dispatch(failure(error));

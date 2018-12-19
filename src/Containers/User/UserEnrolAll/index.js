@@ -19,7 +19,6 @@ const validate = () => {
   return errors;
 };
 const required = value => (value ? undefined : 'Required');
-const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 class EnrolAllCreate extends React.Component {
   constructor(props) {
@@ -27,15 +26,13 @@ class EnrolAllCreate extends React.Component {
     this.props.dispatch(UserActions.getAll());
     this.state = {
       value: this.props.value,
-      data: '',
-      userId: undefined,
     };
   }
 
   submit = (values) => {
     if (this.state.selectedDate ? (new Date(this.state.selectedDate)) < (new Date()) : true) { return; }
-    const userDate = Object.assign({}, values);
-    this.props.dispatch(UserActions.enrolAll(userDate));
+    const user = Object.assign({}, values);
+    this.props.dispatch(UserActions.enrolAll(user.user, this.state.selectedDate));
   };
 
   handleSubmitClicked = () => {

@@ -286,7 +286,7 @@ const ClientDetails = {
       subItemExtension: 'subscription/create',
     },
     {
-      key: 2,
+      key: 3,
       subItemName: 'Subscribe All Courses',
       subItemIcon: <AttachIcon />,
       subItemExtension: 'subscription/create/all',

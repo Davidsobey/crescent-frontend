@@ -139,12 +139,12 @@ function enrol(enrolment) {
   };
 }
 
-function enrolAll(userDate) {
+function enrolAll(user, deadline) {
   function request() {
     return { type: UserConstants.ENROL_ALL_REQUEST };
   }
-  function success(user) {
-    return { type: UserConstants.ENROL_ALL_SUCCESS, user };
+  function success(u) {
+    return { type: UserConstants.ENROL_ALL_SUCCESS, u };
   }
   function failure(error) {
     return { type: UserConstants.ENROL_ALL_FAILURE, error };
@@ -153,9 +153,10 @@ function enrolAll(userDate) {
   return (dispatch) => {
     dispatch(request());
 
-    UserService.enrolAll(userDate).then(
-      (user) => {
-        dispatch(success(user));
+    UserService.enrolAll(user, deadline).then(
+      (u) => {
+        dispatch(success(u));
+        dispatch(AlertActions.success('Subscribed to all courses.'));
       },
       (error) => {
         dispatch(failure(error));

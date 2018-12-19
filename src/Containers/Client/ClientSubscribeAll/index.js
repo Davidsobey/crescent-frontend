@@ -33,8 +33,8 @@ class SubscribeAllCreate extends React.Component {
   }
 
   submit = (values) => {
-    const clientId = Object.assign({}, values);
-    this.props.dispatch(ClientActions.subscribeAll(clientId));
+    const client = Object.assign({}, values);
+    this.props.dispatch(ClientActions.subscribeAll(client.clientID));
   };
 
   render() {
