@@ -50,7 +50,7 @@ function subscribe(subscription) {
     ClientService.subscribe(subscription).then(
       () => {
         history.push('/user/enrol');
-        dispatch(course_success(subscription.courseID));
+        dispatch(courseSuccess(subscription.courseID));
         dispatch(success(subscription));
         dispatch(AlertActions.success('Subscription created.'));
       },
