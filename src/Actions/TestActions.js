@@ -226,16 +226,18 @@ function enrolmentTest(testId, courseId, userId) {
     dispatch(request());
 
     TestService.enrolmentTest(testId, courseId, userId).then(
-      dispatch(success()),
-      dispatch(questionsRequest()),
-      console.log('Loading ETQs'),
-      TestService.loadTestQuestions(userId, testId).then(
-        questions => dispatch(questionsSuccess(questions)),
-        (error) => {
-          dispatch(questionsFailure(error));
-          dispatch(AlertActions.error(error));
-        },
-      ),
+      () => {
+        dispatch(success());
+        dispatch(questionsRequest());
+        console.log('Loading ETQs');
+        TestService.loadTestQuestions(userId, testId).then(
+          questions => dispatch(questionsSuccess(questions)),
+          (error) => {
+            dispatch(questionsFailure(error));
+            dispatch(AlertActions.error(error));
+          },
+        );
+      },
       (error) => {
         dispatch(failure(error));
         dispatch(AlertActions.error(error));
