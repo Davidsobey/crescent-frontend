@@ -33,6 +33,7 @@ import UserCreate from '../Containers/User/UserCreate/index';
 import UserView from '../Containers/User/UserView/index';
 import UserEdit from '../Containers/User/UserEdit/index';
 import EnrolmentCreate from '../Containers/User/UserEnrol/index';
+import EnrolAllCreate from '../Containers/User/UserEnrolAll/index';
 import EnrolmentList from '../Containers/User/UserEnrolView/index';
 import ClientView from '../Containers/Client/ClientView/index';
 import ClientCreate from '../Containers/Client/ClientCreate/index';
@@ -48,6 +49,7 @@ import AcknowledgementDetail from '../Containers/Policy/Acknowledgement/Detail/i
 import AcknowledgementMaterial from '../Containers/Policy/Acknowledgement/Material/index';
 import ClientEdit from '../Containers/Client/ClientEdit/index';
 import SubscriptionCreate from '../Containers/Client/ClientSubscribe/index';
+import SubscribeAllCreate from '../Containers/Client/ClientSubscribeAll/index';
 import SubscriptionView from '../Containers/Client/ClientSubscribeView/index';
 import UsersHome from '../Containers/UserView/Home';
 import UsersCourseView from '../Containers/UserView/Courses/index';
@@ -191,6 +193,11 @@ class AppRouters extends React.Component {
                   exact
                 />
                 <Route
+                  path={Routes.USER_ENROL_ALL}
+                  component={withAuth(EnrolAllCreate, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
                   path={Routes.USER_ENROL_VIEW}
                   component={withAuth(EnrolmentList, ['Admin', 'Client'])}
                   exact
@@ -263,6 +270,11 @@ class AppRouters extends React.Component {
                 <Route
                   path={Routes.CLIENT_SUBSCRIBE}
                   component={withAuth(SubscriptionCreate, ['Admin', 'Client'])}
+                  exact
+                />
+                <Route
+                  path={Routes.CLIENT_SUBSCRIBE_ALL}
+                  component={withAuth(SubscribeAllCreate, ['Admin', 'Client'])}
                   exact
                 />
                 <Route

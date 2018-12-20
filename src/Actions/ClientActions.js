@@ -8,8 +8,8 @@ function create(client, clientRoleId) {
   function request() {
     return { type: ClientConstants.CREATE_REQUEST, client };
   }
-  function success(client) {
-    return { type: ClientConstants.CREATE_SUCCESS, client, clientRoleId };
+  function success(c) {
+    return { type: ClientConstants.CREATE_SUCCESS, c, clientRoleId };
   }
   function failure(error) {
     return { type: ClientConstants.CREATE_FAILURE, error };
@@ -18,8 +18,8 @@ function create(client, clientRoleId) {
   return (dispatch) => {
     dispatch(request({ client }));
     ClientService.create(client).then(
-      (client) => {
-        dispatch(success(client));
+      (c) => {
+        dispatch(success(c));
         history.push('/user/create');
         dispatch(AlertActions.success('Client created.'));
       },
@@ -41,7 +41,7 @@ function subscribe(subscription) {
   function failure(error) {
     return { type: ClientConstants.SUBSCRIBE_FAILURE, error };
   }
-  function course_success(newCourseId) {
+  function courseSuccess(newCourseId) {
     return { type: CourseConstants.CREATE_SUCCESS, newCourseId };
   }
 
@@ -50,7 +50,7 @@ function subscribe(subscription) {
     ClientService.subscribe(subscription).then(
       () => {
         history.push('/user/enrol');
-        dispatch(course_success(subscription.courseID));
+        dispatch(courseSuccess(subscription.courseID));
         dispatch(success(subscription));
         dispatch(AlertActions.success('Subscription created.'));
       },
@@ -61,6 +61,34 @@ function subscribe(subscription) {
     );
   };
 }
+
+function subscribeAll(clientId) {
+  function request() {
+    return { type: ClientConstants.SUBSCRIBE_ALL_REQUEST };
+  }
+  function success(client) {
+    return { type: ClientConstants.SUBSCRIBE_ALL_SUCCESS, client };
+  }
+  function failure(error) {
+    return { type: ClientConstants.SUBSCRIBE_ALL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request({ clientId }));
+    ClientService.subscribeAll(clientId).then(
+      (client) => {
+        dispatch(success(client));
+        dispatch(AlertActions.success('Subscribed to all courses.'));
+        history.push('/user/enrol');
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(AlertActions.error(error));
+      },
+    );
+  };
+}
+
 
 function subscribeSilent(subscription) {
   function request() {
@@ -275,6 +303,7 @@ const clientActions = {
   getById,
   subscribe,
   subscribeSilent,
+  subscribeAll,
   deleteClient,
   loadClient,
   editClient,

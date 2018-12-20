@@ -17,8 +17,8 @@ const validate = () => {
 
   return errors;
 };
-const required = value => value ? undefined : 'Required';
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const required = value => (value ? undefined : 'Required');
+const number = value => (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 /* eslint-disable react/prefer-stateless-function */
 class SubscriptionCreate extends React.Component {
@@ -27,14 +27,14 @@ class SubscriptionCreate extends React.Component {
     this.props.dispatch(CourseActions.getAll());
     this.props.dispatch(ClientActions.getAll());
   }
-  
-  componentWillMount () {
-    if (this.props.user.role.name != 'Admin') {
+
+  componentWillMount() {
+    if (this.props.user.role.name !== 'Admin') {
       this.props.initialize({ clientID: this.props.user.clientId });
       this.props.dispatch(CourseActions.getAllUnsubscribed(this.props.user.clientId));
     }
   }
-  
+
   loadUnsubscribedCourses = (values) => {
     this.props.dispatch(CourseActions.getAllUnsubscribed(values.target.value));
   };
@@ -44,15 +44,19 @@ class SubscriptionCreate extends React.Component {
     this.props.dispatch(ClientActions.subscribe(subscription));
   };
 
+  subscribeAll(clientId) {
+    this.props.dispatch(ClientActions.subscribeAll(clientId));
+  }
+
   render() {
-    const isValidModule = (module => 
+    const isValidModule = (module =>
       (Array.isArray(module.moduleMaterialIds) ? module.moduleMaterialIds.length : false)
     );
-    const isValidCourse = (course => Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false);
-    const isUnsubscribedCourse = (course => {
+    const isValidCourse = (course => (Array.isArray(course.modules) ? course.modules.filter(isValidModule).length : false));
+    const isUnsubscribedCourse = ((course) => {
       if (Array.isArray(this.props.unsubscribed_courses)) {
-        let length = this.props.unsubscribed_courses
-          .filter(unsubscribed_course => course.id == unsubscribed_course.id)
+        const length = this.props.unsubscribed_courses
+          .filter(unsubscribed_course => course.id === unsubscribed_course.id)
           .length;
         return length;
       }
@@ -79,15 +83,15 @@ class SubscriptionCreate extends React.Component {
                   Loading Clients
                 </div>
               ) : (
-                <Field 
-                  name="clientID" 
+                <Field
+                  name="clientID"
                   onChange={this.loadUnsubscribedCourses}
-                  label="Client Name" 
-                  component={Select} 
-                  validate={[ required ]}
+                  label="Client Name"
+                  component={Select}
+                  validate={[required]}
                 >
                   {(Array.isArray(this.props.clients) ? this.props.clients : [])
-                  .filter(client => this.props.user.role.name == 'Admin' || client.id == this.props.user.clientId)
+                  .filter(client => this.props.user.role.name === 'Admin' || client.id === this.props.user.clientId)
                   .map(client => (
                     <MenuItem value={client.id} key={client.id}>
                       {client.name}
@@ -103,20 +107,20 @@ class SubscriptionCreate extends React.Component {
                   Loading Courses
                 </div>
               ) : (
-                <Field 
-                  name="courseID" 
-                  label="Course Name" 
-                  component={Select} 
-                  validate={[ required ]}
+                <Field
+                  name="courseID"
+                  label="Course Name"
+                  component={Select}
+                  validate={[required]}
                 >
                   {courses.length ?
                   courses.map(course => (
                     <MenuItem value={course.id} key={course.id}>
                       {course.name}
                     </MenuItem>
-                  )) : 
+                  )) :
                   (
-                    <MenuItem disabled={true}>
+                    <MenuItem disabled>
                       No course
                     </MenuItem>
                   )}
@@ -125,7 +129,7 @@ class SubscriptionCreate extends React.Component {
             </div>
           </div>
           {this.props.client_subscribing ? (
-            <div style={{width: '400px'}}>
+            <div style={{ width: '400px' }}>
               <LinearProgress color="secondary" />
               Subscribing Client To Course
             </div>
@@ -141,6 +145,16 @@ class SubscriptionCreate extends React.Component {
               </Button>
             </div>
           )}
+          <div className="formAlignRight">
+            <Button
+              className="buttonFormat"
+              variant="raised"
+              color="secondary"
+              onClick={() => this.subscribeAll(this.props.user.clientId)}
+            >
+                Subscribe To All courses
+            </Button>
+          </div>
         </form>
       </Card>
     );

@@ -250,6 +250,12 @@ const UserDetails = {
     },
     {
       key: 3,
+      subItemName: 'Enrol All Courses',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'enrol/all',
+    },
+    {
+      key: 4,
       subItemName: 'Enrolment List',
       subItemIcon: <ListIcon />,
       subItemExtension: 'enrol/list',
@@ -275,9 +281,15 @@ const ClientDetails = {
     },
     {
       key: 2,
-      subItemName: 'Subscribe',
+      subItemName: 'Subscribe Course',
       subItemIcon: <AttachIcon />,
       subItemExtension: 'subscription/create',
+    },
+    {
+      key: 3,
+      subItemName: 'Subscribe All Courses',
+      subItemIcon: <AttachIcon />,
+      subItemExtension: 'subscription/create/all',
     },
   ],
 };

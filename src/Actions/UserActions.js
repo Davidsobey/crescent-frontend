@@ -139,6 +139,32 @@ function enrol(enrolment) {
   };
 }
 
+function enrolAll(user, deadline) {
+  function request() {
+    return { type: UserConstants.ENROL_ALL_REQUEST };
+  }
+  function success(u) {
+    return { type: UserConstants.ENROL_ALL_SUCCESS, u };
+  }
+  function failure(error) {
+    return { type: UserConstants.ENROL_ALL_FAILURE, error };
+  }
+
+  return (dispatch) => {
+    dispatch(request());
+
+    UserService.enrolAll(user, deadline).then(
+      (u) => {
+        dispatch(success(u));
+        dispatch(AlertActions.success('Subscribed to all courses.'));
+      },
+      (error) => {
+        dispatch(failure(error));
+      },
+    );
+  };
+}
+
 function loadUser(id) {
   function request() {
     return { type: UserConstants.GETUSER_REQUEST, id };
@@ -239,6 +265,7 @@ const UserActions = {
   deleteUser,
   loadUser,
   enrol,
+  enrolAll,
   getAllRoles,
   editUser,
   changePassword,

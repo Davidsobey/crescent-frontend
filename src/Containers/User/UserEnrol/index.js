@@ -60,6 +60,10 @@ class EnrolmentCreate extends React.Component {
     this.setState({ selectedDate: values.target.value });
   };
 
+  enrolAll(userId) {
+    this.props.dispatch(UserActions.enrolAll(userId));
+  }
+
   render() {
     const { selectedDate } = this.state;
     const val = this.state.value || null;
@@ -69,7 +73,7 @@ class EnrolmentCreate extends React.Component {
     );
     const isValidCourse = ((course) => {
       const courseWithModules = (Array.isArray(this.props.courses) ? this.props.courses : [])
-        .find(c => c.id == course.id);
+        .find(c => c.id === course.id);
       const modules = courseWithModules ? courseWithModules.modules : null;
       return Array.isArray(modules) ? modules.filter(isValidModule).length : false;
     });
@@ -115,7 +119,7 @@ class EnrolmentCreate extends React.Component {
                     validate={[required]}
                   >
                     {(Array.isArray(this.props.users) ? this.props.users : [])
-                    .filter(user => (this.props.user.role.name == 'Admin' || this.props.user.clientId == user.clientId))
+                    .filter(user => (this.props.user.role.name === 'Admin' || this.props.user.clientId === user.clientId))
                     .map(user => (
                       <MenuItem value={user.id} key={user.id}>
                         {user.name}
@@ -192,6 +196,16 @@ class EnrolmentCreate extends React.Component {
               </Button>
             </div>
           )}
+          <div className="formAlignRight">
+            <Button
+              onClick={this.enrolAll(this.props.user.id)}
+              className="buttonFormat"
+              variant="raised"
+              color="primary"
+            >
+              Enrol In All Courses
+            </Button>
+          </div>
         </form>
       </Card>
     );
