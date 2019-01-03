@@ -181,7 +181,7 @@ async function delayedLog(item) {
   };
 
   return Auth.fetch(
-    `https://crescenttesting.azurewebsites.net/api/Materials/${item}`,
+    `${CommonConstants.API_ENDPOINT}/Materials/${item}`,
     requestOptions,
   );
 }
