@@ -4,6 +4,9 @@ Assessment Certificate
 Test Marks Calculation
 Blue Colour on Card Headings
 Previous/Next Buttons in User View to be green
+Upstream Host Error with SMTP to incorrect email address - Investigate (User Enrol and User Policy Assign)
+User Enrol infinite loop Error
+Client Create Reducer error with client.id 
 
 In Progress: Complete Enrolment and EnrolmentTests
 In Progress: Missed deadline as red? Or Emailing? 
